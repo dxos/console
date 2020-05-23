@@ -14,10 +14,11 @@ import ConsoleContextProvider from './ConsoleContextProvider';
 
 const { server, port = 80, path } = config;
 
-// TODO(burdon): Error handling for server errors.
 // TODO(burdon): Authentication:
 // https://www.apollographql.com/docs/react/networking/authentication/
 
+// TODO(burdon): Configure from server.
+// TODO(burdon): Configure error handling for server errors.
 const client = new ApolloClient({
   uri: `${server}:${port}${path}`
 });
