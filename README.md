@@ -6,10 +6,12 @@ Apollo GraphQL client and server using express.
 
 ### POC
 
-- [ ] Refresh button.
+- [ ] https://github.com/standard/standardx (JSX)
+
+- [ ] config from provider.
+- [ ] Hash Router.
 - [ ] Trigger server-side commands (separate express path?)
 - [ ] Test backend IPFS request.
-- [ ] Layout/Router (with Material UI).
 
 ### Next
 
@@ -19,6 +21,7 @@ Apollo GraphQL client and server using express.
 
 ### Done
 
+- [ ] Layout (with Material UI).
 - [x] Error boundary.
 - [x] Server React app from server.
     - https://www.freecodecamp.org/news/how-to-set-up-deploy-your-react-app-from-scratch-using-webpack-and-babel-a669891033d4/

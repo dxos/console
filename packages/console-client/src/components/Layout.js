@@ -2,42 +2,66 @@
 // Copyright 2020 DxOS
 //
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+import { makeStyles } from '@material-ui/core';
 
-import { useStatusReducer } from '../hooks';
+import { FullScreen } from '@dxos/gem-core';
 
-// TODO(burdon): Factor out LoadingIndicator.
+import config from '../../config.json';
+import StatusBar from '../containers/StatusBar';
+import AppBar from './AppBar';
+import Sidebar from './Sidebar';
+import { ConsoleContext } from '../hooks';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    flex: 1
+  },
+  sidebar: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexShrink: 0,
+    width: 200,
+    borderRight: `1px solid ${theme.palette.primary.dark}`
+  },
+  main: {
+    display: 'flex',
+    flex: 1
+  },
+  cooter: {
+    display: 'flex',
+    flexShrink: 0
+  }
+}));
+
 const Layout = ({ children }) => {
-  const [{ loading, error = '' }] = useStatusReducer();
-  const [isLoading, setLoading] = useState(loading);
-
-  useEffect(() => {
-    let t;
-    if (loading) {
-      setLoading(loading);
-      t = setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
-
-    return () => clearTimeout(t);
-  }, [loading]);
+  const classes = useStyles();
+  const { modules } = useContext(ConsoleContext);
 
   return (
-    <div>
-      <div>
-        {children}
+    <FullScreen>
+      <div className={classes.root}>
+        <AppBar config={config} />
+        <div className={classes.container}>
+          <div className={classes.sidebar}>
+            <Sidebar modules={modules} />
+          </div>
+          <div className={classes.main}>
+            {children}
+          </div>
+        </div>
+        <div className={classes.footer}>
+          <StatusBar />
+        </div>
       </div>
-
-      <div>
-        {error && (
-          <span>{String(error)}</span>
-        )}
-        {isLoading && (
-          <span>Loading</span>
-        )}
-      </div>
-    </div>
+    </FullScreen>
   );
 };
 

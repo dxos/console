@@ -7,9 +7,7 @@ import defaultsDeep from 'lodash.defaultsdeep';
 
 import ErrorBoundary from '../components/ErrorBoundary';
 
-import { statusReducer, SET_STATUS } from '../hooks/status';
-
-import { ConsoleContext } from '../hooks';
+import { ConsoleContext, statusReducer, SET_STATUS } from '../hooks';
 
 const defaultState = {};
 
@@ -29,11 +27,12 @@ const appReducer = (state, action) => ({
  * Wraps children with a React ErrorBoundary component, which catches runtime errors and enables reset.
  *
  * @param {function} children
+ * @param {function} modules
  * @param {Object} [initialState]
  * @param {function} [errorHandler]
  * @returns {function}
  */
-const ConsoleContextProvider = ({ children, initialState = {}, errorHandler }) => {
+const ConsoleContextProvider = ({ children, modules, initialState = {}, errorHandler }) => {
   const [state, dispatch] = useReducer(appReducer, defaultsDeep({}, initialState, defaultState));
 
   const { errors: { exceptions = [] } = {} } = state[SET_STATUS] || {};
@@ -53,7 +52,7 @@ const ConsoleContextProvider = ({ children, initialState = {}, errorHandler }) =
   }
 
   return (
-    <ConsoleContext.Provider value={{ state, dispatch }}>
+    <ConsoleContext.Provider value={{ modules, state, dispatch }}>
       <ErrorBoundary>
         {children}
       </ErrorBoundary>

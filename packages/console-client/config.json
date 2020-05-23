@@ -1,6 +1,11 @@
 {
-  "server": "http://localhost",
   "publicUrl": "/app",
   "port": 4000,
-  "path": "/api"
+  "path": "/api",
+  "app": {
+    "org": "DxOS",
+    "theme": "dark",
+    "title": "Console",
+    "website": "https://dxos.org"
+  }
 }
