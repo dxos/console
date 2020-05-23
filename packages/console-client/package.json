@@ -1,0 +1,62 @@
+{
+  "name": "@dxos/console-client",
+  "version": "1.0.0-beta.0",
+  "description": "DxOS Console Client",
+  "main": "dist/es/index.js",
+  "scripts": {
+    "analyzer": "webpack --config webpack-analyzer.config.js",
+    "build": "npm run clean && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --source-maps inline",
+    "clean": "rm -rf dist",
+    "lint": "semistandard 'src/**/*.js'",
+    "start": "VERBOSE=true webpack-dev-server --mode development",
+    "test": "jest --rootDir ./src --passWithNoTests --no-cache"
+  },
+  "author": "DxOS.org",
+  "license": "GPL-3.0",
+  "browserslist": [
+    "> 5%"
+  ],
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@babel/runtime": "^7.8.7",
+    "apollo-boost": "^0.4.9",
+    "debug": "^4.1.1",
+    "graphql-tag": "^2.10.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "source-map-support": "^0.5.12"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-export-default-from": "^7.5.2",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.8.0",
+    "babel-loader": "^8.0.0",
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "babel-plugin-inline-import": "^3.0.0",
+    "dotenv-webpack": "^1.8.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-jest": "^23.13.1",
+    "eslint-plugin-react": "^7.17.0",
+    "html-webpack-plugin": "^4.3.0",
+    "jest": "^24.8.0",
+    "semistandard": "^14.2.0",
+    "webpack": "^4.41.2",
+    "webpack-bundle-analyzer": "^3.6.0",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-cli": "^3.3.10",
+    "webpack-merge": "^4.2.2",
+    "webpack-version-file-plugin": "^0.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
