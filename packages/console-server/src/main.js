@@ -8,28 +8,30 @@ import path from 'path';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { print } from 'graphql/language';
 
-import SCHEMA from './gql/api.graphql';
-import QUERY_STATUS from './gql/status.graphql';
+import QUERY_STATUS from '@dxos/console-client/gql/status.graphql';
+import clientConfig from '@dxos/console-client/config.json';
+
+import { resolvers } from './resolvers';
 
 import config from '../config.json';
-import { version } from '../package.json';
 
-const log = debug('c2:src');
-debug.enable('c2:*');
+import SCHEMA from './gql/api.graphql';
 
-// Resolver
-const resolvers = {
-  Query: {
-    status: () => ({
-      version
-    })
-  }
-};
+const log = debug('dxos:console:server');
 
-// Server
+// TODO(burdon): Config.
+debug.enable('dxos:console:*');
+
+//
+// Express server.
+//
+
 const app = express();
 
+//
 // CORS
+//
+
 // import cors from 'cors'
 // https://expressjs.com/en/resources/middleware/cors.html
 // https://www.prisma.io/blog/enabling-cors-for-express-graphql-apollo-server-1ef999bfb38d
@@ -38,14 +40,23 @@ const app = express();
 //   credentials: true
 // }));
 
+//
 // React app
-// TODO(burdon): Create HTML file.
-// TODO(burdon): Load JS.
-app.get('/app', (req,res) =>{
-  res.sendFile(path.join(__dirname + '/../../../node_modules/@dxos/console-client/dist/es/main.js'));
+//
+
+const { public_url } = clientConfig;
+
+app.get(`${public_url}(/:filePath)?`, (req, res) => {
+  const { filePath = 'index.html' } = req.params;
+  const file = path.join(__dirname + '../../../../node_modules/@dxos/console-client/dist/production', filePath);
+  res.sendFile(file);
 });
 
+//
+// Apollo Server
 // https://www.apollographql.com/docs/apollo-server/api/apollo-server
+//
+
 const server = new ApolloServer({
   typeDefs: SCHEMA,
   resolvers,
@@ -66,11 +77,19 @@ const server = new ApolloServer({
   }
 });
 
+//
+// Apollo middleware
 // https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserverapplymiddleware
+//
+
 server.applyMiddleware({
   app,
   path: config.path
 });
+
+//
+// Start server
+//
 
 app.listen({ port: config.port }, () => {
   log(`Running: http://localhost:${config.port}`);

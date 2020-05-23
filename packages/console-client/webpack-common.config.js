@@ -30,8 +30,9 @@ module.exports = {
     fs: 'empty'
   },
 
+  // TODO(burdon): Config production path for apollo (diff webpack config).
   output: {
-    path: `${__dirname}/dist`,
+    path: `${__dirname}/dist/production`,
     filename: '[name].bundle.js',
     publicPath: PUBLIC_URL
   },

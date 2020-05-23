@@ -1,4 +1,5 @@
 {
+  "public_url": "/app",
   "port": 4000,
   "path": "/graphql"
 }
