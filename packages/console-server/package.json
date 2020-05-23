@@ -48,5 +48,28 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": [
+      "plugin:jest/recommended",
+      "semistandard",
+      "standard-jsx"
+    ],
+    "plugins": [
+      "babel",
+      "node"
+    ],
+    "rules": {
+      "babel/semi": 1
+    }
+  },
+  "semistandard": {
+    "parser": "babel-eslint",
+    "env": [
+      "jest",
+      "node",
+      "browser"
+    ]
   }
 }

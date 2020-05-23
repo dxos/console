@@ -32,6 +32,7 @@
     "apollo-boost": "^0.4.9",
     "debug": "^4.1.1",
     "graphql-tag": "^2.10.3",
+    "lodash.defaultsdeep": "^4.6.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "source-map-support": "^0.5.12"
@@ -52,6 +53,7 @@
     "dotenv-webpack": "^1.8.0",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-jest": "^23.13.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react": "^7.17.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^24.8.0",
@@ -66,5 +68,27 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": [
+      "plugin:jest/recommended",
+      "semistandard",
+      "standard-jsx"
+    ],
+    "plugins": [
+      "babel"
+    ],
+    "rules": {
+      "babel/semi": 1
+    }
+  },
+  "semistandard": {
+    "parser": "babel-eslint",
+    "env": [
+      "jest",
+      "node",
+      "browser"
+    ]
   }
 }

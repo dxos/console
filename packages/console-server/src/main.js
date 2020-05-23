@@ -9,11 +9,9 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { print } from 'graphql/language';
 
 import QUERY_STATUS from '@dxos/console-client/gql/status.graphql';
-import clientConfig from '@dxos/console-client/config.json';
+import config from '@dxos/console-client/config.json';
 
 import { resolvers } from './resolvers';
-
-import config from '../config.json';
 
 import SCHEMA from './gql/api.graphql';
 
@@ -44,11 +42,12 @@ const app = express();
 // React app
 //
 
-const { public_url } = clientConfig;
+const { publicUrl } = config;
 
-app.get(`${public_url}(/:filePath)?`, (req, res) => {
+app.get(`${publicUrl}(/:filePath)?`, (req, res) => {
   const { filePath = 'index.html' } = req.params;
-  const file = path.join(__dirname + '../../../../node_modules/@dxos/console-client/dist/production', filePath);
+  const file = path.join(__dirname, '../../../node_modules/@dxos/console-client/dist/production', filePath);
+  console.log(__dirname, file);
   res.sendFile(file);
 });
 

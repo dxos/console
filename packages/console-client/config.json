@@ -1,5 +1,6 @@
 {
-  "public_url": "/app",
+  "server": "http://localhost",
+  "publicUrl": "/app",
   "port": 4000,
-  "path": "/graphql"
+  "path": "/api"
 }

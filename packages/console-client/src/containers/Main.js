@@ -6,24 +6,30 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 import React from 'react';
 
-import Status from '../components/Status';
+import Status from './Status';
 
 import config from '../../config.json';
+import Layout from '../components/Layout';
+import ConsoleContextProvider from './ConsoleContextProvider';
 
-const { port, path } = config;
+const { server, port = 80, path } = config;
 
 // TODO(burdon): Error handling for server errors.
 // TODO(burdon): Authentication:
 // https://www.apollographql.com/docs/react/networking/authentication/
 
 const client = new ApolloClient({
-  uri: `http://localhost:${port}${path}`
+  uri: `${server}:${port}${path}`
 });
 
 const Main = () => {
   return (
     <ApolloProvider client={client}>
-      <Status />
+      <ConsoleContextProvider>
+        <Layout>
+          <Status />
+        </Layout>
+      </ConsoleContextProvider>
     </ApolloProvider>
   );
 };

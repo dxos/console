@@ -2,11 +2,11 @@
 // Copyright 2020 DxOS
 //
 
-import debug from 'debug';
+// import debug from 'debug';
 
 import { version } from '../package.json';
 
-const log = debug('dxos:console:resolver');
+// const log = debug('dxos:console:resolver');
 
 //
 // Resolver
@@ -15,6 +15,7 @@ const log = debug('dxos:console:resolver');
 export const resolvers = {
   Query: {
     status: () => ({
+      timestamp: new Date().toUTCString(),
       version
     })
   }

@@ -1,4 +1,9 @@
+#
+# Copyright 2020 DxOS
+#
+
 type Status {
+  timestamp: String
   version: String
 }
 
