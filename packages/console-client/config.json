@@ -1,11 +1,14 @@
 {
-  "publicUrl": "/app",
-  "port": 4000,
-  "path": "/api",
   "app": {
     "org": "DxOS",
     "theme": "dark",
     "title": "Console",
-    "website": "https://dxos.org"
+    "website": "https://dxos.org",
+    "publicUrl": "/console"
+  },
+  "graphql": {
+    "path": "/api",
+    "port": 4000,
+    "pollInterval": 10000
   }
 }

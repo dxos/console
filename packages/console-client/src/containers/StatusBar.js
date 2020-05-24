@@ -5,9 +5,12 @@
 import clsx from 'clsx';
 import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
+import Toolbar from '@material-ui/core/Toolbar';
 import ErrorIcon from '@material-ui/icons/Error';
 import LoadingIcon from '@material-ui/icons/Wifi';
 import RunningIcon from '@material-ui/icons/CheckCircle';
+import PublicIcon from '@material-ui/icons/Public';
 import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
@@ -22,9 +25,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     justifyContent: 'space-around',
     backgroundColor: grey[900],
-    color: '#EEE',
-    height: 32,
-    padding: 4
+    color: grey[400]
   },
   left: {
     width: 160
@@ -39,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     margin: '0 2px'
+  },
+  link: {
+    color: grey[400]
   },
   error: {
     color: red[500]
@@ -82,14 +86,18 @@ const StatusBar = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.left} />
+    <Toolbar variant="dense" className={classes.root}>
+      <div className={classes.left}>
+        <Link className={classes.link} href={config.app.website} rel="noreferrer" target="_blank">
+          <PublicIcon />
+        </Link>
+      </div>
       <div className={classes.center}>(c) {config.app.org} {version}</div>
       <div className={classes.right}>
         <LoadingIcon className={clsx(classes.icon, isLoading && classes.loading)} />
         <StatusIcon error={error} />
       </div>
-    </div>
+    </Toolbar>
   );
 };
 

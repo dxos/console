@@ -5,13 +5,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import MuiAppBar from '@material-ui/core/AppBar';
-import MuiLink from '@material-ui/core/Link';
+import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
-import PublicIcon from '@material-ui/icons/Public';
+import GraphQLIcon from '@material-ui/icons/Adb';
 
 import DxOSIcon from '../icons/DXOS';
+import { graphqlApi } from '../client';
 
 const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.denseToolbar,
@@ -45,18 +46,24 @@ const AppBar = ({ config }) => {
     <>
       <MuiAppBar position="fixed">
         <Toolbar variant="dense">
-          <MuiLink href="/">
+          <Link href="/">
             <div className={classes.logo}>
               <DxOSIcon />
             </div>
-          </MuiLink>
+          </Link>
           <div className={classes.title}>
             <Typography variant="h6">{config.app.title}</Typography>
           </div>
           <div>
-            <MuiLink href={config.app.website} className={classes.link} rel="noreferrer" target="_blank">
-              <PublicIcon />
-            </MuiLink>
+            <Link
+              className={classes.link}
+              href={graphqlApi(config)}
+              rel="noreferrer"
+              target="_blank"
+              title="Console GraphQL"
+            >
+              <GraphQLIcon />
+            </Link>
           </div>
         </Toolbar>
       </MuiAppBar>

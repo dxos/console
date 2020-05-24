@@ -42,12 +42,11 @@ const app = express();
 // React app
 //
 
-const { publicUrl } = config;
+const { app: { publicUrl } } = config;
 
 app.get(`${publicUrl}(/:filePath)?`, (req, res) => {
   const { filePath = 'index.html' } = req.params;
   const file = path.join(__dirname, '../../../node_modules/@dxos/console-client/dist/production', filePath);
-  console.log(__dirname, file);
   res.sendFile(file);
 });
 
@@ -69,7 +68,8 @@ const server = new ApolloServer({
     },
     tabs: [
       {
-        endpoint: config.path,
+        name: 'Status',
+        endpoint: config.graphql.path,
         query: print(gql(QUERY_STATUS))
       }
     ]
@@ -83,13 +83,13 @@ const server = new ApolloServer({
 
 server.applyMiddleware({
   app,
-  path: config.path
+  path: config.graphql.path
 });
 
 //
 // Start server
 //
 
-app.listen({ port: config.port }, () => {
-  log(`Running: http://localhost:${config.port}`);
+app.listen({ port: config.graphql.port }, () => {
+  log(`Running: http://localhost:${config.graphql.port}`);
 });

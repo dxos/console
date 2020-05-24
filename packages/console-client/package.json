@@ -12,7 +12,7 @@
     "analyzer": "webpack --config webpack-analyzer.config.js",
     "build": "npm run clean && npm run build:module && npm run build:production",
     "build:module": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --source-maps inline",
-    "build:production": "PUBLIC_URL=/app webpack --mode production",
+    "build:production": "PUBLIC_URL=/console webpack --mode production",
     "clean": "rm -rf dist",
     "lint": "semistandard 'src/**/*.js'",
     "start": "VERBOSE=true webpack-dev-server --mode development",

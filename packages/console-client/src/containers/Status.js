@@ -5,12 +5,12 @@
 import isObject from 'lodash.isobject';
 import omit from 'lodash.omit';
 import transform from 'lodash.transform';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import Json from '../components/Json';
 
-import { useQueryStatusReducer } from '../hooks';
+import { ConsoleContext, useQueryStatusReducer } from '../hooks';
 
 import QUERY_STATUS from '../../gql/status.graphql';
 
@@ -19,7 +19,9 @@ const removeTypename = data => transform(data, (result, value, key) => {
 });
 
 const Status = () => {
-  const data = useQueryStatusReducer(useQuery(QUERY_STATUS, { pollInterval: 5000 }));
+  const { config } = useContext(ConsoleContext);
+
+  const data = useQueryStatusReducer(useQuery(QUERY_STATUS, { pollInterval: config.graphql.pollInterval }));
   if (!data) {
     return null;
   }
