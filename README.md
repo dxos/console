@@ -6,11 +6,13 @@ Apollo GraphQL client and server using express.
 
 ### POC
 
-- [ ] Test backend IPFS client request.
 - [ ] Trigger server-side wire commands (separate express path?)
 
 ### Next
 
+- [ ] Routes.
+- [ ] Fix JsonTree (yarn link).
+- [ ] Client/server API abstraction (error handler, etc.)
 - [ ] Webpack config (remove dynamic config?)
 - [ ] https://github.com/standard/standardx (JSX)
 - [ ] Shared config.
@@ -18,6 +20,8 @@ Apollo GraphQL client and server using express.
 
 ### Done
 
+- [c] Client resolvers: https://www.apollographql.com/docs/tutorial/local-state/
+- [x] Test backend IPFS client request.
 - [x] Hash Router.
 - [x] Layout (with Material UI).
 - [x] config from provider.

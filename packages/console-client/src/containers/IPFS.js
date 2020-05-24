@@ -9,18 +9,19 @@ import Json from '../components/Json';
 
 import { ConsoleContext, useQueryStatusReducer } from '../hooks';
 
-import QUERY from '../../gql/status.graphql';
+import QUERY from '../../gql/ipfs.graphql';
 
-const Status = () => {
+const IPFS = () => {
   const { config } = useContext(ConsoleContext);
   const data = useQueryStatusReducer(useQuery(QUERY, { pollInterval: config.api.pollInterval }));
   if (!data) {
     return null;
   }
 
+  // TODO(burdon): Return structured GraphQL.
   return (
-    <Json data={data} />
+    <Json data={{ ipfs: JSON.parse(data.ipfs.json) }} />
   );
 };
 
-export default Status;
+export default IPFS;

@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    flex: 1
+    flex: 1,
+    overflow: 'hidden'
   },
   sidebar: {
     display: 'flex',
@@ -33,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     display: 'flex',
-    flex: 1
+    flex: 1,
+    overflow: 'hidden'
   },
   cooter: {
     display: 'flex',

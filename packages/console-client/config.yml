@@ -1,0 +1,43 @@
+#
+# NODE_ENV === production
+# NOTE: Set CONFIG_FILE to swap out this config file.
+#
+
+app:
+  title: 'Console'
+  org': 'DxOS'
+  theme: 'dark'
+  website: 'https://dxos.org'
+  publicUrl: '/console'
+
+api:
+  path: '/api'
+  port: 4000
+  pollInterval: 10000
+
+system:
+  debug: 'dxos:console:*'
+  xbox:
+    image: '/opt/xbox/IMAGE'
+
+services:
+  app:
+    server: 'http://127.0.0.1:5999'                             # TODO(burdon): ???
+
+  wns:
+      server: 'https://node1.dxos.network/wns/api'
+      webui: 'https://node1.dxos.network/wns/webui'
+  #    server: 'http://127.0.0.1:9473/api'
+  #    webui: 'http://127.0.0.1:9473/webui'
+
+  signal:
+    server: 'http://127.0.0.1:4000'
+    api: 'http://127.0.0.1:4000'                                # TODO(burdon): ???
+
+  ipfs:
+    server: '/ip4/127.0.0.1/tcp/5001'
+    gateway: '/ip4//127.0.0.1:8888/ipfs/'
+    webui: 'http://127.0.0.1:5001/webui'
+
+  wellknown:
+    endpoint: 'http://127.0.0.1:9000/.well-known/dxos'

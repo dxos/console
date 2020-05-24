@@ -4,21 +4,24 @@
 
 import debug from 'debug';
 import express from 'express';
+import fs from 'fs';
 import path from 'path';
+import yaml from 'js-yaml';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { print } from 'graphql/language';
 
 import QUERY_STATUS from '@dxos/console-client/gql/status.graphql';
-import config from '@dxos/console-client/config.json';
 
 import { resolvers } from './resolvers';
 
 import SCHEMA from './gql/api.graphql';
 
+const config = yaml.safeLoad(
+  fs.readFileSync(path.join(__dirname, '../../../node_modules/@dxos/console-client/config.yml')));
+
 const log = debug('dxos:console:server');
 
-// TODO(burdon): Config.
-debug.enable('dxos:console:*');
+debug.enable(config.system.debug);
 
 //
 // Express server.
@@ -69,7 +72,7 @@ const server = new ApolloServer({
     tabs: [
       {
         name: 'Status',
-        endpoint: config.graphql.path,
+        endpoint: config.api.path,
         query: print(gql(QUERY_STATUS))
       }
     ]
@@ -83,13 +86,14 @@ const server = new ApolloServer({
 
 server.applyMiddleware({
   app,
-  path: config.graphql.path
+  path: config.api.path
 });
 
 //
 // Start server
 //
 
-app.listen({ port: config.graphql.port }, () => {
-  log(`Running: http://localhost:${config.graphql.port}`);
+const { api: { port } } = config;
+app.listen({ port }, () => {
+  log(`Running: http://localhost:${port}`);
 });

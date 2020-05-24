@@ -23,6 +23,7 @@ const removeTypename = data => transform(data, (result, value, key) => {
 const Json = ({ data }) => {
   const classes = useStyles();
 
+  // TODO(burdon): Bug expands when updated.
   return (
     <JsonTreeView className={classes.root} data={removeTypename(data)} />
   );

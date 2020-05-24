@@ -2,13 +2,14 @@
 // Copyright 2020 DxOS
 //
 
+import debug from 'debug';
 import React from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import config from '../../config.json';
+import config from '../../config.yml';
 
 import { createTheme } from '../theme';
 import { clientFactory } from '../client';
@@ -19,7 +20,11 @@ import Layout from '../components/Layout';
 
 import ConsoleContextProvider from './ConsoleContextProvider';
 
+import IPFS from './IPFS';
 import Status from './Status';
+import WNS from './WNS';
+
+debug.enable(config.system.debug);
 
 const Main = () => {
   return (
@@ -31,8 +36,10 @@ const Main = () => {
             <Switch>
               <Route path="/:module">
                 <Layout>
-                  <Route path="/status" component={Status} />
                   <Route path="/config" component={Config} />
+                  <Route path="/ipfs" component={IPFS} />
+                  <Route path="/status" component={Status} />
+                  <Route path="/wns" component={WNS} />
                 </Layout>
               </Route>
               <Redirect to="/status" />

@@ -2,11 +2,21 @@
 # Copyright 2020 DxOS
 #
 
+type JSONResult {
+  json: String!
+}
+
 type Status {
-  timestamp: String
-  version: String
+  timestamp: String!
+  version: String!
 }
 
 type Query {
   status: Status
+  ipfs: JSONResult
+  wns: JSONResult
+}
+
+schema {
+  query: Query
 }
