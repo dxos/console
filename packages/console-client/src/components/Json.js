@@ -16,9 +16,16 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+/**
+ * Remove Apollo __typename directive.
+ * @param {Object} data
+ * @returns {Object}
+ */
 const removeTypename = data => transform(data, (result, value, key) => {
-  result[key] = isObject(value) && '__typename' in value ? omit(value, '__typename') : value;
-});
+  if (key !== '__typename') {
+    result[key] = isObject(value) ? ('__typename' in value ? omit(value, '__typename') : value) : value;
+  }
+}, {});
 
 const Json = ({ data }) => {
   const classes = useStyles();

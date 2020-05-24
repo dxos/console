@@ -13,13 +13,31 @@ const log = debug('dxos:console:server:resolvers');
 // Resolvers
 //
 
-export const resolvers = {
+const timestamp = () => new Date().toUTCString();
+
+export const createResolvers = config => ({
+  Mutation: {
+    //
+    // WNS
+    //
+
+    wns_action: async (_, __, { action }) => {
+      log(`WNS action: ${action}`);
+
+      return {
+        timestamp: timestamp(),
+        code: 0
+      };
+    }
+  },
+
   Query: {
     //
-    // Status
+    // System
     //
-    status: () => ({
-      timestamp: new Date().toUTCString(),
+
+    system_status: () => ({
+      timestamp: timestamp(),
       version
     }),
 
@@ -29,14 +47,19 @@ export const resolvers = {
     // https://github.com/ipfs/js-ipfs
     // https://github.com/ipfs/js-ipfs/tree/master/packages/ipfs-http-client#api
     //
-    ipfs: async () => {
+
+    ipfs_status: async () => {
       log('Calling IPFS...');
 
       // TODO(burdon): Config.
+      // NOTE: Hangs if server not running.
       const ipfs = new IpfsHttpClient('/ip4/127.0.0.1/tcp/5001');
 
       const version = await ipfs.version();
       const status = await ipfs.id();
+
+      console.log(version);
+      log('Done');
 
       return {
         json: JSON.stringify({
@@ -46,4 +69,4 @@ export const resolvers = {
       };
     }
   }
-};
+});

@@ -21,7 +21,7 @@ export const createResolvers = config => {
 
   return {
     Query: {
-      wns: async () => {
+      wns_status: async () => {
         log('Querying WNS...');
 
         const status = await registry.getStatus();

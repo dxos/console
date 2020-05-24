@@ -29,7 +29,7 @@ This creates the following folders:
 NOTE: GQL and Production files and exported and may be used by the server.
 
 ```javascript
-import QUERY_STATUS from '@dxos/console-client/gql/status.graphql';
+import QUERY_STATUS from '@dxos/console-client/gql/system_status.graphql';
 import config from '@dxos/console-client/config.json';
 
 ...

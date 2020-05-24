@@ -4,13 +4,16 @@
 
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import { Mutation } from '@apollo/react-components';
 import { makeStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 
 import Json from '../components/Json';
 
 import { ConsoleContext, useQueryStatusReducer } from '../hooks';
 
-import QUERY from '../../gql/wns.graphql';
+import WNS_STATUS from '../../gql/wns_status.graphql';
+import WNS_ACTION from '../../gql/wns_action.graphql';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,20 +27,30 @@ const useStyles = makeStyles((theme) => ({
 const WNS = () => {
   const classes = useStyles();
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(QUERY, { pollInterval: config.api.pollInterval }));
+  const data = useQueryStatusReducer(useQuery(WNS_STATUS, { pollInterval: config.api.pollInterval }));
   if (!data) {
     return null;
   }
 
-  // TODO(burdon): peers causes issues.
-  // Warning: Failed prop type: Invalid prop `children` supplied to `ForwardRef(Typography)`, expected a ReactNode.
-  const d = JSON.parse(data.wns.json);
-  d.peers = [];
-
-  // TODO(burdon): Return structured GraphQL.
   return (
     <div className={classes.root}>
-      <Json data={{ wns: d }} />
+      <Mutation mutation={WNS_ACTION}>
+        {(action, { data }) => (
+          <div>
+            <Button
+              onClick={() => {
+                action({ variables: { command: 'test' } });
+              }}
+            >
+              Test
+            </Button>
+
+            <pre>Result: {JSON.stringify(data)}</pre>
+          </div>
+        )}
+      </Mutation>
+
+      <Json data={JSON.parse(data.wns_status.json)} />
     </div>
   );
 };

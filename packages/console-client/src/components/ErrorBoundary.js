@@ -3,6 +3,7 @@
 //
 
 import React, { Component } from 'react';
+import Typography from '@material-ui/core/Typography';
 
 /**
  * Root-level error boundary.
@@ -34,7 +35,10 @@ class ErrorBoundary extends Component {
 
     if (error) {
       return (
-        <pre>{String(error)}</pre>
+        <div>
+          <Typography>Error</Typography>
+          <pre>{String(error)}</pre>
+        </div>
       );
     }
 

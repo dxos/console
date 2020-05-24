@@ -2,25 +2,23 @@
 // Copyright 2020 DxOS
 //
 
-import React, { useContext } from 'react';
+import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import Json from '../components/Json';
 
-import { ConsoleContext, useQueryStatusReducer } from '../hooks';
+import { useQueryStatusReducer } from '../hooks';
 
-import QUERY from '../../gql/ipfs.graphql';
+import IPFS_STATUS from '../../gql/ipfs_status.graphql';
 
 const IPFS = () => {
-  const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(QUERY, { pollInterval: config.api.pollInterval }));
+  const data = useQueryStatusReducer(useQuery(IPFS_STATUS));
   if (!data) {
     return null;
   }
 
-  // TODO(burdon): Return structured GraphQL.
   return (
-    <Json data={{ ipfs: JSON.parse(data.ipfs.json) }} />
+    <Json data={JSON.parse(data.ipfs_status.json)} />
   );
 };
 

@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    flex: 1
+    flex: 1,
+    overflow: 'hidden'
   },
   container: {
     display: 'flex',
@@ -25,19 +26,19 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     overflow: 'hidden'
   },
-  sidebar: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexShrink: 0,
-    width: 180,
-    borderRight: `1px solid ${theme.palette.primary.dark}`
-  },
   main: {
     display: 'flex',
     flex: 1,
     overflow: 'hidden'
   },
-  cooter: {
+  sidebar: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexShrink: 0,
+    width: 200,
+    borderRight: `1px solid ${theme.palette.primary.dark}`
+  },
+  footer: {
     display: 'flex',
     flexShrink: 0
   }

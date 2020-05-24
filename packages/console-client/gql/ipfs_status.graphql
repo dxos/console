@@ -3,7 +3,7 @@
 #
 
 {
-  ipfs {
+  ipfs_status {
     json
   }
 }

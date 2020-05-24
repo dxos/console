@@ -6,17 +6,36 @@ type JSONResult {
   json: String!
 }
 
+type Log {
+  log: [String]!
+}
+
 type Status {
   timestamp: String!
   version: String!
 }
 
+type Result {
+  timestamp: String!
+  code: Int!
+}
+
+#
+# Schema
+#
+
 type Query {
-  status: Status
-  ipfs: JSONResult
-  wns: JSONResult
+  system_status: Status
+  ipfs_status: JSONResult
+  wns_status: JSONResult
+  wns_log: Log
+}
+
+type Mutation {
+  wns_action(command: String!): Result
 }
 
 schema {
+  mutation: Mutation
   query: Query
 }

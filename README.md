@@ -6,17 +6,19 @@ Apollo GraphQL client and server using express.
 
 ### POC
 
-- [ ] Trigger server-side wire commands (separate express path?)
+- [ ] Trigger server-side wire commands (mutation or separate express path?)
 
 ### Next
 
-- [ ] Routes.
-- [ ] Fix JsonTree (yarn link).
-- [ ] Client/server API abstraction (error handler, etc.)
+- [ ] Config routes for services (test).
 - [ ] Webpack config (remove dynamic config?)
+
+- [ ] Client/server API abstraction (error handler, etc.)
+- [ ] Port dashboard API calls (resolve config first).
+- [ ] Port dashboard react modules with dummy resolvers.
+
+- [ ] Fix JsonTree (yarn link).
 - [ ] https://github.com/standard/standardx (JSX)
-- [ ] Shared config.
-- [ ] Port dashboard modules with dummy resolvers.
 
 ### Done
 

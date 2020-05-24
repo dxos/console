@@ -10,9 +10,9 @@ import yaml from 'js-yaml';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { print } from 'graphql/language';
 
-import QUERY_STATUS from '@dxos/console-client/gql/status.graphql';
+import SYSTEM_STATUS from '@dxos/console-client/gql/system_status.graphql';
 
-import { resolvers } from './resolvers';
+import { createResolvers } from './resolvers';
 
 import SCHEMA from './gql/api.graphql';
 
@@ -60,7 +60,8 @@ app.get(`${publicUrl}(/:filePath)?`, (req, res) => {
 
 const server = new ApolloServer({
   typeDefs: SCHEMA,
-  resolvers,
+
+  resolvers: createResolvers(config),
 
   // https://www.apollographql.com/docs/apollo-server/testing/graphql-playground
   // https://github.com/prisma-labs/graphql-playground#usage
@@ -73,7 +74,7 @@ const server = new ApolloServer({
       {
         name: 'Status',
         endpoint: config.api.path,
-        query: print(gql(QUERY_STATUS))
+        query: print(gql(SYSTEM_STATUS))
       }
     ]
   }

@@ -9,17 +9,17 @@ import Json from '../components/Json';
 
 import { ConsoleContext, useQueryStatusReducer } from '../hooks';
 
-import QUERY from '../../gql/status.graphql';
+import SYSTEM_STATUS from '../../gql/system_status.graphql';
 
 const Status = () => {
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(QUERY, { pollInterval: config.api.pollInterval }));
+  const data = useQueryStatusReducer(useQuery(SYSTEM_STATUS, { pollInterval: config.api.pollInterval }));
   if (!data) {
     return null;
   }
 
   return (
-    <Json data={data} />
+    <Json data={data.system_status} />
   );
 };
 

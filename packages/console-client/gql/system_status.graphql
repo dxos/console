@@ -3,7 +3,7 @@
 #
 
 {
-  status {
+  system_status {
     timestamp
     version
   }
