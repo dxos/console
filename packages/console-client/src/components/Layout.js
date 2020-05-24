@@ -4,10 +4,10 @@
 
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 
 import { FullScreen } from '@dxos/gem-core';
 
-import config from '../../config.json';
 import StatusBar from '../containers/StatusBar';
 import AppBar from './AppBar';
 import Sidebar from './Sidebar';
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     flexShrink: 0,
-    width: 200,
+    width: 180,
     borderRight: `1px solid ${theme.palette.primary.dark}`
   },
   main: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = ({ children }) => {
   const classes = useStyles();
-  const { modules } = useContext(ConsoleContext);
+  const { config, modules } = useContext(ConsoleContext);
 
   return (
     <FullScreen>
@@ -53,9 +53,9 @@ const Layout = ({ children }) => {
           <div className={classes.sidebar}>
             <Sidebar modules={modules} />
           </div>
-          <div className={classes.main}>
+          <Paper className={classes.main}>
             {children}
-          </div>
+          </Paper>
         </div>
         <div className={classes.footer}>
           <StatusBar />

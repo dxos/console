@@ -45,7 +45,7 @@ const AppBar = ({ config }) => {
     <>
       <MuiAppBar position="fixed">
         <Toolbar variant="dense">
-          <MuiLink href="/console">
+          <MuiLink href="/">
             <div className={classes.logo}>
               <DxOSIcon />
             </div>

@@ -4,6 +4,7 @@
 
 import clsx from 'clsx';
 import React from 'react';
+import { useHistory, useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -23,6 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   icon: {
+    minWidth: 40,
     color: theme.palette.grey[500]
   },
 
@@ -33,16 +35,17 @@ const useStyles = makeStyles(theme => ({
 
 const Sidebar = ({ modules: { services, settings } }) => {
   const classes = useStyles();
+  const history = useHistory();
+  const { module } = useParams();
 
-  // TODO(burdon): Change.
-  const router = {};
+  const isSelected = path => path === `/${module}`;
 
   const Modules = ({ modules }) => (
     <List aria-label="items" className={classes.list}>
       {modules.map(({ path, title, icon: Icon }) => (
-        <ListItem button selected={path === router.pathname} key={path} onClick={() => router.push(path)}>
+        <ListItem button selected={isSelected(path)} key={path} onClick={() => history.push(path)}>
           <ListItemIcon classes={{ root: classes.icon }}>
-            <Icon className={clsx(classes.icon, path === router.pathname && classes.selected)} />
+            <Icon className={clsx(classes.icon, isSelected(path) && classes.selected)} />
           </ListItemIcon>
           <ListItemText primary={title} />
         </ListItem>

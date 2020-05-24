@@ -14,32 +14,32 @@ import ServicesIcon from '@material-ui/icons/Storage';
 export default {
   services: [
     {
-      path: '/console/status',
+      path: '/status',
       title: 'Status',
       icon: StatsIcon
     },
     {
-      path: '/console/wns',
+      path: '/wns',
       title: 'WNS',
       icon: RegistryIcon
     },
     {
-      path: '/console/apps',
+      path: '/apps',
       title: 'Apps',
       icon: AppsIcon
     },
     {
-      path: '/console/bots',
+      path: '/bots',
       title: 'Bots',
       icon: BotsIcon
     },
     {
-      path: '/console/signal',
+      path: '/signal',
       title: 'Signal Server',
       icon: SignalIcon
     },
     {
-      path: '/console/ipfs',
+      path: '/ipfs',
       title: 'IPFS',
       icon: IPFSIcon
     }
@@ -47,12 +47,12 @@ export default {
 
   settings: [
     {
-      path: '/console/metadata',
+      path: '/metadata',
       title: 'Metadata',
       icon: ServicesIcon
     },
     {
-      path: '/console/config',
+      path: '/config',
       title: 'Config',
       icon: ConfigIcon
     }

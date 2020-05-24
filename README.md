@@ -6,22 +6,21 @@ Apollo GraphQL client and server using express.
 
 ### POC
 
-- [ ] https://github.com/standard/standardx (JSX)
-
-- [ ] config from provider.
-- [ ] Hash Router.
-- [ ] Trigger server-side commands (separate express path?)
-- [ ] Test backend IPFS request.
+- [ ] Test backend IPFS client request.
+- [ ] Trigger server-side wire commands (separate express path?)
 
 ### Next
 
-- [ ] Lint settings for webstorm (bug?)
+- [ ] Webpack config (remove dynamic config?)
+- [ ] https://github.com/standard/standardx (JSX)
 - [ ] Shared config.
 - [ ] Port dashboard modules with dummy resolvers.
 
 ### Done
 
-- [ ] Layout (with Material UI).
+- [x] Hash Router.
+- [x] Layout (with Material UI).
+- [x] config from provider.
 - [x] Error boundary.
 - [x] Server React app from server.
     - https://www.freecodecamp.org/news/how-to-set-up-deploy-your-react-app-from-scratch-using-webpack-and-babel-a669891033d4/

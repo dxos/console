@@ -1,5 +1,5 @@
 //
-// Copyright 2020 Wireline, Inc.
+// Copyright 2020 DxOS
 //
 
 import React, { useEffect, useReducer } from 'react';
@@ -27,12 +27,13 @@ const appReducer = (state, action) => ({
  * Wraps children with a React ErrorBoundary component, which catches runtime errors and enables reset.
  *
  * @param {function} children
- * @param {function} modules
+ * @param {Object} config
+ * @param {Object} modules
  * @param {Object} [initialState]
  * @param {function} [errorHandler]
  * @returns {function}
  */
-const ConsoleContextProvider = ({ children, modules, initialState = {}, errorHandler }) => {
+const ConsoleContextProvider = ({ children, config, modules, initialState = {}, errorHandler }) => {
   const [state, dispatch] = useReducer(appReducer, defaultsDeep({}, initialState, defaultState));
 
   const { errors: { exceptions = [] } = {} } = state[SET_STATUS] || {};
@@ -52,7 +53,7 @@ const ConsoleContextProvider = ({ children, modules, initialState = {}, errorHan
   }
 
   return (
-    <ConsoleContext.Provider value={{ modules, state, dispatch }}>
+    <ConsoleContext.Provider value={{ config, modules, state, dispatch }}>
       <ErrorBoundary>
         {children}
       </ErrorBoundary>

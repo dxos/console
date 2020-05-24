@@ -3,7 +3,7 @@
 //
 
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
 import LoadingIcon from '@material-ui/icons/Wifi';
@@ -12,9 +12,8 @@ import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 
-import config from '../../config.json';
 import { version } from '../../package.json';
-import { useStatusReducer } from '../hooks';
+import { ConsoleContext, useStatusReducer } from '../hooks';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +55,7 @@ const StatusBar = () => {
   const classes = useStyles();
   const [{ loading, error }] = useStatusReducer();
   const [isLoading, setLoading] = useState(loading);
+  const { config } = useContext(ConsoleContext);
 
   useEffect(() => {
     let t;
