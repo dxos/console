@@ -21,8 +21,8 @@ export const createResolvers = config => ({
     // WNS
     //
 
-    wns_action: async (_, __, { action }) => {
-      log(`WNS action: ${action}`);
+    wns_action: async (_, { command }) => {
+      log(`WNS action: ${command}`);
 
       return {
         timestamp: timestamp(),

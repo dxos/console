@@ -10,19 +10,17 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import config from '../../config.yml';
-
 import { createTheme } from '../theme';
 import { clientFactory } from '../client';
 import modules from '../modules';
 
-import Config from '../components/Config';
 import Layout from '../components/Layout';
-
 import ConsoleContextProvider from './ConsoleContextProvider';
 
-import IPFS from './IPFS';
-import Status from './Status';
-import WNS from './WNS';
+import Config from './panels/Config';
+import IPFS from './panels/IPFS';
+import Status from './panels/Status';
+import WNS from './panels/WNS';
 
 debug.enable(config.system.debug);
 

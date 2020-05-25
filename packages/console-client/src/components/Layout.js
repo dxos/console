@@ -4,14 +4,14 @@
 
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 
 import { FullScreen } from '@dxos/gem-core';
 
-import StatusBar from '../containers/StatusBar';
+import { ConsoleContext } from '../hooks';
+
 import AppBar from './AppBar';
 import Sidebar from './Sidebar';
-import { ConsoleContext } from '../hooks';
+import StatusBar from './StatusBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,9 +56,9 @@ const Layout = ({ children }) => {
           <div className={classes.sidebar}>
             <Sidebar modules={modules} />
           </div>
-          <Paper className={classes.main}>
+          <div className={classes.main}>
             {children}
-          </Paper>
+          </div>
         </div>
         <div className={classes.footer}>
           <StatusBar />

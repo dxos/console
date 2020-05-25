@@ -5,11 +5,14 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import Json from '../components/Json';
+import Json from '../../components/Json';
 
-import { ConsoleContext, useQueryStatusReducer } from '../hooks';
+import SYSTEM_STATUS from '../../../gql/system_status.graphql';
 
-import SYSTEM_STATUS from '../../gql/system_status.graphql';
+import { ConsoleContext, useQueryStatusReducer } from '../../hooks';
+
+import Panel from '../../components/Panel';
+import Toolbar from '../../components/Toolbar';
 
 const Status = () => {
   const { config } = useContext(ConsoleContext);
@@ -19,7 +22,13 @@ const Status = () => {
   }
 
   return (
-    <Json data={data.system_status} />
+    <Panel
+      toolbar={
+        <Toolbar />
+      }
+    >
+      <Json data={data.system_status} />
+    </Panel>
   );
 };
 
