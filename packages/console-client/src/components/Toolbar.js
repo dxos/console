@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS
+// Copyright 2020 DxOS.org
 //
 
 import React from 'react';
@@ -10,18 +10,20 @@ const useStyles = makeStyles(theme => ({
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
+    whiteSpace: 'nowrap',
 
     '& > button': {
-      margin: theme.spacing(0.5),
+      margin: theme.spacing(0.5)
     }
   }
 }));
 
+// TODO(burdon): Tabs.
 const Toolbar = ({ children }) => {
   const classes = useStyles();
 
   return (
-    <MuiToolbar variant="dense" disableGutters className={classes.toolbar}>
+    <MuiToolbar disableGutters className={classes.toolbar}>
       {children}
     </MuiToolbar>
   );

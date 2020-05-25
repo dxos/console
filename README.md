@@ -6,23 +6,31 @@ Apollo GraphQL client and server using express.
 
 ### POC
 
-- [ ] Trigger server-side wire commands (mutation or separate express path?)
+- [ ] Complete WNS functionality
+    - [ ] Logging
+    - [ ] Webpack and dynamic config 
+    - [ ] Routes for services
+    - [ ] Trigger server-side wire commands
+    - [ ] Test on device in production.
+
+- [ ] IPFS
+- [ ] Signal
+- [ ] Apps
+- [ ] Bots
+- [ ] Meta
 
 ### Next
-
-- [ ] Config routes for services (test).
-- [ ] Webpack config (remove dynamic config?)
 
 - [ ] Client/server API abstraction (error handler, etc.)
 - [ ] Port dashboard API calls (resolve config first).
 - [ ] Port dashboard react modules with dummy resolvers.
 
-- [ ] Fix JsonTree (yarn link).
 - [ ] https://github.com/standard/standardx (JSX)
 
 ### Done
 
-- [c] Client resolvers: https://www.apollographql.com/docs/tutorial/local-state/
+- [x] Fix JsonTree (yarn link).
+- [x] Client resolvers: https://www.apollographql.com/docs/tutorial/local-state/
 - [x] Test backend IPFS client request.
 - [x] Hash Router.
 - [x] Layout (with Material UI).

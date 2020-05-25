@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS
+// Copyright 2020 DxOS.org
 //
 
 import clsx from 'clsx';
@@ -86,7 +86,7 @@ const StatusBar = () => {
   };
 
   return (
-    <Toolbar variant="dense" className={classes.root}>
+    <Toolbar className={classes.root}>
       <div className={classes.left}>
         <Link className={classes.link} href={config.app.website} rel="noreferrer" target="_blank">
           <PublicIcon />

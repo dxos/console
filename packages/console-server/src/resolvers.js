@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS
+// Copyright 2020 DxOS.org
 //
 
 import debug from 'debug';
@@ -9,12 +9,13 @@ import { version } from '../package.json';
 
 const log = debug('dxos:console:server:resolvers');
 
-//
-// Resolvers
-//
-
 const timestamp = () => new Date().toUTCString();
 
+/**
+ * Resolvers
+ * https://www.apollographql.com/docs/graphql-tools/resolvers
+ * @param config
+ */
 export const createResolvers = config => ({
   Mutation: {
     //

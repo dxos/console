@@ -1,5 +1,5 @@
 #
-# Copyright 2020 DxOS
+# Copyright 2020 DxOS.org
 #
 
 type JSONResult {
@@ -25,14 +25,16 @@ type Result {
 #
 
 type Query {
-  system_status: Status
-  ipfs_status: JSONResult
-  wns_status: JSONResult
-  wns_log: Log
+  system_status: Status!
+  ipfs_status: JSONResult!
+  wns_status: JSONResult!
+  # TODO(burdon): Import WNS schema!
+  wns_records(type: String): JSONResult!
+  wns_log: Log!
 }
 
 type Mutation {
-  wns_action(command: String!): Result
+  wns_action(command: String!): Result!
 }
 
 schema {

@@ -19,6 +19,36 @@ export const createTheme = (theme) => createMuiTheme({
   props: {
     MuiButtonBase: {
       disableRipple: true
+    },
+    MuiButton: {
+      size: 'small'
+    },
+    MuiFilledInput: {
+      margin: 'dense'
+    },
+    MuiFormControl: {
+      margin: 'dense'
+    },
+    MuiFormHelperText: {
+      margin: 'dense'
+    },
+    MuiIconButton: {
+      size: 'small'
+    },
+    MuiInputBase: {
+      margin: 'dense'
+    },
+    MuiInputLabel: {
+      margin: 'dense'
+    },
+    MuiTable: {
+      size: 'small'
+    },
+    MuiTextField: {
+      margin: 'dense'
+    },
+    MuiToolbar: {
+      variant: 'dense'
     }
   },
 

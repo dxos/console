@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS
+// Copyright 2020 DxOS.org
 //
 
 import React, { useContext } from 'react';
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     flexShrink: 0,
     width: 200,
-    borderRight: `1px solid ${theme.palette.primary.dark}`
+    borderRight: `1px solid ${theme.palette.divider}`
   },
   footer: {
     display: 'flex',

@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS
+// Copyright 2020 DxOS.org
 //
 
 import React from 'react';
@@ -45,7 +45,7 @@ const AppBar = ({ config }) => {
   return (
     <>
       <MuiAppBar position="fixed">
-        <Toolbar variant="dense">
+        <Toolbar>
           <Link href="/">
             <div className={classes.logo}>
               <DxOSIcon />

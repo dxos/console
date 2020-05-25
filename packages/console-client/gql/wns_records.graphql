@@ -1,0 +1,9 @@
+#
+# Copyright 2020 DxOS.org
+#
+
+query ($type: String) {
+  wns_records (type: $type) @client {
+    json
+  }
+}

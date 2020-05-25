@@ -4,9 +4,8 @@
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -28,9 +27,9 @@ const Panel = ({ toolbar, children }) => {
   return (
     <div className={classes.root}>
       {toolbar}
-      <Paper className={classes.container}>
+      <div className={classes.container}>
         {children}
-      </Paper>
+      </div>
     </div>
   );
 };

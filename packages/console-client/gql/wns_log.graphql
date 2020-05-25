@@ -3,7 +3,7 @@
 #
 
 {
-  wns_status @client {
-    json
+  wns_log @client {
+    log
   }
 }

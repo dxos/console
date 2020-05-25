@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS
+// Copyright 2020 DxOS.org
 //
 
 import debug from 'debug';
@@ -17,10 +17,14 @@ import modules from '../modules';
 import Layout from '../components/Layout';
 import ConsoleContextProvider from './ConsoleContextProvider';
 
+import AppRecords from './panels/apps/Apps';
+import Bots from './panels/bots/Bots';
 import Config from './panels/Config';
-import IPFS from './panels/IPFS';
+import IPFS from './panels/ipfs/IPFS';
+import Metadata from './panels/Metadata';
+import Signaling from './panels/Signaling';
 import Status from './panels/Status';
-import WNS from './panels/WNS';
+import WNS from './panels/wns/WNS';
 
 debug.enable(config.system.debug);
 
@@ -34,8 +38,12 @@ const Main = () => {
             <Switch>
               <Route path="/:module">
                 <Layout>
+                  <Route path="/apps" component={AppRecords} />
+                  <Route path="/bots" component={Bots} />
                   <Route path="/config" component={Config} />
                   <Route path="/ipfs" component={IPFS} />
+                  <Route path="/metadata" component={Metadata} />
+                  <Route path="/signaling" component={Signaling} />
                   <Route path="/status" component={Status} />
                   <Route path="/wns" component={WNS} />
                 </Layout>

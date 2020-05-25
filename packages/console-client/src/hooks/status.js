@@ -8,8 +8,12 @@ import { ConsoleContext } from './context';
 
 export const SET_STATUS = 'errors';
 
+/**
+ *
+ */
 export const useStatusReducer = () => {
   const { state, dispatch } = useContext(ConsoleContext);
+
   return [
     state[SET_STATUS] || {},
     value => dispatch({ type: SET_STATUS, payload: value || { exceptions: [] } })
