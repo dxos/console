@@ -52,11 +52,12 @@ export const createResolvers = config => {
       wns_log: async () => {
         log('WNS log...');
 
-        // TODO(burdon): Use Registry API rather than from CLI?
+        const data = await registry.getLogs();
+
         return {
           __typename: 'JSONLog',
           timestamp: timestamp(),
-          log: []
+          log: data
         };
       }
     }
