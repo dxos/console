@@ -18,10 +18,11 @@ import { getServiceUrl } from '../../../util/config';
 
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
+import moment from 'moment';
 
 const AppRecords = () => {
   const { config } = useContext(ConsoleContext);
-  const [sorter, sortBy] = useSorter('id');
+  const [sorter, sortBy] = useSorter('createTime', false);
   const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.pollInterval,
     variables: { type: 'wrn:app' }
@@ -54,20 +55,22 @@ const AppRecords = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell onClick={sortBy('name')}>ID</TableCell>
+          <TableCell onClick={sortBy('name')}>Identifier</TableCell>
           <TableCell onClick={sortBy('version')} size="small">Version</TableCell>
+          <TableCell onClick={sortBy('createTime')} size="small">Created</TableCell>
           <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell>Link</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {records.sort(sorter).map(({ id, name, version, attributes: { displayName, publicUrl } }) => {
+        {records.sort(sorter).map(({ id, name, version, createTime, attributes: { displayName, publicUrl } }) => {
           const link = getAppUrl({ id, name, version, publicUrl });
 
           return (
             <TableRow key={id} size="small">
               <TableCell monospace>{name}</TableCell>
               <TableCell monospace>{version}</TableCell>
+              <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
               <TableCell>{displayName}</TableCell>
               <TableCell monospace>
                 {link && (

@@ -64,7 +64,7 @@ export const WNSRecordType = ({ type = types[0].key, onChanged }) => {
 
 const WNSRecords = ({ type }) => {
   const { config } = useContext(ConsoleContext);
-  const [sorter, sortBy] = useSorter('id');
+  const [sorter, sortBy] = useSorter('createTime', false);
   const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.pollInterval,
     variables: { type }
@@ -81,11 +81,11 @@ const WNSRecords = ({ type }) => {
       <TableHead>
         <TableRow>
           <TableCell onClick={sortBy('type')} size="small">Type</TableCell>
-          <TableCell onClick={sortBy('name')}>ID</TableCell>
+          <TableCell onClick={sortBy('name')}>Identifier</TableCell>
           <TableCell onClick={sortBy('version')} size="small">Version</TableCell>
+          <TableCell onClick={sortBy('createTime')} size="small">Created</TableCell>
           <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('attributes.package')}>Package Hash</TableCell>
-          <TableCell onClick={sortBy('createTime')} size="small">Created</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -95,13 +95,13 @@ const WNSRecords = ({ type }) => {
               <TableCell monospace>{type}</TableCell>
               <TableCell monospace>{name}</TableCell>
               <TableCell monospace>{version}</TableCell>
+              <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
               <TableCell>{displayName}</TableCell>
               <TableCell title={JSON.stringify(pkg)} monospace>
                 {pkg && (
                   <PackageLink config={config} type={type} pkg={pkg} />
                 )}
               </TableCell>
-              <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
             </TableRow>
           ))}
       </TableBody>

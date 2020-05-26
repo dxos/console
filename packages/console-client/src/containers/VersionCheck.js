@@ -45,9 +45,7 @@ const VersionCheck = () => {
         }
       });
 
-      if (latest !== current) {
-        setUpgrade({ current, latest });
-      }
+      setUpgrade({ current, latest: latest !== current ? latest : undefined });
     }
   }, [status, data]);
 

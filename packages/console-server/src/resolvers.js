@@ -35,14 +35,17 @@ export const createResolvers = config => ({
     // System
     //
 
-    system_status: () => ({
-      timestamp: timestamp(),
-      json: JSON.stringify({
-        dxos: {
-          image: '0.0.1'
-        }
-      })
-    }),
+    // TODO(burdon): System calls.
+    system_status: () => {
+      return {
+        timestamp: timestamp(),
+        json: JSON.stringify({
+          dxos: {
+            image: '0.0.1'
+          }
+        })
+      };
+    },
 
     //
     // IPFS

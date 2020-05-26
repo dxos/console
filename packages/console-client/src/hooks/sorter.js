@@ -6,8 +6,8 @@ import get from 'lodash.get';
 import { useState } from 'react';
 
 // TODO(burdon): Enable multiple sort order (e.g., id, version).
-export const useSorter = (initial) => {
-  const [{ sort, ascend }, setSort] = useState({ sort: initial, ascend: true });
+export const useSorter = (initSort, initAscend) => {
+  const [{ sort, ascend }, setSort] = useState({ sort: initSort, ascend: initAscend });
 
   const sorter = (item1, item2) => {
     const a = get(item1, sort);

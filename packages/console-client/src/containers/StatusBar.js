@@ -40,6 +40,14 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     textAlign: 'center'
   },
+  info: {
+    display: 'flex',
+    fontFamily: 'monospace',
+    fontSize: 'large',
+    '& div': {
+      margin: 4
+    }
+  },
   icon: {
     margin: '0 2px'
   },
@@ -54,12 +62,6 @@ const useStyles = makeStyles((theme) => ({
   },
   loading: {
     color: theme.palette.primary.dark
-  },
-  info: {
-    display: 'flex',
-    '& div': {
-      margin: 4
-    }
   }
 }));
 

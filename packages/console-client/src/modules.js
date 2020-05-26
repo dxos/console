@@ -34,8 +34,8 @@ export default {
       icon: BotsIcon
     },
     {
-      path: '/signal',
-      title: 'Signal Server',
+      path: '/signaling',
+      title: 'Signaling',
       icon: SignalIcon
     },
     {
