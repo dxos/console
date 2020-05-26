@@ -16,7 +16,7 @@ import Toolbar from '../../components/Toolbar';
 
 const Status = () => {
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(SYSTEM_STATUS, { pollInterval: config.api.pollInterval }));
+  const data = useQueryStatusReducer(useQuery(SYSTEM_STATUS, { pollInterval: config.api.intervalQuery }));
   if (!data) {
     return null;
   }

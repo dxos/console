@@ -13,7 +13,7 @@ import Log from '../../../components/Log';
 
 const WNSLog = () => {
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(WNS_LOG, { pollInterval: config.api.pollInterval }));
+  const data = useQueryStatusReducer(useQuery(WNS_LOG, { pollInterval: config.api.intervalLog }));
   if (!data) {
     return null;
   }

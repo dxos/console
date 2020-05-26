@@ -6,13 +6,14 @@
 app:
   title: 'Console'
   org': 'DxOS'
-  theme: 'light'
+  theme: 'dark'
   website: 'https://dxos.org'
   publicUrl: '/console'
 
 api:
   path: '/api'
   port: 4000
+  intervalLog: 5000
   pollInterval: 10000
 
 system:

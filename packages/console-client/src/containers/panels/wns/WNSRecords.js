@@ -66,7 +66,7 @@ const WNSRecords = ({ type }) => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('createTime', false);
   const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
-    pollInterval: config.api.pollInterval,
+    pollInterval: config.api.intervalQuery,
     variables: { type }
   }));
 

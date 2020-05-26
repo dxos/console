@@ -11,11 +11,14 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    overflow: 'hidden'
   },
 
   container: {
     display: 'flex',
+    // Pin to bottom (render in time order).
+    flexDirection: 'column-reverse',
     flex: 1,
     overflowX: 'scroll',
     overflowY: 'scroll'
@@ -24,13 +27,13 @@ const useStyles = makeStyles(theme => ({
   log: {
     padding: theme.spacing(1),
     fontSize: 16,
-    // fontFamily: 'monospace',
+    fontFamily: 'monospace',
     whiteSpace: 'nowrap'
   },
 
   level: {
     display: 'inline-block',
-    width: 48,
+    width: 60,
     marginRight: 8,
     color: theme.palette.grey[500]
   },

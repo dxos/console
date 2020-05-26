@@ -52,6 +52,7 @@ export const createResolvers = config => {
       wns_log: async () => {
         log('WNS log...');
 
+        // TODO(burdon): Cache and merge previous state.
         const data = await registry.getLogs();
 
         return {

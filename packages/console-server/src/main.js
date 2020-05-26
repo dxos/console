@@ -47,6 +47,7 @@ const app = express();
 
 const { app: { publicUrl } } = config;
 
+// TODO(burdon): Load via WNS.
 app.get(`${publicUrl}(/:filePath)?`, (req, res) => {
   const { filePath = 'index.html' } = req.params;
   const file = path.join(__dirname, '../../../node_modules/@dxos/console-client/dist/production', filePath);
