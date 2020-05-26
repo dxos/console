@@ -10,11 +10,13 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import config from '../../config.yml';
+import { build } from '../../version.json';
+
 import { createTheme } from '../theme';
 import { clientFactory } from '../client';
 import modules from '../modules';
 
-import Layout from '../components/Layout';
+import Layout from './Layout';
 import ConsoleContextProvider from './ConsoleContextProvider';
 
 import AppRecords from './panels/apps/Apps';
@@ -26,8 +28,14 @@ import Signaling from './panels/Signaling';
 import Status from './panels/Status';
 import WNS from './panels/wns/WNS';
 
+// TODO(burdon): Config object.
+Object.assign(config, { build });
+
 debug.enable(config.system.debug);
 
+/**
+ * Root application.
+ */
 const Main = () => {
   return (
     <ApolloProvider client={clientFactory(config)}>

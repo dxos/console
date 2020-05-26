@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import WNS_RECORDS from '../../../../gql/wns_records.graphql';
 
-import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
+import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -18,6 +18,7 @@ import TableCell from '../../../components/TableCell';
 
 const AppRecords = () => {
   const { config } = useContext(ConsoleContext);
+  const [sorter, sortBy] = useSorter('id');
   const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.pollInterval,
     variables: { type: 'wrn:bot' }
@@ -29,16 +30,14 @@ const AppRecords = () => {
 
   const records = data.wns_records.json;
 
-  // TODO(burdon): Factor out.
-  const sorter = (a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
-
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>Name</TableCell>
-          <TableCell size="small">Version</TableCell>
-          <TableCell>Description</TableCell>
+          <TableCell onClick={sortBy('name')}>ID</TableCell>
+          <TableCell onClick={sortBy('version')} size="small">Version</TableCell>
+          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
+          <TableCell />
         </TableRow>
       </TableHead>
       <TableBody>

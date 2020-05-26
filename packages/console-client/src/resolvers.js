@@ -10,6 +10,8 @@ import { getServiceUrl } from './util/config';
 
 const log = debug('dxos:console:client:resolvers');
 
+const timestamp = () => new Date().toUTCString();
+
 /**
  * Resolvers
  * https://www.apollographql.com/docs/tutorial/local-state/#local-resolvers
@@ -27,6 +29,9 @@ export const createResolvers = config => {
 
         return {
           __typename: 'JSONResult',
+          timestamp: timestamp(),
+
+          // NOTE: Hack since this should be a string according to the schema.
           json: data
         };
       },
@@ -37,6 +42,9 @@ export const createResolvers = config => {
 
         return {
           __typename: 'JSONResult',
+          timestamp: timestamp(),
+
+          // NOTE: Hack since this should be a string according to the schema.
           json: data
         };
       },
@@ -47,6 +55,7 @@ export const createResolvers = config => {
         // TODO(burdon): Use Registry API rather than from CLI?
         return {
           __typename: 'JSONLog',
+          timestamp: timestamp(),
           log: []
         };
       }

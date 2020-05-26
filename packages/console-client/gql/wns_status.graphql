@@ -4,6 +4,7 @@
 
 {
   wns_status @client {
+    timestamp
     json
   }
 }

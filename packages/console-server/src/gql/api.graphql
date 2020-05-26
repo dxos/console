@@ -2,22 +2,20 @@
 # Copyright 2020 DxOS.org
 #
 
-type JSONResult {
-  json: String!
-}
-
-type Log {
-  log: [String]!
-}
-
-type Status {
-  timestamp: String!
-  version: String!
-}
-
 type Result {
   timestamp: String!
   code: Int!
+}
+
+type Log {
+  timestamp: String!
+  log: [String]!
+}
+
+# TODO(burdon): Generic result.
+type JSONResult {
+  timestamp: String!
+  json: String!
 }
 
 #
@@ -25,7 +23,7 @@ type Result {
 #
 
 type Query {
-  system_status: Status!
+  system_status: JSONResult!
   ipfs_status: JSONResult!
   wns_status: JSONResult!
   # TODO(burdon): Import WNS schema!

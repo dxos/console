@@ -15,7 +15,7 @@ import TableBody from '@material-ui/core/TableBody';
 
 import WNS_RECORDS from '../../../../gql/wns_records.graphql';
 
-import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
+import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
@@ -64,7 +64,7 @@ export const WNSRecordType = ({ type = types[0].key, onChanged }) => {
 
 const WNSRecords = ({ type }) => {
   const { config } = useContext(ConsoleContext);
-  const [{ sort, ascend }, setSort] = useState({ sort: 'type', ascend: true });
+  const [sorter, sortBy] = useSorter('id');
   const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.pollInterval,
     variables: { type }
@@ -76,23 +76,14 @@ const WNSRecords = ({ type }) => {
 
   const records = data.wns_records.json;
 
-  // TODO(burdon): Factor out.
-  const sortBy = field => () => setSort({ sort: field, ascend: (field === sort ? !ascend : true) });
-  const sorter = (item1, item2) => {
-    const a = get(item1, sort);
-    const b = get(item2, sort);
-    const dir = ascend ? 1 : -1;
-    return (a < b) ? -1 * dir : (a > b) ? dir : 0;
-  };
-
   return (
     <Table>
       <TableHead>
         <TableRow>
           <TableCell onClick={sortBy('type')} size="small">Type</TableCell>
-          <TableCell onClick={sortBy('name')}>Name</TableCell>
+          <TableCell onClick={sortBy('name')}>ID</TableCell>
           <TableCell onClick={sortBy('version')} size="small">Version</TableCell>
-          <TableCell onClick={sortBy('attributes.displayName')}>Description</TableCell>
+          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('attributes.package')}>Package Hash</TableCell>
           <TableCell onClick={sortBy('createTime')} size="small">Created</TableCell>
         </TableRow>

@@ -3,6 +3,7 @@
 //
 
 import clsx from 'clsx';
+import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
@@ -15,15 +16,16 @@ import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 
-import { version } from '../../package.json';
 import { ConsoleContext, useStatusReducer } from '../hooks';
+
+import VersionCheck from './VersionCheck';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     backgroundColor: grey[900],
     color: grey[400]
   },
@@ -50,16 +52,26 @@ const useStyles = makeStyles((theme) => ({
   running: {
     color: green[500]
   },
-  loading:{
+  loading: {
     color: theme.palette.primary.dark
+  },
+  info: {
+    display: 'flex',
+    '& div': {
+      margin: 4
+    }
   }
 }));
 
+/**
+ * Displays status indicators at the bottom of the page.
+ */
 const StatusBar = () => {
   const classes = useStyles();
   const [{ loading, error }] = useStatusReducer();
   const [isLoading, setLoading] = useState(loading);
   const { config } = useContext(ConsoleContext);
+  const { build: { name, buildDate, version } } = config;
 
   useEffect(() => {
     let t;
@@ -92,7 +104,13 @@ const StatusBar = () => {
           <PublicIcon />
         </Link>
       </div>
-      <div className={classes.center}>(c) {config.app.org} {version}</div>
+
+      <div className={classes.info}>
+        <div>{name} ({version})</div>
+        <div>{moment(buildDate).format('L')}</div>
+        <VersionCheck />
+      </div>
+
       <div className={classes.right}>
         <LoadingIcon className={clsx(classes.icon, isLoading && classes.loading)} />
         <StatusIcon error={error} />

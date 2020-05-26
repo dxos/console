@@ -5,8 +5,6 @@
 import debug from 'debug';
 import IpfsHttpClient from 'ipfs-http-client';
 
-import { version } from '../package.json';
-
 const log = debug('dxos:console:server:resolvers');
 
 const timestamp = () => new Date().toUTCString();
@@ -39,7 +37,11 @@ export const createResolvers = config => ({
 
     system_status: () => ({
       timestamp: timestamp(),
-      version
+      json: JSON.stringify({
+        dxos: {
+          image: '0.0.1'
+        }
+      })
     }),
 
     //

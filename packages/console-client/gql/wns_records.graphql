@@ -4,6 +4,7 @@
 
 query ($type: String) {
   wns_records (type: $type) @client {
+    timestamp
     json
   }
 }

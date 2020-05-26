@@ -5,6 +5,6 @@
 {
   system_status {
     timestamp
-    version
+    json
   }
 }

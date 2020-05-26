@@ -27,7 +27,7 @@ const Status = () => {
         <Toolbar />
       }
     >
-      <Json data={data.system_status} />
+      <Json data={JSON.parse(data.system_status.json)} />
     </Panel>
   );
 };

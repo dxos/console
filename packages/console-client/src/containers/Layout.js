@@ -9,8 +9,8 @@ import { FullScreen } from '@dxos/gem-core';
 
 import { ConsoleContext } from '../hooks';
 
-import AppBar from './AppBar';
-import Sidebar from './Sidebar';
+import AppBar from '../components/AppBar';
+import Sidebar from '../components/Sidebar';
 import StatusBar from './StatusBar';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+/**
+ * Main layout for app.
+ */
 const Layout = ({ children }) => {
   const classes = useStyles();
   const { config, modules } = useContext(ConsoleContext);

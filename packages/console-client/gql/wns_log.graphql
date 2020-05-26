@@ -4,6 +4,7 @@
 
 {
   wns_log @client {
+    timestamp
     log
   }
 }

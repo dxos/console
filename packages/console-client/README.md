@@ -4,13 +4,21 @@ Apollo GraphQL client.
 
 ## Usage
 
+First start the server:
+
 ```bash
-  yarn
+  cd packages/consoe-server
   yarn start
 ```
 
-http://localhost:8080
+Then start the Webpack devserver.
 
+```bash
+  cd packages/consoe-client
+  yarn start
+```
+
+Then load the app: http://localhost:8080.
 
 ## Deploy
 
