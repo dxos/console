@@ -3,9 +3,16 @@
   "version": "1.0.0-beta.0",
   "description": "DxOS Console Client",
   "main": "dist/es/index.js",
+  "files": [
+    "config.yml",
+    "dist/production",
+    "gql"
+  ],
   "scripts": {
     "analyzer": "webpack --config webpack-analyzer.config.js",
-    "build": "npm run clean && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --source-maps inline",
+    "build": "npm run clean && npm run build:module && npm run build:production",
+    "build:module": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --source-maps inline",
+    "build:production": "PUBLIC_URL=/console webpack --mode production",
     "clean": "rm -rf dist",
     "lint": "semistandard 'src/**/*.js'",
     "start": "VERBOSE=true webpack-dev-server --mode development",
@@ -20,13 +27,33 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "@apollo/react-components": "^3.1.5",
     "@apollo/react-hooks": "^3.1.5",
     "@babel/runtime": "^7.8.7",
-    "apollo-boost": "^0.4.9",
+    "@dxos/gem-core": "^1.0.0-beta.11",
+    "@dxos/react-ux": "^1.0.0-beta.20",
+    "@material-ui/core": "^4.10.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.54",
+    "@wirelineio/registry-client": "^0.4.8",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link-http": "^1.5.17",
+    "build-url": "^2.0.0",
+    "clsx": "^1.1.0",
+    "compare-versions": "^3.6.0",
     "debug": "^4.1.1",
     "graphql-tag": "^2.10.3",
+    "lodash.defaultsdeep": "^4.6.1",
+    "lodash.get": "^4.4.2",
+    "lodash.isobject": "^3.0.2",
+    "lodash.omit": "^4.5.0",
+    "lodash.transform": "^4.6.0",
+    "moment": "^2.26.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "source-map-support": "^0.5.12"
   },
   "devDependencies": {
@@ -34,7 +61,7 @@
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.8.7",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-export-default-from": "^7.5.2",
+    "@babel/plugin-proposal-export-default-from": "^7.8.3",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.2",
@@ -43,20 +70,52 @@
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-inline-import": "^3.0.0",
     "dotenv-webpack": "^1.8.0",
+    "eslint": "^6.7.2",
+    "eslint-config-semistandard": "^15.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-config-standard-jsx": "^8.1.0",
+    "eslint-loader": "^3.0.3",
     "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^23.13.1",
-    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-jsdoc": "^21.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-standard": "^4.0.1",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^24.8.0",
+    "react-scripts": "^3.4.1",
     "semistandard": "^14.2.0",
     "webpack": "^4.41.2",
     "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-dev-server": "^3.11.0",
     "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2",
-    "webpack-version-file-plugin": "^0.4.0"
+    "webpack-version-file-plugin": "^0.4.0",
+    "yaml-loader": "^0.6.0"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": [
+      "plugin:jest/recommended",
+      "semistandard",
+      "standard-jsx"
+    ],
+    "plugins": [
+      "babel"
+    ],
+    "rules": {
+      "babel/semi": 1
+    }
+  },
+  "semistandard": {
+    "parser": "babel-eslint",
+    "env": [
+      "jest",
+      "node",
+      "browser"
+    ]
   }
 }

@@ -1,35 +1,38 @@
 //
-// Copyright 2020 DxOS
+// Copyright 2020 DxOS.org
 //
 
 import debug from 'debug';
 import express from 'express';
+import fs from 'fs';
 import path from 'path';
+import yaml from 'js-yaml';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { print } from 'graphql/language';
 
+import SYSTEM_STATUS from '@dxos/console-client/gql/system_status.graphql';
+
+import { createResolvers } from './resolvers';
+
 import SCHEMA from './gql/api.graphql';
-import QUERY_STATUS from './gql/status.graphql';
 
-import config from '../config.json';
-import { version } from '../package.json';
+const config = yaml.safeLoad(
+  fs.readFileSync(path.join(__dirname, '../../../node_modules/@dxos/console-client/config.yml')));
 
-const log = debug('c2:src');
-debug.enable('c2:*');
+const log = debug('dxos:console:server');
 
-// Resolver
-const resolvers = {
-  Query: {
-    status: () => ({
-      version
-    })
-  }
-};
+debug.enable(config.system.debug);
 
-// Server
+//
+// Express server.
+//
+
 const app = express();
 
+//
 // CORS
+//
+
 // import cors from 'cors'
 // https://expressjs.com/en/resources/middleware/cors.html
 // https://www.prisma.io/blog/enabling-cors-for-express-graphql-apollo-server-1ef999bfb38d
@@ -38,17 +41,27 @@ const app = express();
 //   credentials: true
 // }));
 
+//
 // React app
-// TODO(burdon): Create HTML file.
-// TODO(burdon): Load JS.
-app.get('/app', (req,res) =>{
-  res.sendFile(path.join(__dirname + '/../../../node_modules/@dxos/console-client/dist/es/main.js'));
+//
+
+const { app: { publicUrl } } = config;
+
+app.get(`${publicUrl}(/:filePath)?`, (req, res) => {
+  const { filePath = 'index.html' } = req.params;
+  const file = path.join(__dirname, '../../../node_modules/@dxos/console-client/dist/production', filePath);
+  res.sendFile(file);
 });
 
+//
+// Apollo Server
 // https://www.apollographql.com/docs/apollo-server/api/apollo-server
+//
+
 const server = new ApolloServer({
   typeDefs: SCHEMA,
-  resolvers,
+
+  resolvers: createResolvers(config),
 
   // https://www.apollographql.com/docs/apollo-server/testing/graphql-playground
   // https://github.com/prisma-labs/graphql-playground#usage
@@ -59,19 +72,29 @@ const server = new ApolloServer({
     },
     tabs: [
       {
-        endpoint: config.path,
-        query: print(gql(QUERY_STATUS))
+        name: 'Status',
+        endpoint: config.api.path,
+        query: print(gql(SYSTEM_STATUS))
       }
     ]
   }
 });
 
+//
+// Apollo middleware
 // https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserverapplymiddleware
+//
+
 server.applyMiddleware({
   app,
-  path: config.path
+  path: config.api.path
 });
 
-app.listen({ port: config.port }, () => {
-  log(`Running: http://localhost:${config.port}`);
+//
+// Start server
+//
+
+const { api: { port } } = config;
+app.listen({ port }, () => {
+  log(`Running: http://localhost:${port}`);
 });

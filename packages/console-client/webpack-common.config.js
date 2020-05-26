@@ -30,8 +30,9 @@ module.exports = {
     fs: 'empty'
   },
 
+  // TODO(burdon): Config production path for apollo (diff webpack config).
   output: {
-    path: `${__dirname}/dist`,
+    path: `${__dirname}/dist/production`,
     filename: '[name].bundle.js',
     publicPath: PUBLIC_URL
   },
@@ -45,10 +46,8 @@ module.exports = {
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          // name: 'vendor',
-          name(module) {
+          name (module) {
             const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-            // return `vendor-${packageName.replace('@', '')}`;
 
             if (packageName.startsWith('@dxos')) {
               return 'dxos';
@@ -104,11 +103,18 @@ module.exports = {
         }
       },
 
-      // https://www.apollographql.com/docs/react/integrations/webpack/
+      // https://github.com/eemeli/yaml-loader
+      {
+        test: /\.ya?ml$/,
+        type: 'json',
+        use: 'yaml-loader'
+      },
+
+      // https://www.apollographql.com/docs/react/integrations/webpack
       {
         test: /\.(graphql|gql)$/,
         exclude: /node_modules/,
-        loader: 'graphql-tag/loader',
+        loader: 'graphql-tag/loader'
       },
 
       // fonts

@@ -1,0 +1,10 @@
+#
+# Copyright 2020 DxOS.org
+#
+
+{
+  wns_log @client {
+    timestamp
+    log
+  }
+}

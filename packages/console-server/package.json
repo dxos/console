@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "semistandard 'src/**/*.js'",
     "test": "jest --rootDir ./src --passWithNoTests --no-cache",
-    "start": "nodemon --exec babel-node ./src/main.js"
+    "start": "BABEL_DISABLE_CACHE=1 nodemon --exec babel-node ./src/main.js"
   },
   "author": "DxOS.org",
   "license": "GPL-3.0",
@@ -26,6 +26,9 @@
     "express-graphql": "^0.9.0",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
+    "ipfs-http-client": "^44.1.0",
+    "js-yaml": "^3.14.0",
+    "react-dom": "^16.13.1",
     "source-map-support": "^0.5.12"
   },
   "devDependencies": {
@@ -35,17 +38,46 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-export-default-from": "^7.5.2",
     "@babel/preset-env": "^7.4.5",
-    "babel-eslint": "^10.0.2",
+    "babel-eslint": "^10.0.3",
     "babel-jest": "^24.8.0",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-inline-import": "^3.0.0",
+    "eslint": "^6.7.2",
+    "eslint-config-semistandard": "^15.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-loader": "^3.0.3",
     "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^23.13.1",
+    "eslint-plugin-jsdoc": "^21.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.8.0",
     "nodemon": "^2.0.4",
     "semistandard": "^14.2.0"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": [
+      "plugin:jest/recommended",
+      "semistandard"
+    ],
+    "plugins": [
+      "babel"
+    ],
+    "rules": {
+      "babel/semi": 1
+    }
+  },
+  "semistandard": {
+    "parser": "babel-eslint",
+    "env": [
+      "jest",
+      "node",
+      "browser"
+    ]
   }
 }
