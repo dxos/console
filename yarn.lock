@@ -3267,12 +3267,13 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@wirelineio/registry-client@^0.4.8":
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/@wirelineio/registry-client/-/registry-client-0.4.8.tgz#05baf614ed28c25daaa20335359955b0a153a509"
-  integrity sha512-kxf4Zj3dr+q+dW++N2TUAZz7h7LLE/8RU31c7mUEwy9ZbZXXPcAF0voq8985FTCUmSc4Z5t9b77hvpFqFn5lLA==
+"@wirelineio/registry-client@^0.4.9":
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/@wirelineio/registry-client/-/registry-client-0.4.9.tgz#8e0166c67d74d634294076cff73b7cff5cee40d8"
+  integrity sha512-n9oecUGU01+SUvdrB+/1LCbAQT+jiIG3pfZj+JLU4teou17ZxaEcMbzpFamWO2IVXZP0751y6Va42K4IFE7e9w==
   dependencies:
     "@babel/runtime" "^7.0.0"
+    "@wirelineio/wns-schema" "^0.1.0"
     bech32 "^1.1.3"
     bip32 "^2.0.5"
     bip39 "^2.5.0"
@@ -3290,6 +3291,11 @@
     multihashing-async "^0.8.0"
     ripemd160 "^2.0.2"
     secp256k1 "^3.6.2"
+
+"@wirelineio/wns-schema@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@wirelineio/wns-schema/-/wns-schema-0.1.0.tgz#61afc98e0a3e89a5d4ad3ef1d84f50b199224356"
+  integrity sha512-MetSYFR7OS54hR2tGmFnzGeK5vwqJfBI2kZXmYHKcdj5EyJXheMg9XP3LUwVLVgRe7gOCoQqBstAYl1cL1FdHg==
 
 "@wry/context@^0.4.0":
   version "0.4.4"
