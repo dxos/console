@@ -3,16 +3,12 @@
 //
 
 import React, { useState } from 'react';
-import { Mutation } from '@apollo/react-components';
 import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import TabContext from '@material-ui/lab/TabContext';
 
-import WNS_ACTION from '../../../../gql/wns_action.graphql';
-
-import ControlButtons from '../../../components/ControlButtons';
 import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
 
@@ -60,23 +56,6 @@ const WNS = () => {
           {tab === TAB_RECORDS && (
             <WNSRecordType type={type} onChanged={setType} />
           )}
-
-          <div className={classes.expand} />
-
-          <Mutation mutation={WNS_ACTION}>
-            {(action, { data }) => (
-              <div>
-                <ControlButtons
-                  onStart={() => {
-                    action({ variables: { command: 'start' } });
-                  }}
-                  onStop={() => {
-                    action({ variables: { command: 'stop' } });
-                  }}
-                />
-              </div>
-            )}
-          </Mutation>
         </Toolbar>
       }
     >
