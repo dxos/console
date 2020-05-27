@@ -1179,6 +1179,13 @@
   dependencies:
     debug "^4.1.1"
 
+"@dxos/debug@^1.0.0-beta.37":
+  version "1.0.0-beta.37"
+  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.37.tgz#0fc3a1d9d0b2616c5c22da6fcea7c369610ec282"
+  integrity sha512-65jOaqMrjv1Comepqq2U0k9olpAiKtk6pVEnhZHb+FutPMnjIkA+TPedNfTpxWQEs3MpG0IVyj64JugGl2KhQA==
+  dependencies:
+    debug "^4.1.1"
+
 "@dxos/gem-core@^1.0.0-beta.11":
   version "1.0.0-beta.11"
   resolved "https://registry.yarnpkg.com/@dxos/gem-core/-/gem-core-1.0.0-beta.11.tgz#b4b8e82b3cfe7a9dd06fac8596ccf04fa8028e21"
@@ -1194,17 +1201,16 @@
     react-dom "^16.13.1"
     react-resize-aware "^3.0.0"
 
-"@dxos/react-ux@^1.0.0-beta.20":
-  version "1.0.0-beta.20"
-  resolved "https://registry.yarnpkg.com/@dxos/react-ux/-/react-ux-1.0.0-beta.20.tgz#0f0801ae2ddb9089428034cc4b466ee98206a180"
-  integrity sha512-larSB5cNCbyvP55/qan9uzioGXrcbtvrmy+fBRx7eLlsFs/eTgD/zrNMSVtq5mvMAn/oKKCOX1wipxm4gK6fdA==
+"@dxos/react-ux@^1.0.0-beta.37":
+  version "1.0.0-beta.37"
+  resolved "https://registry.yarnpkg.com/@dxos/react-ux/-/react-ux-1.0.0-beta.37.tgz#4a6003ce52f0afa156e0af457162d2d14695f153"
+  integrity sha512-QuRIAc4xY57uHRqRnXwGZEW5VD6NVmpIQWRB1T2XsmRdyIzwWDHgK6pBzd7zeNQI/6nqzHr0fkeRY0Lsqou8Cw==
   dependencies:
     "@dxos/crypto" "^1.0.0-beta.1"
-    "@dxos/debug" "^1.0.0-beta.20"
+    "@dxos/debug" "^1.0.0-beta.37"
     "@material-ui/core" "^4.9.0"
     "@material-ui/icons" "^4.5.1"
     "@material-ui/lab" "^4.0.0-alpha.42"
-    "@material-ui/styles" "^4.9.0"
     clsx "^1.0.4"
     lodash.isplainobject "^4.0.6"
     uuid "^3.3.3"
@@ -2189,7 +2195,7 @@
     prop-types "^15.7.2"
     react-is "^16.8.0"
 
-"@material-ui/styles@^4.10.0", "@material-ui/styles@^4.9.0":
+"@material-ui/styles@^4.10.0":
   version "4.10.0"
   resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.10.0.tgz#2406dc23aa358217aa8cc772e6237bd7f0544071"
   integrity sha512-XPwiVTpd3rlnbfrgtEJ1eJJdFCXZkHxy8TrdieaTvwxNYj42VnnCyFzxYeNW9Lhj4V1oD8YtQ6S5Gie7bZDf7Q==

@@ -4,31 +4,28 @@
 
 import clsx from 'clsx';
 import moment from 'moment';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flex: 1,
-    flexDirection: 'column',
     overflow: 'hidden'
   },
 
-  container: {
+  log: {
     display: 'flex',
     // Pin to bottom (render in time order).
     flexDirection: 'column-reverse',
-    flex: 1,
-    overflowX: 'scroll',
-    overflowY: 'scroll'
-  },
-
-  log: {
+    overflow: 'scroll',
     padding: theme.spacing(1),
-    fontSize: 16,
-    fontFamily: 'monospace',
-    whiteSpace: 'nowrap'
+
+    '& div': {
+      fontSize: 16,
+      fontFamily: 'monospace',
+      whiteSpace: 'nowrap'
+    }
   },
 
   level: {
@@ -50,7 +47,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Log = ({ log = [], onClear }) => {
+const Log = ({ log = [] }) => {
   const classes = useStyles();
 
   const levels = {
@@ -91,11 +88,11 @@ const Log = ({ log = [], onClear }) => {
         const pkg = levels[level] ? '' : `[${level}]: `;
 
         message = (
-          <Fragment>
+          <>
             <span className={classes.ts}>{datetime}</span>
             <span className={clsx(classes.level, className)}>{label || level}</span>
             <span>{pkg}{text}</span>
-          </Fragment>
+          </>
         );
 
         return true;
@@ -111,10 +108,8 @@ const Log = ({ log = [], onClear }) => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.container}>
-        <div className={classes.log}>
-          {log.reverse().map((line, i) => <Line key={i} message={line} />)}
-        </div>
+      <div className={classes.log}>
+        {log.map((line, i) => <Line key={i} message={line} />)}
       </div>
     </div>
   );

@@ -15,6 +15,10 @@ const timestamp = () => new Date().toUTCString();
  * @param config
  */
 export const createResolvers = config => ({
+
+  // TODO(burdon): Auth mutations.
+  // https://www.apollographql.com/docs/apollo-server/data/errors/#codes
+
   Mutation: {
     //
     // WNS

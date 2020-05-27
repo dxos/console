@@ -20,8 +20,8 @@ import WNSLog from './WNSLog';
 import WNSRecords, { WNSRecordType } from './WNSRecords';
 import WNSStatus from './WNSStatus';
 
-const TAB_RECORDS = 'explorer';
-const TAB_STATUS = 'records';
+const TAB_RECORDS = 'records';
+const TAB_STATUS = 'status';
 const TAB_LOG = 'log';
 
 const useStyles = makeStyles(() => ({

@@ -18,6 +18,8 @@ import red from '@material-ui/core/colors/red';
 
 import { ConsoleContext, useStatusReducer } from '../hooks';
 
+import Error from '../components/Error';
+
 import VersionCheck from './VersionCheck';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,17 +32,15 @@ const useStyles = makeStyles((theme) => ({
     color: grey[400]
   },
   left: {
+    display: 'flex',
     width: 160
   },
   right: {
+    display: 'flex',
     width: 160,
-    textAlign: 'right'
+    justifyContent: 'flex-end'
   },
   center: {
-    flex: 1,
-    textAlign: 'center'
-  },
-  info: {
     display: 'flex',
     fontFamily: 'monospace',
     fontSize: 'large',
@@ -90,7 +90,7 @@ const StatusBar = () => {
   const StatusIcon = ({ error }) => {
     if (error) {
       return (
-        <ErrorIcon className={clsx(classes.icon, classes.error)} title={String(error)} />
+        <ErrorIcon className={clsx(classes.icon, classes.error)} />
       );
     } else {
       return (
@@ -100,24 +100,28 @@ const StatusBar = () => {
   };
 
   return (
-    <Toolbar className={classes.root}>
-      <div className={classes.left}>
-        <Link className={classes.link} href={config.app.website} rel="noreferrer" target="_blank">
-          <PublicIcon />
-        </Link>
-      </div>
+    <>
+      <Toolbar className={classes.root}>
+        <div className={classes.left}>
+          <Link className={classes.link} href={config.app.website} rel="noreferrer" target="_blank">
+            <PublicIcon />
+          </Link>
+        </div>
 
-      <div className={classes.info}>
-        <div>{name} ({version})</div>
-        <div>{moment(buildDate).format('L')}</div>
-        <VersionCheck />
-      </div>
+        <div className={classes.center}>
+          <div>{name} ({version})</div>
+          <div>{moment(buildDate).format('L')}</div>
+          <VersionCheck />
+        </div>
 
-      <div className={classes.right}>
-        <LoadingIcon className={clsx(classes.icon, isLoading && classes.loading)} />
-        <StatusIcon error={error} />
-      </div>
-    </Toolbar>
+        <div className={classes.right}>
+          <LoadingIcon className={clsx(classes.icon, isLoading && classes.loading)} />
+          <StatusIcon error={error} />
+        </div>
+      </Toolbar>
+
+      <Error error={error} />
+    </>
   );
 };
 

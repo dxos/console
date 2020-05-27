@@ -2,7 +2,7 @@
 // Copyright 2020 DxOS.org
 //
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
@@ -10,30 +10,37 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles(() => ({
   root: {
-    marginBottom: 60
+    marginBottom: 48
+  },
+
+  alert: {
+    minWidth: 400
   }
 }));
 
-const Error = ({ message, ...rest }) => {
+const Error = ({ error, ...rest }) => {
   const classes = useStyles();
-  if (!message) {
-    return null;
-  }
+  const [message, setMessage] = useState(error);
 
-  const messages = Array.isArray(message) ? message : [message];
+  useEffect(() => {
+    setMessage(error ? error.message || String(error) : null);
+  }, [error]);
+
+  const handleClose = () => {
+    setMessage(null);
+  };
 
   return (
     <Snackbar
-      className={classes.root}
+      classes={{ root: classes.root }}
       open={Boolean(message)}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       TransitionProps={{ exit: false }}
+      autoHideDuration={1000}
     >
-      <Alert severity="error" {...rest}>
+      <Alert classes={{ root: classes.alert }} severity="error" {...rest} onClose={handleClose}>
         <AlertTitle>Error</AlertTitle>
-        {messages.map((message, i) => (
-          <div key={i}>{message}</div>
-        ))}
+        <div>{message}</div>
       </Alert>
     </Snackbar>
   );

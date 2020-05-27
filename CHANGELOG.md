@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- [x] Fixed hook that causes 100x rerendering.
+- [x] Logging.
+- [x] Error handling.
 - [x] Table sorting.
 - [x] Version check.
 - [x] Fix JsonTree (yarn link).
@@ -23,9 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] Monorepo for client/server.
 - [x] Basic React/Apollo component.
 
-## Tasks
-
-### POC
+### Next
 
 - [ ] Webpack and dynamic config 
 - [ ] Complete WNS functionality
@@ -37,8 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] Bots
 - [ ] Signal
 - [ ] Metadata
-
-### Next
 
 - [ ] https://github.com/standard/standardx (JSX)
 - [ ] Client/server API abstraction (error handler, etc.)

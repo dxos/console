@@ -7,7 +7,7 @@ import defaultsDeep from 'lodash.defaultsdeep';
 
 import ErrorBoundary from '../components/ErrorBoundary';
 
-import { ConsoleContext, statusReducer, SET_STATUS } from '../hooks';
+import { ConsoleContext, statusReducer, STATUS, SET_STATUS } from '../hooks';
 
 const defaultState = {};
 
@@ -18,8 +18,7 @@ const defaultState = {};
  * @param {string} action
  */
 const appReducer = (state, action) => ({
-  // TODO(burdon): Key shouldn't be same as action type.
-  [SET_STATUS]: statusReducer(state[SET_STATUS], action)
+  [STATUS]: statusReducer(state[STATUS], action)
 });
 
 /**
@@ -36,8 +35,6 @@ const appReducer = (state, action) => ({
 const ConsoleContextProvider = ({ children, config, modules, initialState = {}, errorHandler }) => {
   const [state, dispatch] = useReducer(appReducer, defaultsDeep({}, initialState, defaultState));
 
-  const { errors: { exceptions = [] } = {} } = state[SET_STATUS] || {};
-
   // Bind the error handler.
   if (errorHandler) {
     useEffect(() => {
@@ -45,7 +42,7 @@ const ConsoleContextProvider = ({ children, config, modules, initialState = {}, 
         dispatch({
           type: SET_STATUS,
           payload: {
-            exceptions: [error, ...exceptions]
+            error
           }
         });
       });

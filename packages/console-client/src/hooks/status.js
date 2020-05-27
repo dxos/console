@@ -2,20 +2,21 @@
 // Copyright 2019 DxOS
 //
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { ConsoleContext } from './context';
 
-export const SET_STATUS = 'errors';
+export const STATUS = 'xxx';
+export const SET_STATUS = 'set.status';
 
 /**
- *
+ * Dispatcher for app status.
  */
 export const useStatusReducer = () => {
   const { state, dispatch } = useContext(ConsoleContext);
 
   return [
-    state[SET_STATUS] || {},
+    state[STATUS] || {},
     value => dispatch({ type: SET_STATUS, payload: value || { exceptions: [] } })
   ];
 };
@@ -26,13 +27,15 @@ export const useStatusReducer = () => {
 export const useQueryStatusReducer = ({ loading, error, data }) => {
   const [, setStatus] = useStatusReducer();
 
-  if (loading) {
-    setTimeout(() => setStatus({ loading }));
-  }
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => setStatus({ loading }));
+    }
 
-  if (error) {
-    setTimeout(() => setStatus({ error }));
-  }
+    if (error) {
+      setTimeout(() => setStatus({ error }));
+    }
+  }, [loading, error]);
 
   return data;
 };

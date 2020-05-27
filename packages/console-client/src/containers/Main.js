@@ -9,6 +9,8 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+import { ErrorHandler } from '@dxos/debug';
+
 import config from '../../config.yml';
 import { build } from '../../version.json';
 
@@ -33,13 +35,16 @@ Object.assign(config, { build });
 
 debug.enable(config.system.debug);
 
+// Global error handler.
+const errorHandler = new ErrorHandler();
+
 /**
  * Root application.
  */
 const Main = () => {
   return (
     <ApolloProvider client={clientFactory(config)}>
-      <ConsoleContextProvider config={config} modules={modules}>
+      <ConsoleContextProvider config={config} modules={modules} errorHandler={errorHandler}>
         <ThemeProvider theme={createTheme(config.app.theme)}>
           <CssBaseline />
           <HashRouter>
