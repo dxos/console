@@ -35,7 +35,7 @@ const VersionCheck = () => {
   // Check version.
   useEffect(() => {
     if (status && data) {
-      const { dxos: { image: current } } = JSON.parse(status.system_status.json);
+      const { dxos: { image: current } } = status.system_status;
       let latest = current;
       data.wns_records.json.forEach(({ attributes: { name, version } }) => {
         // TODO(burdon): Filter by type (WRN?)

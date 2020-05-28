@@ -2,7 +2,9 @@
 // Copyright 2020 DxOS.org
 //
 
+import compression from 'compression';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import debug from 'debug';
 import express from 'express';
 import mustache from 'mustache-express';
@@ -12,11 +14,15 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { print } from 'graphql/language';
 import yargs from 'yargs';
 
-import SYSTEM_STATUS from '@dxos/console-client/src/gql/system_status.graphql';
+// TODO(burdon): Use once published by @ashwinp.
+// import { extensions as WNS_EXTENSIONS, schema as WNS_SCHEMA } from '@wirelineio/wns-schema';
 
-import { createResolvers } from './resolvers';
+import SYSTEM_STATUS from '@dxos/console-app/src/gql/system_status.graphql';
 
-import SCHEMA from '../gql/api.graphql';
+import { resolvers } from '../resolvers';
+
+import API_SCHEMA from '../gql/api.graphql';
+import SYSTEM_SCHEMA from '../gql/system.graphql';
 
 const argv = yargs
   .option('config', {
@@ -53,16 +59,19 @@ if (argv.verbose) {
 // Express server.
 //
 
+const { app: { publicUrl } } = config;
+
 const app = express();
 
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'mustache');
 app.engine('mustache', mustache());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(compression());
 
-// TODO(burdon): Add react, webpack deps
-
-// TODO(burdon): app.use(compression());
+app.get('/', (req, res) => {
+  res.redirect(publicUrl);
+});
 
 //
 // CORS
@@ -71,17 +80,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // import cors from 'cors'
 // https://expressjs.com/en/resources/middleware/cors.html
 // https://www.prisma.io/blog/enabling-cors-for-express-graphql-apollo-server-1ef999bfb38d
-// app.use(cors({
-//   origin: true,
-//   credentials: true
-// }));
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 
 //
 // React app
 // TODO(burdon): Can we load this via WNS?
 //
-
-const { app: { publicUrl } } = config;
 
 const bundles = [
   'runtime', 'vendor', 'material-ui', 'dxos', 'main'
@@ -105,9 +112,23 @@ app.get(publicUrl, (req, res) => {
 //
 
 const server = new ApolloServer({
-  typeDefs: SCHEMA,
+  typeDefs: [
+    API_SCHEMA,
+    SYSTEM_SCHEMA
+    // WNS_EXTENSIONS,
+    // WNS_SCHEMA
+  ],
 
-  resolvers: createResolvers(config),
+  // https://www.apollographql.com/docs/graphql-tools/resolvers
+  resolvers,
+
+  // https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument
+  context: ({ req }) => ({
+    config,
+
+    // TODO(burdon): Auth.
+    authToken: req.headers.authorization
+  }),
 
   // https://www.apollographql.com/docs/apollo-server/testing/graphql-playground
   // https://github.com/prisma-labs/graphql-playground#usage

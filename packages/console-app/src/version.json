@@ -1,6 +1,6 @@
 {
   "build": {
-    "name":      "@dxos/console-client",
+    "name":      "@dxos/console-app",
     "buildDate": "2020-05-27T22:04:52.661Z",
     "version":   "1.0.0-beta.0"
   }

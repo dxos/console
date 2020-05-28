@@ -5,6 +5,17 @@
 query {
   system_status {
     timestamp
-    json
+    dxos {
+      image
+    }
+    system {
+      network {
+        address
+      }
+      nodejs {
+        version
+        environment
+      }
+    }
   }
 }

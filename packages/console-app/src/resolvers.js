@@ -59,19 +59,15 @@ export const createResolvers = config => {
       wns_log: async () => {
         log('WNS log...');
 
-        const data = await registry.getLogs();
-
-        // TODO(burdon): Bug returns blank line at end.
-        const filtered = data.map(line => line).filter(Boolean);
-
         // Cache and merge previous state.
-        let i = filtered.findIndex(line => line === cachedLog[cachedLog.length - 1]);
+        const data = await registry.getLogs();
+        let i = data.findIndex(line => line === cachedLog[cachedLog.length - 1]);
         if (i === -1) {
-          cachedLog = filtered;
+          cachedLog = data;
         } else {
           i++;
-          for (; i < filtered.length - 1; i++) {
-            cachedLog.push(filtered[i]);
+          for (; i < data.length - 1; i++) {
+            cachedLog.push(data[i]);
           }
 
           // Trim.

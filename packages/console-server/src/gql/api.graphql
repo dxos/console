@@ -2,6 +2,12 @@
 # Copyright 2020 DxOS.org
 #
 
+# TODO(burdon): Replace generic results with schema.
+type JSONResult {
+  timestamp: String!
+  json: String!
+}
+
 type Result {
   timestamp: String!
   code: Int!
@@ -12,27 +18,20 @@ type Log {
   log: [String]!
 }
 
-# TODO(burdon): Generic result.
-type JSONResult {
-  timestamp: String!
-  json: String!
-}
-
 #
 # Schema
 #
 
-type Query {
-  system_status: JSONResult!
-  ipfs_status: JSONResult!
-  wns_status: JSONResult!
-  # TODO(burdon): Import WNS schema!
-  wns_records(type: String): JSONResult!
-  wns_log: Log!
+type Mutation {
+  action(command: String!): Result!
 }
 
-type Mutation {
-  wns_action(command: String!): Result!
+type Query {
+  system_status: SystemStatus!
+  ipfs_status: JSONResult!
+  wns_status: JSONResult!
+  wns_records(type: String): JSONResult!
+  wns_log: Log!
 }
 
 schema {
