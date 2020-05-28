@@ -8,15 +8,6 @@ module.exports = {
     '@babel/preset-react'
   ],
   plugins: [
-    [
-      'babel-plugin-inline-import', {
-        extensions: [
-          '.mustache',
-          '.graphql'
-        ]
-      }
-    ],
-
     // Allows export of components importing GQL files (without webpack).
     'import-graphql',
     'inline-json-import',

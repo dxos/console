@@ -1,9 +1,0 @@
-#
-# Copyright 2020 DxOS.org
-#
-
-{
-  ipfs_status {
-    json
-  }
-}
