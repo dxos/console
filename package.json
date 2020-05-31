@@ -42,7 +42,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-standard": "^4.0.1",
     "lint-staged": "^9.5.0",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.2.2",
+    "webpack-cli": "^3.3.11"
   },
   "eslintConfig": {
     "parser": "babel-eslint",

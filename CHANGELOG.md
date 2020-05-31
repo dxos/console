@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### ISSUES
+- 05/31/20: https://github.com/webpack/webpack-cli/issues/1602 (webpack-cli issue with monorepos)
+
 ### Added
 
 - [x] Fixed hook that causes 100x rerendering.

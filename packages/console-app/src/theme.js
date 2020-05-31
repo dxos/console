@@ -8,6 +8,9 @@ import orange from '@material-ui/core/colors/orange';
 
 export const createTheme = (theme) => createMuiTheme({
 
+  // https://material-ui.com/system/shadows
+  shadows: ['none'],
+
   // https://stackoverflow.com/questions/60567673/reactjs-material-ui-theme-mixins-toolbar-offset-is-not-adapting-when-toolbar
   mixins: {
     denseToolbar: {
