@@ -72,8 +72,7 @@ module.exports = {
 
     // NOTE: Must be defined below Dotenv (otherwise will override).
     // https://webpack.js.org/plugins/environment-plugin
-    new webpack.EnvironmentPlugin({
-    }),
+    // new webpack.EnvironmentPlugin({}),
 
     // Define the build config file based on the target.
     // https://webpack.js.org/plugins/normal-module-replacement-plugin
