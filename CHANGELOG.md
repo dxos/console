@@ -8,10 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### ISSUES
-
-- 05/31/20: `webpack-cli` bug: https://github.com/webpack/webpack-dev-server/issues/2424
-    - workaround: added "nohoist" to root package.json
-    
+- 05/31/20: https://github.com/webpack/webpack-cli/issues/1602 (webpack-cli issue with monorepos)
 
 ### Added
 
