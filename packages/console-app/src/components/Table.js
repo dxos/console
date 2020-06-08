@@ -31,7 +31,7 @@ const Table = ({ children }) => {
 
   return (
     <TableContainer className={classes.root}>
-      <MuiTable stickyHeader size="small" className={classes.table}>
+      <MuiTable stickyHeader size='small' className={classes.table}>
         {children}
       </MuiTable>
     </TableContainer>

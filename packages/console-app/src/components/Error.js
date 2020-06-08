@@ -38,7 +38,7 @@ const Error = ({ error, ...rest }) => {
       TransitionProps={{ exit: false }}
       autoHideDuration={1000}
     >
-      <Alert classes={{ root: classes.alert }} severity="error" {...rest} onClose={handleClose}>
+      <Alert classes={{ root: classes.alert }} severity='error' {...rest} onClose={handleClose}>
         <AlertTitle>Error</AlertTitle>
         <div>{message}</div>
       </Alert>

@@ -13,7 +13,7 @@ export const omitDeep = (value, key) => {
       }
 
       return Object.assign({
-        [k]: omitDeep(value[k], key),
+        [k]: omitDeep(value[k], key)
       }, newObject);
     }, {});
   }

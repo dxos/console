@@ -44,23 +44,23 @@ const AppBar = ({ config }) => {
 
   return (
     <>
-      <MuiAppBar position="fixed">
+      <MuiAppBar position='fixed'>
         <Toolbar>
-          <Link href="/">
+          <Link href='/'>
             <div className={classes.logo}>
               <DxOSIcon />
             </div>
           </Link>
           <div className={classes.title}>
-            <Typography variant="h6">{config.app.title}</Typography>
+            <Typography variant='h6'>{config.app.title}</Typography>
           </div>
           <div>
             <Link
               className={classes.link}
               href={graphqlApi(config)}
-              rel="noreferrer"
-              target="_blank"
-              title="Console GraphQL"
+              rel='noreferrer'
+              target='_blank'
+              title='Console GraphQL'
             >
               <GraphQLIcon />
             </Link>

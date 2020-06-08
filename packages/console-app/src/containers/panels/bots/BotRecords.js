@@ -36,8 +36,8 @@ const AppRecords = () => {
       <TableHead>
         <TableRow>
           <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell onClick={sortBy('version')} size="small">Version</TableCell>
-          <TableCell onClick={sortBy('createTime')} size="small">Created</TableCell>
+          <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
+          <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
           <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell />
         </TableRow>
@@ -45,7 +45,7 @@ const AppRecords = () => {
       <TableBody>
         {records.sort(sorter).map(({ id, name, version, createTime, attributes: { displayName } }) => {
           return (
-            <TableRow key={id} size="small">
+            <TableRow key={id} size='small'>
               <TableCell monospace>{name}</TableCell>
               <TableCell monospace>{version}</TableCell>
               <TableCell>{moment.utc(createTime).fromNow()}</TableCell>

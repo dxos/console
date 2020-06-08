@@ -13,8 +13,7 @@ const Signal = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-    </div>
+    <div className={classes.root} />
   );
 };
 

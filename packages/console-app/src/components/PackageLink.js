@@ -17,7 +17,7 @@ const PackageLink = ({ config, type, pkg }) => {
   // TODO(burdon): Pass in expected arg types.
   if (typeof pkg === 'string') {
     const ipfsUrl = getServiceUrl(config, 'ipfs.gateway', { path: `${pkg}` });
-    return <Link href={ipfsUrl} target="ipfs">{pkg}</Link>;
+    return <Link href={ipfsUrl} target='ipfs'>{pkg}</Link>;
   }
 
   // eslint-disable-next-line default-case
@@ -34,7 +34,7 @@ const PackageLink = ({ config, type, pkg }) => {
               key={`${cid}`}
               href={ipfsUrl}
               title={cid}
-              target="ipfs"
+              target='ipfs'
             >
               {platform}/{arch}: {cid}
             </Link>

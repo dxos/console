@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Apps = () => {
+  // eslint-disable-next-line
   const classes = useStyles();
   const [tab, setTab] = useState(TAB_RECORDS);
 
@@ -27,7 +28,7 @@ const Apps = () => {
       toolbar={
         <Toolbar>
           <Tabs value={tab} onChange={(_, value) => setTab(value)}>
-            <Tab value={TAB_RECORDS} label="Records" />
+            <Tab value={TAB_RECORDS} label='Records' />
           </Tabs>
         </Toolbar>
       }

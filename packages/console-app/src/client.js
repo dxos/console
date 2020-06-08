@@ -22,7 +22,6 @@ export const graphqlApi = config => {
  * @returns {ApolloClient}
  */
 export const clientFactory = config => {
-
   // https://www.apollographql.com/docs/link/
   const link = createHttpLink({
     uri: graphqlApi(config),

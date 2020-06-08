@@ -51,9 +51,9 @@ const Log = ({ log = [] }) => {
   const classes = useStyles();
 
   const levels = {
-    'I': { label: 'INFO', className: classes.level_info },
-    'W': { label: 'WARN', className: classes.level_warn },
-    'E': { label: 'ERROR', className: classes.level_error }
+    I: { label: 'INFO', className: classes.level_info },
+    W: { label: 'WARN', className: classes.level_warn },
+    E: { label: 'ERROR', className: classes.level_error }
   };
 
   // TODO(burdon): Parse in backend and normalize numbers.
@@ -84,7 +84,7 @@ const Log = ({ log = [] }) => {
         const datetime = transform(rest).format('YYYY-MM-DD HH:mm:ss');
         const text = match[match.length - 1];
 
-        const { label, className } = levels[level] || levels['I'];
+        const { label, className } = levels[level] || levels.I;
         const pkg = levels[level] ? '' : `[${level}]: `;
 
         message = (

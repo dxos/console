@@ -44,19 +44,19 @@ const Main = ({ config }) => {
           <CssBaseline />
           <HashRouter>
             <Switch>
-              <Route path="/:module">
+              <Route path='/:module'>
                 <Layout>
-                  <Route path="/apps" component={AppRecords} />
-                  <Route path="/bots" component={Bots} />
-                  <Route path="/config" component={Config} />
-                  <Route path="/ipfs" component={IPFS} />
-                  <Route path="/metadata" component={Metadata} />
-                  <Route path="/signaling" component={Signaling} />
-                  <Route path="/status" component={Status} />
-                  <Route path="/wns" component={WNS} />
+                  <Route path='/apps' component={AppRecords} />
+                  <Route path='/bots' component={Bots} />
+                  <Route path='/config' component={Config} />
+                  <Route path='/ipfs' component={IPFS} />
+                  <Route path='/metadata' component={Metadata} />
+                  <Route path='/signaling' component={Signaling} />
+                  <Route path='/status' component={Status} />
+                  <Route path='/wns' component={WNS} />
                 </Layout>
               </Route>
-              <Redirect to="/status" />
+              <Redirect to='/status' />
             </Switch>
           </HashRouter>
         </ThemeProvider>

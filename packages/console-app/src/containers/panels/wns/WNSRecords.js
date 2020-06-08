@@ -2,9 +2,8 @@
 // Copyright 2020 DxOS.org
 //
 
-import get from 'lodash.get';
 import moment from 'moment';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -45,10 +44,10 @@ export const WNSRecordType = ({ type = types[0].key, onChanged }) => {
     <ButtonGroup
       disableRipple
       disableFocusRipple
-      variant="outlined"
-      color="primary"
-      size="small"
-      aria-label="text primary button group"
+      variant='outlined'
+      color='primary'
+      size='small'
+      aria-label='text primary button group'
     >
       {types.map(t => (
         <Button
@@ -81,10 +80,10 @@ const WNSRecords = ({ type }) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell onClick={sortBy('type')} size="small">Type</TableCell>
+          <TableCell onClick={sortBy('type')} size='small'>Type</TableCell>
           <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell onClick={sortBy('version')} size="small">Version</TableCell>
-          <TableCell onClick={sortBy('createTime')} size="small">Created</TableCell>
+          <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
+          <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
           <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('attributes.package')}>Package Hash</TableCell>
         </TableRow>
@@ -92,7 +91,7 @@ const WNSRecords = ({ type }) => {
       <TableBody>
         {records.sort(sorter)
           .map(({ id, type, name, version, createTime, attributes: { displayName, package: pkg } }) => (
-            <TableRow key={id} size="small">
+            <TableRow key={id} size='small'>
               <TableCell monospace>{type}</TableCell>
               <TableCell monospace>{name}</TableCell>
               <TableCell monospace>{version}</TableCell>

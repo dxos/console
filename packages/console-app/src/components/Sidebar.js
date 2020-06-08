@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
     // backgroundColor: theme.palette.grey[100]
   },
 
@@ -42,7 +42,7 @@ const Sidebar = ({ modules: { services, settings } }) => {
   const isSelected = path => path === `/${module}`;
 
   const Modules = ({ modules }) => (
-    <List aria-label="items" className={classes.list}>
+    <List aria-label='items' className={classes.list}>
       {modules.map(({ path, title, icon: Icon }) => (
         <ListItem button selected={isSelected(path)} key={path} onClick={() => history.push(path)}>
           <ListItemIcon classes={{ root: classes.icon }}>

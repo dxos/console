@@ -12,19 +12,19 @@ const ControlButtons = ({ onStart, onStop, onOpen }) => {
   return (
     <div>
       {onStart && (
-        <IconButton onClick={onStart} title="Restart">
+        <IconButton onClick={onStart} title='Restart'>
           <StartIcon />
         </IconButton>
       )}
 
       {onStop && (
-        <IconButton onClick={onStop} title="Stop">
+        <IconButton onClick={onStop} title='Stop'>
           <StopIcon />
         </IconButton>
       )}
 
       {onOpen && (
-        <IconButton onClick={onOpen} title="Open console">
+        <IconButton onClick={onOpen} title='Open console'>
           <OpenIcon />
         </IconButton>
       )}

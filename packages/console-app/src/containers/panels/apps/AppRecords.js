@@ -56,8 +56,8 @@ const AppRecords = () => {
       <TableHead>
         <TableRow>
           <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell onClick={sortBy('version')} size="small">Version</TableCell>
-          <TableCell onClick={sortBy('createTime')} size="small">Created</TableCell>
+          <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
+          <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
           <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell>Link</TableCell>
         </TableRow>
@@ -67,7 +67,7 @@ const AppRecords = () => {
           const link = getAppUrl({ id, name, version, publicUrl });
 
           return (
-            <TableRow key={id} size="small">
+            <TableRow key={id} size='small'>
               <TableCell monospace>{name}</TableCell>
               <TableCell monospace>{version}</TableCell>
               <TableCell>{moment.utc(createTime).fromNow()}</TableCell>

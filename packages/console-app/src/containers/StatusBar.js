@@ -103,7 +103,7 @@ const StatusBar = () => {
     <>
       <Toolbar className={classes.root}>
         <div className={classes.left}>
-          <Link className={classes.link} href={config.app.website} rel="noreferrer" target="_blank">
+          <Link className={classes.link} href={config.app.website} rel='noreferrer' target='_blank'>
             <PublicIcon />
           </Link>
         </div>
