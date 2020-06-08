@@ -3,29 +3,30 @@
 //
 
 import React, { useContext } from 'react';
+import moment from 'moment';
 
 import { useQuery } from '@apollo/react-hooks';
 import Link from '@material-ui/core/Link';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
-import moment from 'moment';
+
+import IPFS_STATUS from '../../../gql/ipfs_status.graphql';
+import WNS_RECORDS from '../../../gql/wns_records.graphql';
+
+import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 
 import { BooleanIcon } from '../../../components/BooleanIcon';
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
-import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 import { getServiceUrl } from '../../../util/config';
-
-import IPFS_STATUS from '../../../gql/ipfs_status.graphql';
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
 
 const AppRecords = () => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('createTime', false);
   const appResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { type: 'wrn:app' }
+    variables: { attributes: { type: 'wrn:app' } }
   }));
 
   // TODO(telackey): Does this also need an interval?
@@ -35,7 +36,7 @@ const AppRecords = () => {
     return null;
   }
 
-  const appData = appResponse.wns_records.json;
+  const appData = JSON.parse(appResponse.wns_records.json);
   const ipfsData = JSON.parse(ipfsResponse.ipfs_status.json);
 
   const localRefs = new Set(ipfsData.refs.local);

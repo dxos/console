@@ -43,16 +43,17 @@ export const createResolvers = config => {
         };
       },
 
-      wns_records: async (_, { type }) => {
+      wns_records: async (_, { attributes }) => {
+        console.error(attributes);
         log('WNS records...');
-        const data = await registry.queryRecords({ type });
+        const data = await registry.queryRecords(attributes);
 
         return {
           __typename: 'JSONResult',
           timestamp: timestamp(),
 
           // NOTE: Hack since this should be a string according to the schema.
-          json: data
+          json: JSON.stringify(data)
         };
       },
 

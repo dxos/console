@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 export const BooleanIcon = ({ yes = false, error = false }) => {
   const classes = useStyles();
   return (yes
-          ? <YesIcon className={classes.on} />
-          : <NoIcon className={error ? classes.error : classes.off} />
+    ? <YesIcon className={classes.on} />
+    : <NoIcon className={error ? classes.error : classes.off} />
   );
 };
