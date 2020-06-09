@@ -14,7 +14,7 @@ First start the server:
 Then start the Webpack devserver.
 
 ```bash
-  cd packages/consoe-app
+  cd packages/console-app
   yarn start
 ```
 

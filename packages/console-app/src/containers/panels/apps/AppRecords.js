@@ -3,36 +3,43 @@
 //
 
 import React, { useContext } from 'react';
+import moment from 'moment';
+
 import { useQuery } from '@apollo/react-hooks';
-
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
-
-import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
-
 import Link from '@material-ui/core/Link';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 
-import { getServiceUrl } from '../../../util/config';
+import IPFS_STATUS from '../../../gql/ipfs_status.graphql';
+import WNS_RECORDS from '../../../gql/wns_records.graphql';
 
+import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
+
+import { BooleanIcon } from '../../../components/BooleanIcon';
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
-import moment from 'moment';
+import { getServiceUrl } from '../../../util/config';
 
 const AppRecords = () => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('createTime', false);
-  const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const appResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { type: 'wrn:app' }
+    variables: { attributes: { type: 'wrn:app' } }
   }));
 
-  if (!data) {
+  // TODO(telackey): Does this also need an interval?
+  const ipfsResponse = useQueryStatusReducer(useQuery(IPFS_STATUS));
+
+  if (!appResponse || !ipfsResponse) {
     return null;
   }
 
-  const records = data.wns_records.json;
+  const appData = JSON.parse(appResponse.wns_records.json);
+  const ipfsData = JSON.parse(ipfsResponse.ipfs_status.json);
+
+  const localRefs = new Set(ipfsData.refs.local);
 
   // TODO(burdon): Test if app is deployed.
   const getAppUrl = ({ name, version }) => {
@@ -47,8 +54,12 @@ const AppRecords = () => {
       pathComponents.push(config.services.app.prefix.substring(1));
     }
 
-    pathComponents.push(`${name}@${version}`);
-    return pathComponents.join('/');
+    if (version) {
+      pathComponents.push(`${name}@${version}`);
+    } else {
+      pathComponents.push(name);
+    }
+    return `${pathComponents.join('/')}/`;
   };
 
   return (
@@ -56,26 +67,29 @@ const AppRecords = () => {
       <TableHead>
         <TableRow>
           <TableCell onClick={sortBy('name')}>Identifier</TableCell>
+          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
-          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
-          <TableCell>Link</TableCell>
+          <TableCell size='small'>Downloaded</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {records.sort(sorter).map(({ id, name, version, createTime, attributes: { displayName, publicUrl } }) => {
-          const link = getAppUrl({ id, name, version, publicUrl });
+        {appData.sort(sorter).map(({ id, name, version, createTime, attributes: { displayName, publicUrl, package: hash } }) => {
+          const verLink = getAppUrl({ id, name, version, publicUrl });
+          const appLink = getAppUrl({ id, name, publicUrl });
 
           return (
             <TableRow key={id} size='small'>
-              <TableCell monospace>{name}</TableCell>
-              <TableCell monospace>{version}</TableCell>
-              <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
+              <TableCell monospace>
+                <Link href={appLink} target={name}>{name}</Link>
+              </TableCell>
               <TableCell>{displayName}</TableCell>
               <TableCell monospace>
-                {link && (
-                  <Link href={link} target={name}>{link}</Link>
-                )}
+                <Link href={verLink} target={version}>{version}</Link>
+              </TableCell>
+              <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
+              <TableCell>
+                <BooleanIcon yes={localRefs && localRefs.has(hash)} />
               </TableCell>
             </TableRow>
           );

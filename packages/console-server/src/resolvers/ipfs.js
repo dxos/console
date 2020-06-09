@@ -21,14 +21,36 @@ export const ipfsResolvers = {
       // NOTE: Hangs if server not running.
       const ipfs = new IpfsHttpClient(config.services.ipfs.server);
 
+      const id = await ipfs.id();
       const version = await ipfs.version();
-      const status = await ipfs.id();
+      const peers = await ipfs.swarm.peers();
+      const stats = await ipfs.stats.repo();
+      // Do not expose the repo path.
+      delete stats.repoPath;
+
+      const refs = [];
+      for await (const ref of ipfs.refs.local()) {
+        if (ref.err) {
+          log(ref.err);
+        } else {
+          refs.push(ref.ref);
+        }
+      }
 
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify({
+          id,
           version,
-          status
+          repo: {
+            stats
+          },
+          refs: {
+            local: refs
+          },
+          swarm: {
+            peers
+          }
         })
       };
     }

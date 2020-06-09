@@ -2,8 +2,10 @@
 # Copyright 2020 DxOS.org
 #
 
-query ($type: String) {
-  wns_records (type: $type) @client {
+# TODO(telackey): Object would probably not be legal in general, but does work for a '@client' resolved query.
+# When we do strong typing across the board we should replace it with something like KeyValueInput.
+query ($attributes: Object) {
+  wns_records (attributes: $attributes) @client {
     timestamp
     json
   }

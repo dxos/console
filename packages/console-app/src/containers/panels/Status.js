@@ -16,10 +16,12 @@ import Toolbar from '../../components/Toolbar';
 
 const Status = () => {
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(SYSTEM_STATUS, { pollInterval: config.api.intervalQuery }));
-  if (!data) {
+  const systemResponse = useQueryStatusReducer(useQuery(SYSTEM_STATUS, { pollInterval: config.api.intervalQuery }));
+  if (!systemResponse) {
     return null;
   }
+
+  const data = JSON.parse(systemResponse.system_status.json);
 
   return (
     <Panel
@@ -27,7 +29,7 @@ const Status = () => {
         <Toolbar />
       }
     >
-      <Json data={data.system_status} />
+      <Json data={data} />
     </Panel>
   );
 };

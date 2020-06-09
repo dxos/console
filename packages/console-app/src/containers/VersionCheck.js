@@ -26,18 +26,22 @@ const useStyles = makeStyles(theme => ({
 const VersionCheck = () => {
   const classes = useStyles();
   const [{ current, latest }, setUpgrade] = useState({});
-  const status = useQueryStatusReducer(useQuery(SYSTEM_STATUS));
-  const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const statusRespone = useQueryStatusReducer(useQuery(SYSTEM_STATUS));
+  const wnsResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: CHECK_INTERVAL,
-    variables: { type: 'wrn:resource' }
+    variables: { attributes: { type: 'wrn:resource' } }
   }));
 
   // Check version.
   useEffect(() => {
-    if (status && data) {
-      const { dxos: { image: current } } = status.system_status;
+    if (statusRespone && wnsResponse) {
+      const statusData = JSON.parse(statusRespone.system_status.json);
+      const wnsData = JSON.parse(wnsResponse.wns_records.json);
+
+      const { dxos: { image: current = '0.0.0' } = {} } = statusData;
+
       let latest = current;
-      data.wns_records.json.forEach(({ attributes: { name, version } }) => {
+      wnsData.forEach(({ attributes: { name, version } }) => {
         // TODO(burdon): Filter by type (WRN?)
         if (name.startsWith('dxos/xbox:')) {
           if (compareVersions(version, latest) > 0) {
@@ -48,7 +52,7 @@ const VersionCheck = () => {
 
       setUpgrade({ current, latest: latest !== current ? latest : undefined });
     }
-  }, [status, data]);
+  }, [status, wnsResponse]);
 
   // TODO(burdon): Link to Github page with upgrade info.
   return (
