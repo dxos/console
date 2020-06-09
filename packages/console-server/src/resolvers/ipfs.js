@@ -26,7 +26,7 @@ export const ipfsResolvers = {
       const peers = await ipfs.swarm.peers();
       const stats = await ipfs.stats.repo();
       // Do not expose the repo path.
-      delete stats['repoPath'];
+      delete stats.repoPath;
 
       const refs = [];
       for await (const ref of ipfs.refs.local()) {

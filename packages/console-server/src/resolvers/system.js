@@ -31,7 +31,7 @@ const getSystemInfo = async () => {
   const addresses = Object.entries(ifaces).reduce((result, [, values]) => {
     values.forEach(({ family, address }) => {
       address = address.toLowerCase();
-      //TODO(telackey): Include link-local IPv6?
+      // TODO(telackey): Include link-local IPv6?
       if (!address.startsWith('127.') && !address.startsWith('fe80::') && !address.startsWith('::1')) {
         result.push(address);
       }
@@ -63,12 +63,12 @@ const getSystemInfo = async () => {
     os: {
       arch: os.arch(),
       platform: os.platform(),
-      version: os.version ? os.version() : undefined, // Node > 13
+      version: os.version ? os.version() : undefined // Node > 13
     },
 
     time: {
       now: moment(),
-      up: moment().subtract(os.uptime(), 'seconds'),
+      up: moment().subtract(os.uptime(), 'seconds')
     },
 
     nodejs: {
