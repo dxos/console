@@ -3,6 +3,8 @@
 # NOTE: Set CONFIG_FILE to swap out this config file.
 #
 
+# TODO(burdon): Set defaults.
+
 app:
   title: 'Console'
   org': 'DxOS'
@@ -22,19 +24,20 @@ system:
 services:
   app:
     prefix: '/app'
-    server: 'https://xbox.local'
+    server: 'http://127.0.0.1:5999'
 
   wns:
-    server: 'https://xbox.local/dxos/wns/api'
-    webui: 'https://xbox.local/dxos/wns/webui'
+      server: 'https://node1.dxos.network/wns/api'
+      webui: 'https://node1.dxos.network/wns/webui'
 
   signal:
-    server: 'wss://xbox.local/dxos/signal'
-    api: 'https://xbox.local/dxos/signal/status'
+    server: 'http://127.0.0.1:4000'
+    api: 'http://127.0.0.1:4000'
 
   ipfs:
-    server: 'https://xbox.local/dxos/ipfs/api'
-    gateway: 'https://xbox.local/dxos/ipfs/gateway'
+    server: '/ip4/127.0.0.1/tcp/5001'
+    gateway: '/ip4//127.0.0.1:8888/ipfs/'
+    webui: 'http://127.0.0.1:5001/webui'
 
   wellknown:
-    endpoint: 'https://xbox.local/.well-known/dxos'
+    endpoint: 'http://127.0.0.1:9000/.well-known/dxos'
