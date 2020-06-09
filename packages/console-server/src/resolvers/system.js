@@ -30,7 +30,9 @@ const getSystemInfo = async () => {
   const ifaces = os.networkInterfaces();
   const addresses = Object.entries(ifaces).reduce((result, [, values]) => {
     values.forEach(({ family, address }) => {
-      if (family === 'IPv4' && address !== '127.0.0.1') {
+      address = address.toLowerCase();
+      //TODO(telackey): Include link-local IPv6?
+      if (!address.startsWith('127.') && !address.startsWith('fe80::') && !address.startsWith('::1')) {
         result.push(address);
       }
     });
@@ -42,7 +44,7 @@ const getSystemInfo = async () => {
   const device = await si.system();
 
   return {
-    cpu: pick(cpu, 'brand', 'cores', 'manufacturer', 'vendor'),
+    cpu: pick(cpu, 'brand', 'cores', 'manufacturer', 'vendor', 'speed'),
 
     memory: {
       total: size(memory.total, 'M'),
@@ -54,21 +56,23 @@ const getSystemInfo = async () => {
     device: pick(device, 'model', 'serial', 'version'),
 
     network: {
-      address: addresses
+      addresses
     },
 
     // https://nodejs.org/api/os.html
     os: {
       arch: os.arch(),
-      type: os.type(),
       platform: os.platform(),
       version: os.version ? os.version() : undefined, // Node > 13
-      uptime: moment().subtract(os.uptime(), 'seconds').fromNow()
+    },
+
+    time: {
+      now: moment(),
+      up: moment().subtract(os.uptime(), 'seconds'),
     },
 
     nodejs: {
-      version: process.version,
-      environment: process.env.NODE_ENV
+      version: process.version
     }
   };
 };
@@ -80,11 +84,7 @@ export const systemResolvers = {
 
       return {
         timestamp: new Date().toUTCString(),
-        dxos: {
-          // TODO(burdon): ???
-          image: '0.0.1'
-        },
-        system
+        json: JSON.stringify(system)
       };
     }
   }
