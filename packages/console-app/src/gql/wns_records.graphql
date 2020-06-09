@@ -1,5 +1,5 @@
 #
-# Copyright 2019 Wireline, Inc.
+# Copyright 2020 DxOS.org
 #
 
 # TODO(telackey): Object would probably not be legal in general, but does work for a '@client' resolved query.
