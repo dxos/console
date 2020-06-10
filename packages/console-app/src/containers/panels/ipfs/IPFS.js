@@ -2,11 +2,13 @@
 // Copyright 2020 DxOS.org
 //
 
-import React from 'react';
+import React, { useState } from 'react';
 import get from 'lodash.get';
 
 import { useQuery } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -68,8 +70,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const TAB_STATUS = 'status';
+const TAB_LOG = 'log';
+
 const IPFS = () => {
   const classes = useStyles();
+  const [tab, setTab] = useState(TAB_STATUS);
+
   const ipfsResponse = useQueryStatusReducer(useQuery(IPFS_STATUS));
   const wnsResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     variables: { attributes: { type: RECORD_TYPE, service: SERVICE_TYPE } }
@@ -115,7 +122,12 @@ const IPFS = () => {
   return (
     <Panel
       toolbar={
-        <Toolbar />
+        <Toolbar>
+          <Tabs value={tab} onChange={(_, value) => setTab(value)}>
+            <Tab value={TAB_STATUS} label='Status' />
+            <Tab value={TAB_LOG} label='Log' />
+          </Tabs>
+        </Toolbar>
       }
     >
       <h4 className={classes.caption}>WNS-registered IPFS Servers</h4>

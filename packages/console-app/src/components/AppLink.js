@@ -7,7 +7,7 @@ import Link from '@material-ui/core/Link';
 
 import { getServiceUrl } from '../util/config';
 
-const getAppUrl = (config, { name, version, text }) => {
+const getAppUrl = (config, { name, version }) => {
   const base = getServiceUrl(config, 'app.server');
   const pathComponents = [base];
 

@@ -80,7 +80,32 @@ export const createResolvers = config => {
           timestamp: timestamp(),
           log: [...cachedLog].reverse()
         };
-      }
+      },
+
+      signal_status: async () => {
+        log('Signal status...');
+
+        const url = getServiceUrl(config, 'signal.api', { path: 'status' });
+        const res = await fetch(url);
+
+        return {
+          __typename: 'JSONResult',
+          timestamp: timestamp(),
+
+          // NOTE: Hack since this should be a string according to the schema.
+          json: res.json()
+        };
+      },
+
+      signal_log: async () => {
+        log('Signal log...');
+
+        return {
+          __typename: 'JSONLog',
+          timestamp: timestamp(),
+          log: []
+        };
+      },
     }
   };
 };

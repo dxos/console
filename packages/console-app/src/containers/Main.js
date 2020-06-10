@@ -24,7 +24,7 @@ import Bots from './panels/bots/Bots';
 import Config from './panels/Config';
 import IPFS from './panels/ipfs/IPFS';
 import Metadata from './panels/Metadata';
-import Signaling from './panels/Signaling';
+import Signaling from './panels/signal/Signaling';
 import Status from './panels/Status';
 import WNS from './panels/wns/WNS';
 

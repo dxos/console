@@ -84,7 +84,7 @@ const WNSRecords = ({ type }) => {
         <TableRow>
           <TableCell onClick={sortBy('type')} size='small'>Type</TableCell>
           <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell size='icon'>Query</TableCell>
+          <TableCell size='icon'>GraphQL</TableCell>
           <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
