@@ -2,8 +2,8 @@
 # Copyright 2020 DxOS.org
 #
 
-query {
-  wns_log {
+query($incremental: Boolean) {
+  wns_log(incremental: $incremental) {
     timestamp
     json
   }

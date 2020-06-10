@@ -16,7 +16,10 @@ const oldLines = [];
 
 const SignalLog = () => {
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(SIGNAL_LOG, { pollInterval: config.api.intervalLog }));
+  const data = useQueryStatusReducer(useQuery(SIGNAL_LOG, {
+    pollInterval: config.api.intervalLog,
+    variables: { first: oldLines.length === 0 }
+  }));
   if (!data) {
     return null;
   }
@@ -28,7 +31,7 @@ const SignalLog = () => {
   }
 
   return (
-    <Log log={oldLines.slice(0)} />
+    <Log log={oldLines.slice(0)}/>
   );
 };
 

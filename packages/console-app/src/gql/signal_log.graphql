@@ -2,8 +2,8 @@
 # Copyright 2020 DxOS.org
 #
 
-query {
-  signal_log {
+query ($incremental: Boolean) {
+  signal_log(incremental: $incremental) {
     timestamp
     json
   }

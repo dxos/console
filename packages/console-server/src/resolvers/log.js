@@ -29,6 +29,7 @@ class LogCache {
 }
 
 const _caches = new Map();
+
 const getLogCache = (name) => {
   let cache = _caches.get(name);
   if (!cache) {
@@ -38,48 +39,50 @@ const getLogCache = (name) => {
   return cache;
 }
 
-const getLogs = async (name, lines = 100) => {
+const getLogs = async (name, incremental = false, lines = 100) => {
   const command = 'wire';
   const args = ['service', 'logs', '--lines', lines, name];
 
   const child = spawnSync(command, args, { encoding: 'utf8' });
   const logLines = child.stdout.split(/\n/);
   const cache = getLogCache(name);
-  return cache.append(logLines);
+  const added =  cache.append(logLines);
+
+  return incremental ? added : Array.from(cache.buffer);
 };
 
 export const logResolvers = {
   Query: {
-    wns_log: async () => {
-      const logs = await getLogs('wns-lite');
+    wns_log: async (_, { incremental }) => {
+      const logs = await getLogs('wns-lite', incremental);
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify(logs)
       };
     },
-    signal_log: async () => {
-      const logs = await getLogs('signal');
+    signal_log: async (_, { incremental }) => {
+      const logs = await getLogs('signal', incremental);
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify(logs)
       };
     },
-    ipfs_log: async () => {
-      const logs = await getLogs('ipfs');
+    ipfs_log: async (_, { incremental }) => {
+      const logs = await getLogs('ipfs', incremental);
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify(logs)
       };
     },
-    ipfs_swarm_log: async () => {
-      const logs = await getLogs('ipfs');
+    ipfs_swarm_log: async (_, { incremental }) => {
+      const logs = await getLogs('ipfs-swarm-connect', incremental);
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify(logs)
       };
     },
-    app_log: async () => {
-      const logs = await getLogs('ipfs');
+    app_log: async (_, { incremental }) => {
+      const logs = await getLogs('app', incremental);
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify(logs)
