@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import WNS_RECORDS from '../../../gql/wns_records.graphql';
 
@@ -20,6 +21,8 @@ import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
 
 import PackageLink from '../../../components/PackageLink';
+import QueryLink from "../../../components/QueryLink";
+import AppLink from "../../../components/AppLink";
 
 const types = [
   { key: null, label: 'ALL' },
@@ -67,14 +70,14 @@ const WNSRecords = ({ type }) => {
   const [sorter, sortBy] = useSorter('createTime', false);
   const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { type }
+    variables: { attributes: { type } }
   }));
 
   if (!data) {
     return null;
   }
 
-  const records = data.wns_records.json;
+  const records = JSON.parse(data.wns_records.json);
 
   return (
     <Table>
@@ -82,28 +85,51 @@ const WNSRecords = ({ type }) => {
         <TableRow>
           <TableCell onClick={sortBy('type')} size='small'>Type</TableCell>
           <TableCell onClick={sortBy('name')}>Identifier</TableCell>
+          <TableCell size='icon'>Query</TableCell>
+          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
-          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
-          <TableCell onClick={sortBy('attributes.package')}>Package Hash</TableCell>
+          <TableCell onClick={sortBy('package')} size='small'>Package</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {records.sort(sorter)
-          .map(({ id, type, name, version, createTime, attributes: { displayName, package: pkg } }) => (
-            <TableRow key={id} size='small'>
-              <TableCell monospace>{type}</TableCell>
-              <TableCell monospace>{name}</TableCell>
-              <TableCell monospace>{version}</TableCell>
-              <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
-              <TableCell>{displayName}</TableCell>
-              <TableCell title={JSON.stringify(pkg)} monospace>
-                {pkg && (
-                  <PackageLink config={config} type={type} pkg={pkg} />
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
+          .map((record) => {
+              const { id, type, name, version, createTime, attributes: { displayName, description, service, package: pkg } } = record;
+
+              let pkgLink = undefined;
+              let appLink = undefined;
+              let verLink = undefined;
+
+              if (pkg) {
+                pkgLink = (<PackageLink config={config} type={type} pkg={pkg}/>);
+              }
+
+              if (type === 'wrn:app') {
+                appLink = (<AppLink config={config} name={name}/>);
+                verLink = (<AppLink config={config} name={name} version={version} text={version}/>);
+              }
+
+              return (<TableRow key={id} size='small'>
+                  <TableCell monospace>{type}</TableCell>
+                  <TableCell monospace>
+                    {appLink && appLink || name}
+                  </TableCell>
+                  <TableCell>
+                    <QueryLink config={config} name={name} icon={true}/>
+                  </TableCell>
+                  <TableCell>{displayName || service || description}</TableCell>
+                  <TableCell monospace>
+                    {verLink && verLink || version}
+                  </TableCell>
+                  <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
+                  <TableCell monospace>
+                    {pkgLink}
+                  </TableCell>
+                </TableRow>
+              );
+            }
+          )}
       </TableBody>
     </Table>
   );

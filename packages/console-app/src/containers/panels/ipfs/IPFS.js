@@ -122,9 +122,9 @@ const IPFS = () => {
       <Table stickyHeader size='small' className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell size=''>Identifier</TableCell>
-            <TableCell size='small'>Description</TableCell>
-            <TableCell size='small'>Connected</TableCell>
+            <TableCell>Identifier</TableCell>
+            <TableCell size='medium'>Description</TableCell>
+            <TableCell size='icon'>Connected</TableCell>
             <TableCell>Address</TableCell>
           </TableRow>
         </TableHead>

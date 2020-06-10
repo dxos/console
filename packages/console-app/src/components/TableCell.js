@@ -11,6 +11,12 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles(() => ({
   small: {
     width: 160
+  },
+  medium: {
+    width: 220
+  },
+  icon: {
+    width: 120
   }
 }));
 
