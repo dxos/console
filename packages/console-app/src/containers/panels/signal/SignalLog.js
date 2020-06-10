@@ -11,6 +11,9 @@ import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
 import Log from '../../../components/Log';
 
+const MAX_LINES = 1000;
+const oldLines = [];
+
 const SignalLog = () => {
   const { config } = useContext(ConsoleContext);
   const data = useQueryStatusReducer(useQuery(SIGNAL_LOG, { pollInterval: config.api.intervalLog }));
@@ -18,8 +21,14 @@ const SignalLog = () => {
     return null;
   }
 
+  const newLines = JSON.parse(data.signal_log.json);
+  oldLines.push(...newLines);
+  if (oldLines.length > MAX_LINES) {
+    oldLines.splice(0, oldLines.length - MAX_LINES);
+  }
+
   return (
-    <Log log={data.signal_log.log} />
+    <Log log={oldLines.slice(0)} />
   );
 };
 

@@ -13,15 +13,17 @@ type JSONResult {
 #
 
 type Query {
-  app_swarm_log: JSONResult!
+  app_log: JSONResult!
+  app_status: JSONResult!
   ipfs_log: JSONResult!
   ipfs_status: JSONResult!
   ipfs_swarm_log: JSONResult!
+  ipfs_swarm_status: JSONResult!
+  signal_log: JSONResult!
   signal_status: JSONResult!
-  signal_swarm_log: JSONResult!
   system_status: JSONResult!
-  wns_status: JSONResult!
   wns_log: JSONResult!
+  wns_status: JSONResult!
 }
 
 schema {

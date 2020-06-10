@@ -106,6 +106,9 @@ const Log = ({ log = [] }) => {
     );
   };
 
+  // TODO(telackey): Why do these display in reverse?
+  log.reverse();
+
   return (
     <div className={classes.root}>
       <div className={classes.log}>

@@ -2,11 +2,7 @@
 // Copyright 2020 DxOS.org
 //
 
-import moment from 'moment';
-import pick from 'lodash.pick';
-import os from 'os';
-import si from 'systeminformation';
-import { spawnSync } from "child_process";
+import { spawnSync } from 'child_process';
 
 class LogCache {
   constructor(maxLines = 500) {
@@ -56,6 +52,34 @@ export const logResolvers = {
   Query: {
     wns_log: async () => {
       const logs = await getLogs('wns-list');
+      return {
+        timestamp: new Date().toUTCString(),
+        json: JSON.stringify(logs)
+      };
+    },
+    signal_log: async () => {
+      const logs = await getLogs('signal');
+      return {
+        timestamp: new Date().toUTCString(),
+        json: JSON.stringify(logs)
+      };
+    },
+    ipfs_log: async () => {
+      const logs = await getLogs('ipfs');
+      return {
+        timestamp: new Date().toUTCString(),
+        json: JSON.stringify(logs)
+      };
+    },
+    ipfs_swarm_log: async () => {
+      const logs = await getLogs('ipfs');
+      return {
+        timestamp: new Date().toUTCString(),
+        json: JSON.stringify(logs)
+      };
+    },
+    app_log: async () => {
+      const logs = await getLogs('ipfs');
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify(logs)
