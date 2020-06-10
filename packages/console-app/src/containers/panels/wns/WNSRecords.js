@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
-import Tooltip from '@material-ui/core/Tooltip';
 
 import WNS_RECORDS from '../../../gql/wns_records.graphql';
 
@@ -21,8 +20,8 @@ import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
 
 import PackageLink from '../../../components/PackageLink';
-import QueryLink from "../../../components/QueryLink";
-import AppLink from "../../../components/AppLink";
+import QueryLink from '../../../components/QueryLink';
+import AppLink from '../../../components/AppLink';
 
 const types = [
   { key: null, label: 'ALL' },
@@ -95,40 +94,41 @@ const WNSRecords = ({ type }) => {
       <TableBody>
         {records.sort(sorter)
           .map((record) => {
-              const { id, type, name, version, createTime, attributes: { displayName, description, service, package: pkg } } = record;
+            const { id, type, name, version, createTime, attributes: { displayName, description, service, package: pkg } } = record;
 
-              let pkgLink = undefined;
-              let appLink = undefined;
-              let verLink = undefined;
+            let pkgLink;
+            let appLink;
+            let verLink;
 
-              if (pkg) {
-                pkgLink = (<PackageLink config={config} type={type} pkg={pkg}/>);
-              }
-
-              if (type === 'wrn:app') {
-                appLink = (<AppLink config={config} name={name}/>);
-                verLink = (<AppLink config={config} name={name} version={version} text={version}/>);
-              }
-
-              return (<TableRow key={id} size='small'>
-                  <TableCell monospace>{type}</TableCell>
-                  <TableCell monospace>
-                    {appLink && appLink || name}
-                  </TableCell>
-                  <TableCell>
-                    <QueryLink config={config} name={name} icon={true}/>
-                  </TableCell>
-                  <TableCell>{displayName || service || description}</TableCell>
-                  <TableCell monospace>
-                    {verLink && verLink || version}
-                  </TableCell>
-                  <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
-                  <TableCell monospace>
-                    {pkgLink}
-                  </TableCell>
-                </TableRow>
-              );
+            if (pkg) {
+              pkgLink = (<PackageLink config={config} type={type} pkg={pkg} />);
             }
+
+            if (type === 'wrn:app') {
+              appLink = (<AppLink config={config} name={name} />);
+              verLink = (<AppLink config={config} name={name} version={version} text={version} />);
+            }
+
+            return (
+              <TableRow key={id} size='small'>
+                <TableCell monospace>{type}</TableCell>
+                <TableCell monospace>
+                  {appLink || name}
+                </TableCell>
+                <TableCell>
+                  <QueryLink config={config} name={name} icon />
+                </TableCell>
+                <TableCell>{displayName || service || description}</TableCell>
+                <TableCell monospace>
+                  {verLink || version}
+                </TableCell>
+                <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
+                <TableCell monospace>
+                  {pkgLink}
+                </TableCell>
+              </TableRow>
+            );
+          }
           )}
       </TableBody>
     </Table>

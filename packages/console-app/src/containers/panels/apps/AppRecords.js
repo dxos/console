@@ -6,7 +6,6 @@ import React, { useContext } from 'react';
 import moment from 'moment';
 
 import { useQuery } from '@apollo/react-hooks';
-import Link from '@material-ui/core/Link';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
@@ -19,8 +18,7 @@ import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks
 import { BooleanIcon } from '../../../components/BooleanIcon';
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
-import { getServiceUrl } from '../../../util/config';
-import AppLink from "../../../components/AppLink";
+import AppLink from '../../../components/AppLink';
 
 const AppRecords = () => {
   const { config } = useContext(ConsoleContext);

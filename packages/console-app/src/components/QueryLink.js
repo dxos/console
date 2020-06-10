@@ -22,15 +22,17 @@ const QUERY = `{
  * @param {string} name
  * @param {string} [text]
  */
-const QueryLink = ({ config, name, text, icon = false}) => {
+const QueryLink = ({ config, name, text, icon = false }) => {
   const baseURL = getServiceUrl(config, 'wns.webui');
   const query = QUERY.replace('%NAME%', name);
-  const fullURL= encodeURI(`${baseURL}?query=${query}`);
+  const fullURL = encodeURI(`${baseURL}?query=${query}`);
 
   if (icon) {
-    return <Link href={fullURL} target='wns'>
-      <ExitToApp />
-    </Link>
+    return (
+      <Link href={fullURL} target='wns'>
+        <ExitToApp />
+      </Link>
+    );
   }
   return <Link href={fullURL} target='wns'>{text || name}</Link>;
 };

@@ -35,7 +35,7 @@ const getAppUrl = (config, { name, version, text }) => {
  * @param {string} [version]
  */
 const AppLink = ({ config, name, version, text }) => {
-  const fullURL = getAppUrl(config, {name, version});
+  const fullURL = getAppUrl(config, { name, version });
   return <Link href={fullURL} target={name}>{text || name}</Link>;
 };
 

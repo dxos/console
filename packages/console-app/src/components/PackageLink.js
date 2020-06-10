@@ -4,8 +4,6 @@
 
 import React from 'react';
 import Link from '@material-ui/core/Link';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import { getServiceUrl } from '../util/config';
 
