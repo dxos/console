@@ -22,7 +22,6 @@ import SYSTEM_STATUS from '@dxos/console-app/src/gql/system_status.graphql';
 import { resolvers } from '../resolvers';
 
 import API_SCHEMA from '../gql/api.graphql';
-import SYSTEM_SCHEMA from '../gql/system.graphql';
 
 const argv = yargs
   .option('config', {
@@ -113,10 +112,7 @@ app.get(publicUrl, (req, res) => {
 
 const server = new ApolloServer({
   typeDefs: [
-    API_SCHEMA,
-    SYSTEM_SCHEMA
-    // WNS_EXTENSIONS,
-    // WNS_SCHEMA
+    API_SCHEMA
   ],
 
   // https://www.apollographql.com/docs/graphql-tools/resolvers

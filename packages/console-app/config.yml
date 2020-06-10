@@ -22,20 +22,19 @@ system:
 services:
   app:
     prefix: '/app'
-    server: 'http://127.0.0.1:5999'
+    server: 'https://xbox.local'
 
   wns:
-    server: 'http://127.0.0.1:9473/api'
-    webui: 'http://127.0.0.1:9473/webui'
+    server: 'https://xbox.local/dxos/wns/api'
+    webui: 'https://xbox.local/dxos/wns/webui'
 
   signal:
-    server: 'http://127.0.0.1:4000'
-    api: 'http://127.0.0.1:4000'
+    server: 'wss://xbox.local/dxos/signal'
+    api: 'https://xbox.local/dxos/signal/'
 
   ipfs:
-    server: '/ip4/127.0.0.1/tcp/5001'
-    gateway: '/ip4//127.0.0.1:8888/ipfs/'
-    webui: 'http://127.0.0.1:5001/webui'
+    server: 'https://xbox.local/dxos/ipfs/api'
+    gateway: 'https://xbox.local/dxos/ipfs/gateway'
 
   wellknown:
-    endpoint: 'http://127.0.0.1:9000/.well-known/dxos'
+    endpoint: 'https://xbox.local/.well-known/dxos'

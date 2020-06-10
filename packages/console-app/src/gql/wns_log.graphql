@@ -3,8 +3,8 @@
 #
 
 query {
-  wns_log @client {
+  wns_log {
     timestamp
-    log
+    json
   }
 }
