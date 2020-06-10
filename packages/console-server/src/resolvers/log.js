@@ -51,7 +51,7 @@ const getLogs = async (name, lines = 100) => {
 export const logResolvers = {
   Query: {
     wns_log: async () => {
-      const logs = await getLogs('wns-list');
+      const logs = await getLogs('wns-lite');
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify(logs)
