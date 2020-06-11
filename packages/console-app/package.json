@@ -1,6 +1,6 @@
 {
   "name": "@dxos/console-app",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "DxOS Console Client",
   "main": "dist/es/index.js",
   "files": [
