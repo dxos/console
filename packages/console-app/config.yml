@@ -12,29 +12,26 @@ app:
 
 api:
   path: '/api'
-  port: 9004
   intervalLog: 5000
   pollInterval: 10000
 
 system:
   debug: 'dxos:console:*'
 
-services:
+routes:
   app:
-    prefix: '/app'
-    server: 'http://127.0.0.1:5999'
+    server: '/app'
 
   wns:
-    server: 'http://127.0.0.1:9473/api'
-    webui: 'http://127.0.0.1:9473/console'
+    server: '/dxos/wns/api'
+    webui: '/dxos/wns/console'
 
   signal:
-    server: 'ws://127.0.0.1:4000'
-    api: 'http://127.0.0.1:4000'
+    api: '/dxos/signal'
 
   ipfs:
-    server: 'http://127.0.0.1:5001'
-    gateway: 'http://127.0.0.1:8888/ipfs/'
+    server: '/dxos/ipfs/api'
+    gateway: '/dxos/ipfs/gateway'
 
   wellknown:
-    endpoint: 'http://127.0.0.1:9000/.well-known/dxos'
+    endpoint: '/.well-known/dxos'
