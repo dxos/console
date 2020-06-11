@@ -39,7 +39,6 @@ const useStyles = makeStyles(() => ({
 const Signal = () => {
   const classes = useStyles();
   const [tab, setTab] = useState(TAB_STATUS);
-  const [type, setType] = useState();
 
   return (
     <Panel

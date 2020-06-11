@@ -7,32 +7,40 @@ import { useQuery } from '@apollo/react-hooks';
 
 import SIGNAL_LOG from '../../../gql/signal_log.graphql';
 
-import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
+import { ConsoleContext } from '../../../hooks';
 
 import Log from '../../../components/Log';
 
 const MAX_LINES = 1000;
-const oldLines = [];
+const logBuffer = [];
 
 const SignalLog = () => {
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(SIGNAL_LOG, {
-    pollInterval: config.api.intervalLog,
-    variables: { first: oldLines.length === 0 }
-  }));
+  const { data, refetch, startPolling, stopPolling } = useQuery(SIGNAL_LOG, {
+    variables: { incremental: false }
+  });
+
   if (!data) {
     return null;
   }
 
-  const newLines = JSON.parse(data.signal_log.json);
-  oldLines.push(...newLines);
-  if (oldLines.length > MAX_LINES) {
-    oldLines.splice(0, oldLines.length - MAX_LINES);
+  const { incremental, lines } = JSON.parse(data.signal_log.json);
+
+  if (!incremental) {
+    stopPolling();
+    refetch({ incremental: true });
+    startPolling(config.api.intervalLog);
+  }
+
+  logBuffer.push(...lines);
+  if (logBuffer.length > MAX_LINES) {
+    logBuffer.splice(0, logBuffer.length - MAX_LINES);
   }
 
   return (
-    <Log log={oldLines.slice(0)}/>
+    <Log log={logBuffer.slice(0)} />
   );
-};
+}
+;
 
 export default SignalLog;

@@ -7,8 +7,9 @@ import defaultsDeep from 'lodash.defaultsdeep';
 
 import { ipfsResolvers } from './ipfs';
 import { systemResolvers } from './system';
-import { logResolvers } from "./log";
+import { logResolvers } from './log';
 
+// eslint-disable-next-line
 const log = debug('dxos:console:server:resolvers');
 
 /**

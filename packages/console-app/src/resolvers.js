@@ -105,7 +105,7 @@ export const createResolvers = config => {
           timestamp: timestamp(),
           log: []
         };
-      },
+      }
     }
   };
 };

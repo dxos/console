@@ -5,13 +5,13 @@
 import { spawnSync } from 'child_process';
 
 class LogCache {
-  constructor(maxLines = 500) {
+  constructor (maxLines = 500) {
     // Sets in JS iterate in insertion order.
     this.buffer = new Set();
     this.maxLines = maxLines;
   }
 
-  append(lines) {
+  append (lines) {
     const added = [];
     for (const line of lines) {
       if (!this.buffer.has(line)) {
@@ -37,7 +37,7 @@ const getLogCache = (name) => {
     _caches.set(name, cache);
   }
   return cache;
-}
+};
 
 const getLogs = async (name, incremental = false, lines = 100) => {
   const command = 'wire';
@@ -46,7 +46,7 @@ const getLogs = async (name, incremental = false, lines = 100) => {
   const child = spawnSync(command, args, { encoding: 'utf8' });
   const logLines = child.stdout.split(/\n/);
   const cache = getLogCache(name);
-  const added =  cache.append(logLines);
+  const added = cache.append(logLines);
 
   return incremental ? added : Array.from(cache.buffer);
 };
@@ -54,38 +54,38 @@ const getLogs = async (name, incremental = false, lines = 100) => {
 export const logResolvers = {
   Query: {
     wns_log: async (_, { incremental }) => {
-      const logs = await getLogs('wns-lite', incremental);
+      const lines = await getLogs('wns-lite', incremental);
       return {
         timestamp: new Date().toUTCString(),
-        json: JSON.stringify(logs)
+        json: JSON.stringify({ incremental, lines })
       };
     },
     signal_log: async (_, { incremental }) => {
-      const logs = await getLogs('signal', incremental);
+      const lines = await getLogs('signal', incremental);
       return {
         timestamp: new Date().toUTCString(),
-        json: JSON.stringify(logs)
+        json: JSON.stringify({ incremental, lines })
       };
     },
     ipfs_log: async (_, { incremental }) => {
-      const logs = await getLogs('ipfs', incremental);
+      const lines = await getLogs('ipfs', incremental);
       return {
         timestamp: new Date().toUTCString(),
-        json: JSON.stringify(logs)
+        json: JSON.stringify({ incremental, lines })
       };
     },
     ipfs_swarm_log: async (_, { incremental }) => {
-      const logs = await getLogs('ipfs-swarm-connect', incremental);
+      const lines = await getLogs('ipfs-swarm-connect', incremental);
       return {
         timestamp: new Date().toUTCString(),
-        json: JSON.stringify(logs)
+        json: JSON.stringify({ incremental, lines })
       };
     },
     app_log: async (_, { incremental }) => {
-      const logs = await getLogs('app', incremental);
+      const lines = await getLogs('app', incremental);
       return {
         timestamp: new Date().toUTCString(),
-        json: JSON.stringify(logs)
+        json: JSON.stringify({ incremental, lines })
       };
     }
   }
