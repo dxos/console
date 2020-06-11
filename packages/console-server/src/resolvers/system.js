@@ -6,7 +6,7 @@ import moment from 'moment';
 import pick from 'lodash.pick';
 import os from 'os';
 import si from 'systeminformation';
-import { spawnSync } from "child_process";
+import { spawnSync } from 'child_process';
 
 const num = new Intl.NumberFormat('en', { maximumSignificantDigits: 3 });
 
@@ -88,7 +88,7 @@ const getServiceInfo = async () => {
 
   const child = spawnSync(command, args, { encoding: 'utf8' });
   return JSON.parse(child.stdout);
-}
+};
 
 export const systemResolvers = {
   Query: {
@@ -107,6 +107,6 @@ export const systemResolvers = {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify(serviceInfo)
       };
-    },
+    }
   }
 };

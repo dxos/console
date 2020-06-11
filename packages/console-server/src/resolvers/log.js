@@ -59,6 +59,6 @@ export const logResolvers = {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify({ incremental, lines })
       };
-    },
+    }
   }
 };
