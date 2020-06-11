@@ -1,5 +1,5 @@
 {
-  "name": "@dxos/console",
+  "name": "@dxos/console-server",
   "version": "1.0.0-beta.0",
   "description": "DxOS Console Server",
   "main": "dist/es/index.js",
