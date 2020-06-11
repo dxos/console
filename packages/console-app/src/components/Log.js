@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   log: {
+    width: '100%',
     display: 'flex',
     // Pin to bottom (render in time order).
     flexDirection: 'column-reverse',

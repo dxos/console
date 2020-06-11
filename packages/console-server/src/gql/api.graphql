@@ -17,6 +17,7 @@ type Query {
   app_status: JSONResult!
   ipfs_status: JSONResult!
   ipfs_swarm_status: JSONResult!
+  service_status: JSONResult!
   signal_status: JSONResult!
   system_status: JSONResult!
   wns_status: JSONResult!

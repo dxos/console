@@ -29,7 +29,7 @@ const AppRecords = () => {
     return null;
   }
 
-  const records = data.wns_records.json;
+  const records = JSON.parse(data.wns_records.json);
 
   return (
     <Table>

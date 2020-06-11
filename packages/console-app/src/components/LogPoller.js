@@ -12,10 +12,20 @@ import LOGS from '../gql/logs.graphql';
 import Log from './Log';
 
 const MAX_LINES = 1000;
-const logBuffer = [];
+const _logBuffers = new Map();
+
+const getLogBuffer = (name) => {
+  let buffer = _logBuffers.get(name);
+  if (!buffer) {
+    buffer = [];
+    _logBuffers.set(name, buffer);
+  }
+  return buffer;
+}
 
 const LogPoller = ({ service }) => {
   const { config } = useContext(ConsoleContext);
+  const logBuffer = getLogBuffer(service);
   const data = useQueryStatusReducer(useQuery(LOGS, {
     pollInterval: config.api.intervalLog,
     variables: { service, incremental: logBuffer.length !== 0 }
@@ -37,7 +47,7 @@ const LogPoller = ({ service }) => {
   }
 
   return (
-    <Log log={logBuffer.slice(0)} />
+    <Log log={logBuffer.slice(0)}/>
   );
 };
 

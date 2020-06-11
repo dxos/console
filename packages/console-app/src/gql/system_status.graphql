@@ -8,3 +8,10 @@ query {
     json
   }
 }
+
+query {
+  service_status {
+    timestamp,
+    json
+  }
+}

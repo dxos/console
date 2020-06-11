@@ -22,7 +22,7 @@ import ConsoleContextProvider from './ConsoleContextProvider';
 import AppRecords from './panels/apps/Apps';
 import Bots from './panels/bots/Bots';
 import Config from './panels/Config';
-import IPFS from './panels/ipfs/IPFS';
+import IPFSStatus from './panels/ipfs/IPFS';
 import Metadata from './panels/Metadata';
 import Signaling from './panels/signal/Signaling';
 import Status from './panels/Status';
@@ -49,7 +49,7 @@ const Main = ({ config }) => {
                   <Route path='/apps' component={AppRecords} />
                   <Route path='/bots' component={Bots} />
                   <Route path='/config' component={Config} />
-                  <Route path='/ipfs' component={IPFS} />
+                  <Route path='/ipfs' component={IPFSStatus} />
                   <Route path='/metadata' component={Metadata} />
                   <Route path='/signaling' component={Signaling} />
                   <Route path='/status' component={Status} />
