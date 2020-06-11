@@ -29,13 +29,30 @@ services:
     webui: 'http://127.0.0.1:9473/webui'
 
   signal:
-    server: 'http://127.0.0.1:4000'
+    server: 'ws://127.0.0.1:4000'
     api: 'http://127.0.0.1:4000'
 
   ipfs:
-    server: '/ip4/127.0.0.1/tcp/5001'
-    gateway: '/ip4//127.0.0.1:8888/ipfs/'
-    webui: 'http://127.0.0.1:5001/webui'
+    server: 'https://127.0.0.1:5001'
+    gateway: 'http://127.0.0.1:8888'
 
   wellknown:
     endpoint: 'http://127.0.0.1:9000/.well-known/dxos'
+
+routes:
+  app:
+    server: '/app'
+
+  wns:
+    server: '/dxos/wns/api'
+    webui: '/dxos/wns/console'
+
+  signal:
+    api: '/dxos/signal'
+
+  ipfs:
+    server: '/dxos/ipfs/api'
+    gateway: '/dxos/ipfs/gateway'
+
+  wellknown:
+    endpoint: '/.well-known/dxos'
