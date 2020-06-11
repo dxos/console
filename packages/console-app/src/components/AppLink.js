@@ -3,6 +3,7 @@
 //
 
 import React from 'react';
+import get from 'lodash.get';
 import Link from '@material-ui/core/Link';
 
 import { getServiceUrl } from '../util/config';
@@ -12,11 +13,12 @@ const getAppUrl = (config, { name, version }) => {
   const pathComponents = [base];
 
   // TODO(burdon): Fix.
-  // `wire app serve` expects the /wrn/ prefix.
+  // `wire app serve` expects the /app/ prefix.
   // That is OK in the production config where we can make it part of the the route,
   // but in development it must be prepended since we don't want to make it part of services.app.server.
-  if (!base.startsWith(`/${config.services.app.prefix}`) && !base.endsWith(`/${config.services.app.prefix}`)) {
-    pathComponents.push(config.services.app.prefix.substring(1));
+  const prefix = get(config, 'services.app.prefix');
+  if (prefix && !base.startsWith(`/${prefix}`) && !base.endsWith(`/${prefix}`)) {
+    pathComponents.push(prefix.substring(1));
   }
 
   if (version) {
