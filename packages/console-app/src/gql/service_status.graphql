@@ -3,7 +3,7 @@
 #
 
 query {
-  system_status {
+  service_status {
     timestamp,
     json
   }

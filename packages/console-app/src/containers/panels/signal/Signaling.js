@@ -13,7 +13,7 @@ import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
 
 import SignalStatus from './SignalStatus';
-import LogPoller from "../../../components/LogPoller";
+import LogPoller from '../../../components/LogPoller';
 
 const TAB_STATUS = 'status';
 const TAB_LOG = 'log';

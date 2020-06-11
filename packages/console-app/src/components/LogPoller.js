@@ -21,7 +21,7 @@ const getLogBuffer = (name) => {
     _logBuffers.set(name, buffer);
   }
   return buffer;
-}
+};
 
 const LogPoller = ({ service }) => {
   const { config } = useContext(ConsoleContext);
@@ -47,7 +47,7 @@ const LogPoller = ({ service }) => {
   }
 
   return (
-    <Log log={logBuffer.slice(0)}/>
+    <Log log={logBuffer.slice(0)} />
   );
 };
 

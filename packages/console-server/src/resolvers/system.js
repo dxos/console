@@ -87,7 +87,7 @@ const getServiceInfo = async () => {
   const args = ['service', '--json'];
 
   const child = spawnSync(command, args, { encoding: 'utf8' });
-  return child.stdout;
+  return JSON.parse(child.stdout);
 }
 
 export const systemResolvers = {

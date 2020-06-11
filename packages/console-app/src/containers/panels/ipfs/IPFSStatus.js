@@ -2,13 +2,11 @@
 // Copyright 2020 DxOS.org
 //
 
-import React, { useState } from 'react';
+import React from 'react';
 import get from 'lodash.get';
 
 import { useQuery } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -22,7 +20,6 @@ import Json from '../../../components/Json';
 import Panel from '../../../components/Panel';
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
-import Toolbar from '../../../components/Toolbar';
 import { BooleanIcon } from '../../../components/BooleanIcon';
 
 const RECORD_TYPE = 'wrn:service';
@@ -70,13 +67,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TAB_STATUS = 'status';
-const TAB_LOG_IPFS = 'log';
-const TAB_LOG_SWARM = 'connect log';
-
 const IPFSStatus = () => {
   const classes = useStyles();
-  const [tab, setTab] = useState(TAB_STATUS);
 
   const ipfsResponse = useQueryStatusReducer(useQuery(IPFS_STATUS));
   const wnsResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
@@ -138,7 +130,7 @@ const IPFSStatus = () => {
               <TableCell>{name}</TableCell>
               <TableCell>{description}</TableCell>
               <TableCell>
-                <BooleanIcon yes={connected}/>
+                <BooleanIcon yes={connected} />
               </TableCell>
               <TableCell>
                 {ipfs.addresses}
