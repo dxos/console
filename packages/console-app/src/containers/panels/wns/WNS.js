@@ -9,8 +9,6 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import TabContext from '@material-ui/lab/TabContext';
 
-import WNS_LOG from '../../../gql/wns_log.graphql';
-
 import LogPoller from "../../../components/LogPoller";
 import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
@@ -78,7 +76,7 @@ const WNS = () => {
 
         {tab === TAB_LOG && (
           <div className={classes.panel}>
-            <LogPoller query={WNS_LOG} />
+            <LogPoller service='wns-lite' />
           </div>
         )}
       </TabContext>

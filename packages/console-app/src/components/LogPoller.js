@@ -7,14 +7,16 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { ConsoleContext, useQueryStatusReducer } from '../hooks';
 
+import LOGS from '../gql/logs.graphql';
+
 import Log from './Log';
 
 const MAX_LINES = 1000;
 const logBuffer = [];
 
-const LogPoller = ({ service, query }) => {
+const LogPoller = ({ service }) => {
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(query, {
+  const data = useQueryStatusReducer(useQuery(LOGS, {
     pollInterval: config.api.intervalLog,
     variables: { service, incremental: logBuffer.length !== 0 }
   }));
@@ -23,7 +25,7 @@ const LogPoller = ({ service, query }) => {
     return null;
   }
 
-  const { incremental, lines } = JSON.parse(data.wns_log.json);
+  const { incremental, lines } = JSON.parse(data.logs.json);
 
   if (!incremental && lines.length) {
     logBuffer.length = 0;

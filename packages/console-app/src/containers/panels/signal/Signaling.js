@@ -9,8 +9,6 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import TabContext from '@material-ui/lab/TabContext';
 
-import SIGNAL_LOG from '../../../gql/logs.graphql';
-
 import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
 
@@ -64,7 +62,7 @@ const Signal = () => {
 
         {tab === TAB_LOG && (
           <div className={classes.panel}>
-            <LogPoller query={SIGNAL_LOG} />
+            <LogPoller service='signal' />
           </div>
         )}
       </TabContext>
