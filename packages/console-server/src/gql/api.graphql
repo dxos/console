@@ -8,33 +8,21 @@ type JSONResult {
   json: String!
 }
 
-type Result {
-  timestamp: String!
-  code: Int!
-}
-
-type Log {
-  timestamp: String!
-  log: [String]!
-}
-
 #
 # Schema
 #
 
-type Mutation {
-  action(command: String!): Result!
-}
-
 type Query {
-  system_status: SystemStatus!
+  logs(service: String!, incremental: Boolean): JSONResult!
+  app_status: JSONResult!
   ipfs_status: JSONResult!
+  ipfs_swarm_status: JSONResult!
+  service_status: JSONResult!
+  signal_status: JSONResult!
+  system_status: JSONResult!
   wns_status: JSONResult!
-  wns_records(type: String): JSONResult!
-  wns_log: Log!
 }
 
 schema {
-  mutation: Mutation
   query: Query
 }

@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   log: {
+    width: '100%',
     display: 'flex',
     // Pin to bottom (render in time order).
     flexDirection: 'column-reverse',
@@ -105,6 +106,9 @@ const Log = ({ log = [] }) => {
       <div>{message}</div>
     );
   };
+
+  // TODO(telackey): Why do these display in reverse?
+  log.reverse();
 
   return (
     <div className={classes.root}>

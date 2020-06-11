@@ -12,8 +12,8 @@ import TabContext from '@material-ui/lab/TabContext';
 import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
 
-import SignalLog from './SignalLog';
 import SignalStatus from './SignalStatus';
+import LogPoller from '../../../components/LogPoller';
 
 const TAB_STATUS = 'status';
 const TAB_LOG = 'log';
@@ -39,7 +39,6 @@ const useStyles = makeStyles(() => ({
 const Signal = () => {
   const classes = useStyles();
   const [tab, setTab] = useState(TAB_STATUS);
-  const [type, setType] = useState();
 
   return (
     <Panel
@@ -63,7 +62,7 @@ const Signal = () => {
 
         {tab === TAB_LOG && (
           <div className={classes.panel}>
-            <SignalLog />
+            <LogPoller service='signal' />
           </div>
         )}
       </TabContext>

@@ -3,8 +3,8 @@
 #
 
 query {
-  signal_log @client {
-    timestamp
-    log
+  service_status {
+    timestamp,
+    json
   }
 }

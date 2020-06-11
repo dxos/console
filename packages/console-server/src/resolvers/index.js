@@ -7,7 +7,9 @@ import defaultsDeep from 'lodash.defaultsdeep';
 
 import { ipfsResolvers } from './ipfs';
 import { systemResolvers } from './system';
+import { logResolvers } from './log';
 
+// eslint-disable-next-line
 const log = debug('dxos:console:server:resolvers');
 
 /**
@@ -19,14 +21,4 @@ export const resolvers = defaultsDeep({
   // TODO(burdon): Auth.
   // https://www.apollographql.com/docs/apollo-server/data/errors/#codes
 
-  Mutation: {
-    action: async (_, { command }) => {
-      log(`WNS action: ${command}`);
-
-      return {
-        timestamp: new Date().toUTCString(),
-        code: 0
-      };
-    }
-  }
-}, ipfsResolvers, systemResolvers);
+}, ipfsResolvers, systemResolvers, logResolvers);

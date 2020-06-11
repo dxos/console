@@ -1,8 +1,0 @@
-#
-# Copyright 2020 DxOS.org
-#
-
-type SystemStatus {
-  timestamp: String!
-  json: String!
-}

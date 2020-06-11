@@ -6,6 +6,7 @@ import moment from 'moment';
 import pick from 'lodash.pick';
 import os from 'os';
 import si from 'systeminformation';
+import { spawnSync } from "child_process";
 
 const num = new Intl.NumberFormat('en', { maximumSignificantDigits: 3 });
 
@@ -77,6 +78,18 @@ const getSystemInfo = async () => {
   };
 };
 
+/**
+ * Get system inforamtion.
+ * https://www.npmjs.com/package/systeminformation
+ */
+const getServiceInfo = async () => {
+  const command = 'wire';
+  const args = ['service', '--json'];
+
+  const child = spawnSync(command, args, { encoding: 'utf8' });
+  return JSON.parse(child.stdout);
+}
+
 export const systemResolvers = {
   Query: {
     system_status: async () => {
@@ -86,6 +99,14 @@ export const systemResolvers = {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify(system)
       };
-    }
+    },
+    service_status: async () => {
+      const serviceInfo = await getServiceInfo();
+
+      return {
+        timestamp: new Date().toUTCString(),
+        json: JSON.stringify(serviceInfo)
+      };
+    },
   }
 };
