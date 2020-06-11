@@ -13,16 +13,12 @@ type JSONResult {
 #
 
 type Query {
-  app_log(incremental: Boolean): JSONResult!
+  logs(service: String!, incremental: Boolean): JSONResult!
   app_status: JSONResult!
-  ipfs_log(incremental: Boolean): JSONResult!
   ipfs_status: JSONResult!
-  ipfs_swarm_log(incremental: Boolean): JSONResult!
   ipfs_swarm_status: JSONResult!
-  signal_log(incremental: Boolean): JSONResult!
   signal_status: JSONResult!
   system_status: JSONResult!
-  wns_log(incremental: Boolean): JSONResult!
   wns_status: JSONResult!
 }
 

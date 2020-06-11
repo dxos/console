@@ -53,40 +53,12 @@ const getLogs = async (name, incremental = false, lines = 100) => {
 
 export const logResolvers = {
   Query: {
-    wns_log: async (_, { incremental }) => {
-      const lines = await getLogs('wns-lite', incremental);
+    logs: async (_, { service, incremental }) => {
+      const lines = await getLogs(service, incremental);
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify({ incremental, lines })
       };
     },
-    signal_log: async (_, { incremental }) => {
-      const lines = await getLogs('signal', incremental);
-      return {
-        timestamp: new Date().toUTCString(),
-        json: JSON.stringify({ incremental, lines })
-      };
-    },
-    ipfs_log: async (_, { incremental }) => {
-      const lines = await getLogs('ipfs', incremental);
-      return {
-        timestamp: new Date().toUTCString(),
-        json: JSON.stringify({ incremental, lines })
-      };
-    },
-    ipfs_swarm_log: async (_, { incremental }) => {
-      const lines = await getLogs('ipfs-swarm-connect', incremental);
-      return {
-        timestamp: new Date().toUTCString(),
-        json: JSON.stringify({ incremental, lines })
-      };
-    },
-    app_log: async (_, { incremental }) => {
-      const lines = await getLogs('app', incremental);
-      return {
-        timestamp: new Date().toUTCString(),
-        json: JSON.stringify({ incremental, lines })
-      };
-    }
   }
 };

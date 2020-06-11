@@ -1,0 +1,10 @@
+#
+# Copyright 2020 DxOS.org
+#
+
+query ($service: String!, $incremental: Boolean) {
+  logs(service: $service, incremental: $incremental) {
+    timestamp
+    json
+  }
+}
