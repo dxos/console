@@ -3,8 +3,6 @@
 # NOTE: Set CONFIG_FILE to swap out this config file.
 #
 
-# TODO(burdon): Set defaults.
-
 app:
   title: 'Console'
   org': 'DxOS'
@@ -14,7 +12,7 @@ app:
 
 api:
   path: '/api'
-  port: 4000
+  port: 9004
   intervalLog: 5000
   pollInterval: 10000
 
@@ -27,17 +25,16 @@ services:
     server: 'http://127.0.0.1:5999'
 
   wns:
-      server: 'https://node1.dxos.network/wns/api'
-      webui: 'https://node1.dxos.network/wns/webui'
+    server: 'http://127.0.0.1:9473/api'
+    webui: 'http://127.0.0.1:9473/console'
 
   signal:
-    server: 'http://127.0.0.1:4000'
+    server: 'ws://127.0.0.1:4000'
     api: 'http://127.0.0.1:4000'
 
   ipfs:
-    server: '/ip4/127.0.0.1/tcp/5001'
-    gateway: '/ip4//127.0.0.1:8888/ipfs/'
-    webui: 'http://127.0.0.1:5001/webui'
+    server: 'http://127.0.0.1:5001'
+    gateway: 'http://127.0.0.1:8888/ipfs/'
 
   wellknown:
     endpoint: 'http://127.0.0.1:9000/.well-known/dxos'

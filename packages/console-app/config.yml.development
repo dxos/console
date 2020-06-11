@@ -12,7 +12,7 @@ app:
 
 api:
   path: '/api'
-  port: 4000
+  port: 9004
   intervalLog: 5000
   pollInterval: 10000
 
@@ -26,33 +26,15 @@ services:
 
   wns:
     server: 'http://127.0.0.1:9473/api'
-    webui: 'http://127.0.0.1:9473/webui'
+    webui: 'http://127.0.0.1:9473/console'
 
   signal:
     server: 'ws://127.0.0.1:4000'
     api: 'http://127.0.0.1:4000'
 
   ipfs:
-    server: 'https://127.0.0.1:5001'
-    gateway: 'http://127.0.0.1:8888'
+    server: 'http://127.0.0.1:5001'
+    gateway: 'http://127.0.0.1:8888/ipfs/'
 
   wellknown:
     endpoint: 'http://127.0.0.1:9000/.well-known/dxos'
-
-routes:
-  app:
-    server: '/app'
-
-  wns:
-    server: '/dxos/wns/api'
-    webui: '/dxos/wns/console'
-
-  signal:
-    api: '/dxos/signal'
-
-  ipfs:
-    server: '/dxos/ipfs/api'
-    gateway: '/dxos/ipfs/gateway'
-
-  wellknown:
-    endpoint: '/.well-known/dxos'
