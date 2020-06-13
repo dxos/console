@@ -11,8 +11,8 @@ app:
   publicUrl: '/console'
 
 api:
+  server: 'https://xbox.local'
   path: '/api'
-  port: 9004
   intervalLog: 5000
   pollInterval: 10000
 
@@ -22,19 +22,19 @@ system:
 services:
   app:
     prefix: '/app'
-    server: 'http://127.0.0.1:5999'
+    server: 'https://xbox.local'
 
   wns:
-    server: 'http://127.0.0.1:9473/api'
-    webui: 'http://127.0.0.1:9473/console'
+    server: 'https://xbox.local/dxos/wns/api'
+    webui: 'https://xbox.local/dxos/wns/console'
 
   signal:
-    server: 'ws://127.0.0.1:4000'
-    api: 'http://127.0.0.1:4000'
+    server: 'wss://xbox.local/dxos/signal'
+    api: 'https://xbox.local/dxos/signal'
 
   ipfs:
-    server: 'http://127.0.0.1:5001'
-    gateway: 'http://127.0.0.1:8888/ipfs/'
+    server: 'https://xbox.local/dxos/ipfs/api'
+    gateway: 'https://xbox.local/dxos/ipfs/gateway'
 
   wellknown:
-    endpoint: 'http://127.0.0.1:9000/.well-known/dxos'
+    endpoint: 'https://xbox.local:9000/.well-known/dxos'
