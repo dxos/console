@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 const VersionCheck = () => {
   const classes = useStyles();
   const [{ current, latest }, setUpgrade] = useState({});
-  const statusRespone = useQueryStatusReducer(useQuery(SYSTEM_STATUS));
+  const statusResponse = useQueryStatusReducer(useQuery(SYSTEM_STATUS));
   const wnsResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: CHECK_INTERVAL,
     variables: { attributes: { type: 'wrn:resource' } }
@@ -35,8 +35,8 @@ const VersionCheck = () => {
 
   // Check version.
   useEffect(() => {
-    if (statusRespone && wnsResponse) {
-      const statusData = JSON.parse(statusRespone.system_status.json);
+    if (statusResponse && wnsResponse) {
+      const statusData = JSON.parse(statusResponse.system_status.json);
       const wnsData = JSON.parse(wnsResponse.wns_records.json);
 
       const current = get(statusData, 'dxos.xbox.version', '0.0.0');
@@ -51,9 +51,13 @@ const VersionCheck = () => {
         }
       });
 
+      console.error('ZZZZZ', current, latest);
+
       setUpgrade({ current, latest: latest !== current ? latest : undefined });
+    } else {
+      console.error('YYY', current, latest);
     }
-  }, [status, wnsResponse]);
+  }, [statusResponse, wnsResponse]);
 
   // TODO(burdon): Link to Github page with upgrade info.
   return (
@@ -62,7 +66,7 @@ const VersionCheck = () => {
         <div>SYS: {current}</div>
       )}
       {latest && (
-        <div className={classes.update}>LATEST: {latest}</div>
+        <div className={classes.update}>(LATEST: {latest})</div>
       )}
     </>
   );

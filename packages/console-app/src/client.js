@@ -8,7 +8,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { createResolvers } from './resolvers';
 
-const defaultServer = `${window.location.origin}`;
+const defaultServer = `${window.location.host}`;
 
 export const graphqlApi = config => {
   const { api: { server = defaultServer, port = '', path = '/api' } } = config;
