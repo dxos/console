@@ -51,11 +51,7 @@ const VersionCheck = () => {
         }
       });
 
-      console.error('ZZZZZ', current, latest);
-
       setUpgrade({ current, latest: latest !== current ? latest : undefined });
-    } else {
-      console.error('YYY', current, latest);
     }
   }, [statusResponse, wnsResponse]);
 
