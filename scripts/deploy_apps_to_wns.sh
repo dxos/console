@@ -28,7 +28,13 @@ build: yarn dist
 version: $WNS_VERSION
 EOF
   
-  yarn -s wire app build
+  yarn clean
+
+  # TODO(telackey): We need to fix `wire app build` not to bake in a path!
+  # In the meantime, use `yarn dist` which will not.
+  # yarn -s wire app build
+  yarn dist
+
   if [ -d "dist/production" ]; then
     yarn -s wire app publish --path './dist/production'
   else

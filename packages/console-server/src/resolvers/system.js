@@ -2,6 +2,7 @@
 // Copyright 2020 DxOS.org
 //
 
+import fs from 'fs';
 import moment from 'moment';
 import pick from 'lodash.pick';
 import os from 'os';
@@ -22,6 +23,15 @@ const size = (n, unit) => {
 
   return num.format(Math.round(n / (10 ** power))) + (unit ? ` ${unit}` : '');
 };
+
+const getVersionInfo = () => {
+  // TODO(telackey): Get from config (or figure out a better way to do this).
+  const versionFile = '/opt/xbox/VERSION';
+  if (fs.existsSync(versionFile)) {
+    return fs.readFileSync(versionFile, { encoding: 'UTF8' }).replace(/^\s+|\s+$/g, '')
+  }
+  return undefined;
+}
 
 /**
  * Get system inforamtion.
@@ -74,6 +84,12 @@ const getSystemInfo = async () => {
 
     nodejs: {
       version: process.version
+    },
+
+    dxos: {
+      xbox: {
+        version: getVersionInfo()
+      }
     }
   };
 };

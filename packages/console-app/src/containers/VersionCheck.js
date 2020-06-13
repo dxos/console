@@ -3,6 +3,7 @@
 //
 
 import compareVersions from 'compare-versions';
+import get from 'lodash.get';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core';
@@ -38,7 +39,7 @@ const VersionCheck = () => {
       const statusData = JSON.parse(statusRespone.system_status.json);
       const wnsData = JSON.parse(wnsResponse.wns_records.json);
 
-      const { dxos: { image: current = '0.0.0' } = {} } = statusData;
+      const current = get(statusData, 'dxos.xbox.version', '0.0.0');
 
       let latest = current;
       wnsData.forEach(({ attributes: { name, version } }) => {

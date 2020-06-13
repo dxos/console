@@ -1,5 +1,5 @@
 name: dxos.network/console-app
 displayName: DxOS Console Client
 build: yarn dist
-version: 0.0.2
-package: QmPQX2Ti5fCnmKy4z8hzsGdEHKYWxiLSesRUtPj84w7L6L
+version: 0.0.3
+package: QmQv4MGD9m6DTJtFJcoYM3b8bif16Tw7qoRhVgAj7dKo23
