@@ -28,10 +28,10 @@ const getVersionInfo = () => {
   // TODO(telackey): Get from config (or figure out a better way to do this).
   const versionFile = '/opt/xbox/VERSION';
   if (fs.existsSync(versionFile)) {
-    return fs.readFileSync(versionFile, { encoding: 'UTF8' }).replace(/^\s+|\s+$/g, '')
+    return fs.readFileSync(versionFile, { encoding: 'UTF8' }).replace(/^\s+|\s+$/g, '');
   }
   return undefined;
-}
+};
 
 /**
  * Get system inforamtion.
