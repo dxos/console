@@ -32,18 +32,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Next
 
 - [ ] Webpack and dynamic config 
-- [ ] Complete WNS functionality
-    - [ ] Logging
-    - [ ] Trigger server-side wire commands
-    - [ ] Test on device in production.
-- [ ] IPFS
-- [ ] Apps
+- [X] Complete WNS functionality
+    - [X] Logging
+    - [X] Trigger server-side wire commands
+    - [X] Test on device in production.
+- [X] IPFS
+- [X] Apps
 - [ ] Bots
-- [ ] Signal
+- [X] Signal
 - [ ] Metadata
 
 - [ ] https://github.com/standard/standardx (JSX)
 - [ ] Client/server API abstraction (error handler, etc.)
-- [ ] Port dashboard API calls (resolve config first).
+- [X] Port dashboard API calls (resolve config first).
 - [ ] Port dashboard react modules with dummy resolvers.
 - [ ] Auth for mutations.
