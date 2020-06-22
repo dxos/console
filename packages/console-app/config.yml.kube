@@ -11,7 +11,7 @@ app:
   publicUrl: '/console'
 
 api:
-  server: 'https://xbox.local'
+  server: 'https://kube.local'
   path: '/api'
   intervalLog: 5000
   pollInterval: 10000
@@ -22,19 +22,19 @@ system:
 services:
   app:
     prefix: '/app'
-    server: 'https://xbox.local'
+    server: 'https://kube.local'
 
   wns:
-    server: 'https://xbox.local/dxos/wns/api'
-    webui: 'https://xbox.local/dxos/wns/console'
+    server: 'https://kube.local/dxos/wns/api'
+    webui: 'https://kube.local/dxos/wns/console'
 
   signal:
-    server: 'wss://xbox.local/dxos/signal'
-    api: 'https://xbox.local/dxos/signal'
+    server: 'wss://kube.local/dxos/signal'
+    api: 'https://kube.local/dxos/signal'
 
   ipfs:
-    server: 'https://xbox.local/dxos/ipfs/api'
-    gateway: 'https://xbox.local/dxos/ipfs/gateway'
+    server: 'https://kube.local/dxos/ipfs/api'
+    gateway: 'https://kube.local/dxos/ipfs/gateway'
 
   wellknown:
-    endpoint: 'https://xbox.local:9000/.well-known/dxos'
+    endpoint: 'https://kube.local:9000/.well-known/dxos'
