@@ -1,7 +1,7 @@
 {
   "name": "@dxos/console",
   "version": "1.0.0-beta.0",
-  "description": "DxOS Console",
+  "description": "DXOS Console",
   "main": "index.js",
   "private": true,
   "scripts": {

@@ -1,5 +1,5 @@
 //
-// Copyright 2019 DxOS
+// Copyright 2019 DXOS.org
 //
 
 const path = require('path');
@@ -67,7 +67,7 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './public/index.html',
       templateParameters: {
-        title: 'DxOS Console'
+        title: 'DXOS Console'
       }
     }),
 

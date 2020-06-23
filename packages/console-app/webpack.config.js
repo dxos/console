@@ -1,5 +1,5 @@
 //
-// Copyright 2019 DxOS
+// Copyright 2019 DXOS.org
 //
 
 const merge = require('webpack-merge');
@@ -15,7 +15,7 @@ module.exports = merge(commonConfig, {
     new HtmlWebPackPlugin({
       template: './public/index.html',
       templateParameters: {
-        title: 'DxOS Console'
+        title: 'DXOS Console'
       }
     })
   ]

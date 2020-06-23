@@ -19,7 +19,7 @@ jobs:
       - name: Build and WNS publish
         run: |
           git config --global user.email "npm@dxos.network"
-          git config --global user.name "DxOS"
+          git config --global user.name "DXOS"
           
           yarn install
           yarn build
