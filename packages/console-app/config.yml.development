@@ -1,5 +1,5 @@
 #
-# NODE_ENV === production
+# NODE_ENV=production
 # NOTE: Set CONFIG_FILE to swap out this config file.
 #
 
