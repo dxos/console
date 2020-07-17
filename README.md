@@ -1,5 +1,5 @@
 # Console
 
-DxOS Network GraphQL server and console application.
+DXOS Kubenet GraphQL server and console application.
 
 ![Console](./docs/images/console.png)

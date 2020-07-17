@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS.org
+// Copyright 2020 DXOS.org
 //
 
 import fs from 'fs';
@@ -30,6 +30,7 @@ const getVersionInfo = () => {
   if (fs.existsSync(versionFile)) {
     return fs.readFileSync(versionFile, { encoding: 'UTF8' }).replace(/^\s+|\s+$/g, '');
   }
+
   return undefined;
 };
 

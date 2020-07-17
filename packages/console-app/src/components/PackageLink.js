@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS.org.org
+// Copyright 2020 DXOS.org.org
 //
 
 import React from 'react';

@@ -1,7 +1,7 @@
 {
   "name": "@dxos/console-app",
   "version": "1.0.0-beta.9",
-  "description": "DxOS Console Client",
+  "description": "DXOS Console Client",
   "main": "dist/es/index.js",
   "files": [
     "src/gql"
@@ -16,7 +16,7 @@
     "start": "cp -f ${CONFIG_FILE:-config.yml.development} config.yml && VERBOSE=true webpack-dev-server --mode development",
     "test": "jest --rootDir ./src --passWithNoTests --no-cache"
   },
-  "author": "DxOS.org",
+  "author": "DXOS.org",
   "license": "GPL-3.0",
   "browserslist": [
     "> 5%"
