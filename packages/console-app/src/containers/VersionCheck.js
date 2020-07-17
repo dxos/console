@@ -39,12 +39,12 @@ const VersionCheck = () => {
       const statusData = JSON.parse(statusResponse.system_status.json);
       const wnsData = JSON.parse(wnsResponse.wns_records.json);
 
-      const current = get(statusData, 'dxos.xbox.version', '0.0.0');
+      const current = get(statusData, 'dxos.kube.version', '0.0.0');
 
       let latest = current;
       wnsData.forEach(({ attributes: { name, version } }) => {
         // TODO(burdon): Filter by type (WRN?)
-        if (name.startsWith('dxos/xbox:')) {
+        if (name.startsWith('dxos/kube:')) {
           if (compareVersions(version, latest) > 0) {
             latest = version;
           }

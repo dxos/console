@@ -25,7 +25,7 @@ import AppLink from '../../../components/AppLink';
 
 const types = [
   { key: null, label: 'ALL' },
-  { key: 'wrn:xbox', label: 'XBox' },
+  { key: 'wrn:kube', label: 'Kube' },
   { key: 'wrn:resource', label: 'Resource' },
   { key: 'wrn:service', label: 'Service' },
   { key: 'wrn:app', label: 'App' },

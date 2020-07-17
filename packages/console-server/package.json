@@ -1,6 +1,6 @@
 {
   "name": "@dxos/console-server",
-  "version": "1.0.0-beta.9",
+  "version": "1.0.0-beta.15",
   "description": "DXOS Console Server",
   "main": "dist/es/index.js",
   "bin": {
@@ -18,7 +18,7 @@
     "dev": "VERBOSE=true webpack-dev-server --mode development --watch",
     "lint": "semistandard 'src/**/*.js'",
     "test": "jest --rootDir ./src --passWithNoTests --no-cache",
-    "start": "CONFIG_FILE=./config.yml BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server/main.js -- --verbose"
+    "start": "CONFIG_FILE=./config-local.yml BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server/main.js -- --verbose"
   },
   "author": "DXOS.org",
   "license": "GPL-3.0",
@@ -31,7 +31,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
     "@babel/runtime": "^7.8.7",
-    "@dxos/console-app": "^1.0.0-beta.9",
+    "@dxos/console-app": "^1.0.0-beta.15",
     "@wirelineio/wns-schema": "^0.1.1",
     "apollo-boost": "^0.4.9",
     "apollo-server-express": "^2.13.1",

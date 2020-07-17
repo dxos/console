@@ -19,8 +19,13 @@ jobs:
       - name: Build and WNS publish
         run: |
           git config --global user.email "npm@dxos.network"
+<<<<<<< HEAD
           git config --global user.name "dxos"
 
+=======
+          git config --global user.name "DXOS"
+          
+>>>>>>> burdon/fix
           yarn install
           yarn build
           yarn test

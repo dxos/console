@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   root: {}
 }));
 
-const Apps = () => {
+const Bots = () => {
   // eslint-disable-next-line
   const classes = useStyles();
   const [tab, setTab] = useState(TAB_RECORDS);
@@ -40,4 +40,4 @@ const Apps = () => {
   );
 };
 
-export default Apps;
+export default Bots;

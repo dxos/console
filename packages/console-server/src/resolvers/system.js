@@ -26,7 +26,7 @@ const size = (n, unit) => {
 
 const getVersionInfo = () => {
   // TODO(telackey): Get from config (or figure out a better way to do this).
-  const versionFile = '/opt/xbox/VERSION';
+  const versionFile = '/opt/kube/VERSION';
   if (fs.existsSync(versionFile)) {
     return fs.readFileSync(versionFile, { encoding: 'UTF8' }).replace(/^\s+|\s+$/g, '');
   }
@@ -88,7 +88,7 @@ const getSystemInfo = async () => {
     },
 
     dxos: {
-      xbox: {
+      kube: {
         version: getVersionInfo()
       }
     }

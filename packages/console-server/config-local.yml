@@ -22,19 +22,19 @@ system:
 services:
   app:
     prefix: '/app'
-    server: 'http://127.0.0.1:5999'
+    server: 'https://kube.local'
 
   wns:
-    server: 'http://127.0.0.1:9473/api'
-    webui: 'http://127.0.0.1:9473/console'
+    server: 'https://kube.local/dxos/wns/api'
+    webui: 'https://kube.local/dxos/wns/console'
 
   signal:
-    server: 'ws://127.0.0.1:4000'
-    api: 'http://127.0.0.1:4000'
+    server: 'wss://kube.local/dxos/signal'
+    api: 'https://kube.local/dxos/signal'
 
   ipfs:
-    server: 'http://127.0.0.1:5001'
-    gateway: 'http://127.0.0.1:8888/ipfs/'
+    server: 'https://kube.local/dxos/ipfs/api'
+    gateway: 'https://kube.local/dxos/ipfs/gateway'
 
   wellknown:
-    endpoint: 'http://127.0.0.1:9000/.well-known/dxos'
+    endpoint: 'https://kube.local/.well-known/dxos'

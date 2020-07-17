@@ -97,7 +97,7 @@ app.use(`${publicUrl}/lib`, express.static('./dist/client'));
 
 app.get(publicUrl, (req, res) => {
   res.render('console', {
-    title: 'Console',
+    title: 'Kubenet Console',
     container: 'root',
     config: JSON.stringify(config),
     scripts: bundles.map(bundle => ({ src: `${publicUrl}/lib/${bundle}.bundle.js` }))

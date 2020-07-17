@@ -1,10 +1,10 @@
 #
-# NODE_ENV === production
+# NODE_ENV=production
 # NOTE: Set CONFIG_FILE to swap out this config file.
 #
 
 app:
-  title: 'Console'
+  title: 'Kubenet Console'
   org: 'DXOS.org'
   theme: 'dark'
   website: 'https://dxos.org'

@@ -17,12 +17,12 @@ import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
 import moment from 'moment';
 
-const AppRecords = () => {
+const BotRecords = () => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('createTime', false);
   const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { type: 'wrn:bot' }
+    variables: { attributes: { type: 'wrn:bot' } }
   }));
 
   if (!data) {
@@ -59,4 +59,4 @@ const AppRecords = () => {
   );
 };
 
-export default AppRecords;
+export default BotRecords;
