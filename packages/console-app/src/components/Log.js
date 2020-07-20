@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
 
     '& div': {
-      fontSize: 16,
+      fontSize: 14,
       fontFamily: 'monospace',
       whiteSpace: 'nowrap'
     }

@@ -37,9 +37,9 @@ const BotRecords = () => {
         <TableRow>
           <TableCell onClick={sortBy('name')}>Identifier</TableCell>
           <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
-          <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
           <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
-          <TableCell />
+          <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
+          <TableCell size='icon' />
         </TableRow>
       </TableHead>
       <TableBody>
@@ -48,8 +48,8 @@ const BotRecords = () => {
             <TableRow key={id} size='small'>
               <TableCell monospace>{name}</TableCell>
               <TableCell monospace>{version}</TableCell>
-              <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
               <TableCell>{displayName}</TableCell>
+              <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
               <TableCell />
             </TableRow>
           );

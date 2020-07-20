@@ -5,6 +5,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import { useHistory, useParams } from 'react-router';
+
 import { makeStyles } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -17,7 +18,6 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between'
-    // backgroundColor: theme.palette.grey[100]
   },
 
   list: {

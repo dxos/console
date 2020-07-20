@@ -9,18 +9,21 @@ import MuiTableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
+  icon: {
+    width: 48
+  },
   small: {
-    width: 160
+    width: 130
   },
   medium: {
-    width: 220
+    width: 170
   },
-  icon: {
-    width: 120
+  large: {
+    width: 400
   }
 }));
 
-const TableCell = ({ children, size, monospace = false, title, ...rest }) => {
+const TableCell = ({ children, size, monospace = false, style, title, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -31,8 +34,10 @@ const TableCell = ({ children, size, monospace = false, title, ...rest }) => {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
+        verticalAlign: 'top',
         fontFamily: monospace ? 'monospace' : 'inherit',
-        fontSize: monospace ? 14 : 'inherit'
+        fontSize: monospace ? 14 : 13,
+        ...style
       }}
       title={title}
     >

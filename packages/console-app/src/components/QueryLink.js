@@ -4,37 +4,56 @@
 
 import React from 'react';
 
-import ExitToApp from '@material-ui/icons/ExitToApp';
 import Link from '@material-ui/core/Link';
+import LinkIcon from '@material-ui/icons/ExitToApp';
 
 import { getServiceUrl } from '../util/config';
 
-const QUERY = `{
-  queryRecords(attributes: [
-   { key: "name", value: { string: "%NAME%" }}]) {
-     id type name bondId createTime expiryTime owners attributes { key, value { string, json } }
-   }
-}`;
+const QUERY = `
+  query {
+    queryRecords(attributes: [{ key: "name", value: { string: "%NAME%" } }]) {
+      id
+      type
+      name
+      bondId
+      createTime
+      expiryTime
+      owners
+      attributes {
+        key
+        value {
+          string
+          json
+        }
+      }
+    }
+  }
+`;
 
 /**
  * Render link to record in WNS.
  * @param {Object} config
  * @param {string} name
  * @param {string} [text]
+ * @param {boolean} icon
  */
 const QueryLink = ({ config, name, text, icon = false }) => {
   const baseURL = getServiceUrl(config, 'wns.webui');
   const query = QUERY.replace('%NAME%', name);
+
+  // NOTE: Playground bug opens two tabs.
   const fullURL = encodeURI(`${baseURL}?query=${query}`);
 
-  if (icon) {
-    return (
-      <Link href={fullURL} target='wns'>
-        <ExitToApp />
-      </Link>
-    );
-  }
-  return <Link href={fullURL} target='wns'>{text || name}</Link>;
+  return (
+    <Link href={fullURL} target='gql'>
+      {icon && (
+        <LinkIcon />
+      )}
+      {!icon && (
+        text || name
+      )}
+    </Link>
+  );
 };
 
 export default QueryLink;
