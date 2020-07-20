@@ -22,10 +22,8 @@ Then load the app: http://localhost:8080.
 
 ## Using a KUBE
 
-If you would like to use a KUBE for testing, rather than running all the
-services locally, you can specify a different config file when starting:
-`config-kube.yml` to use `kube.local` and `config-testnet.yml` to use 
-`demo.kube.dxos.network`.
+To use your KUBE for testing, rather than running all the services locally, specify a different
+config file when starting: `config-kube.yml`, which connects to `kube.local` for all services.
 
 For example:
 
