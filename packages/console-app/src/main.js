@@ -6,7 +6,7 @@ import debug from 'debug';
 import React from 'react';
 import { render } from 'react-dom';
 
-import config from '../config.yml';
+import config from './config';
 
 import Main from './containers/Main';
 

@@ -15,7 +15,7 @@ module.exports = merge(commonConfig, {
     new HtmlWebPackPlugin({
       template: './public/index.html',
       templateParameters: {
-        title: 'DXOS Console'
+        title: 'Kubenet Console'
       }
     })
   ]

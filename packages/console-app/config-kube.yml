@@ -1,11 +1,11 @@
 #
-# NODE_ENV === production
+# NODE_ENV=development
 # NOTE: Set CONFIG_FILE to swap out this config file.
 #
 
 app:
-  title: 'Console'
-  org': 'DXOS'
+  title: 'Kubnet Console'
+  org': 'DXOS.org'
   theme: 'dark'
   website: 'https://dxos.org'
   publicUrl: '/console'
