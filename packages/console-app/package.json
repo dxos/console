@@ -10,7 +10,7 @@
     "analyzer": "webpack --config webpack-analyzer.config.js",
     "build:babel": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --source-maps inline",
     "build": "yarn dist",
-    "dist": "yarn clean && CONFIG_FILE=config-production.yml yarn build:babel && webpack",
+    "dist": "yarn clean && yarn build:babel && CONFIG_FILE=config-production.yml webpack",
     "clean": "rm -rf dist",
     "lint": "semistandard 'src/**/*.js'",
     "start": "CONFIG_FILE=${CONFIG_FILE:-config-testnet.yml} VERBOSE=true webpack-dev-server --mode development",
