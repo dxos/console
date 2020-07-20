@@ -4,7 +4,7 @@ Apollo GraphQL client.
 
 ## Usage
 
-Use the following command to run the server at: http://localhost:4000
+Use the following command to run the server at: http://localhost:9004
 
 ```bash
   yarn start  
@@ -30,7 +30,7 @@ To build the client and serve it directly from the server:
   yarn start
 ```
 
-Then open the app at: http://localhost:4000/console
+Then open the app at: http://localhost:9004/console
 
 
 ## Production

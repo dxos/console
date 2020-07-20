@@ -18,7 +18,7 @@
     "dev": "VERBOSE=true webpack-dev-server --mode development --watch",
     "lint": "semistandard 'src/**/*.js'",
     "test": "jest --rootDir ./src --passWithNoTests --no-cache",
-    "start": "CONFIG_FILE=./config.yml BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server/main.js -- --verbose"
+    "start": "CONFIG_FILE=${CONFIG_FILE=./config.yml} BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server/main.js -- --verbose"
   },
   "author": "DXOS.org",
   "license": "GPL-3.0",

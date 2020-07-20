@@ -11,8 +11,8 @@ app:
   publicUrl: '/console'
 
 api:
+  server: 'http://127.0.0.1:9004'
   path: '/api'
-  port: 9004
   intervalLog: 5000
   pollInterval: 10000
 
