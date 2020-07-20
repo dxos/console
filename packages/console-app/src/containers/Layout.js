@@ -55,6 +55,7 @@ const Layout = ({ children }) => {
     <FullScreen>
       <div className={classes.root}>
         <AppBar config={config} />
+
         <div className={classes.container}>
           <div className={classes.sidebar}>
             <Sidebar modules={modules} />
@@ -63,6 +64,7 @@ const Layout = ({ children }) => {
             {children}
           </div>
         </div>
+
         <div className={classes.footer}>
           <StatusBar />
         </div>

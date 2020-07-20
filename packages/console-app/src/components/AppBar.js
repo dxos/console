@@ -11,27 +11,31 @@ import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import GraphQLIcon from '@material-ui/icons/Adb';
 
-import DxOSIcon from '../icons/DXOS';
+import DXOSIcon from '../icons/DXOS';
 import { graphqlApi } from '../client';
 
 const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.denseToolbar,
 
   logo: {
-    paddingBottom: 2,
-    marginTop: 4,
     marginRight: theme.spacing(2),
-    color: '#333',
+    color: theme.palette.grey[800],
 
     '& svg': {
-      width: 64,
-      height: 32
+      width: 100,
+      height: 48
     }
+  },
+
+  logoLink: {
+    lineHeight: 0
   },
 
   title: {
     display: 'flex',
-    flex: 1
+    flex: 1,
+    marginTop: 2,
+    color: theme.palette.grey[800]
   },
 
   link: {
@@ -46,9 +50,9 @@ const AppBar = ({ config }) => {
     <>
       <MuiAppBar position='fixed'>
         <Toolbar>
-          <Link href='/'>
+          <Link classes={{ root: classes.logoLink }} href='/'>
             <div className={classes.logo}>
-              <DxOSIcon />
+              <DXOSIcon />
             </div>
           </Link>
           <div className={classes.title}>
