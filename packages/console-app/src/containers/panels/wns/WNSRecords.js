@@ -83,13 +83,13 @@ const WNSRecords = ({ type }) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell onClick={sortBy('type')} size='small'>Type</TableCell>
+          <TableCell onClick={sortBy('type')} size='medium'>Type</TableCell>
           <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell size='icon'>GraphQL</TableCell>
           <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
-          <TableCell onClick={sortBy('package')} size='small'>Package</TableCell>
+          <TableCell onClick={sortBy('package')}>Package</TableCell>
+          <TableCell size='icon' />
         </TableRow>
       </TableHead>
       <TableBody>
@@ -117,15 +117,19 @@ const WNSRecords = ({ type }) => {
                   {appLink || name}
                 </TableCell>
                 <TableCell>
-                  <QueryLink config={config} name={name} icon />
+                  {displayName || service || description}
                 </TableCell>
-                <TableCell>{displayName || service || description}</TableCell>
                 <TableCell monospace>
                   {verLink || version}
                 </TableCell>
-                <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
+                <TableCell>
+                  {moment.utc(createTime).fromNow()}
+                </TableCell>
                 <TableCell monospace>
                   {pkgLink}
+                </TableCell>
+                <TableCell>
+                  <QueryLink config={config} name={name} icon />
                 </TableCell>
               </TableRow>
             );

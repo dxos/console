@@ -13,9 +13,12 @@ import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
 
 import LogPoller from '../../../components/LogPoller';
+
+import IPFSNetwork from './IPFSNetwork';
 import IPFSStatus from './IPFSStatus';
 
 const TAB_STATUS = 'status';
+const TAB_NETWORK = 'network';
 const TAB_LOG = 'log';
 const TAB_SWARM_LOG = 'swarm';
 
@@ -47,6 +50,7 @@ const IPFS = () => {
         <Toolbar>
           <Tabs value={tab} onChange={(_, value) => setTab(value)}>
             <Tab value={TAB_STATUS} label='Status' />
+            <Tab value={TAB_NETWORK} label='Network' />
             <Tab value={TAB_LOG} label='Log' />
             <Tab value={TAB_SWARM_LOG} label='Connection Log' />
           </Tabs>
@@ -55,23 +59,27 @@ const IPFS = () => {
     >
       <TabContext value={tab}>
         {tab === TAB_STATUS && (
-          <div className={classes.panel}>
-            <Paper className={classes.paper}>
-              <IPFSStatus />
-            </Paper>
-          </div>
+          <Paper className={classes.paper}>
+            <IPFSStatus />
+          </Paper>
+        )}
+
+        {tab === TAB_NETWORK && (
+          <Paper className={classes.paper}>
+            <IPFSNetwork />
+          </Paper>
         )}
 
         {tab === TAB_LOG && (
-          <div className={classes.panel}>
+          <Paper className={classes.paper}>
             <LogPoller service='ipfs' />
-          </div>
+          </Paper>
         )}
 
         {tab === TAB_SWARM_LOG && (
-          <div className={classes.panel}>
+          <Paper className={classes.paper}>
             <LogPoller service='ipfs-swarm-connect' />
-          </div>
+          </Paper>
         )}
       </TabContext>
     </Panel>

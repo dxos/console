@@ -25,7 +25,7 @@ import Config from './panels/Config';
 import IPFS from './panels/ipfs/IPFS';
 import Metadata from './panels/Metadata';
 import Signaling from './panels/signal/Signaling';
-import Status from './panels/Status';
+import System from './panels/system/Status';
 import WNS from './panels/wns/WNS';
 
 // Global error handler.
@@ -52,7 +52,7 @@ const Main = ({ config }) => {
                   <Route path='/ipfs' component={IPFS} />
                   <Route path='/metadata' component={Metadata} />
                   <Route path='/signaling' component={Signaling} />
-                  <Route path='/status' component={Status} />
+                  <Route path='/system' component={System} />
                   <Route path='/wns' component={WNS} />
                 </Layout>
               </Route>

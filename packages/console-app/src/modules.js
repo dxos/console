@@ -14,8 +14,8 @@ import ServicesIcon from '@material-ui/icons/Storage';
 export default {
   services: [
     {
-      path: '/status',
-      title: 'Status',
+      path: '/system',
+      title: 'System',
       icon: StatsIcon
     },
     {
