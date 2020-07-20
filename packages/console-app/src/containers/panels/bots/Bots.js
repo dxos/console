@@ -11,8 +11,10 @@ import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
 
 import BotRecords from './BotRecords';
+import LogPoller from '../../../components/LogPoller';
 
 const TAB_RECORDS = 'records';
+const TAB_LOG = 'log';
 
 const useStyles = makeStyles(theme => ({
   root: {}
@@ -29,12 +31,17 @@ const Bots = () => {
         <Toolbar>
           <Tabs value={tab} onChange={(_, value) => setTab(value)}>
             <Tab value={TAB_RECORDS} label='Records' />
+            <Tab value={TAB_LOG} label='Log' />
           </Tabs>
         </Toolbar>
       }
     >
       {tab === TAB_RECORDS && (
         <BotRecords />
+      )}
+
+      {tab === TAB_LOG && (
+        <LogPoller service='bot-factory' />
       )}
     </Panel>
   );
