@@ -56,7 +56,7 @@ const Main = ({ config }) => {
                   <Route path='/wns' component={WNS} />
                 </Layout>
               </Route>
-              <Redirect to='/status' />
+              <Redirect to='/system' />
             </Switch>
           </HashRouter>
         </ThemeProvider>
