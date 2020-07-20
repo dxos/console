@@ -20,6 +20,20 @@ Then start the Webpack devserver.
 
 Then load the app: http://localhost:8080.
 
+## Using a KUBE
+
+If you would like to use a KUBE for testing, rather than running all the
+services locally, you can specify a different config file when starting:
+`config-kube.yml` to use `kube.local` and `config-testnet.yml` to use 
+`demo.kube.dxos.network`.
+
+For example:
+
+```javascript
+  cd packages/console-app
+  CONFIG_FILE=config-kube.yml yarn start
+```
+
 ## Deploy
 
 ```bash

@@ -37,4 +37,4 @@ services:
     gateway: 'https://kube.local/dxos/ipfs/gateway'
 
   wellknown:
-    endpoint: 'https://kube.local:9000/.well-known/dxos'
+    endpoint: 'https://kube.local/.well-known/dxos'
