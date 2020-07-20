@@ -32,7 +32,7 @@ const SignalServers = () => {
         <TableHead>
           <TableRow>
             <TableCell>Server</TableCell>
-            <TableCell>Peers</TableCell>
+            <TableCell size='small' s>Peers</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

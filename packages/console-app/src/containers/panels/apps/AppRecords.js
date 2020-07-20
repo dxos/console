@@ -30,14 +30,12 @@ const AppRecords = () => {
 
   // TODO(telackey): Does this also need an interval?
   const ipfsResponse = useQueryStatusReducer(useQuery(IPFS_STATUS));
-
   if (!appResponse || !ipfsResponse) {
     return null;
   }
 
   const appData = JSON.parse(appResponse.wns_records.json);
   const ipfsData = JSON.parse(ipfsResponse.ipfs_status.json);
-
   const localRefs = new Set(ipfsData.refs.local);
 
   return (
@@ -45,22 +43,24 @@ const AppRecords = () => {
       <TableHead>
         <TableRow>
           <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
+          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
-          <TableCell size='icon'>Downloaded</TableCell>
+          <TableCell size='icon' />
         </TableRow>
       </TableHead>
       <TableBody>
-        {appData.sort(sorter).map(({ id, name, version, createTime, attributes: { displayName, publicUrl, package: hash } }) => {
+        {appData.sort(sorter).map(({ id, name, version, createTime, attributes: { displayName, package: hash } }) => {
           return (
             <TableRow key={id} size='small'>
               <TableCell monospace>
                 <AppLink config={config} name={name} />
               </TableCell>
-              <TableCell>{displayName}</TableCell>
               <TableCell monospace>
                 <AppLink config={config} name={name} version={version} text={version} />
+              </TableCell>
+              <TableCell>
+                {displayName}
               </TableCell>
               <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
               <TableCell>

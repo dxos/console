@@ -109,14 +109,16 @@ const IPFSStatus = () => {
     displayServers.push({ name: 'None' });
   }
 
+  // TODO(burdon): Get Address (currenlty truncated).
+
   return (
     <Table stickyHeader size='small' className={classes.table}>
       <TableHead>
         <TableRow>
           <TableCell>Identifier</TableCell>
           <TableCell size='medium'>Description</TableCell>
-          <TableCell size='icon'>Connected</TableCell>
           <TableCell>Address</TableCell>
+          <TableCell size='small'>Connected</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -125,10 +127,10 @@ const IPFSStatus = () => {
             <TableCell>{name}</TableCell>
             <TableCell>{description}</TableCell>
             <TableCell>
-              <BooleanIcon yes={connected} />
+              {ipfs.addresses}
             </TableCell>
             <TableCell>
-              {ipfs.addresses}
+              <BooleanIcon yes={connected} />
             </TableCell>
           </TableRow>
         ))}

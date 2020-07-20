@@ -9,8 +9,7 @@ const webpack = require('webpack');
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
-// TODO(burdon): Remove.
-const STACK_CONFIG = process.env.CONFIG || 'default';
+const CONFIG_FILE = path.relative('./src', process.env.CONFIG_FILE || 'config-local.yml');
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -76,8 +75,8 @@ module.exports = {
 
     // Define the build config file based on the target.
     // https://webpack.js.org/plugins/normal-module-replacement-plugin
-    new webpack.NormalModuleReplacementPlugin(/(.*)__STACK_CONFIG__/, (resource) => {
-      resource.request = resource.request.replace(/__STACK_CONFIG__/, STACK_CONFIG);
+    new webpack.NormalModuleReplacementPlugin(/(.*)__CONFIG_FILE__/, (resource) => {
+      resource.request = resource.request.replace(/__CONFIG_FILE__/, CONFIG_FILE);
     }),
 
     // https://www.npmjs.com/package/webpack-version-file-plugin

@@ -1,34 +1,33 @@
 //
-// Copyright 2020 DXOS.org.org
+// Copyright 2020 DXOS.org
 //
 
 import React from 'react';
 
-import ExitToApp from '@material-ui/icons/ExitToApp';
 import Link from '@material-ui/core/Link';
+import LinkIcon from '@material-ui/icons/ExitToApp';
 
 import { getServiceUrl } from '../util/config';
 
-// TODO(burdon): print actual GRAPHQL query.
 const QUERY = `
-query {
-  queryRecords(attributes: [{ key: "name", value: { string: "%NAME%" } }]) {
-    id
-    type
-    name
-    bondId
-    createTime
-    expiryTime
-    owners
-    attributes {
-      key
-      value {
-        string
-        json
+  query {
+    queryRecords(attributes: [{ key: "name", value: { string: "%NAME%" } }]) {
+      id
+      type
+      name
+      bondId
+      createTime
+      expiryTime
+      owners
+      attributes {
+        key
+        value {
+          string
+          json
+        }
       }
     }
   }
-}
 `;
 
 /**
@@ -42,20 +41,18 @@ const QueryLink = ({ config, name, text, icon = false }) => {
   const baseURL = getServiceUrl(config, 'wns.webui');
   const query = QUERY.replace('%NAME%', name);
 
-  // TODO(burdon): This doesn't work.
+  // NOTE: Playground bug opens two tabs.
   const fullURL = encodeURI(`${baseURL}?query=${query}`);
 
-  console.log(fullURL);
-
-  if (icon) {
-    return (
-      <Link href={fullURL} target='WNS_GraphQL'>
-        <ExitToApp />
-      </Link>
-    );
-  }
   return (
-    <Link href={fullURL} target='wns'>{text || name}</Link>
+    <Link href={fullURL} target='gql'>
+      {icon && (
+        <LinkIcon />
+      )}
+      {!icon && (
+        text || name
+      )}
+    </Link>
   );
 };
 

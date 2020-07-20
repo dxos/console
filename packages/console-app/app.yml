@@ -1,5 +1,5 @@
 name: dxos.network/console-app
-displayName: DXOS Console Client
+displayName: Kubenet Console Client
 build: yarn dist
 version: 0.0.6
 package: QmZpM8u7ZUfQpXLgtdB1ug7nGExUrXhebtTSfSBPrRwcLX

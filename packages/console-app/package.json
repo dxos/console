@@ -1,7 +1,7 @@
 {
   "name": "@dxos/console-app",
-  "version": "1.0.0-beta.17",
-  "description": "DXOS Console Client",
+  "version": "1.0.0-beta.19",
+  "description": "Kubenet Console Client",
   "main": "dist/es/index.js",
   "files": [
     "src/gql"
@@ -10,10 +10,10 @@
     "analyzer": "webpack --config webpack-analyzer.config.js",
     "build:babel": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --source-maps inline",
     "build": "yarn dist",
-    "dist": "yarn clean && cp -f config-production.yml config.yml && yarn build:babel && webpack",
+    "dist": "yarn clean && yarn build:babel && CONFIG_FILE=config-production.yml webpack",
     "clean": "rm -rf dist",
     "lint": "semistandard 'src/**/*.js'",
-    "start": "cp -f ${CONFIG_FILE:-config-local.yml} config.yml && VERBOSE=true webpack-dev-server --mode development",
+    "start": "CONFIG_FILE=${CONFIG_FILE:-config-testnet.yml} VERBOSE=true webpack-dev-server --mode development",
     "test": "jest --rootDir ./src --passWithNoTests --no-cache"
   },
   "author": "DXOS.org",

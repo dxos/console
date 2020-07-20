@@ -17,6 +17,9 @@ const useStyles = makeStyles(() => ({
   },
   medium: {
     width: 170
+  },
+  large: {
+    width: 400
   }
 }));
 

@@ -85,8 +85,8 @@ const WNSRecords = ({ type }) => {
         <TableRow>
           <TableCell onClick={sortBy('type')} size='medium'>Type</TableCell>
           <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
+          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
           <TableCell onClick={sortBy('package')}>Package</TableCell>
           <TableCell size='icon' />
@@ -116,11 +116,11 @@ const WNSRecords = ({ type }) => {
                 <TableCell monospace>
                   {appLink || name}
                 </TableCell>
-                <TableCell>
-                  {displayName || service || description}
-                </TableCell>
                 <TableCell monospace>
                   {verLink || version}
+                </TableCell>
+                <TableCell>
+                  {displayName || service || description}
                 </TableCell>
                 <TableCell>
                   {moment.utc(createTime).fromNow()}

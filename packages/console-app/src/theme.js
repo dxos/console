@@ -14,7 +14,7 @@ export const createTheme = (theme) => createMuiTheme({
   // https://stackoverflow.com/questions/60567673/reactjs-material-ui-theme-mixins-toolbar-offset-is-not-adapting-when-toolbar
   mixins: {
     denseToolbar: {
-      minHeight: 48
+      height: 48
     }
   },
 
