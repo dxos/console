@@ -1,17 +1,17 @@
 #
-# NODE_ENV=production
+# NODE_ENV === production
 # NOTE: Set CONFIG_FILE to swap out this config file.
 #
 
 app:
-  title: 'Kubenet Console'
-  org': 'DXOS.org'
+  title: 'Console'
+  org': 'DXOS'
   theme: 'dark'
   website: 'https://dxos.org'
   publicUrl: '/console'
 
 api:
-  server: 'https://kube.local'
+  server: 'http://127.0.0.1:9004'
   path: '/api'
   intervalLog: 5000
   pollInterval: 10000
@@ -22,19 +22,19 @@ system:
 services:
   app:
     prefix: '/app'
-    server: 'https://kube.local'
+    server: 'http://127.0.0.1:5999'
 
   wns:
-    server: 'https://kube.local/dxos/wns/api'
-    webui: 'https://kube.local/dxos/wns/console'
+    server: 'http://127.0.0.1:9473/api'
+    webui: 'http://127.0.0.1:9473/console'
 
   signal:
-    server: 'wss://kube.local/dxos/signal'
-    api: 'https://kube.local/dxos/signal'
+    server: 'ws://127.0.0.1:4000'
+    api: 'http://127.0.0.1:4000'
 
   ipfs:
-    server: 'https://kube.local/dxos/ipfs/api'
-    gateway: 'https://kube.local/dxos/ipfs/gateway'
+    server: 'http://127.0.0.1:5001'
+    gateway: 'http://127.0.0.1:8888/ipfs/'
 
   wellknown:
-    endpoint: 'https://kube.local:9000/.well-known/dxos'
+    endpoint: 'http://127.0.0.1:9000/.well-known/dxos'

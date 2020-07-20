@@ -30,7 +30,7 @@ To build the client and serve it directly from the server:
   yarn start
 ```
 
-Then open the app at: http://localhost:4000/console
+Then open the app at: http://localhost:9004/console
 
 
 ## Production

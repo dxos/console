@@ -30,6 +30,7 @@ const types = [
   { key: 'wrn:service', label: 'Service' },
   { key: 'wrn:app', label: 'App' },
   { key: 'wrn:bot', label: 'Bot' },
+  { key: 'wrn:bot-factory', label: 'Bot Factory' },
   { key: 'wrn:type', label: 'Type' }
 ];
 
