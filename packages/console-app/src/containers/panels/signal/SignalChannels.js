@@ -17,29 +17,33 @@ import SIGNAL_STATUS from '../../../gql/signal_status.graphql';
 
 import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
-const SignalServers = () => {
+const SignalChannels = () => {
   const { config } = useContext(ConsoleContext);
   const data = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { pollInterval: config.api.intervalQuery }));
   if (!data) {
     return null;
   }
 
-  const { json: { signals = [] } } = data.signal_status;
+  const { json: { channels = [] } } = data.signal_status;
 
   return (
     <TableContainer>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Signal Server</TableCell>
+            <TableCell>Channel</TableCell>
+            <TableCell size='small'>Participants</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {signals.map((signal) => {
+          {channels.map(({ channel, peers = [] }) => {
             return (
-              <TableRow key={signal} size='small'>
+              <TableRow key={channel} size='small'>
                 <TableCell monospace>
-                  {signal}
+                  {channel}
+                </TableCell>
+                <TableCell monospace>
+                  {peers.length}
                 </TableCell>
               </TableRow>
             );
@@ -50,4 +54,4 @@ const SignalServers = () => {
   );
 };
 
-export default SignalServers;
+export default SignalChannels;
