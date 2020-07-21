@@ -25,7 +25,7 @@ import Config from './panels/Config';
 import IPFS from './panels/ipfs/IPFS';
 import Metadata from './panels/Metadata';
 import Signaling from './panels/signal/Signaling';
-import System from './panels/system/Status';
+import System from './panels/system/System';
 import WNS from './panels/wns/WNS';
 
 // Global error handler.
