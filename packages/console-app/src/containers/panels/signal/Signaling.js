@@ -13,9 +13,11 @@ import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
 import LogPoller from '../../../components/LogPoller';
 
+import SignalChannels from './SignalChannels';
 import SignalServers from './SignalServers';
 
-const TAB_STATUS = 'status';
+const TAB_NETWORK = 'servers';
+const TAB_CHANNELS = 'channels';
 const TAB_LOG = 'log';
 
 const useStyles = makeStyles(() => ({
@@ -38,24 +40,33 @@ const useStyles = makeStyles(() => ({
 
 const Signal = () => {
   const classes = useStyles();
-  const [tab, setTab] = useState(TAB_STATUS);
+  const [tab, setTab] = useState(TAB_NETWORK);
 
   return (
     <Panel
       toolbar={
         <Toolbar>
           <Tabs value={tab} onChange={(_, value) => setTab(value)}>
-            <Tab value={TAB_STATUS} label='Status' />
+            <Tab value={TAB_NETWORK} label='Network' />
+            <Tab value={TAB_CHANNELS} label='Channels' />
             <Tab value={TAB_LOG} label='Log' />
           </Tabs>
         </Toolbar>
       }
     >
       <TabContext value={tab}>
-        {tab === TAB_STATUS && (
+        {tab === TAB_NETWORK && (
           <div className={classes.panel}>
             <Paper className={classes.paper}>
               <SignalServers />
+            </Paper>
+          </div>
+        )}
+
+        {tab === TAB_CHANNELS && (
+          <div className={classes.panel}>
+            <Paper className={classes.paper}>
+              <SignalChannels />
             </Paper>
           </div>
         )}
