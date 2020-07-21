@@ -2,7 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
-import React from 'react';
+import React, { useContext } from 'react';
+import { useQuery } from '@apollo/react-hooks';
 
 import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -11,13 +12,20 @@ import TableRow from '@material-ui/core/TableRow';
 
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
-import { useSorter } from '../../../hooks';
+import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
+import SERVICE_STATUS from '../../../gql/service_status.graphql';
 
 const format = (value, unit, symbol = '') => Math.floor(value / unit).toLocaleString() + symbol;
 
-const SignalServers = ({ services }) => {
+const SignalServers = () => {
+  const { config } = useContext(ConsoleContext);
   const [sorter] = useSorter('name');
+  const serviceResponse = useQueryStatusReducer(useQuery(SERVICE_STATUS, { pollInterval: config.api.intervalQuery }));
+  if (!serviceResponse) {
+    return null;
+  }
 
+  const services = JSON.parse(serviceResponse.service_status.json);
   const total = services.reduce((value, { memory }) => value + memory, 0);
 
   return (

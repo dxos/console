@@ -9,7 +9,6 @@ import RegistryIcon from '@material-ui/icons/Language';
 import IPFSIcon from '@material-ui/icons/GraphicEq';
 import ConfigIcon from '@material-ui/icons/Settings';
 import SignalIcon from '@material-ui/icons/Traffic';
-import ServicesIcon from '@material-ui/icons/Storage';
 
 export default {
   services: [
@@ -46,11 +45,6 @@ export default {
   ],
 
   settings: [
-    {
-      path: '/metadata',
-      title: 'Metadata',
-      icon: ServicesIcon
-    },
     {
       path: '/config',
       title: 'Config',
