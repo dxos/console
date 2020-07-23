@@ -109,11 +109,7 @@ const StatusBar = () => {
         </div>
 
         <div className={classes.center}>
-          <div>{name} ({version})</div>
-          <div>{moment(buildDate).format('L')}</div>
-        </div>
-
-        <div className={classes.center}>
+          <div>{name} [{version} {moment(buildDate).format('L')}]</div>
           <VersionCheck />
         </div>
 

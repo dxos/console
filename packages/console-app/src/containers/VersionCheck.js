@@ -7,6 +7,7 @@ import get from 'lodash.get';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 
 import SYSTEM_STATUS from '../gql/system_status.graphql';
 import WNS_RECORDS from '../gql/wns_records.graphql';
@@ -14,6 +15,8 @@ import WNS_RECORDS from '../gql/wns_records.graphql';
 import { useQueryStatusReducer } from '../hooks';
 
 const CHECK_INTERVAL = 5 * 60 * 1000;
+
+const UPDATE_LINK = 'https://github.com/dxos/kube#updating-the-system';
 
 const useStyles = makeStyles(theme => ({
   update: {
@@ -59,10 +62,13 @@ const VersionCheck = () => {
   return (
     <>
       {current && (
-        <div>SYS: {current}</div>
+        <div>System {current}</div>
       )}
+
       {latest && (
-        <div className={classes.update}>(LATEST: {latest})</div>
+        <div className={classes.update}>
+          (<Link href={UPDATE_LINK} target='github' title='Updating your KUBE'>LATEST: {latest}</Link>)
+        </div>
       )}
     </>
   );
