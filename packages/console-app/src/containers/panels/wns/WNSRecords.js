@@ -83,12 +83,12 @@ const WNSRecords = ({ type }) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell onClick={sortBy('type')} size='medium'>Type</TableCell>
-          <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
-          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
+          <TableCell onClick={sortBy('attributes.type')} size='medium'>Type</TableCell>
+          <TableCell onClick={sortBy('names[0]')}>Identifier</TableCell>
+          <TableCell onClick={sortBy('attributes.version')} size='small'>Version</TableCell>
+          <TableCell onClick={sortBy('attributes.name')}>Name</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
-          <TableCell onClick={sortBy('package')}>Package</TableCell>
+          <TableCell onClick={sortBy('attributes.package')}>Package</TableCell>
           <TableCell size='icon' />
         </TableRow>
       </TableHead>
@@ -135,7 +135,7 @@ const WNSRecords = ({ type }) => {
                   {pkgLink}
                 </TableCell>
                 <TableCell>
-                  <QueryLink config={config} name={name} icon />
+                  <QueryLink config={config} id={id} icon />
                 </TableCell>
               </TableRow>
             );

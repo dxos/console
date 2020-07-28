@@ -25,7 +25,7 @@ const AppRecords = () => {
   const [sorter, sortBy] = useSorter('createTime', false);
   const appResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { attributes: { type: 'wrn:app' } }
+    variables: { attributes: { type: 'app' } }
   }));
 
   // TODO(telackey): Does this also need an interval?
@@ -42,22 +42,26 @@ const AppRecords = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
-          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
+          <TableCell onClick={sortBy('names[0]')}>Identifier</TableCell>
+          <TableCell onClick={sortBy('attributes.version')} size='small'>Version</TableCell>
+          <TableCell onClick={sortBy('attributes.name')}>Name</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
           <TableCell size='icon' />
         </TableRow>
       </TableHead>
       <TableBody>
-        {appData.sort(sorter).map(({ id, name, version, createTime, attributes: { displayName, package: hash } }) => {
+        {appData.sort(sorter).map(({ id, names, createTime, attributes: { name: displayName, version, package: hash } }) => {
           return (
             <TableRow key={id} size='small'>
               <TableCell monospace>
-                <AppLink config={config} name={name} />
+                {names.map(name => <>
+                  <AppLink config={config} name={name} />
+                  <br />
+                  </>
+                )}
               </TableCell>
               <TableCell monospace>
-                <AppLink config={config} name={name} version={version} text={version} />
+                {version}
               </TableCell>
               <TableCell>
                 {displayName}

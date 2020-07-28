@@ -11,7 +11,7 @@ import { getServiceUrl } from '../util/config';
 
 const QUERY = `
   query {
-    getRecordsByIds([ "%ID%" ]) {
+    getRecordsByIds(ids: [ "%ID%" ]) {
       id
       names
       bondId
