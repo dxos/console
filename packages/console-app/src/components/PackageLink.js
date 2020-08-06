@@ -23,7 +23,7 @@ const PackageLink = ({ config, type, pkg, text }) => {
 
   // eslint-disable-next-line default-case
   switch (type) {
-    case 'wrn:bot': {
+    case 'bot': {
       const packageLinks = [];
       Object.keys(pkg).forEach((platform, i) => {
         Object.keys(pkg[platform]).forEach(arch => {

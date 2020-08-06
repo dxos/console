@@ -25,13 +25,13 @@ import AppLink from '../../../components/AppLink';
 
 const types = [
   { key: null, label: 'ALL' },
-  { key: 'wrn:kube', label: 'Kube' },
-  { key: 'wrn:resource', label: 'Resource' },
-  { key: 'wrn:service', label: 'Service' },
-  { key: 'wrn:app', label: 'App' },
-  { key: 'wrn:bot', label: 'Bot' },
-  { key: 'wrn:bot-factory', label: 'Bot Factory' },
-  { key: 'wrn:type', label: 'Type' }
+  { key: 'kube', label: 'Kube' },
+  { key: 'resource', label: 'Resource' },
+  { key: 'service', label: 'Service' },
+  { key: 'app', label: 'App' },
+  { key: 'bot', label: 'Bot' },
+  { key: 'bot-factory', label: 'Bot Factory' },
+  { key: 'type', label: 'Type' }
 ];
 
 const useStyles = makeStyles(theme => ({
@@ -83,41 +83,47 @@ const WNSRecords = ({ type }) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell onClick={sortBy('type')} size='medium'>Type</TableCell>
-          <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
-          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
+          <TableCell onClick={sortBy('attributes.type')} size='medium'>Type</TableCell>
+          <TableCell onClick={sortBy('names[0]')}>Identifier</TableCell>
+          <TableCell onClick={sortBy('attributes.version')} size='small'>Version</TableCell>
+          <TableCell onClick={sortBy('attributes.name')}>Name</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
-          <TableCell onClick={sortBy('package')}>Package</TableCell>
+          <TableCell onClick={sortBy('attributes.package')}>Package</TableCell>
           <TableCell size='icon' />
         </TableRow>
       </TableHead>
       <TableBody>
         {records.sort(sorter)
           .map((record) => {
-            const { id, type, name, version, createTime, attributes: { displayName, description, service, package: pkg } } = record;
+            const { id, names, createTime, attributes: { type, name: displayName, version, description, service, package: pkg } } = record;
 
             let pkgLink;
-            let appLink;
-            let verLink;
+            let appLinks;
 
             if (pkg) {
               pkgLink = (<PackageLink config={config} type={type} pkg={pkg} />);
             }
 
-            if (type === 'wrn:app') {
-              appLink = (<AppLink config={config} name={name} />);
-              verLink = (<AppLink config={config} name={name} version={version} text={version} />);
+            if (type === 'app') {
+              appLinks = (
+                <>
+                  {names.map(name => <>
+                    <AppLink config={config} name={name} />
+                    <br />
+                    </>
+                  )}
+                </>
+              );
             }
 
             return (
               <TableRow key={id} size='small'>
                 <TableCell monospace>{type}</TableCell>
                 <TableCell monospace>
-                  {appLink || name}
+                  {appLinks || names}
                 </TableCell>
                 <TableCell monospace>
-                  {verLink || version}
+                  {version}
                 </TableCell>
                 <TableCell>
                   {displayName || service || description}
@@ -129,7 +135,7 @@ const WNSRecords = ({ type }) => {
                   {pkgLink}
                 </TableCell>
                 <TableCell>
-                  <QueryLink config={config} name={name} icon />
+                  <QueryLink config={config} id={id} icon />
                 </TableCell>
               </TableRow>
             );
