@@ -25,13 +25,16 @@ import AppLink from '../../../components/AppLink';
 
 const types = [
   { key: null, label: 'ALL' },
-  { key: 'kube', label: 'Kube' },
-  { key: 'resource', label: 'Resource' },
-  { key: 'service', label: 'Service' },
-  { key: 'app', label: 'App' },
-  { key: 'bot', label: 'Bot' },
-  { key: 'bot-factory', label: 'Bot Factory' },
-  { key: 'type', label: 'Type' }
+  { key: 'wrn://dxos/type/application/web', label: 'App' },
+  { key: 'wrn://dxos/type/application/bot', label: 'Bot' },
+  { key: 'wrn://dxos/type/device/kube', label: 'Kube' },
+  { key: 'wrn://dxos/type/service/bot-factory', label: 'Bot Factory' },
+  { key: 'wrn://dxos/type/service/ipfs', label: 'IPFS' },
+  { key: 'wrn://dxos/type/service/ipfs-gateway', label: 'IPFS Gateway' },
+  { key: 'wrn://dxos/type/service/signal', label: 'Signal' },
+  { key: 'wrn://dxos/type/service/stun', label: 'STUN' },
+  { key: 'wrn://dxos/type/service/turn', label: 'TURN' },
+  { key: 'type', label: 'Type' },
 ];
 
 const useStyles = makeStyles(theme => ({
@@ -84,7 +87,7 @@ const WNSRecords = ({ type }) => {
       <TableHead>
         <TableRow>
           <TableCell onClick={sortBy('attributes.type')} size='medium'>Type</TableCell>
-          <TableCell onClick={sortBy('names[0]')}>Identifier</TableCell>
+          <TableCell onClick={sortBy('names[0]')}>Registered Names</TableCell>
           <TableCell onClick={sortBy('attributes.version')} size='small'>Version</TableCell>
           <TableCell onClick={sortBy('attributes.name')}>Name</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
@@ -104,11 +107,11 @@ const WNSRecords = ({ type }) => {
               pkgLink = (<PackageLink config={config} type={type} pkg={pkg} />);
             }
 
-            if (type === 'app') {
+            if (type === 'wrn://dxos/type/application/web') {
               appLinks = (
                 <>
-                  {names.map(name => <>
-                    <AppLink config={config} name={name} />
+                  {names.map(wrn => <>
+                    <AppLink config={config} wrn={wrn} />
                     <br />
                     </>
                   )}

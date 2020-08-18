@@ -8,7 +8,7 @@ import Link from '@material-ui/core/Link';
 
 import { getServiceUrl } from '../util/config';
 
-const getAppUrl = (config, { name, version }) => {
+const getAppUrl = (config, { wrn }) => {
   const base = getServiceUrl(config, 'app.server');
   const pathComponents = [base];
 
@@ -21,11 +21,7 @@ const getAppUrl = (config, { name, version }) => {
     pathComponents.push(prefix.substring(1));
   }
 
-  if (version) {
-    pathComponents.push(`${name}@${version}`);
-  } else {
-    pathComponents.push(name);
-  }
+  pathComponents.push(encodeURIComponent(wrn));
   return `${pathComponents.join('/')}/`;
 };
 
@@ -34,11 +30,10 @@ const getAppUrl = (config, { name, version }) => {
  * @param {Object} config
  * @param {string} name
  * @param {string} [text]
- * @param {string} [version]
  */
-const AppLink = ({ config, name, version, text }) => {
-  const fullURL = getAppUrl(config, { name, version });
-  return <Link href={fullURL} target={name}>{text || name}</Link>;
+const AppLink = ({ config, wrn, text }) => {
+  const fullURL = getAppUrl(config, { wrn });
+  return <Link href={fullURL} target={wrn}>{text || wrn}</Link>;
 };
 
 export default AppLink;

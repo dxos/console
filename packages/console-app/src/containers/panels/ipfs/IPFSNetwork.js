@@ -20,8 +20,7 @@ import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
 import { BooleanIcon } from '../../../components/BooleanIcon';
 
-const RECORD_TYPE = 'wrn:service';
-const SERVICE_TYPE = 'ipfs';
+const RECORD_TYPE = 'wrn://dxos/type/service/ipfs';
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -70,7 +69,7 @@ const IPFSStatus = () => {
 
   const ipfsResponse = useQueryStatusReducer(useQuery(IPFS_STATUS));
   const wnsResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
-    variables: { attributes: { type: RECORD_TYPE, service: SERVICE_TYPE } }
+    variables: { attributes: { type: RECORD_TYPE } }
   }));
 
   if (!wnsResponse || !ipfsResponse) {
@@ -78,10 +77,10 @@ const IPFSStatus = () => {
   }
 
   const ipfsData = JSON.parse(ipfsResponse.ipfs_status.json);
-  const registeredServers = JSON.parse(wnsResponse.wns_records.json);
+  const registeredServers = JSON.parse(wnsResponse.wns_records.json).filter(record => get(record, 'attributes.active') !== false);
 
   const displayServers = registeredServers.map((service) => {
-    const addresses = get(service, 'attributes.ipfs.addresses');
+    const addresses = get(service, 'attributes.addresses');
     let connected = false;
     for (const address of addresses) {
       const parts = address.split('/');
@@ -93,10 +92,9 @@ const IPFSStatus = () => {
     }
 
     return {
-      name: get(service, 'name'),
+      ...service.attributes,
+      names: get(service, 'names'),
       version: get(service, 'version'),
-      description: get(service, 'attributes.description'),
-      ipfs: get(service, 'attributes.ipfs'),
       connected
     };
   });
@@ -115,19 +113,19 @@ const IPFSStatus = () => {
     <Table stickyHeader size='small' className={classes.table}>
       <TableHead>
         <TableRow>
-          <TableCell>Identifier</TableCell>
+          <TableCell>Registered Names</TableCell>
           <TableCell size='medium'>Description</TableCell>
           <TableCell>Address</TableCell>
           <TableCell size='small'>Connected</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {displayServers.map(({ name, description, ipfs, connected }) => (
-          <TableRow key={name}>
-            <TableCell>{name}</TableCell>
+        {displayServers.map(({ names, description, addresses, connected }) => (
+          <TableRow key={names}>
+            <TableCell>{names.map(name => <>{name}<br /></>)}</TableCell>
             <TableCell>{description}</TableCell>
             <TableCell>
-              {ipfs.addresses}
+              {addresses}
             </TableCell>
             <TableCell>
               <BooleanIcon yes={connected} />

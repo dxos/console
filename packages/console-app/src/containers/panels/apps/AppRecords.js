@@ -25,7 +25,7 @@ const AppRecords = () => {
   const [sorter, sortBy] = useSorter('createTime', false);
   const appResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { attributes: { type: 'app' } }
+    variables: { attributes: { type: 'wrn://dxos/type/application/web' } }
   }));
 
   // TODO(telackey): Does this also need an interval?
@@ -42,7 +42,7 @@ const AppRecords = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell onClick={sortBy('names[0]')}>Identifier</TableCell>
+          <TableCell onClick={sortBy('names[0]')}>Registered Names</TableCell>
           <TableCell onClick={sortBy('attributes.version')} size='small'>Version</TableCell>
           <TableCell onClick={sortBy('attributes.name')}>Name</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
@@ -54,8 +54,8 @@ const AppRecords = () => {
           return (
             <TableRow key={id} size='small'>
               <TableCell monospace>
-                {names.map(name => <>
-                  <AppLink config={config} name={name} />
+                {names.map(wrn => <>
+                  <AppLink config={config} wrn={wrn} />
                   <br />
                   </>
                 )}

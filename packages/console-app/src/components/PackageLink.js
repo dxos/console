@@ -15,19 +15,18 @@ import { getServiceUrl } from '../util/config';
  * @param {string} [text]
  */
 const PackageLink = ({ config, type, pkg, text }) => {
-  // TODO(burdon): Pass in expected arg types.
-  if (typeof pkg === 'string') {
-    const ipfsUrl = getServiceUrl(config, 'ipfs.gateway', { path: `${pkg}` });
-    return <Link href={ipfsUrl} key={pkg} target={pkg}>{text || pkg}</Link>;
-  }
-
   // eslint-disable-next-line default-case
   switch (type) {
-    case 'bot': {
+    case 'wrn://dxos/type/application/web': {
+      const cid = pkg['/'];
+      const ipfsUrl = getServiceUrl(config, 'ipfs.gateway', { path: `${cid}` });
+      return <Link href={ipfsUrl} key={cid} target={cid}>{text || cid}</Link>;
+    }
+    case 'wrn://dxos/type/application/bot': {
       const packageLinks = [];
       Object.keys(pkg).forEach((platform, i) => {
         Object.keys(pkg[platform]).forEach(arch => {
-          const cid = pkg[platform][arch];
+          const cid = pkg[platform][arch]['/'];
           const ipfsUrl = getServiceUrl(config, 'ipfs.gateway', { path: `${cid}` });
           packageLinks.push(
             <div>
