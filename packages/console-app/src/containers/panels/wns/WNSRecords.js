@@ -25,16 +25,12 @@ import AppLink from '../../../components/AppLink';
 
 const types = [
   { key: null, label: 'ALL' },
-  { key: 'wrn://dxos/type/application/web', label: 'App' },
-  { key: 'wrn://dxos/type/application/bot', label: 'Bot' },
-  { key: 'wrn://dxos/type/device/kube', label: 'Kube' },
-  { key: 'wrn://dxos/type/service/bot-factory', label: 'Bot Factory' },
-  { key: 'wrn://dxos/type/service/ipfs', label: 'IPFS' },
-  { key: 'wrn://dxos/type/service/ipfs-gateway', label: 'IPFS Gateway' },
-  { key: 'wrn://dxos/type/service/signal', label: 'Signal' },
-  { key: 'wrn://dxos/type/service/stun', label: 'STUN' },
-  { key: 'wrn://dxos/type/service/turn', label: 'TURN' },
-  { key: 'type', label: 'Type' },
+  { key: 'wrn:kube', label: 'Kube' },
+  { key: 'wrn:service', label: 'Service' },
+  { key: 'wrn:app', label: 'App' },
+  { key: 'wrn:bot', label: 'Bot' },
+  { key: 'wrn:bot-factory', label: 'Bot Factory' },
+  { key: 'wrn:type', label: 'Type' }
 ];
 
 const useStyles = makeStyles(theme => ({
@@ -107,7 +103,7 @@ const WNSRecords = ({ type }) => {
               pkgLink = (<PackageLink config={config} type={type} pkg={pkg} />);
             }
 
-            if (type === 'wrn://dxos/type/application/web') {
+            if (type === 'wrn:app') {
               appLinks = (
                 <>
                   {names.map(wrn => <>

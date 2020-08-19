@@ -20,7 +20,8 @@ import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
 import { BooleanIcon } from '../../../components/BooleanIcon';
 
-const RECORD_TYPE = 'wrn://dxos/type/service/ipfs';
+const RECORD_TYPE = 'wrn:service';
+const SERVICE_TYPE = 'ipfs';
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -69,7 +70,7 @@ const IPFSStatus = () => {
 
   const ipfsResponse = useQueryStatusReducer(useQuery(IPFS_STATUS));
   const wnsResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
-    variables: { attributes: { type: RECORD_TYPE } }
+    variables: { attributes: { type: RECORD_TYPE, service: SERVICE_TYPE } }
   }));
 
   if (!wnsResponse || !ipfsResponse) {
@@ -77,10 +78,10 @@ const IPFSStatus = () => {
   }
 
   const ipfsData = JSON.parse(ipfsResponse.ipfs_status.json);
-  const registeredServers = JSON.parse(wnsResponse.wns_records.json).filter(record => get(record, 'attributes.active') !== false);
+  const registeredServers = JSON.parse(wnsResponse.wns_records.json).filter(record => get(record, 'attributes.ipfs.active') !== false);
 
   const displayServers = registeredServers.map((service) => {
-    const addresses = get(service, 'attributes.addresses');
+    const addresses = get(service, 'attributes.ipfs.addresses');
     let connected = false;
     for (const address of addresses) {
       const parts = address.split('/');
@@ -93,6 +94,7 @@ const IPFSStatus = () => {
 
     return {
       ...service.attributes,
+      ...service.attributes.ipfs,
       names: get(service, 'names'),
       version: get(service, 'version'),
       connected

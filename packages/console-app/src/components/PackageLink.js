@@ -10,19 +10,19 @@ import { getServiceUrl } from '../util/config';
 /**
  * Render IPFS links in package.
  * @param {Object} config
- * @param {string} [type]
+ * @param {string} type
  * @param {string} pkg
  * @param {string} [text]
  */
 const PackageLink = ({ config, type, pkg, text }) => {
   // eslint-disable-next-line default-case
   switch (type) {
-    case 'wrn://dxos/type/application/web': {
+    case 'wrn:app': {
       const cid = pkg['/'];
       const ipfsUrl = getServiceUrl(config, 'ipfs.gateway', { path: `${cid}` });
       return <Link href={ipfsUrl} key={cid} target={cid}>{text || cid}</Link>;
     }
-    case 'wrn://dxos/type/application/bot': {
+    case 'wrn:bot': {
       const packageLinks = [];
       Object.keys(pkg).forEach((platform, i) => {
         Object.keys(pkg[platform]).forEach(arch => {

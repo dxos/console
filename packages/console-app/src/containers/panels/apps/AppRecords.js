@@ -25,7 +25,7 @@ const AppRecords = () => {
   const [sorter, sortBy] = useSorter('createTime', false);
   const appResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { attributes: { type: 'wrn://dxos/type/application/web' } }
+    variables: { attributes: { type: 'wrn:app' } }
   }));
 
   // TODO(telackey): Does this also need an interval?
