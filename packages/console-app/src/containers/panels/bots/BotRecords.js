@@ -22,7 +22,7 @@ const BotRecords = () => {
   const [sorter, sortBy] = useSorter('createTime', false);
   const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { attributes: { type: 'bot' } }
+    variables: { attributes: { type: 'wrn:bot' } }
   }));
 
   if (!data) {
@@ -46,7 +46,7 @@ const BotRecords = () => {
         {records.sort(sorter).map(({ id, names, createTime, attributes: { name: displayName, version } }) => {
           return (
             <TableRow key={id} size='small'>
-              <TableCell monospace>{names}</TableCell>
+              <TableCell monospace>{names.map(name => <div>{name}</div>)}</TableCell>
               <TableCell monospace>{version}</TableCell>
               <TableCell>{displayName}</TableCell>
               <TableCell>{moment.utc(createTime).fromNow()}</TableCell>

@@ -1,5 +1,6 @@
-name: dxos.network/console-app
+name: dxos.network/console-moon
 displayName: Kubenet Console Client
 build: yarn dist
-version: 0.0.6
-package: QmZpM8u7ZUfQpXLgtdB1ug7nGExUrXhebtTSfSBPrRwcLX
+version: 0.0.16
+package:
+  /: Qme8aGPrvs6TzgeQGoDpGb46jpvg5pLb71Fg91YFBPgz5K

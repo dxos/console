@@ -106,10 +106,10 @@ const WNSRecords = ({ type }) => {
             if (type === 'wrn:app') {
               appLinks = (
                 <>
-                  {names.map(wrn => <>
-                    <AppLink config={config} wrn={wrn} />
-                    <br />
-                    </>
+                  {names.map(wrn =>
+                    <div>
+                      <AppLink config={config} wrn={wrn} />
+                    </div>
                   )}
                 </>
               );
@@ -119,7 +119,7 @@ const WNSRecords = ({ type }) => {
               <TableRow key={id} size='small'>
                 <TableCell monospace>{type}</TableCell>
                 <TableCell monospace>
-                  {appLinks || names}
+                  {appLinks || names.map(name => <div>{name}</div>)}
                 </TableCell>
                 <TableCell monospace>
                   {version}

@@ -54,10 +54,9 @@ const AppRecords = () => {
           return (
             <TableRow key={id} size='small'>
               <TableCell monospace>
-                {names.map(wrn => <>
-                  <AppLink config={config} wrn={wrn} />
-                  <br />
-                  </>
+                {names.map(wrn => <div>
+                    <AppLink config={config} wrn={wrn} />
+                  </div>
                 )}
               </TableCell>
               <TableCell monospace>
