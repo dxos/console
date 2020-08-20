@@ -50,7 +50,7 @@ const AppRecords = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {appData.sort(sorter).map(({ id, names, createTime, attributes: { name: displayName, version, package: hash } }) => {
+        {appData.sort(sorter).map(({ id, names, createTime, attributes: { name: displayName, version, package: packageLink } }) => {
           return (
             <TableRow key={id} size='small'>
               <TableCell monospace>
@@ -68,7 +68,7 @@ const AppRecords = () => {
               </TableCell>
               <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
               <TableCell>
-                <BooleanIcon yes={localRefs && localRefs.has(hash)} />
+                <BooleanIcon yes={localRefs && localRefs.has(packageLink['/'])} />
               </TableCell>
             </TableRow>
           );
