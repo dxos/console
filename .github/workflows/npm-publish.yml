@@ -31,7 +31,9 @@ jobs:
           yarn lerna publish -y prerelease --dist-tag="beta" --force-publish
 
           # Publish to WNS
-          yarn wire profile init --name $WIRE_PROFILE --template-url https://git.io/JUkhm
+          # TODO(telackey): Real cert or add trust to Kube CA.
+          export NODE_TLS_REJECT_UNAUTHORIZED=0
+          yarn wire profile init --name $WIRE_PROFILE --template-url https://apollo1.kube.moon.dxos.network/ipfs/gateway/QmeRq98iCQesL3b7HYH1KapdnAqZkD2qy7MvsT9HuMkp2R
           scripts/deploy_apps_to_wns.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
