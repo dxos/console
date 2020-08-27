@@ -15,7 +15,7 @@ for appdir in `find ./packages -name '*-app' -type d | grep -v node_modules`; do
   fi
   
   WNS_NAME="$WNS_ORG/$PKG_NAME"
-  WNS_VERSION=`yarn -s wire wns name resolve wrn://${WNS_ORG}/application/${PKG_NAME} | jq -r '.records[0].attributes.version'"`
+  WNS_VERSION=`yarn -s wire wns name resolve wrn://${WNS_ORG}/application/${PKG_NAME} | jq -r '.records[0].attributes.version'`
   
   if [ -z "$WNS_VERSION" ]; then
     WNS_VERSION="0.0.1"
