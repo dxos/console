@@ -6,7 +6,7 @@ for appdir in `find ./packages -name '*-app' -type d | grep -v node_modules`; do
   pushd $appdir
 
   WNS_ORG="dxos"
-  PKG_NAME=`cat package.json | jq -r '.name' | cut -d'/' -f2-`
+  PKG_NAME=`cat package.json | jq -r '.name' | cut -d'/' -f2- | sed 's/-app$//'`
   PKG_DESC=`cat package.json | jq -r '.description'`
   PKG_VERSION=`cat package.json | jq -r '.version'`
   

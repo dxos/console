@@ -1,5 +1,5 @@
 {
-  "name": "@dxos/console",
+  "name": "@dxos/console-app",
   "version": "1.0.0-moon.0",
   "description": "Kubenet Console Client",
   "main": "dist/es/index.js",
