@@ -11,10 +11,9 @@ import { getServiceUrl } from '../util/config';
 
 const QUERY = `
   query {
-    queryRecords(attributes: [{ key: "name", value: { string: "%NAME%" } }]) {
+    getRecordsByIds(ids: [ "%ID%" ]) {
       id
-      type
-      name
+      names
       bondId
       createTime
       expiryTime
@@ -33,13 +32,13 @@ const QUERY = `
 /**
  * Render link to record in WNS.
  * @param {Object} config
- * @param {string} name
+ * @param {string} id
  * @param {string} [text]
  * @param {boolean} icon
  */
-const QueryLink = ({ config, name, text, icon = false }) => {
+const QueryLink = ({ config, id, text, icon = false }) => {
   const baseURL = getServiceUrl(config, 'wns.webui');
-  const query = QUERY.replace('%NAME%', name);
+  const query = QUERY.replace('%ID%', id);
 
   // NOTE: Playground bug opens two tabs.
   const fullURL = encodeURI(`${baseURL}?query=${query}`);
@@ -50,7 +49,7 @@ const QueryLink = ({ config, name, text, icon = false }) => {
         <LinkIcon />
       )}
       {!icon && (
-        text || name
+        text || id
       )}
     </Link>
   );

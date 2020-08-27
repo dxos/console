@@ -30,9 +30,9 @@
     "lerna": "^3.19.0"
   },
   "devDependencies": {
-    "@dxos/cli": "^1.0.1-beta.5",
-    "@dxos/cli-app": "^1.0.1-beta.5",
-    "@wirelineio/cli-wns": "^1.0.1-beta.5",
+    "@dxos/cli": "^1.1.0-beta.0",
+    "@dxos/cli-app": "^1.1.0-beta.0",
+    "@dxos/cli-wns": "^1.1.0-beta.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
     "eslint-config-semistandard": "^15.0.0",

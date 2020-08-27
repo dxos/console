@@ -35,18 +35,18 @@ const BotRecords = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
-          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
+          <TableCell onClick={sortBy('names[0]')}>Identifier</TableCell>
+          <TableCell onClick={sortBy('attributes.version')} size='small'>Version</TableCell>
+          <TableCell onClick={sortBy('attributes.name')}>Name</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
           <TableCell size='icon' />
         </TableRow>
       </TableHead>
       <TableBody>
-        {records.sort(sorter).map(({ id, name, version, createTime, attributes: { displayName } }) => {
+        {records.sort(sorter).map(({ id, names, createTime, attributes: { name: displayName, version } }) => {
           return (
             <TableRow key={id} size='small'>
-              <TableCell monospace>{name}</TableCell>
+              <TableCell monospace>{names.map(name => <div>{name}</div>)}</TableCell>
               <TableCell monospace>{version}</TableCell>
               <TableCell>{displayName}</TableCell>
               <TableCell>{moment.utc(createTime).fromNow()}</TableCell>

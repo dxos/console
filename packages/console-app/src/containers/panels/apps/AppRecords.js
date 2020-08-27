@@ -42,29 +42,32 @@ const AppRecords = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell onClick={sortBy('name')}>Identifier</TableCell>
-          <TableCell onClick={sortBy('version')} size='small'>Version</TableCell>
-          <TableCell onClick={sortBy('attributes.displayName')}>Name</TableCell>
+          <TableCell onClick={sortBy('names[0]')}>Registered Names</TableCell>
+          <TableCell onClick={sortBy('attributes.version')} size='small'>Version</TableCell>
+          <TableCell onClick={sortBy('attributes.name')}>Name</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
           <TableCell size='icon' />
         </TableRow>
       </TableHead>
       <TableBody>
-        {appData.sort(sorter).map(({ id, name, version, createTime, attributes: { displayName, package: hash } }) => {
+        {appData.sort(sorter).map(({ id, names, createTime, attributes: { name: displayName, version, package: packageLink } }) => {
           return (
             <TableRow key={id} size='small'>
               <TableCell monospace>
-                <AppLink config={config} name={name} />
+                {names.map(wrn => <div>
+                    <AppLink config={config} wrn={wrn} />
+                  </div>
+                )}
               </TableCell>
               <TableCell monospace>
-                <AppLink config={config} name={name} version={version} text={version} />
+                {version}
               </TableCell>
               <TableCell>
                 {displayName}
               </TableCell>
               <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
               <TableCell>
-                <BooleanIcon yes={localRefs && localRefs.has(hash)} />
+                <BooleanIcon yes={localRefs && localRefs.has(packageLink['/'])} />
               </TableCell>
             </TableRow>
           );
