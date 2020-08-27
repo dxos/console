@@ -46,7 +46,7 @@ const BotRecords = () => {
         {records.sort(sorter).map(({ id, names, createTime, attributes: { name: displayName, version } }) => {
           return (
             <TableRow key={id} size='small'>
-              <TableCell monospace>{names.map(name => <div>{name}</div>)}</TableCell>
+              <TableCell monospace>{names.map(name => <div key={name}>{name}</div>)}</TableCell>
               <TableCell monospace>{version}</TableCell>
               <TableCell>{displayName}</TableCell>
               <TableCell>{moment.utc(createTime).fromNow()}</TableCell>

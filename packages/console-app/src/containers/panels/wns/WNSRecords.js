@@ -107,7 +107,7 @@ const WNSRecords = ({ type }) => {
               appLinks = (
                 <>
                   {names.map(wrn =>
-                    <div>
+                    <div key={wrn}>
                       <AppLink config={config} wrn={wrn} />
                     </div>
                   )}
@@ -119,7 +119,7 @@ const WNSRecords = ({ type }) => {
               <TableRow key={id} size='small'>
                 <TableCell monospace>{type}</TableCell>
                 <TableCell monospace>
-                  {appLinks || names.map(name => <div>{name}</div>)}
+                  {appLinks || names.map(name => <div key={name}>{name}</div>)}
                 </TableCell>
                 <TableCell monospace>
                   {version}
