@@ -24,10 +24,26 @@ const SignalChannels = () => {
     return null;
   }
 
-  const { json: { channels = [] } } = data.signal_status;
+  const { json: { nodes = [] } } = data.signal_status;
+
+  const channels = new Map()
+  nodes.forEach(node => {
+    const { signal: { topics = [] } } = node
+    topics.forEach(topic => {
+      if (!channels.has(topic.id)) {
+        channels.set(topic.id, {
+          id: topic.id,
+          peers: topic.peers
+        })
+        return
+      }
+
+      const ch = channels.get(topic.id)
+      ch.peers = [...ch.peers, ...topic.peers]
+    })
+  });
 
   return (
-    <TableContainer>
       <Table>
         <TableHead>
           <TableRow>
@@ -36,11 +52,11 @@ const SignalChannels = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {channels.map(({ channel, peers = [] }) => {
+          {Array.from(channels.values()).map(({ id, peers = [] }) => {
             return (
-              <TableRow key={channel} size='small'>
+              <TableRow key={id} size='small'>
                 <TableCell monospace>
-                  {channel}
+                  {id}
                 </TableCell>
                 <TableCell monospace>
                   {peers.length}
@@ -50,7 +66,6 @@ const SignalChannels = () => {
           })}
         </TableBody>
       </Table>
-    </TableContainer>
   );
 };
 
