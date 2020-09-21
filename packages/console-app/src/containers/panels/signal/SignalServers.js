@@ -24,7 +24,7 @@ import { useQueryStatusReducer } from '../../../hooks';
 import {
   SVG as Svg,
   useGrid,
-  useObjectMutator,
+  useObjectMutator
 } from '@dxos/gem-core';
 
 import {
@@ -50,37 +50,55 @@ const getMetric = (data, name, map = (v) => v) => {
   return map(value.value);
 };
 
-const buildGraph = (nodes) => {
-  const data = { nodes: [], links: [] };
+const buildGraph = (prevGraph, nodes) => {
+  const mutations = {
+    nodes: {
+      $splice: [],
+      $push: []
+    },
+    links: {
+      $set: []
+    }
+  };
+
+  prevGraph.nodes.forEach((prevNode, index) => {
+    if (!nodes.find(node => node.id === prevNode.id)) {
+      mutations.nodes.$splice.push([index, 1]);
+    }
+  });
 
   nodes.forEach(node => {
-    data.nodes.push({ id: node.id, title: node.id.slice(0, 6), data: node });
+    const prevNode = prevGraph.nodes.find(prevNode => prevNode.id === node.id);
+    if (prevNode) {
+      // updated
+      prevNode.data = node;
+      return;
+    }
+    mutations.nodes.$push.push({ id: node.id, title: node.id.slice(0, 6), data: node });
   });
 
   nodes.forEach(node => {
     node.connections.forEach(conn => {
-      const source = data.nodes.find(n => n.id === node.id);
-      const target = data.nodes.find(n => n.id === conn.target);
-      data.links.push({ id: conn.id, source, target });
+      mutations.links.$set.push({ id: conn.id, source: node.id, target: conn.target });
     });
   });
 
-  return data;
+  return mutations;
 };
 
 const useDataGraph = () => {
   // const { config } = useContext(ConsoleContext);
   const data = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { pollInterval: 5 * 1000 }));
 
-  const [dataGraph, setDataGraph] = useObjectMutator({ nodes: [], links: [] });
+  const [dataGraph,, getGraph, updateGraph] = useObjectMutator({ nodes: [], links: [] });
 
   useEffect(() => {
     if (!data) return;
     const { json: { nodes = [] } } = data.signal_status;
 
-    const nextGraph = buildGraph(nodes);
+    const mutations = buildGraph(getGraph(), nodes);
 
-    setDataGraph(nextGraph);
+    updateGraph(mutations);
   }, [data && data.signal_status.json.updatedAt]);
 
   return dataGraph;
