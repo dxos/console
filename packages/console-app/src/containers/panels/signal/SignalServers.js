@@ -2,10 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useMemo, useContext, useRef, useState, useEffect } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import useComponentSize from '@rehooks/component-size';
-import ForceGraph2D from 'react-force-graph-2d';
 
 import Grid from '@material-ui/core/Grid';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,25 +14,21 @@ import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
 import * as colors from '@material-ui/core/colors';
 
-import useResizeAware from 'react-resize-aware';
-
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
 
 import SIGNAL_STATUS from '../../../gql/signal_status.graphql';
 
-import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
+import { useQueryStatusReducer } from '../../../hooks';
 
 import {
   SVG as Svg,
   useGrid,
   useObjectMutator,
-  updateData
 } from '@dxos/gem-core';
 
 import {
   Graph,
-  GridLayout,
   ForceLayout,
   NodeProjector
 } from '@dxos/gem-spore';
@@ -55,7 +50,7 @@ const getMetric = (data, name, map = (v) => v) => {
   return map(value.value);
 };
 
-const convertNodesToGraph = (prevGraph, nodes) => {
+const buildGraph = (nodes) => {
   const data = { nodes: [], links: [] };
 
   nodes.forEach(node => {
@@ -73,38 +68,19 @@ const convertNodesToGraph = (prevGraph, nodes) => {
   return data;
 };
 
-const mergeOperations = (prevList, nextList) => {
-  return {
-    $unshift: prevList.filter(prevItem => !nextList.find(nextItem => prevItem.id === nextItem.id)),
-    $push: nextList.filter(nextItem => !prevList.find(prevItem => nextItem.id === prevItem.id))
-  };
-};
-
 const useDataGraph = () => {
   // const { config } = useContext(ConsoleContext);
   const data = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { pollInterval: 5 * 1000 }));
 
-  const [dataGraph,, getDataGraph, updateDataGraph] = useObjectMutator({ nodes: [], links: [] });
+  const [dataGraph, setDataGraph] = useObjectMutator({ nodes: [], links: [] });
 
   useEffect(() => {
     if (!data) return;
     const { json: { nodes = [] } } = data.signal_status;
-    const prevGraph = getDataGraph();
-    const nextGraph = convertNodesToGraph(prevGraph, nodes);
-    const nodesOperations = mergeOperations(prevGraph.nodes, nextGraph.nodes);
-    const linksOperations = mergeOperations(prevGraph.links, nextGraph.links);
-    updateDataGraph({
-      nodes: {
-        ...nodesOperations,
-        // $apply: (list) => {
-        //   return list.map(node => {
-        //     node.data = nextGraph.nodes.find(n => n.id === node.id).data;
-        //     return node;
-        //   });
-        // }
-      },
-      links: linksOperations
-    });
+
+    const nextGraph = buildGraph(nodes);
+
+    setDataGraph(nextGraph);
   }, [data && data.signal_status.json.updatedAt]);
 
   return dataGraph;
