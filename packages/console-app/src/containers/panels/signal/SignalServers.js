@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useContext, useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import useComponentSize from '@rehooks/component-size';
 
@@ -13,13 +13,19 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
 import * as colors from '@material-ui/core/colors';
+import Box from '@material-ui/core/Box';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
 
 import SIGNAL_STATUS from '../../../gql/signal_status.graphql';
 
-import { useQueryStatusReducer } from '../../../hooks';
+import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
 import {
   SVG as Svg,
@@ -30,115 +36,244 @@ import {
 import {
   Graph,
   ForceLayout,
-  NodeProjector
+  NodeProjector,
+  LinkProjector
 } from '@dxos/gem-spore';
 
-const nodeColors = ['blue', 'yellow', 'red'];
 const useCustomStyles = makeStyles(() => ({
-  nodes: nodeColors.reduce((map, color) => {
-    map[`& g.node.${color} circle`] = { fill: colors[color][400] };
-    map['& g.node text'] = { fill: 'white' };
-    return map;
-  }, {})
+  nodes: {
+    '& g.node.root circle': {
+      fill: colors.blue[400]
+    },
+    '& g.node.adjacent circle': {
+      fill: colors.red[400]
+    },
+    '& g.node.detach circle': {
+      fill: colors.grey[400]
+    },
+    '& g.node text': {
+      fontFamily: 'sans-serif',
+      fontWeight: 100,
+      fill: '#fff'
+    },
+    '& g.node.selected circle': {
+      fill: colors.blue[100],
+      stroke: colors.blue[500]
+    }
+  }
 }));
 
-const getMetric = (data, name, map = (v) => v) => {
-  const metric = data.metrics.find(m => m.name === name);
-  if (!metric) return null;
-  const value = metric.values[0];
-  if (!value) return null;
-  return map(value.value);
+const useLayout = (grid) => {
+  return useMemo(() => new ForceLayout({
+    center: {
+      x: grid.center.x,
+      y: grid.center.y
+    },
+    initializer: (d, center) => {
+      const { type } = d;
+      if (type === 'root') {
+        return {
+          fx: center.x,
+          fy: center.y
+        };
+      }
+    },
+    force: {
+      center: {
+        strength: 0
+      },
+      radial: {
+        radius: 200,
+        strength: 0.5
+      },
+      links: {
+        distance: 120
+      },
+      charge: {
+        strength: -300
+      },
+      collide: {
+        strength: 0.1
+      }
+    }
+  }), []);
 };
 
-const buildGraph = (prevGraph, nodes) => {
-  const mutations = {
-    nodes: {
-      $splice: [],
-      $push: []
-    },
-    links: {
-      $set: []
-    }
-  };
+const getMetric = (data, name, map = (v) => v) => {
+  const value = data.metrics.find(m => m.name === name)?.values[0]?.value;
+  if (!value) return null;
+  return map(value);
+};
 
-  prevGraph.nodes.forEach((prevNode, index) => {
-    if (!nodes.find(node => node.id === prevNode.id)) {
-      mutations.nodes.$splice.push([index, 1]);
-    }
-  });
+const buildGraph = (rootId, nodes) => {
+  const newGraph = { nodes: [], links: [] };
+
+  const rootNode = nodes.find(n => n.id === rootId);
 
   nodes.forEach(node => {
-    const prevNode = prevGraph.nodes.find(prevNode => prevNode.id === node.id);
-    if (prevNode) {
-      // updated
-      prevNode.data = node;
-      return;
+    let type = 'detach';
+    if (rootId === node.id) {
+      type = 'root';
+    } else {
+      const isAdjacent = rootNode.connections.find(conn => conn.target === node.id) || node.connections.find(conn => conn.target === rootId);
+      if (isAdjacent) {
+        type = 'adjacent';
+      }
     }
-    mutations.nodes.$push.push({ id: node.id, title: node.id.slice(0, 6), data: node });
+
+    newGraph.nodes.push({ id: node.id, title: node.id.slice(0, 6), data: node, type });
   });
 
   nodes.forEach(node => {
     node.connections.forEach(conn => {
-      mutations.links.$set.push({ id: conn.id, source: node.id, target: conn.target });
+      newGraph.links.push({ id: conn.id, source: node.id, target: conn.target });
     });
   });
 
-  return mutations;
+  return newGraph;
 };
 
-const useDataGraph = () => {
-  // const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { pollInterval: 5 * 1000 }));
-
-  const [dataGraph,, getGraph, updateGraph] = useObjectMutator({ nodes: [], links: [] });
+const useDataGraph = (response) => {
+  const [dataGraph, setDataGraph, getDataGraph] = useObjectMutator({ updatedAt: 0, nodes: [], links: [] });
 
   useEffect(() => {
-    if (!data) return;
-    const { json: { nodes = [] } } = data.signal_status;
+    if (!response) return;
+    const { updatedAt, id: rootId, nodes = [] } = response.signal_status;
 
-    const mutations = buildGraph(getGraph(), nodes);
+    if (getDataGraph().updatedAt >= updatedAt) return;
 
-    updateGraph(mutations);
-  }, [data && data.signal_status.json.updatedAt]);
+    const graph = buildGraph(rootId, nodes);
+    setDataGraph({
+      updatedAt,
+      ...graph
+    });
+  }, [response && response.signal_status.updatedAt]);
 
   return dataGraph;
 };
 
+const useRowStyles = makeStyles({
+  root: {
+    '& > *': {
+      borderBottom: 'unset'
+    }
+  }
+});
+
+function Row (props) {
+  const { row, open, setOpen } = props;
+
+  const classes = useRowStyles();
+
+  return (
+    <>
+      <TableRow className={classes.root}>
+        <TableCell>
+          <IconButton aria-label='expand row' size='small' onClick={() => setOpen(row.id)}>
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component='th' scope='row'>
+          {row.id}
+        </TableCell>
+        <TableCell align='right'>{row.signal.topics.reduce((prev, curr) => prev + curr.peers.length, 0)}</TableCell>
+        <TableCell align='right'>{getMetric(row, 'moleculer.request.error.total') || 0}</TableCell>
+        <TableCell align='right'>{getMetric(row, 'os.cpu.utilization', v => Math.floor(v))}</TableCell>
+        <TableCell align='right'>{getMetric(row, 'process.memory.rss', v => Math.floor(v / 1024 / 1024))}</TableCell>
+        <TableCell align='right'>{getMetric(row, 'process.uptime', v => Math.floor(v))}</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout='auto' unmountOnExit>
+            <Box margin={1}>
+              <Typography variant='h6' gutterBottom component='div'>
+                Kube Services
+              </Typography>
+              <Table size='small' aria-label='services'>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Service</TableCell>
+                    <TableCell>Status</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {row.kubeServices.map((service) => (
+                    <TableRow key={service.name}>
+                      <TableCell component='th' scope='row'>
+                        {service.name}
+                      </TableCell>
+                      <TableCell>{service.status}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </>
+  );
+}
+
 const SignalServers = () => {
-  const data = useDataGraph();
+  const { config } = useContext(ConsoleContext);
+  const response = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { pollInterval: config.api.pollInterval, context: { api: 'signal' } }));
+
+  const data = useDataGraph(response);
 
   const classes = useCustomStyles();
   const ref = useRef(null);
   const size = useComponentSize(ref);
-  const { width, height } = size;
+  const width = size.width || 0;
+  const height = size.height ? size.height - 30 : 0;
   const grid = useGrid({ width, height });
 
-  const layout = useMemo(() => new ForceLayout(), []);
-  const nodeProjector = useMemo(() => new NodeProjector({
-    node: {
-      showLabels: true,
-      propertyAdapter: (d) => {
-        const webrtcPeersCount = d.data.signal.topics.reduce((prev, curr) => prev + curr.peers.length, 0);
-        const memoryMetric = getMetric(d.data, 'process.memory.rss', v => v / 1024 / 1024);
+  const layout = useLayout(grid);
 
-        return {
-          class: nodeColors[memoryMetric > 150 ? 2 : memoryMetric > 100 ? 1 : 0],
-          radius: webrtcPeersCount > 20 ? 20 : 10
-        };
+  const { nodeProjector, linkProjector } = useMemo(() => ({
+    nodeProjector: new NodeProjector({
+      node: {
+        radius: 16,
+        showLabels: true,
+        propertyAdapter: ({ id, type }) => {
+          return {
+            class: type,
+            radius: {
+              root: 20,
+              neighbors: 15,
+              detach: 10
+            }[type]
+          };
+        }
       }
-    }
+    }),
+    linkProjector: new LinkProjector({ nodeRadius: 16, showArrows: true })
   }), []);
+
+  const [open, setOpen] = useState(null);
+
+  const handleOpen = useCallback(
+    (id) => {
+      if (open && open === id) {
+        setOpen(null);
+      } else {
+        setOpen(id);
+      }
+    },
+    [open]
+  );
 
   return (
     <Grid container spacing={3} direction='column' alignItems='stretch'>
       <Grid item xs ref={ref}>
-        <Svg width={width} height={height - 30}>
+        <Svg width={width} height={height}>
           {data &&
             <Graph
               data={data}
               grid={grid}
               layout={layout}
               nodeProjector={nodeProjector}
+              linkProjector={linkProjector}
               classes={{
                 nodes: classes.nodes
               }}
@@ -150,38 +285,18 @@ const SignalServers = () => {
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell />
                 <TableCell>Signal</TableCell>
-                <TableCell align='right'>Packets sent</TableCell>
-                <TableCell align='right'>Packets receive</TableCell>
+                <TableCell align='right'>Peers (WebRTC)</TableCell>
                 <TableCell align='right'>Requests error</TableCell>
                 <TableCell align='right'>Process CPU (%)</TableCell>
                 <TableCell align='right'>Process memory usage (MB)</TableCell>
                 <TableCell align='right'>Process uptime (sec)</TableCell>
-                <TableCell align='right'>Hostname</TableCell>
-                <TableCell align='right'>OS free memory (MB)</TableCell>
-                <TableCell align='right'>OS arch</TableCell>
-                <TableCell align='right'>OS platform</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data && data.nodes.map((node) => {
-                return (
-                  <TableRow key={node.id}>
-                    <TableCell component='th' scope='row'>
-                      {node.id}
-                    </TableCell>
-                    <TableCell align='right'>{getMetric(node.data, 'moleculer.transporter.packets.sent.total')}</TableCell>
-                    <TableCell align='right'>{getMetric(node.data, 'moleculer.transporter.packets.received.total')}</TableCell>
-                    <TableCell align='right'>{getMetric(node.data, 'moleculer.request.error.total') || 0}</TableCell>
-                    <TableCell align='right'>{getMetric(node.data, 'os.cpu.utilization', v => Math.floor(v))}</TableCell>
-                    <TableCell align='right'>{getMetric(node.data, 'process.memory.rss', v => Math.floor(v / 1024 / 1024))}</TableCell>
-                    <TableCell align='right'>{getMetric(node.data, 'process.uptime', v => Math.floor(v))}</TableCell>
-                    <TableCell align='right'>{getMetric(node.data, 'os.hostname')}</TableCell>
-                    <TableCell align='right'>{getMetric(node.data, 'os.memory.free', v => Math.floor(v / 1024 / 1024))}</TableCell>
-                    <TableCell align='right'>{getMetric(node.data, 'os.arch')}</TableCell>
-                    <TableCell align='right'>{getMetric(node.data, 'os.platform')}</TableCell>
-                  </TableRow>
-                );
+              {data && data.nodes.map(({ data }) => {
+                return <Row key={data.id} row={data} open={open && open === data.id} setOpen={handleOpen} />;
               })}
             </TableBody>
           </Table>
