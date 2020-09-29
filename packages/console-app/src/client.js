@@ -39,7 +39,7 @@ export const clientFactory = config => {
 
   const serviceLinks = {
     signal: createHttpLink({
-      uri: `${config.services.signal.api}/api`
+      uri: config.services.signal.api
     })
   };
 

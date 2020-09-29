@@ -8,21 +8,29 @@ query {
     updatedAt,
     nodes {
       id
-      kubeServices {
-        name
-        status
+      kubeStatus {
+        system {
+          memory {
+            total
+            used
+          }
+
+          time {
+            up
+          }
+
+          nodejs {
+            version
+          }
+        }
+        services {
+          name
+          status
+        }
       }
       connections {
         id
         target
-      }
-      metrics {
-        type
-        name
-        values {
-          key
-          value
-        }
       }
       signal {
         topics {

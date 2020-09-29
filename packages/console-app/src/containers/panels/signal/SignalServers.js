@@ -5,6 +5,7 @@
 import React, { useContext, useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import useComponentSize from '@rehooks/component-size';
+import moment from 'moment';
 
 import Grid from '@material-ui/core/Grid';
 import TableBody from '@material-ui/core/TableBody';
@@ -99,12 +100,6 @@ const useLayout = (grid) => {
   }), []);
 };
 
-const getMetric = (data, name, map = (v) => v) => {
-  const value = data.metrics.find(m => m.name === name)?.values[0]?.value;
-  if (!value) return null;
-  return map(value);
-};
-
 const buildGraph = (rootId, nodes) => {
   const newGraph = { nodes: [], links: [] };
 
@@ -165,6 +160,8 @@ function Row (props) {
 
   const classes = useRowStyles();
 
+  const system = row.kubeStatus.system
+
   return (
     <>
       <TableRow className={classes.root}>
@@ -177,10 +174,11 @@ function Row (props) {
           {row.id}
         </TableCell>
         <TableCell align='right'>{row.signal.topics.reduce((prev, curr) => prev + curr.peers.length, 0)}</TableCell>
-        <TableCell align='right'>{getMetric(row, 'moleculer.request.error.total') || 0}</TableCell>
-        <TableCell align='right'>{getMetric(row, 'os.cpu.utilization', v => Math.floor(v))}</TableCell>
-        <TableCell align='right'>{getMetric(row, 'process.memory.rss', v => Math.floor(v / 1024 / 1024))}</TableCell>
-        <TableCell align='right'>{getMetric(row, 'process.uptime', v => Math.floor(v))}</TableCell>
+        <TableCell align='right'>{system?.version || '-'}</TableCell>
+        <TableCell align='right'>{system?.nodejs?.version || '-'}</TableCell>
+        <TableCell align='right'>{system?.memory?.used || '-'}</TableCell>
+        <TableCell align='right'>{system?.memory?.total || '-'}</TableCell>
+        <TableCell align='right'>{system?.time?.up ? moment(system?.time?.up).format('lll') : '-'}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -197,7 +195,7 @@ function Row (props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.kubeServices.map((service) => (
+                  {row.kubeStatus.services.map((service) => (
                     <TableRow key={service.name}>
                       <TableCell component='th' scope='row'>
                         {service.name}
@@ -266,7 +264,7 @@ const SignalServers = () => {
   return (
     <Grid container spacing={3} direction='column' alignItems='stretch'>
       <Grid item xs ref={ref}>
-        <Svg width={width} height={height}>
+        {width && height && <Svg width={width} height={height}>
           {data &&
             <Graph
               data={data}
@@ -278,7 +276,7 @@ const SignalServers = () => {
                 nodes: classes.nodes
               }}
             />}
-        </Svg>
+        </Svg>}
       </Grid>
       <Grid item xs>
         <TableContainer>
@@ -288,10 +286,11 @@ const SignalServers = () => {
                 <TableCell />
                 <TableCell>Signal</TableCell>
                 <TableCell align='right'>Peers (WebRTC)</TableCell>
-                <TableCell align='right'>Requests error</TableCell>
-                <TableCell align='right'>Process CPU (%)</TableCell>
-                <TableCell align='right'>Process memory usage (MB)</TableCell>
-                <TableCell align='right'>Process uptime (sec)</TableCell>
+                <TableCell align='right'>Kube version</TableCell>
+                <TableCell align='right'>Node.JS version</TableCell>
+                <TableCell align='right'>Memory usage</TableCell>
+                <TableCell align='right'>Memory total</TableCell>
+                <TableCell align='right'>Uptime</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
