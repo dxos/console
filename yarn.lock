@@ -1529,7 +1529,7 @@
     humanhash "^1.0.4"
     hypercore-crypto "^1.0.0"
 
-"@dxos/debug@^1.0.0-beta.20":
+"@dxos/debug@^1.0.0-beta.2":
   version "1.0.0-beta.20"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.20.tgz#a0ad7b532a7baabdb11430d3b1f4d86a47bd8cbc"
   integrity sha512-32PGje/VgJLMQXyS3vEKJfAlEb93P65FwmMtQTpDiTOniAU6R87dQ0qsjgoCdOB5sldJ3VVpWxIciUotRuH2rg==
@@ -1543,10 +1543,10 @@
   dependencies:
     debug "^4.1.1"
 
-"@dxos/gem-core@^1.0.0-beta.24":
-  version "1.0.0-beta.24"
-  resolved "https://registry.yarnpkg.com/@dxos/gem-core/-/gem-core-1.0.0-beta.24.tgz#b906d8ee4fdb98858696b967e53178651624edc1"
-  integrity sha512-JKEUnRjRGSQHn20i6Jg80iIZQaVH4tzlr5ecJ0iShkIQc1FeFyFUKQHX/Momb3+Nt+Wgp8enJ/GonsEhJiFK0A==
+"@dxos/gem-core@^1.0.0-beta.25":
+  version "1.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/@dxos/gem-core/-/gem-core-1.0.0-beta.25.tgz#85b551d05c32fe9162bae8882bce6c48d7d8a0f6"
+  integrity sha512-F+2CUF0gAmSto++6SyTYIQwSRg2wg397olNaJYBHqfxPAHwHT1narMfxb7zbwn/DXtrbcazZRUqk5ZXjk5B+xw==
   dependencies:
     "@material-ui/core" "^4.9.10"
     clsx "^1.1.0"
@@ -1558,12 +1558,12 @@
     react-dom "^16.13.1"
     react-resize-aware "^3.0.0"
 
-"@dxos/gem-spore@^1.0.0-beta.24":
-  version "1.0.0-beta.24"
-  resolved "https://registry.yarnpkg.com/@dxos/gem-spore/-/gem-spore-1.0.0-beta.24.tgz#5630a57ebccc024169497c6091fd68fb2645af54"
-  integrity sha512-4ltmO1xwBRsGSGXUoQio6BdqAVrJTFgAl67Ri+Eki4+uZUTj5vz3qsLufTCbDnwkHGfyf7kl37jlmauQo5A29Q==
+"@dxos/gem-spore@^1.0.0-beta.25":
+  version "1.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/@dxos/gem-spore/-/gem-spore-1.0.0-beta.25.tgz#de804677667c29cc616c056f27abbd35bf172297"
+  integrity sha512-m7UpcXByhvR1azrA8THc1XuCxhgL3F9CGnnnw+JeaH3Rrm9NpCfr25JLnWoEXcOP7Zy9KrdtcrEGP6CkCQveLQ==
   dependencies:
-    "@dxos/gem-core" "^1.0.0-beta.24"
+    "@dxos/gem-core" "^1.0.0-beta.25"
     "@material-ui/core" "^4.9.10"
     clsx "^1.1.0"
     d3 "^6.1.1"
