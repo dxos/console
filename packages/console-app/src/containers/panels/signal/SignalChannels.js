@@ -18,7 +18,7 @@ import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
 const SignalChannels = () => {
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { pollInterval: config.api.pollInterval, context: { api: 'signal' } }));
+  const data = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { fetchPolicy: 'no-cache', pollInterval: config.api.pollInterval, context: { api: 'signal' } }));
   if (!data) {
     return null;
   }

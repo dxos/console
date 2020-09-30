@@ -133,7 +133,8 @@ const useDataGraph = (response) => {
 
   useEffect(() => {
     if (!response) return;
-    const { updatedAt, id: rootId, nodes = [] } = response.signal_status;
+    const { id: rootId, nodes = [] } = response.signal_status;
+    const updatedAt = moment(response.signal_status.updatedAt).valueOf();
 
     if (getDataGraph().updatedAt >= updatedAt) return;
 
@@ -215,7 +216,7 @@ function Row (props) {
 
 const SignalServers = () => {
   const { config } = useContext(ConsoleContext);
-  const response = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { pollInterval: config.api.pollInterval, context: { api: 'signal' } }));
+  const response = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { fetchPolicy: 'no-cache', pollInterval: config.api.pollInterval, context: { api: 'signal' } }));
 
   const data = useDataGraph(response);
 
