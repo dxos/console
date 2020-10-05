@@ -22,19 +22,19 @@ system:
 services:
   app:
     prefix: '/app'
-    server: 'https://demo.kube.dxos.network'
+    server: 'https://apollo1.kube.moon.dxos.network'
 
   wns:
-    server: 'https://demo.kube.dxos.network/dxos/wns/api'
-    webui: 'https://demo.kube.dxos.network/dxos/wns/console'
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/wns/api'
+    webui: 'https://apollo1.kube.moon.dxos.network/dxos/wns/console'
 
   signal:
-    server: 'wss://demo.kube.dxos.network/dxos/signal'
-    api: 'https://demo.kube.dxos.network/dxos/signal/api'
+    server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
+    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
 
   ipfs:
-    server: 'https://demo.kube.dxos.network/dxos/ipfs/api'
-    gateway: 'https://demo.kube.dxos.network/dxos/ipfs/gateway'
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/api'
+    gateway: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway'
 
   wellknown:
-    endpoint: 'https://demo.kube.dxos.network/.well-known/dxos'
+    endpoint: 'https://apollo1.kube.moon.dxos.network/.well-known/dxos'
