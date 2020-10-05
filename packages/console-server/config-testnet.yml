@@ -30,7 +30,7 @@ services:
 
   signal:
     server: 'wss://demo.kube.dxos.network/dxos/signal'
-    api: 'https://demo.kube.dxos.network/dxos/signal'
+    api: 'https://demo.kube.dxos.network/dxos/signal/api'
 
   ipfs:
     server: 'https://demo.kube.dxos.network/dxos/ipfs/api'

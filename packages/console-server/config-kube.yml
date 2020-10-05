@@ -29,7 +29,7 @@ services:
     webui: 'https://kube.local/dxos/wns/console'
 
   signal:
-    server: 'wss://kube.local/dxos/signal'
+    server: 'wss://kube.local/dxos/signal/api'
     api: 'https://kube.local/dxos/signal'
 
   ipfs:
