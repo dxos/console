@@ -36,7 +36,8 @@ const tooltipStyles = {
   ...defaultStyles,
   backgroundColor: 'rgba(53,71,125,0.9)',
   color: 'white',
-  padding: 12
+  padding: 12,
+  zIndex: 1000
 };
 
 const useForceUpdate = () => useReducer(x => !x, false)[1];
