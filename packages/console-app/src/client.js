@@ -8,6 +8,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { createResolvers } from './resolvers';
+import { getServiceUrl } from './util/config';
 
 const defaultServer = `${window.location.origin}`;
 
@@ -39,7 +40,7 @@ export const clientFactory = config => {
 
   const serviceLinks = {
     signal: createHttpLink({
-      uri: config.services.signal.api
+      uri: getServiceUrl(config, 'signal.api')
     })
   };
 
