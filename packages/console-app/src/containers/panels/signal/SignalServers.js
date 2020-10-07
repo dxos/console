@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useContext, useMemo, useRef, useEffect, useState, useCallback } from 'react';
+import React, { useContext, useRef, useEffect, useState, useCallback } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import useComponentSize from '@rehooks/component-size';
 import moment from 'moment';
@@ -13,7 +13,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
-import * as colors from '@material-ui/core/colors';
+
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
@@ -23,84 +23,13 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
+import NetworkGraph from '../../../components/NetworkGraph';
 
 import SIGNAL_STATUS from '../../../gql/signal_status.graphql';
 
 import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
-import {
-  SVG as Svg,
-  useGrid,
-  useObjectMutator
-} from '@dxos/gem-core';
-
-import {
-  Graph,
-  ForceLayout,
-  NodeProjector,
-  LinkProjector
-} from '@dxos/gem-spore';
-
-const useCustomStyles = makeStyles(() => ({
-  nodes: {
-    '& g.node.root circle': {
-      fill: colors.blue[400]
-    },
-    '& g.node.adjacent circle': {
-      fill: colors.red[400]
-    },
-    '& g.node.detach circle': {
-      fill: colors.grey[400]
-    },
-    '& g.node text': {
-      fontFamily: 'sans-serif',
-      fontWeight: 100,
-      fill: '#fff'
-    },
-    '& g.node.selected circle': {
-      fill: colors.blue[100],
-      stroke: colors.blue[500]
-    }
-  }
-}));
-
-const useLayout = (grid) => {
-  return useMemo(() => new ForceLayout({
-    center: {
-      x: grid.center.x,
-      y: grid.center.y
-    },
-    initializer: (d, center) => {
-      const { type } = d;
-      if (type === 'root') {
-        return {
-          fx: center.x,
-          fy: center.y
-        };
-      }
-    },
-    force: {
-      center: {
-        strength: 0
-      },
-      radial: {
-        radius: 200,
-        strength: 0.5
-      },
-      links: {
-        distance: 120
-      },
-      charge: {
-        strength: -300
-      },
-      collide: {
-        strength: 0.1
-      }
-    }
-  }), []);
-};
-
-const buildGraph = (rootId, nodes) => {
+const buildDataGraph = (rootId, prevGraph, nodes) => {
   const newGraph = { nodes: [], links: [] };
 
   const rootNode = nodes.find(n => n.id === rootId);
@@ -116,7 +45,13 @@ const buildGraph = (rootId, nodes) => {
       }
     }
 
-    newGraph.nodes.push({ id: node.id, title: node.id.slice(0, 6), data: node, type });
+    const oldNode = prevGraph.nodes.find(n => n.id === node.id) || {};
+    const newNode = { ...oldNode, id: node.id, label: node.id.slice(0, 6), type, data: node };
+    if (type === 'root') {
+      newNode.fx = 0;
+      newNode.fy = 0;
+    }
+    newGraph.nodes.push(newNode);
   });
 
   nodes.forEach(node => {
@@ -129,16 +64,16 @@ const buildGraph = (rootId, nodes) => {
 };
 
 const useDataGraph = (response) => {
-  const [dataGraph, setDataGraph, getDataGraph] = useObjectMutator({ updatedAt: 0, nodes: [], links: [] });
+  const [dataGraph, setDataGraph] = useState({ updatedAt: 0, nodes: [], links: [] });
 
   useEffect(() => {
     if (!response) return;
     const { id: rootId, nodes = [] } = response.signal_status;
     const updatedAt = moment(response.signal_status.updatedAt).valueOf();
 
-    if (getDataGraph().updatedAt >= updatedAt) return;
+    if (dataGraph.updatedAt >= updatedAt) return;
 
-    const graph = buildGraph(rootId, nodes);
+    const graph = buildDataGraph(rootId, dataGraph, nodes);
     setDataGraph({
       updatedAt,
       ...graph
@@ -161,7 +96,7 @@ function Row (props) {
 
   const classes = useRowStyles();
 
-  const system = row.kubeStatus.system
+  const system = row.kubeStatus.system;
 
   return (
     <>
@@ -214,40 +149,14 @@ function Row (props) {
   );
 }
 
-const SignalServers = () => {
+function SignalServers () {
   const { config } = useContext(ConsoleContext);
   const response = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { fetchPolicy: 'no-cache', pollInterval: config.api.pollInterval, context: { api: 'signal' } }));
 
   const data = useDataGraph(response);
 
-  const classes = useCustomStyles();
-  const ref = useRef(null);
-  const size = useComponentSize(ref);
-  const width = size.width || 0;
-  const height = size.height ? size.height - 30 : 0;
-  const grid = useGrid({ width, height });
-
-  const layout = useLayout(grid);
-
-  const { nodeProjector, linkProjector } = useMemo(() => ({
-    nodeProjector: new NodeProjector({
-      node: {
-        radius: 16,
-        showLabels: true,
-        propertyAdapter: ({ id, type }) => {
-          return {
-            class: type,
-            radius: {
-              root: 20,
-              neighbors: 15,
-              detach: 10
-            }[type]
-          };
-        }
-      }
-    }),
-    linkProjector: new LinkProjector({ nodeRadius: 16, showArrows: true })
-  }), []);
+  const sizeRef = useRef(null);
+  const { width, height } = useComponentSize(sizeRef);
 
   const [open, setOpen] = useState(null);
 
@@ -263,21 +172,23 @@ const SignalServers = () => {
   );
 
   return (
-    <Grid container spacing={3} direction='column' alignItems='stretch'>
-      <Grid item xs ref={ref}>
-        {width && height && <Svg width={width} height={height}>
-          {data &&
-            <Graph
-              data={data}
-              grid={grid}
-              layout={layout}
-              nodeProjector={nodeProjector}
-              linkProjector={linkProjector}
-              classes={{
-                nodes: classes.nodes
-              }}
-            />}
-        </Svg>}
+    <Grid container spacing={0} direction='column' alignItems='stretch' ref={sizeRef}>
+      <Grid item xs>
+        <NetworkGraph
+          width={width}
+          height={height / 2}
+          graph={data}
+          onTooltip={(node) => {
+            return (
+              <>
+                <strong>WebRTC Peers:</strong> {node.signal.topics.reduce((prev, curr) => prev + curr.peers.length, 0)}
+                <br />
+                {node.kubeStatus.services.map((service) => {
+                  return <span key={service.name}><strong>{service.name}:</strong> {service.status}<br /></span>;
+                })}
+              </>);
+          }}
+        />
       </Grid>
       <Grid item xs>
         <TableContainer>
@@ -304,6 +215,6 @@ const SignalServers = () => {
       </Grid>
     </Grid>
   );
-};
+}
 
 export default SignalServers;
