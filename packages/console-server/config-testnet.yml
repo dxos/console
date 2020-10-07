@@ -30,7 +30,7 @@ services:
 
   signal:
     server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
-    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal'
+    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
 
   ipfs:
     server: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/api'
