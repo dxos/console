@@ -92,7 +92,7 @@ const useRowStyles = makeStyles({
 });
 
 function Row (props) {
-  const { row, open, setOpen } = props;
+  const { row } = props;
 
   const classes = useRowStyles();
 
@@ -101,11 +101,6 @@ function Row (props) {
   return (
     <>
       <TableRow className={classes.root}>
-        <TableCell>
-          <IconButton aria-label='expand row' size='small' onClick={() => setOpen(row.id)}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
         <TableCell component='th' scope='row'>
           {row.id}
         </TableCell>
@@ -115,35 +110,6 @@ function Row (props) {
         <TableCell align='right'>{system?.memory?.used || '-'}</TableCell>
         <TableCell align='right'>{system?.memory?.total || '-'}</TableCell>
         <TableCell align='right'>{system?.time?.up ? moment(system?.time?.up).format('lll') : '-'}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout='auto' unmountOnExit>
-            <Box margin={1}>
-              <Typography variant='h6' gutterBottom component='div'>
-                Kube Services
-              </Typography>
-              <Table size='small' aria-label='services'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Service</TableCell>
-                    <TableCell>Status</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.kubeStatus.services.map((service) => (
-                    <TableRow key={service.name}>
-                      <TableCell component='th' scope='row'>
-                        {service.name}
-                      </TableCell>
-                      <TableCell>{service.status}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
       </TableRow>
     </>
   );
@@ -195,7 +161,6 @@ function SignalServers () {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell />
                 <TableCell>Signal</TableCell>
                 <TableCell align='right'>Peers (WebRTC)</TableCell>
                 <TableCell align='right'>Kube version</TableCell>
