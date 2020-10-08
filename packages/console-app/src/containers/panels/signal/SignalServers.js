@@ -22,6 +22,8 @@ import SIGNAL_STATUS from '../../../gql/signal_status.graphql';
 
 import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
+const NODE_ID_LENGTH = 8;
+
 const buildDataGraph = (rootId, prevGraph, nodes) => {
   const newGraph = { nodes: [], links: [] };
 
@@ -39,7 +41,7 @@ const buildDataGraph = (rootId, prevGraph, nodes) => {
     }
 
     const oldNode = prevGraph.nodes.find(n => n.id === node.id) || {};
-    const newNode = { ...oldNode, id: node.id, label: node.id.slice(0, 6), type, data: node };
+    const newNode = { ...oldNode, id: node.id, label: node.id.slice(0, NODE_ID_LENGTH).toUpperCase(), type, data: node };
     if (type === 'root') {
       newNode.fx = 0;
       newNode.fy = 0;
@@ -94,9 +96,7 @@ function Row (props) {
   return (
     <>
       <TableRow className={classes.root}>
-        <TableCell component='th' scope='row'>
-          {row.id}
-        </TableCell>
+        <TableCell>{row.id.slice(0, NODE_ID_LENGTH).toUpperCase()}</TableCell>
         <TableCell align='right'>{row.signal.topics.reduce((prev, curr) => prev + curr.peers.length, 0)}</TableCell>
         <TableCell align='right'>{system?.version || '-'}</TableCell>
         <TableCell align='right'>{system?.nodejs?.version || '-'}</TableCell>
