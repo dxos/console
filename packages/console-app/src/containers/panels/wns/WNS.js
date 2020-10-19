@@ -15,10 +15,12 @@ import Toolbar from '../../../components/Toolbar';
 
 import WNSRecords, { WNSRecordType } from './WNSRecords';
 import WNSStatus from './WNSStatus';
+import WNSLookup from './WNSLookup';
 
 const TAB_RECORDS = 'records';
 const TAB_STATUS = 'status';
 const TAB_LOG = 'log';
+const TAB_LOOKUP = 'lookup';
 
 const useStyles = makeStyles(() => ({
   expand: {
@@ -27,7 +29,7 @@ const useStyles = makeStyles(() => ({
 
   panel: {
     display: 'flex',
-    overflow: 'hidden',
+    overflowY: 'scroll',
     flex: 1
   },
 
@@ -49,6 +51,7 @@ const WNS = () => {
         <Toolbar>
           <Tabs value={tab} onChange={(_, value) => setTab(value)}>
             <Tab value={TAB_RECORDS} label='Records' />
+            <Tab value={TAB_LOOKUP} label='Lookup' />
             <Tab value={TAB_STATUS} label='Status' />
             <Tab value={TAB_LOG} label='Log' />
           </Tabs>
@@ -63,6 +66,12 @@ const WNS = () => {
         {tab === TAB_RECORDS && (
           <div className={classes.panel}>
             <WNSRecords type={type} />
+          </div>
+        )}
+
+        {tab === TAB_LOOKUP && (
+          <div className={classes.panel}>
+            <WNSLookup />
           </div>
         )}
 
