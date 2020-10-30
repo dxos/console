@@ -50,7 +50,7 @@ const PackageLink = ({ config, type, pkg, text }) => {
             return;
           }
 
-          const label = `${platform}/${arch}: ${cid}`
+          const label = `${platform}/${arch}: ${cid}`;
           packageLinks.push(
             <Link
               key={cid}
