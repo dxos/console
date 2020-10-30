@@ -17,28 +17,49 @@ import { getServiceUrl } from '../util/config';
 const PackageLink = ({ config, type, pkg, text }) => {
   // eslint-disable-next-line default-case
   switch (type) {
+    // Apps
     case 'wrn:app': {
       const cid = pkg['/'];
       const ipfsUrl = getServiceUrl(config, 'ipfs.gateway', { path: `${cid}` });
-      return <Link href={ipfsUrl} key={cid} target={cid}>{text || cid}</Link>;
+      if (!cid) {
+        console.warn('Invalid CID', type, pkg);
+        return;
+      }
+
+      return (
+        <Link
+          key={cid}
+          href={ipfsUrl}
+          title={cid}
+          target={cid}
+        >
+          {text || cid}
+        </Link>
+      );
     }
+
+    // Bots
     case 'wrn:bot': {
       const packageLinks = [];
-      Object.keys(pkg).forEach((platform, i) => {
+      Object.keys(pkg).forEach((platform) => {
         Object.keys(pkg[platform]).forEach(arch => {
           const cid = pkg[platform][arch]['/'];
           const ipfsUrl = getServiceUrl(config, 'ipfs.gateway', { path: `${cid}` });
+          if (!cid) {
+            console.warn('Invalid CID', type, pkg);
+            return;
+          }
+
+          const label = `${platform}/${arch}: ${cid}`
           packageLinks.push(
-            <div>
-              <Link
-                key={cid}
-                href={ipfsUrl}
-                title={cid}
-                target={pkg}
-              >
-                {platform}/{arch}: {cid}
-              </Link>
-            </div>
+            <Link
+              key={cid}
+              href={ipfsUrl}
+              title={label}
+              target={pkg}
+            >
+              {cid}
+            </Link>
           );
         });
       });

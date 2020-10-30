@@ -11,7 +11,7 @@ import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
 import Json from '../../../components/Json';
 
-const WNSStatus = () => {
+const RegistryStatus = () => {
   const { config } = useContext(ConsoleContext);
   const data = useQueryStatusReducer(useQuery(WNS_STATUS, { pollInterval: config.api.intervalQuery }));
   if (!data) {
@@ -23,4 +23,4 @@ const WNSStatus = () => {
   );
 };
 
-export default WNSStatus;
+export default RegistryStatus;

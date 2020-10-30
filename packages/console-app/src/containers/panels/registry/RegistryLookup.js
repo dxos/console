@@ -5,22 +5,37 @@
 import React, { useContext, useState } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import TableBody from '@material-ui/core/TableBody';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
+import Toolbar from '@material-ui/core/Toolbar';
+import { makeStyles } from '@material-ui/core';
 
 import { useQuery } from '@apollo/react-hooks';
 
 import Json from '../../../components/Json';
-import Table from '../../../components/Table';
-import TableCell from '../../../components/TableCell';
+
 import { ConsoleContext, useQueryStatusReducer, useRegistry } from '../../../hooks';
 
 import WNS_RECORDS from '../../../gql/wns_records.graphql';
 
-const WNSLookup = () => {
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1
+  },
+  select: {
+    width: 160,
+    marginRight: theme.spacing(2)
+  },
+  button: {
+    marginLeft: theme.spacing(2)
+  }
+}));
+
+const RegistryLookup = () => {
+  const classes = useStyles();
   const { config } = useContext(ConsoleContext);
   const { registry } = useRegistry(config);
   const [result, setResult] = useState({});
@@ -34,6 +49,7 @@ const WNSLookup = () => {
   if (!data) {
     return null;
   }
+
   const records = JSON.parse(data.wns_records.json);
 
   const getNames = () => {
@@ -44,6 +60,7 @@ const WNSLookup = () => {
         records.forEach(item => ret.push(...item.names));
         break;
       }
+
       case 'authority': {
         // Use the known names to come up with a default list of authorities.
         // TODO(telackey): Should we be able to query WNS for a list of authorities?
@@ -57,9 +74,11 @@ const WNSLookup = () => {
         ret = Array.from(names.values());
         break;
       }
+
       default:
         throw new Error(`Unrecognized lookup type: ${lookupType}`);
     }
+
     ret.sort();
     return ret;
   };
@@ -67,6 +86,7 @@ const WNSLookup = () => {
   const handleSelect = (evt) => {
     evt.preventDefault();
 
+    // TODO(burdon): Change to controlled component.
     setLookupType(evt.target.value);
   };
 
@@ -83,54 +103,46 @@ const WNSLookup = () => {
       case 'wrn':
         result = await registry.lookupNames([inputValue], true);
         break;
+
       case 'authority':
         result = await registry.lookupAuthorities([inputValue]);
         break;
+
       default:
         throw new Error(`Unrecognized lookup type: ${lookupType}`);
     }
+
     setResult(result);
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <TableContainer>
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell align='left' width='150px' style={{ verticalAlign: 'middle' }}>
-                  <NativeSelect id='lookupType' name='lookupType' defaultValue='wrn' onChange={handleSelect}>
-                    <option value='authority'>Authority</option>
-                    <option value='wrn'>WRN</option>
-                  </NativeSelect>
-                </TableCell>
-                <TableCell align='left'>
-                  <Autocomplete
-                    options={getNames()}
-                    autoFocus
-                    name='value'
-                    id='value'
-                    fullWidth
-                    freeSolo
-                    inputValue={inputValue}
-                    onInputChange={(event, newInputValue) => {
-                      setInputValue(newInputValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} variant='outlined' />}
-                  />
-                </TableCell>
-                <TableCell align='left' width='150px' style={{ verticalAlign: 'middle' }}>
-                  <Button variant='contained' color='primary' type='submit'>Search</Button>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </form>
+    <div className={classes.root}>
+      <Toolbar>
+        <Select id='lookupType' className={classes.select} name='lookupType' defaultValue='wrn' onChange={handleSelect}>
+          <MenuItem value='authority'>Authority</MenuItem>
+          <MenuItem value='wrn'>WRN</MenuItem>
+        </Select>
+
+        <Autocomplete
+          options={getNames()}
+          autoFocus
+          name='value'
+          id='value'
+          fullWidth
+          freeSolo
+          inputValue={inputValue}
+          onInputChange={(event, newInputValue) => {
+            setInputValue(newInputValue);
+          }}
+          renderInput={(params) => <TextField {...params} variant='outlined' />}
+        />
+
+        <Button className={classes.button} variant='contained' color='primary' onClick={handleSubmit}>Search</Button>
+      </Toolbar>
+
       <Json data={result} />
     </div>
   );
 };
 
-export default WNSLookup;
+export default RegistryLookup;

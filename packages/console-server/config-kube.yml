@@ -4,7 +4,7 @@
 #
 
 app:
-  title: 'Kubenet Console'
+  title: 'Console'
   org': 'DXOS.org'
   theme: 'dark'
   website: 'https://dxos.org'

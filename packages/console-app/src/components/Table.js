@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   table: {
-    tableLayout: 'fixed',
+    // tableLayout: 'fixed',
 
     '& th': {
       fontVariant: 'all-small-caps',
