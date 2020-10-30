@@ -6,7 +6,6 @@ import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import TableBody from '@material-ui/core/TableBody';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
@@ -19,38 +18,53 @@ import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
 const SignalChannels = () => {
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { pollInterval: config.api.intervalQuery }));
+  const data = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { fetchPolicy: 'no-cache', pollInterval: config.api.pollInterval, context: { api: 'signal' } }));
   if (!data) {
     return null;
   }
 
-  const { json: { channels = [] } } = data.signal_status;
+  const { nodes = [] } = data.signal_status;
+
+  const channels = new Map();
+  nodes.forEach(node => {
+    const { signal: { topics = [] } } = node;
+    topics.forEach(topic => {
+      if (!channels.has(topic.id)) {
+        channels.set(topic.id, {
+          id: topic.id,
+          peers: topic.peers
+        });
+        return;
+      }
+
+      const ch = channels.get(topic.id);
+      ch.peers = [...ch.peers, ...topic.peers];
+    });
+  });
 
   return (
-    <TableContainer>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Channel</TableCell>
-            <TableCell size='small'>Participants</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {channels.map(({ channel, peers = [] }) => {
-            return (
-              <TableRow key={channel} size='small'>
-                <TableCell monospace>
-                  {channel}
-                </TableCell>
-                <TableCell monospace>
-                  {peers.length}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Channel</TableCell>
+          <TableCell size='small'>Participants</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {Array.from(channels.values()).map(({ id, peers = [] }) => {
+          return (
+            <TableRow key={id} size='small'>
+              <TableCell monospace>
+                {id}
+              </TableCell>
+              <TableCell monospace>
+                {peers.length}
+              </TableCell>
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 

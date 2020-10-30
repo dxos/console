@@ -3,8 +3,41 @@
 #
 
 query {
-  signal_status @client {
-    timestamp
-    json
+  signal_status: status {
+    id
+    updatedAt,
+    nodes {
+      id
+      kubeStatus {
+        system {
+          memory {
+            total
+            used
+          }
+
+          time {
+            up
+          }
+
+          nodejs {
+            version
+          }
+        }
+        services {
+          name
+          status
+        }
+      }
+      connections {
+        id
+        target
+      }
+      signal {
+        topics {
+          id
+          peers
+        }
+      }
+    }
   }
 }

@@ -3,10 +3,12 @@
 //
 
 import { ApolloClient } from 'apollo-client';
+import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { createResolvers } from './resolvers';
+import { getServiceUrl } from './util/config';
 
 const defaultServer = `${window.location.origin}`;
 
@@ -26,7 +28,7 @@ export const graphqlApi = config => {
  */
 export const clientFactory = config => {
   // https://www.apollographql.com/docs/link/
-  const link = createHttpLink({
+  const defaultLink = createHttpLink({
     uri: graphqlApi(config),
 
     // TODO(burdon): Authentication: send signed message to server (from client wallet).
@@ -36,11 +38,21 @@ export const clientFactory = config => {
     }
   });
 
+  const serviceLinks = {
+    signal: createHttpLink({
+      uri: getServiceUrl(config, 'signal.api')
+    })
+  };
+
   // https://www.apollographql.com/docs/react/api/apollo-client/
   return new ApolloClient({
     connectToDevTools: true,
     cache: new InMemoryCache(),
     resolvers: createResolvers(config),
-    link
+    link: ApolloLink.split(
+      operation => operation.getContext().api && serviceLinks[operation.getContext().api],
+      operation => serviceLinks[operation.getContext().api].request(operation),
+      defaultLink
+    )
   });
 };

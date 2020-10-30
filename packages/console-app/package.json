@@ -1,6 +1,6 @@
 {
   "name": "@dxos/console-app",
-  "version": "1.0.0-beta.23",
+  "version": "1.1.0-beta.10",
   "description": "Kubenet Console Client",
   "main": "dist/es/index.js",
   "files": [
@@ -19,7 +19,7 @@
   "author": "DXOS.org",
   "license": "GPL-3.0",
   "browserslist": [
-    "> 5%"
+    "> 2%"
   ],
   "jest": {
     "testEnvironment": "node"
@@ -28,19 +28,25 @@
     "@apollo/react-components": "^3.1.5",
     "@apollo/react-hooks": "^3.1.5",
     "@babel/runtime": "^7.8.7",
-    "@dxos/debug": "^1.0.0-beta.20",
-    "@dxos/gem-core": "^1.0.0-beta.11",
-    "@dxos/react-ux": "^1.0.0-beta.37",
+    "@dxos/debug": "^1.0.0-beta.2",
+    "@dxos/gem-core": "^1.0.0-beta.25",
+    "@dxos/react-ux": "^1.1.0-beta.0",
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.54",
-    "@wirelineio/registry-client": "^0.4.9",
+    "@rehooks/component-size": "^1.0.3",
+    "@visx/network": "^1.0.0",
+    "@visx/tooltip": "^1.0.0",
+    "@visx/zoom": "^1.0.0",
+    "@wirelineio/registry-client": "^1.1.0-beta.2",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
+    "apollo-link": "^1.2.14",
     "apollo-link-http": "^1.5.17",
     "build-url": "^2.0.0",
     "clsx": "^1.1.0",
     "compare-versions": "^3.6.0",
+    "d3-force": "^2.1.1",
     "debug": "^4.1.1",
     "graphql-tag": "^2.10.3",
     "lodash.defaultsdeep": "^4.6.1",

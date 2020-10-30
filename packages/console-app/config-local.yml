@@ -30,7 +30,7 @@ services:
 
   signal:
     server: 'ws://127.0.0.1:4000'
-    api: 'http://127.0.0.1:4000'
+    api: 'http://127.0.0.1:4000/api'
 
   ipfs:
     server: 'http://127.0.0.1:5001'

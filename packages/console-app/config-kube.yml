@@ -30,7 +30,7 @@ services:
 
   signal:
     server: 'wss://kube.local/dxos/signal'
-    api: 'https://kube.local/dxos/signal'
+    api: 'https://kube.local/dxos/signal/api'
 
   ipfs:
     server: 'https://kube.local/dxos/ipfs/api'

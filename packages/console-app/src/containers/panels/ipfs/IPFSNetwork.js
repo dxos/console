@@ -78,7 +78,7 @@ const IPFSStatus = () => {
   }
 
   const ipfsData = JSON.parse(ipfsResponse.ipfs_status.json);
-  const registeredServers = JSON.parse(wnsResponse.wns_records.json);
+  const registeredServers = JSON.parse(wnsResponse.wns_records.json).filter(record => get(record, 'attributes.ipfs.active') !== false);
 
   const displayServers = registeredServers.map((service) => {
     const addresses = get(service, 'attributes.ipfs.addresses');
@@ -93,10 +93,10 @@ const IPFSStatus = () => {
     }
 
     return {
-      name: get(service, 'name'),
+      ...service.attributes,
+      ...service.attributes.ipfs,
+      names: get(service, 'names'),
       version: get(service, 'version'),
-      description: get(service, 'attributes.description'),
-      ipfs: get(service, 'attributes.ipfs'),
       connected
     };
   });
@@ -115,19 +115,19 @@ const IPFSStatus = () => {
     <Table stickyHeader size='small' className={classes.table}>
       <TableHead>
         <TableRow>
-          <TableCell>Identifier</TableCell>
+          <TableCell>Registered Names</TableCell>
           <TableCell size='medium'>Description</TableCell>
           <TableCell>Address</TableCell>
           <TableCell size='small'>Connected</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {displayServers.map(({ name, description, ipfs, connected }) => (
-          <TableRow key={name}>
-            <TableCell>{name}</TableCell>
+        {displayServers.map(({ names, description, addresses, connected }) => (
+          <TableRow key={names}>
+            <TableCell>{names.map(name => <>{name}<br /></>)}</TableCell>
             <TableCell>{description}</TableCell>
             <TableCell>
-              {ipfs.addresses}
+              {addresses}
             </TableCell>
             <TableCell>
               <BooleanIcon yes={connected} />

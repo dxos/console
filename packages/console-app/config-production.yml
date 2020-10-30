@@ -27,7 +27,7 @@ routes:
     webui: '/dxos/wns/console'
 
   signal:
-    api: '/dxos/signal'
+    api: '/dxos/signal/api'
 
   ipfs:
     server: '/dxos/ipfs/api'
