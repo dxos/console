@@ -19,14 +19,15 @@ import modules from '../modules';
 import Layout from './Layout';
 import ConsoleContextProvider from './ConsoleContextProvider';
 
-import AppRecords from './panels/apps/Apps';
+import Apps from './panels/apps/Apps';
 import Bots from './panels/bots/Bots';
+import Kubes from './panels/kubes/Kubes';
 import Config from './panels/Config';
 import IPFS from './panels/ipfs/IPFS';
 import Metadata from './panels/Metadata';
 import Signaling from './panels/signal/Signaling';
 import System from './panels/system/System';
-import WNS from './panels/wns/WNS';
+import Registry from './panels/registry/Registry';
 
 // Global error handler.
 const errorHandler = new ErrorHandler();
@@ -46,14 +47,15 @@ const Main = ({ config }) => {
             <Switch>
               <Route path='/:module'>
                 <Layout>
-                  <Route path='/apps' component={AppRecords} />
+                  <Route path='/kubes' component={Kubes} />
+                  <Route path='/apps' component={Apps} />
                   <Route path='/bots' component={Bots} />
                   <Route path='/config' component={Config} />
+                  <Route path='/registry' component={Registry} />
                   <Route path='/ipfs' component={IPFS} />
                   <Route path='/metadata' component={Metadata} />
                   <Route path='/signaling' component={Signaling} />
                   <Route path='/system' component={System} />
-                  <Route path='/wns' component={WNS} />
                 </Layout>
               </Route>
               <Redirect to='/system' />

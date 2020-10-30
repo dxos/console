@@ -13,9 +13,9 @@ import LogPoller from '../../../components/LogPoller';
 import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
 
-import WNSRecords, { WNSRecordType } from './WNSRecords';
-import WNSStatus from './WNSStatus';
-import WNSLookup from './WNSLookup';
+import RegistryRecords, { RecordType } from './RegistryRecords';
+import RegistryStatus from './RegistryStatus';
+import RegistryLookup from './RegistryLookup';
 
 const TAB_RECORDS = 'records';
 const TAB_STATUS = 'status';
@@ -40,7 +40,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const WNS = () => {
+const Registry = () => {
   const classes = useStyles();
   const [tab, setTab] = useState(TAB_RECORDS);
   const [type, setType] = useState();
@@ -57,7 +57,7 @@ const WNS = () => {
           </Tabs>
 
           {tab === TAB_RECORDS && (
-            <WNSRecordType type={type} onChanged={setType} />
+            <RecordType type={type} onChanged={setType} />
           )}
         </Toolbar>
       }
@@ -65,20 +65,20 @@ const WNS = () => {
       <TabContext value={tab}>
         {tab === TAB_RECORDS && (
           <div className={classes.panel}>
-            <WNSRecords type={type} />
+            <RegistryRecords type={type} />
           </div>
         )}
 
         {tab === TAB_LOOKUP && (
           <div className={classes.panel}>
-            <WNSLookup />
+            <RegistryLookup />
           </div>
         )}
 
         {tab === TAB_STATUS && (
           <div className={classes.panel}>
             <Paper className={classes.paper}>
-              <WNSStatus />
+              <RegistryStatus />
             </Paper>
           </div>
         )}
@@ -93,4 +93,4 @@ const WNS = () => {
   );
 };
 
-export default WNS;
+export default Registry;

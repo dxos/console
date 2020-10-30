@@ -1,7 +1,7 @@
 {
   "name": "@dxos/console-app",
   "version": "1.1.0-beta.10",
-  "description": "Kubenet Console Client",
+  "description": "Console Client",
   "main": "dist/es/index.js",
   "files": [
     "src/gql"

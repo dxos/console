@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TableCell = ({ children, size, monospace = false, style, title, ...rest }) => {
+const TableCell = ({ children, size, monospace = false, ellipsis = false, style, title, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -32,7 +32,7 @@ const TableCell = ({ children, size, monospace = false, style, title, ...rest })
       className={clsx(size && classes[size])}
       style={{
         overflow: 'hidden',
-        textOverflow: 'ellipsis',
+        textOverflow: ellipsis ? 'ellipsis' : '',
         whiteSpace: 'nowrap',
         verticalAlign: 'top',
         fontFamily: monospace ? 'monospace' : 'inherit',

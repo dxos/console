@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const WNSRecordType = ({ type = types[0].key, onChanged }) => {
+export const RecordType = ({ type = types[0].key, onChanged }) => {
   const classes = useStyles();
 
   return (
@@ -64,7 +64,7 @@ export const WNSRecordType = ({ type = types[0].key, onChanged }) => {
   );
 };
 
-const WNSRecords = ({ type }) => {
+const RegistryRecords = ({ type }) => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('createTime', false);
   const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
@@ -85,7 +85,7 @@ const WNSRecords = ({ type }) => {
           <TableCell onClick={sortBy('attributes.type')} size='medium'>Type</TableCell>
           <TableCell onClick={sortBy('names[0]')}>Registered Names</TableCell>
           <TableCell onClick={sortBy('attributes.version')} size='small'>Version</TableCell>
-          <TableCell onClick={sortBy('attributes.name')}>Name</TableCell>
+          <TableCell onClick={sortBy('attributes.name')}>Display Name</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
           <TableCell onClick={sortBy('attributes.package')}>Package</TableCell>
           <TableCell size='icon' />
@@ -145,4 +145,4 @@ const WNSRecords = ({ type }) => {
   );
 };
 
-export default WNSRecords;
+export default RegistryRecords;

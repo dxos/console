@@ -1,7 +1,7 @@
 {
   "name": "@dxos/console-server",
   "version": "1.1.0-beta.10",
-  "description": "Kubenet Console Server",
+  "description": "Console Server",
   "main": "dist/es/index.js",
   "bin": {
     "dxos-console": "bin/console.js"

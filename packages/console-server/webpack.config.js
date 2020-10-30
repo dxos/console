@@ -67,7 +67,7 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './public/index.html',
       templateParameters: {
-        title: 'Kubenet Console'
+        title: 'Console'
       }
     }),
 
