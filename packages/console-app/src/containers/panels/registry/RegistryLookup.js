@@ -4,11 +4,7 @@
 
 import React, { useContext, useState } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core';
 
 import { useQuery } from '@apollo/react-hooks';
@@ -18,6 +14,8 @@ import Json from '../../../components/Json';
 import { ConsoleContext, useQueryStatusReducer, useRegistry } from '../../../hooks';
 
 import WNS_RECORDS from '../../../gql/wns_records.graphql';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,22 +23,56 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     flex: 1
   },
-  select: {
-    width: 160,
-    marginRight: theme.spacing(2)
+  search: {
+    display: 'flex',
+    padding: '2px 8px'
   },
   button: {
     marginLeft: theme.spacing(2)
+  },
+  selected: {
+    color: theme.palette.text.primary
   }
 }));
 
-const RegistryLookup = () => {
+const types = [
+  { key: 'authority', label: 'Authority' },
+  { key: 'wrn', label: 'WRN' }
+];
+
+export const LookupType = ({ scope = types[0].key, onChange }) => {
+  const classes = useStyles();
+
+  return (
+    <ButtonGroup
+      disableRipple
+      disableFocusRipple
+      variant='outlined'
+      color='primary'
+      size='small'
+      aria-label='text primary button group'
+    >
+      {types.map(t => (
+        <Button
+          key={t.key}
+          className={t.key === scope && classes.selected}
+          onClick={() => onChange(t.key)}
+        >
+          {t.label}
+        </Button>
+      ))}
+    </ButtonGroup>
+  );
+};
+
+LookupType.default = types[0].key;
+
+const RegistryLookup = ({ scope }) => {
   const classes = useStyles();
   const { config } = useContext(ConsoleContext);
   const { registry } = useRegistry(config);
   const [result, setResult] = useState({});
   const [inputValue, setInputValue] = useState('');
-  const [lookupType, setLookupType] = useState('wrn');
 
   const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery
@@ -54,7 +86,7 @@ const RegistryLookup = () => {
 
   const getNames = () => {
     let ret;
-    switch (lookupType) {
+    switch (scope) {
       case 'wrn': {
         ret = [];
         records.forEach(item => ret.push(...item.names));
@@ -74,42 +106,27 @@ const RegistryLookup = () => {
         ret = Array.from(names.values());
         break;
       }
-
-      default:
-        throw new Error(`Unrecognized lookup type: ${lookupType}`);
     }
 
     ret.sort();
     return ret;
   };
 
-  const handleSelect = (evt) => {
-    evt.preventDefault();
-
-    // TODO(burdon): Change to controlled component.
-    setLookupType(evt.target.value);
-  };
-
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-
-    if (!inputValue) {
+  const handleSubmit = async (newInputValue = inputValue) => {
+    if (!newInputValue) {
       setResult('');
       return;
     }
 
     let result;
-    switch (lookupType) {
+    switch (scope) {
       case 'wrn':
-        result = await registry.lookupNames([inputValue], true);
+        result = await registry.lookupNames([newInputValue], true);
         break;
 
       case 'authority':
-        result = await registry.lookupAuthorities([inputValue]);
+        result = await registry.lookupAuthorities([newInputValue]);
         break;
-
-      default:
-        throw new Error(`Unrecognized lookup type: ${lookupType}`);
     }
 
     setResult(result);
@@ -117,30 +134,25 @@ const RegistryLookup = () => {
 
   return (
     <div className={classes.root}>
-      <Toolbar>
-        <Select id='lookupType' className={classes.select} name='lookupType' defaultValue='wrn' onChange={handleSelect}>
-          <MenuItem value='authority'>Authority</MenuItem>
-          <MenuItem value='wrn'>WRN</MenuItem>
-        </Select>
-
+      <div className={classes.search}>
         <Autocomplete
           options={getNames()}
           autoFocus
-          name='value'
           id='value'
+          name='value'
           fullWidth
-          freeSolo
           inputValue={inputValue}
-          onInputChange={(event, newInputValue) => {
-            setInputValue(newInputValue);
-          }}
           renderInput={(params) => <TextField {...params} variant='outlined' />}
+          onInputChange={async (event, newInputValue) => {
+            setInputValue(newInputValue);
+            await handleSubmit(newInputValue);
+          }}
         />
+      </div>
 
-        <Button className={classes.button} variant='contained' color='primary' onClick={handleSubmit}>Search</Button>
-      </Toolbar>
-
-      <Json data={result} />
+      <div>
+        <Json data={result} />
+      </div>
     </div>
   );
 };

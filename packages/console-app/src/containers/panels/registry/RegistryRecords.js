@@ -23,6 +23,12 @@ import PackageLink from '../../../components/PackageLink';
 import QueryLink from '../../../components/QueryLink';
 import AppLink from '../../../components/AppLink';
 
+const useStyles = makeStyles(theme => ({
+  selected: {
+    color: theme.palette.text.primary
+  }
+}));
+
 const types = [
   { key: null, label: 'ALL' },
   { key: 'wrn:kube', label: 'Kube' },
@@ -33,13 +39,7 @@ const types = [
   { key: 'wrn:type', label: 'Type' }
 ];
 
-const useStyles = makeStyles(theme => ({
-  selected: {
-    color: theme.palette.text.primary
-  }
-}));
-
-export const RecordType = ({ type = types[0].key, onChanged }) => {
+export const RecordType = ({ type = types[0].key, onChange }) => {
   const classes = useStyles();
 
   return (
@@ -55,7 +55,7 @@ export const RecordType = ({ type = types[0].key, onChanged }) => {
         <Button
           key={t.key}
           className={t.key === type && classes.selected}
-          onClick={() => onChanged(t.key)}
+          onClick={() => onChange(t.key)}
         >
           {t.label}
         </Button>

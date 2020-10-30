@@ -14,8 +14,8 @@ import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
 
 import RegistryRecords, { RecordType } from './RegistryRecords';
+import RegistryLookup, { LookupType } from './RegistryLookup';
 import RegistryStatus from './RegistryStatus';
-import RegistryLookup from './RegistryLookup';
 
 const TAB_RECORDS = 'records';
 const TAB_STATUS = 'status';
@@ -44,6 +44,7 @@ const Registry = () => {
   const classes = useStyles();
   const [tab, setTab] = useState(TAB_RECORDS);
   const [type, setType] = useState();
+  const [scope, setScope] = useState(LookupType.default);
 
   return (
     <Panel
@@ -57,7 +58,10 @@ const Registry = () => {
           </Tabs>
 
           {tab === TAB_RECORDS && (
-            <RecordType type={type} onChanged={setType} />
+            <RecordType type={type} onChange={setType} />
+          )}
+          {tab === TAB_LOOKUP && (
+            <LookupType scope={scope} onChange={setScope} />
           )}
         </Toolbar>
       }
@@ -71,7 +75,7 @@ const Registry = () => {
 
         {tab === TAB_LOOKUP && (
           <div className={classes.panel}>
-            <RegistryLookup />
+            <RegistryLookup scope={scope} />
           </div>
         )}
 
