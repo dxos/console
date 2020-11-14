@@ -52,8 +52,12 @@ const AppRecords = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {appData.sort(sorter).map(({ id, names, createTime, attributes: { name: displayName, description, version,
-          versionUrl, repositoryVersion, repository, homepage, package: packageLink } }) => {
+        {appData.sort(sorter).map(({
+          id, names, createTime, attributes: {
+            name: displayName, description, version,
+            versionUrl, repositoryVersion, repository, homepage, package: packageLink
+          }
+        }) => {
           const url = repository || homepage;
 
           // If this is a GitHub repo, it is trivial to construct the URL from the base repository and version.
@@ -69,16 +73,14 @@ const AppRecords = () => {
               <TableCell monospace>
                 {versionUrl
                   ? <Link href={versionUrl}>{version}</Link>
-                  : version
-                }
+                  : version}
               </TableCell>
               <TableCell>
                 {displayName || description}
               </TableCell>
               <TableCell>
                 {url &&
-                <Link href={url} target={url}>{url}</Link>
-                }
+                  <Link href={url} target={url}>{url}</Link>}
               </TableCell>
               <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
               <TableCell>
