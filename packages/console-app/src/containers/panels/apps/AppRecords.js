@@ -9,6 +9,7 @@ import { useQuery } from '@apollo/react-hooks';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
+import Link from '@material-ui/core/Link';
 
 import IPFS_STATUS from '../../../gql/ipfs_status.graphql';
 import WNS_RECORDS from '../../../gql/wns_records.graphql';
@@ -45,22 +46,39 @@ const AppRecords = () => {
           <TableCell onClick={sortBy('names[0]')}>Registered Names</TableCell>
           <TableCell onClick={sortBy('attributes.version')} size='small'>Version</TableCell>
           <TableCell onClick={sortBy('attributes.name')}>Name</TableCell>
+          <TableCell onClick={sortBy('attributes.repository')}>Repository</TableCell>
           <TableCell onClick={sortBy('createTime')} size='small'>Created</TableCell>
           <TableCell size='icon' />
         </TableRow>
       </TableHead>
       <TableBody>
-        {appData.sort(sorter).map(({ id, names, createTime, attributes: { name: displayName, version, package: packageLink } }) => {
+        {appData.sort(sorter).map(({ id, names, createTime, attributes: { name: displayName, description, version,
+          versionUrl, repositoryVersion, repository, homepage, package: packageLink } }) => {
+          const url = repository || homepage;
+
+          // If this is a GitHub repo, it is trivial to construct the URL from the base repository and version.
+          if (!versionUrl && repository && repositoryVersion && repository.includes('github')) {
+            versionUrl = `${repository}/tree/${repositoryVersion}`.replace('-dirty', '');
+          }
+
           return (
             <TableRow key={id} size='small'>
               <TableCell monospace>
                 {names.map(wrn => <div key={wrn}> <AppLink config={config} wrn={wrn} /> </div>)}
               </TableCell>
               <TableCell monospace>
-                {version}
+                {versionUrl
+                  ? <Link href={versionUrl}>{version}</Link>
+                  : version
+                }
               </TableCell>
               <TableCell>
-                {displayName}
+                {displayName || description}
+              </TableCell>
+              <TableCell>
+                {url &&
+                <Link href={url} target={url}>{url}</Link>
+                }
               </TableCell>
               <TableCell>{moment.utc(createTime).fromNow()}</TableCell>
               <TableCell>
