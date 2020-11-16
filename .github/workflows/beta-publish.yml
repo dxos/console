@@ -5,7 +5,7 @@ name: beta - Build and Publish
 
 on:
   push:
-    branches: [ main ]
+    branches: [ beta ]
 
 jobs:
   publish:
