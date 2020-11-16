@@ -27,8 +27,8 @@ jobs:
           yarn lint
 
           # Uncomment for NPM publishing.
-          VERSION=`cat lerna.json | grep '"version":' | awk '{ print $2 }' | sed 's/[",]//g'`
-          yarn lerna version $VERSION --no-git-tag-version -y
+          VERSION="`cat lerna.json | grep '"version":' | awk '{ print $2 }' | sed 's/[",]//g' | sed 's/-[a-z]*\./-beta./'`"
+          yarn lerna version ${VERSION} --no-git-tag-version -y
           git commit -am "v$VERSION"
           git push
           git tag -f "v$VERSION"
