@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-for appdir in `find ./apps -name '*-app' -type d | grep -v node_modules`; do
+for appdir in `find ./packages -name '*-app' -type d | grep -v node_modules`; do
   pushd $appdir
 
   WNS_ORG="${WNS_ORG:-dxos}"
