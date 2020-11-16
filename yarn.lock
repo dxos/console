@@ -1376,13 +1376,13 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@dxos/cli-app@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@dxos/cli-app/-/cli-app-2.0.7.tgz#29548801a9b173c2e85f3262df20665f55a4c992"
-  integrity sha512-BoN70q9Su1qnsGuOZ8SmKYsw7Q8ALDR6hwPyCp5JbVBKGj2gfq3ZeuSghIxkY+rv45EKtFjlPsQ+TBHpDZdQjQ==
+"@dxos/cli-app@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@dxos/cli-app/-/cli-app-2.0.8.tgz#b52f1e7e07816068cd79415b22ac12c7e060fa6e"
+  integrity sha512-X49Ziz86wIncm8lou6I8917XRuuDyMEvjzc8RTB6HUzlfFdGw2udE0/xlCEReIFd0sNniOSjVY+K13N/5E26JA==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@dxos/cli-core" "^2.0.7"
+    "@dxos/cli-core" "^2.0.8"
     "@dxos/debug" "^1.0.0-beta.67"
     "@wirelineio/registry-client" "^1.1.0-beta.0"
     assert "^2.0.0"
@@ -1405,10 +1405,10 @@
     semver "^7.1.1"
     yargs "^11.0.0"
 
-"@dxos/cli-core@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@dxos/cli-core/-/cli-core-2.0.7.tgz#5964fdfbfb1d2a6bc9ee0cddc126040e692253e0"
-  integrity sha512-ut9XFXghwNf/G9KUHzx/rBJ7i2kF6idxozvPB1muEZG7acnbjgabNQqWK7FwJMuSSvfBWLj0J7Ojbxxyb9vOng==
+"@dxos/cli-core@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@dxos/cli-core/-/cli-core-2.0.8.tgz#89bf83e3f1e5490e029e0b75847b0c08642cab42"
+  integrity sha512-ggiahK6IXODVQ7utkqX292V/ANdXvXzi+bZSJBQUXt5Xm+dMK5bdcCFCFlBjubH7X+oQGLU01F44RNdm21N+4g==
   dependencies:
     "@babel/runtime" "7.7.2"
     "@dxos/config" "^1.0.0-beta.67"
@@ -1439,13 +1439,13 @@
     yargs-parser "^18.1.2"
     yargs-unparser "1.5.0"
 
-"@dxos/cli-wns@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@dxos/cli-wns/-/cli-wns-2.0.7.tgz#a276a923e2c5a98de4b97fa2abd5c1f5e770b6be"
-  integrity sha512-EOGyMwMeJW2OmI3ISVFf/ntkqmwZJZWpI6e9VlYovAfTrhzuwkC7I4U3i6gCyWn6TPMvJF8EShUkTxRMANvVbw==
+"@dxos/cli-wns@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@dxos/cli-wns/-/cli-wns-2.0.8.tgz#6d9677ae23e36e7e01cf835e97311caf28b2174d"
+  integrity sha512-XPsIh7q5/fGKly+KoCM9JnWdhiyl2DP46Ire3kJzNEySfhpq8G8GWxtlgWqZrzc2GpG9da3GJCoiMnI7H9Fcng==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@dxos/cli-core" "^2.0.7"
+    "@dxos/cli-core" "^2.0.8"
     "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/debug" "^1.0.0-beta.67"
     "@wirelineio/registry-client" "^1.1.0-beta.3"
@@ -1460,13 +1460,13 @@
     tree-kill "^1.2.1"
     yargs "^11.0.0"
 
-"@dxos/cli@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@dxos/cli/-/cli-2.0.7.tgz#5548d08a4dc9a05cd127c591de7aca1f40da9693"
-  integrity sha512-BJ7AGwz1DRAXeNIpYyB9ozgfnUIK1dfeDMUH7hBr82mUm3K4X6Gyl84/Yl5MT3d0anzQyxIVG3H6IQMCM8pVMA==
+"@dxos/cli@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@dxos/cli/-/cli-2.0.8.tgz#9923d6e4d3f7ba4d342de1ca112eef41b8f9752d"
+  integrity sha512-2S8HbNCd0kY/4ofLNz5lT74RKzPxgJMYjta620IhrT6nEWnDccysmBHH+ouN8qLJdmcC0OUfX6iIMtK4DPzxtA==
   dependencies:
     "@babel/runtime" "7.7.2"
-    "@dxos/cli-core" "^2.0.7"
+    "@dxos/cli-core" "^2.0.8"
     "@dxos/debug" "^1.0.0-beta.67"
     assert "^2.0.0"
     find-root "^1.1.0"
