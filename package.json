@@ -1,6 +1,6 @@
 {
   "name": "@dxos/console",
-  "version": "1.2.1-alpha.0",
+  "version": "1.2.2-alpha.0",
   "description": "Console",
   "main": "index.js",
   "private": true,

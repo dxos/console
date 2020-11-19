@@ -154,7 +154,7 @@ function SignalServers () {
           }}
         />
       </Grid>
-      <Grid item xs>
+      <Grid item xs style={{overflow: 'scroll'}}>
         <TableContainer>
           <Table>
             <TableHead>
