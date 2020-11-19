@@ -33,6 +33,14 @@ const getVersionInfo = () => {
   return undefined;
 };
 
+const getCliVersionInfo = () => {
+  const command = 'wire';
+  const args = ['version'];
+
+  const child = spawnSync(command, args, { encoding: 'utf8' });
+  return { version: child.stdout };
+};
+
 /**
  * Get system inforamtion.
  * https://www.npmjs.com/package/systeminformation
@@ -89,6 +97,9 @@ const getSystemInfo = async () => {
     dxos: {
       kube: {
         version: getVersionInfo()
+      },
+      wire: {
+        version: getCliVersionInfo()
       }
     }
   };
