@@ -38,7 +38,7 @@ const getCliVersionInfo = () => {
   const args = ['version'];
 
   const child = spawnSync(command, args, { encoding: 'utf8' });
-  return { version: child.stdout };
+  return child.stdout;
 };
 
 /**
