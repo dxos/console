@@ -10,9 +10,15 @@ query {
       id
       kubeStatus {
         system {
+          version
+
           memory {
             total
             used
+          }
+
+          network {
+            hostname
           }
 
           time {

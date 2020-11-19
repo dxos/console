@@ -6,6 +6,7 @@ import React, { useContext, useRef, useEffect, useState, useCallback } from 'rea
 import { useQuery } from '@apollo/react-hooks';
 import useComponentSize from '@rehooks/component-size';
 import moment from 'moment';
+import get from 'lodash.get';
 
 import Grid from '@material-ui/core/Grid';
 import TableBody from '@material-ui/core/TableBody';
@@ -40,8 +41,12 @@ const buildDataGraph = (rootId, prevGraph, nodes) => {
       }
     }
 
+    const hostname = get(node, 'kubeStatus.system.network.hostname');
+    const shortId = node.id.slice(0, NODE_ID_LENGTH).toUpperCase();
+    const label = hostname || shortId;
+
     const oldNode = prevGraph.nodes.find(n => n.id === node.id) || {};
-    const newNode = { ...oldNode, id: node.id, label: node.id.slice(0, NODE_ID_LENGTH).toUpperCase(), type, data: node };
+    const newNode = { ...oldNode, id: node.id, label, type, data: node };
     if (type === 'root') {
       newNode.fx = 0;
       newNode.fy = 0;
@@ -97,9 +102,9 @@ function Row (props) {
     <>
       <TableRow className={classes.root}>
         <TableCell>{row.id.slice(0, NODE_ID_LENGTH).toUpperCase()}</TableCell>
+        <TableCell>{system?.network?.hostname}</TableCell>
         <TableCell align='right'>{row.signal.topics.reduce((prev, curr) => prev + curr.peers.length, 0)}</TableCell>
         <TableCell align='right'>{system?.version || '-'}</TableCell>
-        <TableCell align='right'>{system?.nodejs?.version || '-'}</TableCell>
         <TableCell align='right'>{system?.memory?.used || '-'}</TableCell>
         <TableCell align='right'>{system?.memory?.total || '-'}</TableCell>
         <TableCell align='right'>{system?.time?.up ? moment(system?.time?.up).format('lll') : '-'}</TableCell>
@@ -154,10 +159,10 @@ function SignalServers () {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Signal</TableCell>
+                <TableCell>ID</TableCell>
+                <TableCell>Hostname</TableCell>
                 <TableCell align='right'>Peers (WebRTC)</TableCell>
                 <TableCell align='right'>Kube version</TableCell>
-                <TableCell align='right'>Node.JS version</TableCell>
                 <TableCell align='right'>Memory usage</TableCell>
                 <TableCell align='right'>Memory total</TableCell>
                 <TableCell align='right'>Uptime</TableCell>
