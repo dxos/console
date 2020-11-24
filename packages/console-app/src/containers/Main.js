@@ -28,7 +28,7 @@ import Metadata from './panels/Metadata';
 import Signaling from './panels/signal/Signaling';
 import System from './panels/system/System';
 import Registry from './panels/registry/Registry';
-import IPFS from './panels/sentry/Sentry';
+import Sentry from './panels/sentry/Sentry';
 
 // Global error handler.
 const errorHandler = new ErrorHandler();
