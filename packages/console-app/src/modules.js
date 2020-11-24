@@ -10,6 +10,7 @@ import IPFSIcon from '@material-ui/icons/GraphicEq';
 import ConfigIcon from '@material-ui/icons/Settings';
 import SignalIcon from '@material-ui/icons/Traffic';
 import KubeIcon from '@material-ui/icons/Dns';
+import SentryIcon from '@material-ui/icons/NotificationImportant';
 
 /**
  * Paths should match Main routes.
@@ -54,7 +55,7 @@ export default {
     {
       path: '/sentry',
       title: 'Sentry',
-      icon: StatsIcon
+      icon: SentryIcon
     }
   ],
 

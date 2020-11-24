@@ -15,9 +15,6 @@ import Toolbar from '../../../components/Toolbar';
 import LogPoller from '../../../components/LogPoller';
 
 const TAB_STATUS = 'status';
-const TAB_NETWORK = 'network';
-const TAB_LOG = 'log';
-const TAB_SWARM_LOG = 'swarm';
 
 const useStyles = makeStyles(() => ({
   expand: {
@@ -41,6 +38,7 @@ const Sentry = () => {
   const classes = useStyles();
   const [tab, setTab] = useState(TAB_STATUS);
 
+  //TODO(wykoff): add query tab, add commonly used info tab
   return (
     <Panel
       toolbar={
@@ -50,12 +48,11 @@ const Sentry = () => {
           </Tabs>
         </Toolbar>
       }
-    >
+    > 
       <TabContext value={tab}>
         {tab === TAB_STATUS && (
           <Paper className={classes.paper}>
-            <h1>Link</h1>
-            <a href="http://sentry.kube.dxos.network:9000/">Sentry</a>
+            <a href="http://sentry.kube.dxos.network:9000/"><h3>Sentry</h3></a>
           </Paper>
         )}
 
