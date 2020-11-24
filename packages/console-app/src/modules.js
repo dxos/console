@@ -50,6 +50,11 @@ export default {
       path: '/ipfs',
       title: 'IPFS',
       icon: IPFSIcon
+    },
+    {
+      path: '/sentry',
+      title: 'Sentry',
+      icon: StatsIcon
     }
   ],
 

@@ -28,6 +28,7 @@ import Metadata from './panels/Metadata';
 import Signaling from './panels/signal/Signaling';
 import System from './panels/system/System';
 import Registry from './panels/registry/Registry';
+import IPFS from './panels/sentry/Sentry';
 
 // Global error handler.
 const errorHandler = new ErrorHandler();
@@ -56,6 +57,7 @@ const Main = ({ config }) => {
                   <Route path='/metadata' component={Metadata} />
                   <Route path='/signaling' component={Signaling} />
                   <Route path='/system' component={System} />
+                  <Route path='/sentry' component={Sentry} />
                 </Layout>
               </Route>
               <Redirect to='/system' />
