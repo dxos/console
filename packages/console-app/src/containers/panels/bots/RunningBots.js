@@ -1,12 +1,12 @@
 /* eslint-disable */ 
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import BOT_LIST from '../../../gql/bot_list.graphql';
 import BOT_KILL from '../../../gql/bot_kill.graphql';
 
-import { ConsoleContext, useQueryStatusReducer, useStatusReducer } from '../../../hooks';
+import { useQueryStatusReducer, useStatusReducer } from '../../../hooks';
 
 import { useSorter } from '../../../hooks';
 
@@ -20,14 +20,11 @@ import TableCell from '../../../components/TableCell';
 import moment from 'moment';
 
 const RunningBots = () => {
-  const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('started', false);
   const [botList, setBotList] = useState([]);
   const [, setStatus] = useStatusReducer();
 
-  const botListResponse = useQueryStatusReducer(useQuery(BOT_LIST, {
-    pollInterval: config.api.pollInterval
-  }));
+  const { data: botListResponse, refetch } = useQueryStatusReducer(useQuery(BOT_LIST));
 
   useEffect(() => {
     if (botListResponse) {
@@ -41,12 +38,11 @@ const RunningBots = () => {
   const onKillBot = async (botId) => {
     const botKillResponse = await killBot({ variables: { botId }});
     if (botKillResponse && botKillResponse.data) {
-      const { botId, error } = JSON.parse(botKillResponse.data.bot_kill.json);
+      const { error } = JSON.parse(botKillResponse.data.bot_kill.json);
       if (error) {
         setStatus({ error });
       } else {
-        const newBotList = botList.filter(bot => bot.botId !== botId);
-        setBotList(newBotList);
+        refetch();
       }
     }
   };

@@ -13,7 +13,7 @@ import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
 const Info = () => {
   const { config } = useContext(ConsoleContext);
-  const systemResponse = useQueryStatusReducer(useQuery(SYSTEM_STATUS, { pollInterval: config.api.intervalQuery }));
+  const { data: systemResponse } = useQueryStatusReducer(useQuery(SYSTEM_STATUS, { pollInterval: config.api.intervalQuery }));
   if (!systemResponse) {
     return null;
   }

@@ -20,7 +20,7 @@ const format = (value, unit, symbol = '') => Math.floor(value / unit).toLocaleSt
 const SignalServers = () => {
   const { config } = useContext(ConsoleContext);
   const [sorter] = useSorter('name');
-  const serviceResponse = useQueryStatusReducer(useQuery(SERVICE_STATUS, { pollInterval: config.api.intervalQuery }));
+  const { data: serviceResponse } = useQueryStatusReducer(useQuery(SERVICE_STATUS, { pollInterval: config.api.intervalQuery }));
   if (!serviceResponse) {
     return null;
   }

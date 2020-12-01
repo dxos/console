@@ -24,13 +24,13 @@ import AppLink from '../../../components/AppLink';
 const AppRecords = () => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('createTime', false);
-  const appResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data: appResponse } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery,
     variables: { attributes: { type: 'wrn:app' } }
   }));
 
   // TODO(telackey): Does this also need an interval?
-  const ipfsResponse = useQueryStatusReducer(useQuery(IPFS_STATUS));
+  const { data: ipfsResponse } = useQueryStatusReducer(useQuery(IPFS_STATUS));
   if (!appResponse || !ipfsResponse) {
     return null;
   }
