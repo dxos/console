@@ -1,8 +1,12 @@
 /* eslint-disable */ 
 
-import React from 'react';
+import React, { useState } from 'react';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { data } from './RunningBotsData';
+import BOT_LIST from '../../../gql/bot_list.graphql';
+import KILL_BOT from '../../../gql/kill_bot.graphql';
+
+import { useQueryStatusReducer } from '../../../hooks';
 
 import { useSorter } from '../../../hooks';
 
@@ -17,6 +21,20 @@ import moment from 'moment';
 
 const RunningBots = () => {
   const [sorter, sortBy] = useSorter('createTime', false);
+  const [botList, setBotList] = useState([]);
+
+  const data = useQueryStatusReducer(useQuery(BOT_LIST));
+  if (!data) {
+    return null;
+  }
+  setBotList(data.botList.json);
+
+  const [killBot] = useMutation(KILL_BOT);
+  const onKillBot = (botId) => {
+    const id = killBot({ variables: { botId }});
+    const newBotList = botList.filter(({ botId }) => botId !== id);
+    setBotList(newBotList);
+  };
 
   return (
     <Table>
@@ -31,7 +49,7 @@ const RunningBots = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.sort(sorter).map(({ id, botId, started, stopped, parties }) => {
+        {botList.sort(sorter).map(({ id, botId, started, stopped, parties }) => {
             return (
               <TableRow key={botId} size='small'>
                 <TableCell monospace>{id}</TableCell>
@@ -40,7 +58,7 @@ const RunningBots = () => {
                 <TableCell monospace>{String(stopped)}</TableCell>
                 <TableCell monospace>{parties.map(partyId => <div key={partyId}>{partyId}</div>)}</TableCell>
                 <TableCell monospace>
-                  <BotControls />
+                  <BotControls onStop={() => onKillBot(botId)}/>
                 </TableCell>
               </TableRow>
             );
