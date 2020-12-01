@@ -3,7 +3,7 @@
 #
 
 mutation ($botId: String!) {
-  kill_bot(botId: $botId) {
+  bot_kill(botId: $botId) {
     timestamp
     json
   }

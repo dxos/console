@@ -21,8 +21,14 @@ type Query {
   signal_status: JSONResult!
   system_status: JSONResult!
   wns_status: JSONResult!
+  bot_list: JSONResult!
+}
+
+type Mutation {
+  bot_kill(botId: String!): JSONResult!
 }
 
 schema {
   query: Query
+  mutation: Mutation
 }

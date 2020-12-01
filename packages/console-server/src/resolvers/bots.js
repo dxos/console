@@ -40,9 +40,9 @@ const executeCommand = async (command, args, timeout = 10000) => {
       }
     }, timeout);
 
-    child.stdout.on('data', stdout.push);
+    child.stdout.on('data', (data) => stdout.push(data));
 
-    child.stderr.on('data', stderr.push);
+    child.stderr.on('data', (data) => stderr.push(data));
 
     child.on('exit', (code) => {
       clearTimeout(timer);
@@ -70,15 +70,19 @@ const getRunningBots = async () => {
 
 const sendBotCommand = async (botId, botCommand) => {
   const command = 'wire';
-  const args = ['bot', command, '--topic', topic, '--bot-id', botId];
+  const args = ['bot', botCommand, '--topic', topic, '--bot-id', botId];
 
-  const { code } = await executeCommand(botCommand, args);
-  return { success: !code, botId: code ? undefined : botId };
+  const { code, stdout, stderr } = await executeCommand(command, args);
+  return {
+    success: !code,
+    botId: code ? undefined : botId,
+    error: (stderr || !code) ? stderr || stdout : undefined
+  };
 };
 
 export const botsResolvers = {
   Query: {
-    bots: async () => {
+    bot_list: async () => {
       const bots = await getRunningBots();
       return {
         timestamp: new Date().toUTCString(),
@@ -87,11 +91,11 @@ export const botsResolvers = {
     }
   },
   Mutation: {
-    killBot: async (_, { botId }) => {
-      const success = await sendBotCommand(botId, 'kill');
+    bot_kill: async (_, { botId }) => {
+      const result = await sendBotCommand(botId, 'kill');
       return {
         timestamp: new Date().toUTCString(),
-        json: JSON.stringify({ success })
+        json: JSON.stringify(result)
       };
     }
   }

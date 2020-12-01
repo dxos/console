@@ -1,7 +1,7 @@
 {
   "build": {
     "name":      "@dxos/console-app",
-    "buildDate": "2020-11-30T08:08:41.245Z",
-    "version":   "1.2.2-alpha.3"
+    "buildDate": "2020-12-01T11:41:49.729Z",
+    "version":   "1.2.2-alpha.4"
   }
 }
