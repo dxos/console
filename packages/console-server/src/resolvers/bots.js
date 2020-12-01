@@ -73,7 +73,7 @@ const sendBotCommand = async (botId, botCommand) => {
   const args = ['bot', command, '--topic', topic, '--bot-id', botId];
 
   const { code } = await executeCommand(botCommand, args);
-  return { success: !code };
+  return { success: !code, botId: code ? undefined : botId };
 };
 
 export const botsResolvers = {
