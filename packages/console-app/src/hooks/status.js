@@ -24,7 +24,7 @@ export const useStatusReducer = () => {
 /**
  * Handle Apollo queries.
  */
-export const useQueryStatusReducer = ({ loading, error, data }) => {
+export const useQueryStatusReducer = ({ loading, error, data, refetch }) => {
   const [, setStatus] = useStatusReducer();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const useQueryStatusReducer = ({ loading, error, data }) => {
     }
   }, [loading, error]);
 
-  return data;
+  return { data, refetch };
 };
 
 export const statusReducer = (state, action) => {

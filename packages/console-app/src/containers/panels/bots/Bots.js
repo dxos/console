@@ -12,9 +12,11 @@ import Toolbar from '../../../components/Toolbar';
 
 import BotRecords from './BotRecords';
 import LogPoller from '../../../components/LogPoller';
+import RunningBots from './RunningBots';
 
 const TAB_RECORDS = 'records';
 const TAB_LOG = 'log';
+const TAB_DATA = 'running bots';
 
 const useStyles = makeStyles(theme => ({
   root: {}
@@ -32,6 +34,7 @@ const Bots = () => {
           <Tabs value={tab} onChange={(_, value) => setTab(value)}>
             <Tab value={TAB_RECORDS} label='Records' />
             <Tab value={TAB_LOG} label='Log' />
+            <Tab value={TAB_DATA} label='Running Bots' />
           </Tabs>
         </Toolbar>
       }
@@ -42,6 +45,9 @@ const Bots = () => {
 
       {tab === TAB_LOG && (
         <LogPoller service='bot-factory' />
+      )}
+      {tab === TAB_DATA && (
+        <RunningBots />
       )}
     </Panel>
   );

@@ -115,7 +115,7 @@ function Row (props) {
 
 function SignalServers () {
   const { config } = useContext(ConsoleContext);
-  const response = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { fetchPolicy: 'no-cache', pollInterval: config.api.pollInterval, context: { api: 'signal' } }));
+  const { data: response } = useQueryStatusReducer(useQuery(SIGNAL_STATUS, { fetchPolicy: 'no-cache', pollInterval: config.api.pollInterval, context: { api: 'signal' } }));
 
   const data = useDataGraph(response);
 

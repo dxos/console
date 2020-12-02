@@ -30,8 +30,8 @@ const useStyles = makeStyles(theme => ({
 const VersionCheck = () => {
   const classes = useStyles();
   const [{ current, latest }, setUpgrade] = useState({});
-  const statusResponse = useQueryStatusReducer(useQuery(SYSTEM_STATUS));
-  const wnsResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data: statusResponse } = useQueryStatusReducer(useQuery(SYSTEM_STATUS));
+  const { data: wnsResponse } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: CHECK_INTERVAL,
     variables: { attributes: { type: 'wrn:resource' } }
   }));

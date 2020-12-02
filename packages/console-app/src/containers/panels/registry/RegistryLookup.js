@@ -74,7 +74,7 @@ const RegistryLookup = ({ scope }) => {
   const [result, setResult] = useState({});
   const [inputValue, setInputValue] = useState('');
 
-  const data = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery
   }));
 

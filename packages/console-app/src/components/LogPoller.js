@@ -26,7 +26,7 @@ const getLogBuffer = (name) => {
 const LogPoller = ({ service }) => {
   const { config } = useContext(ConsoleContext);
   const logBuffer = getLogBuffer(service);
-  const data = useQueryStatusReducer(useQuery(LOGS, {
+  const { data } = useQueryStatusReducer(useQuery(LOGS, {
     pollInterval: config.api.intervalLog,
     variables: { service, incremental: logBuffer.length !== 0 }
   }));
