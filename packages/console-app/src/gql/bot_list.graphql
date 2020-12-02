@@ -1,0 +1,10 @@
+#
+# Copyright 2020 DXOS.org
+#
+
+query {
+  bot_list {
+    timestamp
+    json
+  }
+}

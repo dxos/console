@@ -11,7 +11,7 @@ app:
   publicUrl: '/console'
 
 api:
-  server: 'https://alpha.kube.moon.dxos.network'
+  server: 'https://apollo1.kube.moon.dxos.network'
   path: '/api'
   intervalLog: 5000
   pollInterval: 10000
@@ -22,19 +22,19 @@ system:
 services:
   app:
     prefix: '/app'
-    server: 'https://alpha.kube.moon.dxos.network'
+    server: 'https://apollo1.kube.moon.dxos.network'
 
   wns:
-    server: 'https://alpha.kube.moon.dxos.network/dxos/wns/api'
-    webui: 'https://alpha.kube.moon.dxos.network/dxos/wns/console'
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/wns/api'
+    webui: 'https://apollo1.kube.moon.dxos.network/dxos/wns/console'
 
   signal:
-    server: 'wss://alpha.kube.moon.dxos.network/dxos/signal'
-    api: 'https://alpha.kube.moon.dxos.network/dxos/signal/api'
+    server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
+    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
 
   ipfs:
-    server: 'https://alpha.kube.moon.dxos.network/dxos/ipfs/api'
-    gateway: 'https://alpha.kube.moon.dxos.network/dxos/ipfs/gateway'
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/api'
+    gateway: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway'
 
   wellknown:
-    endpoint: 'https://alpha.kube.moon.dxos.network/.well-known/dxos'
+    endpoint: 'https://apollo1.kube.moon.dxos.network/.well-known/dxos'

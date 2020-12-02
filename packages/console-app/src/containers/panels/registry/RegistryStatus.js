@@ -13,7 +13,7 @@ import Json from '../../../components/Json';
 
 const RegistryStatus = () => {
   const { config } = useContext(ConsoleContext);
-  const data = useQueryStatusReducer(useQuery(WNS_STATUS, { pollInterval: config.api.intervalQuery }));
+  const { data } = useQueryStatusReducer(useQuery(WNS_STATUS, { pollInterval: config.api.intervalQuery }));
   if (!data) {
     return null;
   }

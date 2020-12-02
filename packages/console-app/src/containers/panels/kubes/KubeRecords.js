@@ -21,7 +21,7 @@ import AppLink from '../../../components/AppLink';
 const KubeRecords = () => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('names[0]');
-  const appResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data: appResponse } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     pollInterval: config.api.intervalQuery,
     variables: { attributes: { type: 'wrn:kube' } }
   }));
