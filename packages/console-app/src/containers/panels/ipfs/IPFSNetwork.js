@@ -68,8 +68,8 @@ const useStyles = makeStyles((theme) => ({
 const IPFSStatus = () => {
   const classes = useStyles();
 
-  const ipfsResponse = useQueryStatusReducer(useQuery(IPFS_STATUS));
-  const wnsResponse = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data: ipfsResponse } = useQueryStatusReducer(useQuery(IPFS_STATUS));
+  const { data: wnsResponse } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
     variables: { attributes: { type: RECORD_TYPE, service: SERVICE_TYPE } }
   }));
 
