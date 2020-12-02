@@ -27,8 +27,11 @@ const RunningBots = () => {
 
   useEffect(() => {
     if (botListResponse) {
-      const botListData = JSON.parse(botListResponse.bot_list.json);
-      setBotList(botListData);
+      const { error, bots = [] } = JSON.parse(botListResponse.bot_list.json);
+      if (error) {
+        setStatus({ error });
+      }
+      setBotList(bots);
     }
   }, [botListResponse]);
 
