@@ -36,6 +36,7 @@ const types = [
   { key: 'wrn:app', label: 'App' },
   { key: 'wrn:bot', label: 'Bot' },
   { key: 'wrn:bot-factory', label: 'Bot Factory' },
+  { key: 'wrn:file', label: 'File' },
   { key: 'wrn:type', label: 'Type' }
 ];
 
@@ -94,7 +95,7 @@ const RegistryRecords = ({ type }) => {
       <TableBody>
         {records.sort(sorter)
           .map((record) => {
-            const { id, names, createTime, attributes: { type, name: displayName, version, description, service, package: pkg } } = record;
+            const { id, names, createTime, attributes: { type, name: displayName, fileName, version, description, service, package: pkg } } = record;
 
             let pkgLink;
             let appLinks;
@@ -125,7 +126,7 @@ const RegistryRecords = ({ type }) => {
                   {version}
                 </TableCell>
                 <TableCell>
-                  {displayName || service || description}
+                  {displayName || service || fileName || description}
                 </TableCell>
                 <TableCell>
                   {moment.utc(createTime).fromNow()}
