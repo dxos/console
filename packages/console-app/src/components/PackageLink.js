@@ -17,8 +17,9 @@ import { getServiceUrl } from '../util/config';
 const PackageLink = ({ config, type, pkg, text }) => {
   // eslint-disable-next-line default-case
   switch (type) {
-    // Apps
-    case 'wrn:app': {
+    // Apps and Files
+    case 'wrn:app':
+    case 'wrn:file': {
       const cid = pkg['/'];
       const ipfsUrl = getServiceUrl(config, 'ipfs.gateway', { path: `${cid}` });
       if (!cid) {
