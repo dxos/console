@@ -23,6 +23,9 @@ const QUERY = `
         value {
           string
           json
+          reference {
+            id
+          }
         }
       }
     }
