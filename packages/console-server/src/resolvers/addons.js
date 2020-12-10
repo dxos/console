@@ -8,7 +8,7 @@ import childProcess from 'child_process';
 const ifRadicle = () => {
   try {
     const result = childProcess.execSync('docker ps -f "ancestor=dxos/radicle-seed-node" -q');
-    if (result) {
+    if (result && result.toString()) {
       return { title: 'Radicle', url: '/' };
     }
   } catch (e) {}
