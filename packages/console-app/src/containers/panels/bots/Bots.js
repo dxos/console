@@ -33,8 +33,8 @@ const Bots = () => {
         <Toolbar>
           <Tabs value={tab} onChange={(_, value) => setTab(value)}>
             <Tab value={TAB_RECORDS} label='Records' />
-            <Tab value={TAB_LOG} label='Log' />
             <Tab value={TAB_DATA} label='Running Bots' />
+            <Tab value={TAB_LOG} label='Log' />
           </Tabs>
         </Toolbar>
       }
