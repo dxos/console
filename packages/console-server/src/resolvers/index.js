@@ -5,6 +5,7 @@
 import debug from 'debug';
 import defaultsDeep from 'lodash.defaultsdeep';
 
+import { addonResolvers } from './addons';
 import { ipfsResolvers } from './ipfs';
 import { systemResolvers } from './system';
 import { logResolvers } from './log';
@@ -22,4 +23,4 @@ export const resolvers = defaultsDeep({
   // TODO(burdon): Auth.
   // https://www.apollographql.com/docs/apollo-server/data/errors/#codes
 
-}, ipfsResolvers, systemResolvers, logResolvers, botsResolvers);
+}, ipfsResolvers, systemResolvers, logResolvers, botsResolvers, addonResolvers);
