@@ -13,8 +13,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import LinkIcon from '@material-ui/icons/ExitToApp';
 import ListItemText from '@material-ui/core/ListItemText';
+
+import EXTENSIONS from '../gql/extensions.graphql';
 import { useQueryStatusReducer } from '../hooks';
-import ADDON_LIST from '../gql/addon_list.graphql';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,6 +36,10 @@ const useStyles = makeStyles(theme => ({
 
   selected: {
     color: theme.palette.primary.main
+  },
+
+  expand: {
+    flex: 1
   }
 }));
 
@@ -43,12 +48,8 @@ const Sidebar = ({ modules: { services, settings } }) => {
   const history = useHistory();
   const { module } = useParams();
 
-  const { data: addonResponse } = useQueryStatusReducer(useQuery(ADDON_LIST));
-  console.log(addonResponse);
-  if (!addonResponse) {
-    return null;
-  }
-  const addons = JSON.parse(addonResponse.addon_list.json);
+  const { data: extensionsData } = useQueryStatusReducer(useQuery(EXTENSIONS));
+  const extensions = extensionsData ? JSON.parse(extensionsData.extensions.json) : [];
 
   const isSelected = path => path === `/${module}`;
 
@@ -65,9 +66,9 @@ const Sidebar = ({ modules: { services, settings } }) => {
     </List>
   );
 
-  const Addons = ({ addons }) => (
+  const Extensions = ({ extensions }) => (
     <List aria-label='items' className={classes.list}>
-      {addons.map(({ url, title }) => (
+      {extensions.map(({ url, title }) => (
         <ListItem button key={url} onClick={() => { window.location = url; return true; }}>
           <ListItemIcon classes={{ root: classes.icon }}>
             <LinkIcon className={clsx(classes.icon)} />
@@ -81,7 +82,8 @@ const Sidebar = ({ modules: { services, settings } }) => {
   return (
     <div className={classes.root}>
       <Modules modules={services} />
-      <Addons addons={addons} />
+      <Extensions extensions={extensions} />
+      <div className={classes.expand} />
       <Modules modules={settings} />
     </div>
   );

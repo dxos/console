@@ -3,7 +3,7 @@
 #
 
 query {
-  addon_list {
+  extensions {
     json
   }
 }
