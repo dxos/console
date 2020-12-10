@@ -1,0 +1,9 @@
+#
+# Copyright 2020 DXOS.org
+#
+
+query {
+  addon_list {
+    json
+  }
+}
