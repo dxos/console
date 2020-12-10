@@ -9,7 +9,10 @@ const ifRadicle = () => {
   try {
     const result = childProcess.execSync('docker ps -f "ancestor=dxos/radicle-seed-node" -q');
     if (result && result.toString()) {
-      return { title: 'Radicle', url: '/radicle/' };
+      return {
+        title: 'Radicle',
+        url: '/radicle/'
+      };
     }
   } catch (e) {}
 };
@@ -22,9 +25,9 @@ const ifSentry = () => {
   };
 };
 
-export const addonResolvers = {
+export const extensionResolvers = {
   Query: {
-    addon_list: async (_, __, { config }) => {
+    extensions: async (_, __, { config }) => {
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify([
