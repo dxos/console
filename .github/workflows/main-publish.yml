@@ -29,7 +29,7 @@ jobs:
 
           # Uncomment for NPM publishing.
           npm whoami
-          yarn lerna publish -y prerelease --dist-tag="alpha" --force-publish
+          yarn lerna publish -y patch --dist-tag="alpha" --force-publish
 
           # Publish to WNS
           yarn wire profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
