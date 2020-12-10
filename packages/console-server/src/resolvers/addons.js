@@ -9,7 +9,7 @@ const ifRadicle = () => {
   try {
     const result = childProcess.execSync('docker ps -f "ancestor=dxos/radicle-seed-node" -q');
     if (result && result.toString()) {
-      return { title: 'Radicle', url: '/' };
+      return { title: 'Radicle', url: '/radicle/' };
     }
   } catch (e) {}
 };
