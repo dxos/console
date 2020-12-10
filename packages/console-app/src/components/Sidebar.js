@@ -13,8 +13,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import LinkIcon from '@material-ui/icons/ExitToApp';
 import ListItemText from '@material-ui/core/ListItemText';
-import { useQueryStatusReducer } from "../hooks";
-import ADDON_LIST from "../gql/addon_list.graphql";
+import { useQueryStatusReducer } from '../hooks';
+import ADDON_LIST from '../gql/addon_list.graphql';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,7 +68,7 @@ const Sidebar = ({ modules: { services, settings } }) => {
   const Addons = ({ addons }) => (
     <List aria-label='items' className={classes.list}>
       {addons.map(({ url, title }) => (
-        <ListItem button key={url} onClick={() => window.location = url}>
+        <ListItem button key={url} onClick={() => { window.location = url; return true; }}>
           <ListItemIcon classes={{ root: classes.icon }}>
             <LinkIcon className={clsx(classes.icon)} />
           </ListItemIcon>
