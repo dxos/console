@@ -28,8 +28,8 @@ export const addonResolvers = {
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify([
-          ifSentry(),
-          ifRadicle()
+          ifRadicle(),
+          ifSentry()
         ].filter(x => x))
       };
     }
