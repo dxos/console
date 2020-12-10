@@ -53,22 +53,22 @@ const RunningBots = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell onClick={sortBy('id')}>Identifier</TableCell>
+          <TableCell onClick={sortBy('recordName')}>Identifier</TableCell>
           <TableCell onClick={sortBy('botId')} size='small'>Bot Id</TableCell>
           <TableCell onClick={sortBy('started')}>Started</TableCell>
-          <TableCell onClick={sortBy('stopped')}>Stopped</TableCell>
+          <TableCell onClick={sortBy('stopped')}>Running</TableCell>
           <TableCell onClick={sortBy('parties')} size='small'>Parties</TableCell>
           <TableCell size='icon' />
         </TableRow>
       </TableHead>
       <TableBody>
-        {botList.sort(sorter).map(({ id, botId, started, stopped, parties }) => {
+        {botList.sort(sorter).map(({ recordName, botId, started, stopped, parties }) => {
           return (
             <TableRow key={botId} size='small'>
-              <TableCell monospace>{id}</TableCell>
+              <TableCell monospace>{recordName}</TableCell>
               <TableCell monospace>{botId}</TableCell>
               <TableCell>{moment.utc(started).fromNow()}</TableCell>
-              <TableCell monospace>{String(stopped)}</TableCell>
+              <TableCell monospace>{String(!stopped)}</TableCell>
               <TableCell monospace>{parties && parties.map(partyId => <div key={partyId}>{partyId}</div>)}</TableCell>
               <TableCell monospace>
                 <BotControls onStop={() => onKillBot(botId)} />
