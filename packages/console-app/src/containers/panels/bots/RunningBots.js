@@ -3,7 +3,7 @@
 //
 
 import moment from 'moment';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -12,7 +12,7 @@ import TableBody from '@material-ui/core/TableBody';
 import BOT_LIST from '../../../gql/bot_list.graphql';
 import BOT_KILL from '../../../gql/bot_kill.graphql';
 
-import { useQueryStatusReducer, useStatusReducer, useSorter } from '../../../hooks';
+import { ConsoleContext, useQueryStatusReducer, useStatusReducer, useSorter } from '../../../hooks';
 
 import BotControls from '../../../components/BotControls';
 import Table from '../../../components/Table';
@@ -22,8 +22,9 @@ const RunningBots = () => {
   const [sorter, sortBy] = useSorter('started', false);
   const [botList, setBotList] = useState([]);
   const [, setStatus] = useStatusReducer();
+  const { config } = useContext(ConsoleContext);
 
-  const { data: botListResponse, refetch } = useQueryStatusReducer(useQuery(BOT_LIST));
+  const { data: botListResponse, refetch } = useQueryStatusReducer(useQuery(BOT_LIST, { pollInterval: config.api.pollInterval }));
 
   useEffect(() => {
     if (botListResponse) {
