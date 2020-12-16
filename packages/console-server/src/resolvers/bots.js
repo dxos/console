@@ -15,17 +15,18 @@ const SERVICE_CONFIG_FILENAME = 'service.yml';
 
 const log = debug('dxos:console:server:resolvers');
 
+let topic;
 const getBotFactoryTopic = (botFactoryCwd) => {
-  // TODO(egorgripasov): Get topic from config or registry.
-  const serviceFilePath = path.join(os.homedir(), botFactoryCwd || DEFAULT_BOT_FACTORY_CWD, SERVICE_CONFIG_FILENAME);
-  if (fs.existsSync(serviceFilePath)) {
-    const { topic } = yaml.safeLoad(fs.readFileSync(serviceFilePath));
-    return topic;
+  if (!topic) {
+    // TODO(egorgripasov): Get topic from config or registry.
+    const serviceFilePath = path.join(os.homedir(), botFactoryCwd || DEFAULT_BOT_FACTORY_CWD, SERVICE_CONFIG_FILENAME);
+    if (fs.existsSync(serviceFilePath)) {
+      const botFactoryInfo = yaml.safeLoad(fs.readFileSync(serviceFilePath));
+      topic = botFactoryInfo.topic;
+    }
   }
-  return undefined;
+  return topic;
 };
-
-const topic = getBotFactoryTopic();
 
 const executeCommand = async (command, args, timeout = 10000) => {
   return new Promise((resolve) => {
@@ -59,7 +60,7 @@ const executeCommand = async (command, args, timeout = 10000) => {
 
 const getRunningBots = async () => {
   const command = 'wire';
-  const args = ['bot', 'factory', 'status', '--topic', topic];
+  const args = ['bot', 'factory', 'status', '--topic', getBotFactoryTopic()];
 
   const { code, stdout, stderr } = await executeCommand(command, args);
   return {
@@ -71,7 +72,7 @@ const getRunningBots = async () => {
 
 const sendBotCommand = async (botId, botCommand) => {
   const command = 'wire';
-  const args = ['bot', botCommand, '--topic', topic, '--bot-id', botId];
+  const args = ['bot', botCommand, '--topic', getBotFactoryTopic(), '--bot-id', botId];
 
   const { code, stdout, stderr } = await executeCommand(command, args);
 
