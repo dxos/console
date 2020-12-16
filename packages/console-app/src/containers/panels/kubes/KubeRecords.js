@@ -47,7 +47,7 @@ const KubeRecords = () => {
           return (
             <TableRow key={id} size='small'>
               <TableCell monospace>
-                {names.map(wrn => <div key={wrn}>{url ? <Link href={url}>{wrn}</Link> : {wrn}}</div>)}
+                {names.map(wrn => <div key={wrn}>{url ? <Link href={url}>{wrn}</Link> : { wrn }}</div>)}
               </TableCell>
               <TableCell monospace>
                 {version}
