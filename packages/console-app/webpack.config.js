@@ -30,6 +30,9 @@ module.exports = merge(commonConfig, {
       }
     }),
 
+    // TODO(burdon): Add favicons.
+    // https://www.npmjs.com/package/favicons-webpack-plugin
+
     // https://webpack.js.org/guides/progressive-web-application/
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,

@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Next
 
 - [ ] Webpack and dynamic config 
-- [X] Complete WNS functionality
+- [X] Complete registry functionality
     - [X] Logging
     - [X] Trigger server-side wire commands
     - [X] Test on device in production.

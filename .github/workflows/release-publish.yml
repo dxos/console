@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - name: Build and WNS publish
+      - name: Build and publish
         run: |
           git config --global user.email "npm@dxos.org"
           git config --global user.name "DXOS"
