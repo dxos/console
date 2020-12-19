@@ -15,7 +15,8 @@ debug.enable(config.system.debug);
 // https://webpack.js.org/guides/progressive-web-application
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register(window.location.pathname + 'service-worker.js').then(registration => {
+    const path = decodeURIComponent(window.location.pathname) + 'service-worker.js';
+    navigator.serviceWorker.register(path).then(registration => {
       console.log('SW registered:', registration);
     }).catch(err => {
       console.warn('SW registration failed:', err);
