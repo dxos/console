@@ -57,3 +57,9 @@ import config from '@dxos/console-client/config.json';
 const file = path.join(__dirname + '../../../../node_modules/@dxos/console-client/dist/production', 'index.html');
 res.sendFile(file);
 ```
+
+## PWA
+
+- https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Add_to_home_screen#Manifest
+- https://webpack.js.org/guides/progressive-web-application/
+- https://medium.com/effective-developers/how-to-test-pwa-daa1a6eaf7bf

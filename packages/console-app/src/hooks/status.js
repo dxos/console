@@ -6,7 +6,7 @@ import { useContext, useEffect } from 'react';
 
 import { ConsoleContext } from './context';
 
-export const STATUS = 'xxx';
+export const STATUS = 'status';
 export const SET_STATUS = 'set.status';
 
 /**

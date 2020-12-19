@@ -86,7 +86,6 @@ app.use(cors({
 
 //
 // React app
-// TODO(burdon): Can we load this via WNS?
 //
 
 const bundles = [
@@ -95,6 +94,7 @@ const bundles = [
 
 app.use(`${publicUrl}/lib`, express.static('./dist/client'));
 
+// TODO(burdon): Isn't this loaded via IPFS?
 app.get(publicUrl, (req, res) => {
   res.render('console', {
     title: 'Console',

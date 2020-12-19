@@ -8,6 +8,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { useHistory, useParams } from 'react-router';
 
 import { makeStyles } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -74,15 +75,16 @@ const Sidebar = ({ modules: { services, settings } }) => {
           .replace('%PORT%', window.location.port)
           .replace('%PROTOCOL%', window.location.protocol);
         return (
-          <ListItem button key={url} onClick={() => { window.location = url; return true; }}>
+          <ListItem button key={url}>
             <ListItemIcon classes={{ root: classes.icon }}>
               <LinkIcon className={clsx(classes.icon)} />
             </ListItemIcon>
-            <ListItemText primary={title} />
+            <Link href={url} target='_blank' rel='noreferrer' color='textPrimary' underline='none'>
+              <ListItemText primary={title} />
+            </Link>
           </ListItem>
         );
-      }
-      )}
+      })}
     </List>
   );
 

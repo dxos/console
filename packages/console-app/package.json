@@ -14,6 +14,7 @@
     "clean": "rm -rf dist",
     "dist": "yarn clean && yarn build:babel && CONFIG_FILE=config-production.yml webpack",
     "lint": "semistandard 'src/**/*.js'",
+    "server": "http-server ./dist/production",
     "start": "CONFIG_FILE=${CONFIG_FILE:-config-testnet.yml} VERBOSE=true webpack-dev-server --mode development",
     "test": "jest --rootDir ./src --passWithNoTests --no-cache"
   },
@@ -76,6 +77,7 @@
     "babel-plugin-import-graphql": "^2.7.0",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-inline-json-import": "^0.3.2",
+    "copy-webpack-plugin": "^6.4.1",
     "dotenv-webpack": "^1.8.0",
     "eslint": "^6.7.2",
     "eslint-config-semistandard": "^15.0.0",
@@ -89,6 +91,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-standard": "^4.0.1",
     "html-webpack-plugin": "^4.3.0",
+    "http-server": "^0.12.3",
     "jest": "^24.8.0",
     "react-scripts": "^3.4.1",
     "semistandard": "^14.2.0",
@@ -98,6 +101,7 @@
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2",
     "webpack-version-file-plugin": "^0.4.0",
+    "workbox-webpack-plugin": "^6.0.2",
     "yaml-loader": "^0.6.0"
   },
   "peerDependencies": {
