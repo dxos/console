@@ -5,6 +5,24 @@
 import childProcess from 'child_process';
 
 // TODO(telackey): Make pluggable.
+
+const ifBigDipper = () => {
+  try {
+    const result = childProcess.execSync('docker ps -f "ancestor=big-dipper_app" -q');
+    if (result && result.toString()) {
+      return {
+        title: 'Block Explorer',
+        url: 'http://%HOST%:3080/'
+      };
+    } else {
+      return {
+        title: 'Block Explorer',
+        url: 'http://blockexplorer.kube.moon.dxos.network:3080/'
+      };
+    }
+  } catch (e) {}
+};
+
 const ifRadicle = () => {
   try {
     const result = childProcess.execSync('docker ps -f "ancestor=dxos/radicle-seed-node" -q');
@@ -31,6 +49,7 @@ export const extensionResolvers = {
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify([
+          ifBigDipper(),
           ifRadicle(),
           ifSentry()
         ].filter(x => x))
