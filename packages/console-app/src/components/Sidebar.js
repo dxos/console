@@ -68,14 +68,21 @@ const Sidebar = ({ modules: { services, settings } }) => {
 
   const Extensions = ({ extensions }) => (
     <List aria-label='items' className={classes.list}>
-      {extensions.map(({ url, title }) => (
-        <ListItem button key={url} onClick={() => { window.location = url; return true; }}>
-          <ListItemIcon classes={{ root: classes.icon }}>
-            <LinkIcon className={clsx(classes.icon)} />
-          </ListItemIcon>
-          <ListItemText primary={title} />
-        </ListItem>
-      ))}
+      {extensions.map(({ url, title }) => {
+        url = url
+          .replace('%HOST%', window.location.host)
+          .replace('%PORT%', window.location.port)
+          .replace('%PROTOCOL%', window.location.protocol);
+        return (
+          <ListItem button key={url} onClick={() => { window.location = url; return true; }}>
+            <ListItemIcon classes={{ root: classes.icon }}>
+              <LinkIcon className={clsx(classes.icon)} />
+            </ListItemIcon>
+            <ListItemText primary={title} />
+          </ListItem>
+        );
+      }
+      )}
     </List>
   );
 
