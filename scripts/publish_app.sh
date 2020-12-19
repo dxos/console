@@ -9,13 +9,14 @@ for appdir in `find ./packages -name '*-app' -type d | grep -v node_modules`; do
   PKG_CHANNEL="${PKG_CHANNEL:-}"
   PKG_NAME=`cat package.json | jq -r '.name' | cut -d'/' -f2- | sed 's/-app$//'`
   WNS_NAME="$WNS_ORG/$PKG_NAME"
-  
+
   cat <<EOF > app.yml
 name: $PKG_NAME
 build: yarn dist
 EOF
 
   cat app.yml
+  # TODO(burdon): Rename /app (consistently). Set ENV.
   echo "wrn://${WNS_ORG}/application/${PKG_NAME}${PKG_CHANNEL}"
 
   yarn clean

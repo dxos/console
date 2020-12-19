@@ -21,7 +21,7 @@ jobs:
         run: |
           git config --global user.email "npm@dxos.org"
           git config --global user.name "DXOS"
-          
+
           yarn install
           yarn build
           yarn test
@@ -31,10 +31,10 @@ jobs:
           npm whoami
           yarn lerna publish -y prerelease --dist-tag="alpha" --force-publish
 
-          # Publish to WNS
+          # Publish to registry
           yarn wire profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
           export PKG_CHANNEL="@alpha"
-          scripts/deploy_apps_to_wns.sh
+          scripts/publish_app.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
           WIRE_WNS_USER_KEY: ${{secrets.wns_user_key}}

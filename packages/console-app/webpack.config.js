@@ -3,7 +3,9 @@
 //
 
 const merge = require('webpack-merge');
+const CopyWebPackPlugin = require('copy-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const commonConfig = require('./webpack-common.config');
 
@@ -11,12 +13,27 @@ module.exports = merge(commonConfig, {
   entry: './src/main.js',
 
   plugins: [
+    new CopyWebPackPlugin({
+      patterns: [
+        {
+          from: '**',
+          context: './assets'
+        }
+      ]
+    }),
+
     // https://github.com/jantimon/html-webpack-plugin#options
     new HtmlWebPackPlugin({
       template: './public/index.html',
       templateParameters: {
-        title: 'Console'
+        title: 'DXOS Console'
       }
+    }),
+
+    // https://webpack.js.org/guides/progressive-web-application/
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true
     })
   ]
 });

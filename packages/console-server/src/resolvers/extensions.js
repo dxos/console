@@ -6,21 +6,16 @@ import childProcess from 'child_process';
 
 // TODO(telackey): Make pluggable.
 
-const ifBigDipper = () => {
+const ifBlockExplorer = () => {
   try {
     const result = childProcess.execSync('docker ps -f "ancestor=big-dipper_app" -q');
-    if (result && result.toString()) {
-      return {
-        title: 'Block Explorer',
-        url: 'http://%HOST%:3080/'
-      };
-    } else {
-      return {
-        title: 'Block Explorer',
-        url: 'http://blockexplorer.moon.dxos.network:3080/'
-      };
-    }
-  } catch (e) {}
+    return {
+      title: 'Block Explorer',
+      url: (result && result.toString()) ? 'http://%HOST%:3080/' : 'http://blockexplorer.moon.dxos.network:3080/'
+    };
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const ifRadicle = () => {
@@ -32,7 +27,9 @@ const ifRadicle = () => {
         url: '/radicle/'
       };
     }
-  } catch (e) {}
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // TODO(telackey): Use the local Sentry.
@@ -49,7 +46,7 @@ export const extensionResolvers = {
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify([
-          ifBigDipper(),
+          ifBlockExplorer(),
           ifRadicle(),
           ifSentry()
         ].filter(x => x))
