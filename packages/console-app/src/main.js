@@ -15,7 +15,8 @@ debug.enable(config.system.debug);
 // https://webpack.js.org/guides/progressive-web-application
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    const path = decodeURIComponent(window.location.pathname) + 'service-worker.js';
+    // TODO(burdon): Remove "wrn:" from registry path so encoding is not required.
+    const path = window.location.pathname + 'service_worker.js';
     navigator.serviceWorker.register(path).then(registration => {
       console.log('SW registered:', registration);
     }).catch(err => {
