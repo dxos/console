@@ -1,6 +1,6 @@
 {
   "name": "@dxos/console-app",
-  "version": "1.2.9-alpha.4",
+  "version": "1.2.9-alpha.5",
   "description": "Kubenet Console Client",
   "repository": "https://github.com/dxos/console",
   "main": "dist/es/index.js",
