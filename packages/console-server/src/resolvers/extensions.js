@@ -17,7 +17,7 @@ const ifBigDipper = () => {
     } else {
       return {
         title: 'Block Explorer',
-        url: 'http://blockexplorer.kube.moon.dxos.network:3080/'
+        url: 'http://blockexplorer.moon.dxos.network:3080/'
       };
     }
   } catch (e) {}
