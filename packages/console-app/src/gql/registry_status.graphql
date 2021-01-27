@@ -3,7 +3,7 @@
 #
 
 query {
-  wns_status @client {
+  registry_status @client {
     timestamp
     json
   }

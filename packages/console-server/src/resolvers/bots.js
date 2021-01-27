@@ -10,7 +10,7 @@ import path from 'path';
 import os from 'os';
 import kill from 'tree-kill';
 
-const DEFAULT_BOT_FACTORY_CWD = '.wire/bots';
+const DEFAULT_BOT_FACTORY_CWD = '.dx/bots';
 const SERVICE_CONFIG_FILENAME = 'service.yml';
 
 const log = debug('dxos:console:server:resolvers');
@@ -59,7 +59,7 @@ const executeCommand = async (command, args, timeout = 10000) => {
 };
 
 const getRunningBots = async () => {
-  const command = 'wire';
+  const command = 'dx';
   const args = ['bot', 'factory', 'status', '--topic', getBotFactoryTopic()];
 
   const { code, stdout, stderr } = await executeCommand(command, args);
@@ -71,7 +71,7 @@ const getRunningBots = async () => {
 };
 
 const sendBotCommand = async (botId, botCommand) => {
-  const command = 'wire';
+  const command = 'dx';
   const args = ['bot', botCommand, '--topic', getBotFactoryTopic(), '--bot-id', botId];
 
   const { code, stdout, stderr } = await executeCommand(command, args);

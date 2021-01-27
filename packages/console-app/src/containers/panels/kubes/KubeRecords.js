@@ -11,7 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
+import REGISTRY_RECORDS from '../../../gql/registry_records.graphql';
 
 import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 
@@ -21,16 +21,16 @@ import TableCell from '../../../components/TableCell';
 const KubeRecords = () => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('names[0]');
-  const { data: appResponse } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data: appResponse } = useQueryStatusReducer(useQuery(REGISTRY_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { attributes: { type: 'wrn:kube' } }
+    variables: { attributes: { type: 'dxn:kube' } }
   }));
 
   if (!appResponse) {
     return null;
   }
 
-  const appData = JSON.parse(appResponse.wns_records.json);
+  const appData = JSON.parse(appResponse.registry_records.json);
 
   return (
     <Table>
@@ -47,7 +47,7 @@ const KubeRecords = () => {
           return (
             <TableRow key={id} size='small'>
               <TableCell monospace>
-                {names.map(wrn => <div key={wrn}>{url ? <Link href={url}>{wrn}</Link> : { wrn }}</div>)}
+                {names.map(dxn => <div key={dxn}>{url ? <Link href={url}>{dxn}</Link> : { dxn }}</div>)}
               </TableCell>
               <TableCell monospace>
                 {version}

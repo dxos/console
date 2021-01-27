@@ -12,7 +12,7 @@ import TableBody from '@material-ui/core/TableBody';
 import Link from '@material-ui/core/Link';
 
 import IPFS_STATUS from '../../../gql/ipfs_status.graphql';
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
+import REGISTRY_RECORDS from '../../../gql/registry_records.graphql';
 
 import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 
@@ -24,9 +24,9 @@ import AppLink from '../../../components/AppLink';
 const AppRecords = () => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('createTime', false);
-  const { data: appResponse } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data: appResponse } = useQueryStatusReducer(useQuery(REGISTRY_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { attributes: { type: 'wrn:app' } }
+    variables: { attributes: { type: 'dxn:app' } }
   }));
 
   // TODO(telackey): Does this also need an interval?
@@ -35,7 +35,7 @@ const AppRecords = () => {
     return null;
   }
 
-  const appData = JSON.parse(appResponse.wns_records.json);
+  const appData = JSON.parse(appResponse.registry_records.json);
   const ipfsData = JSON.parse(ipfsResponse.ipfs_status.json);
   const localRefs = new Set(ipfsData.refs.local);
 
@@ -68,7 +68,7 @@ const AppRecords = () => {
           return (
             <TableRow key={id} size='small'>
               <TableCell monospace>
-                {names.map(wrn => <div key={wrn}> <AppLink config={config} wrn={wrn} /> </div>)}
+                {names.map(dxn => <div key={dxn}> <AppLink config={config} dxn={dxn} /> </div>)}
               </TableCell>
               <TableCell monospace>
                 {versionUrl

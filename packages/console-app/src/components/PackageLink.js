@@ -18,8 +18,8 @@ const PackageLink = ({ config, type, pkg, text }) => {
   // eslint-disable-next-line default-case
   switch (type) {
     // Apps and Files
-    case 'wrn:app':
-    case 'wrn:file': {
+    case 'dxn:app':
+    case 'dxn:file': {
       const cid = pkg['/'];
       const ipfsUrl = getServiceUrl(config, 'ipfs.gateway', { path: `${cid}` });
       if (!cid) {
@@ -40,7 +40,7 @@ const PackageLink = ({ config, type, pkg, text }) => {
     }
 
     // Bots
-    case 'wrn:bot': {
+    case 'dxn:bot': {
       const packageLinks = [];
       Object.keys(pkg).forEach((platform) => {
         Object.keys(pkg[platform]).forEach(arch => {

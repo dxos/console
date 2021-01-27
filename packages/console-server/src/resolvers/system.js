@@ -34,7 +34,7 @@ const getVersionInfo = () => {
 };
 
 const getCliVersionInfo = () => {
-  const command = 'wire';
+  const command = 'dx';
   const args = ['version'];
 
   const child = spawnSync(command, args, { encoding: 'utf8' });
@@ -98,7 +98,7 @@ const getSystemInfo = async () => {
       kube: {
         version: getVersionInfo()
       },
-      wire: {
+      dx: {
         version: getCliVersionInfo()
       }
     }
@@ -110,7 +110,7 @@ const getSystemInfo = async () => {
  * https://www.npmjs.com/package/systeminformation
  */
 const getServiceInfo = async () => {
-  const command = 'wire';
+  const command = 'dx';
   const args = ['service', '--json'];
 
   const child = spawnSync(command, args, { encoding: 'utf8' });

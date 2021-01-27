@@ -24,7 +24,7 @@ services:
     prefix: '/app'
     server: 'http://127.0.0.1:5999'
 
-  wns:
+  registry:
     server: 'http://127.0.0.1:9473/api'
     webui: 'http://127.0.0.1:9473/console'
 

@@ -15,7 +15,7 @@ import { print } from 'graphql/language';
 import yargs from 'yargs';
 
 // TODO(burdon): Use once published by @ashwinp.
-// import { extensions as WNS_EXTENSIONS, schema as WNS_SCHEMA } from '@wirelineio/wns-schema';
+// import { extensions as REGISTRY_EXTENSIONS, schema as REGISTRY_SCHEMA } from '@wirelineio/wns-schema';
 
 import SYSTEM_STATUS from '@dxos/console-app/src/gql/system_status.graphql';
 

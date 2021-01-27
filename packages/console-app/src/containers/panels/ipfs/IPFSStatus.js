@@ -7,22 +7,22 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import IPFS_STATUS from '../../../gql/ipfs_status.graphql';
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
+import REGISTRY_RECORDS from '../../../gql/registry_records.graphql';
 
 import { useQueryStatusReducer } from '../../../hooks';
 
 import Json from '../../../components/Json';
 
-const RECORD_TYPE = 'wrn:service';
+const RECORD_TYPE = 'dxn:service';
 const SERVICE_TYPE = 'ipfs';
 
 const IPFSStatus = () => {
   const { data: ipfsResponse } = useQueryStatusReducer(useQuery(IPFS_STATUS));
-  const { data: wnsResponse } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data: registryResponse } = useQueryStatusReducer(useQuery(REGISTRY_RECORDS, {
     variables: { attributes: { type: RECORD_TYPE, service: SERVICE_TYPE } }
   }));
 
-  if (!wnsResponse || !ipfsResponse) {
+  if (!registryResponse || !ipfsResponse) {
     return null;
   }
 
