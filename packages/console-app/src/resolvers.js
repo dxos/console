@@ -4,7 +4,7 @@
 
 import debug from 'debug';
 
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
 
 import { getServiceUrl } from './util/config';
 
@@ -20,7 +20,7 @@ const MAX_LOG_LENGTH = 200;
  * @param config
  */
 export const createResolvers = config => {
-  const endpoint = getServiceUrl(config, 'wns.server', { absolute: true });
+  const endpoint = getServiceUrl(config, 'registry.server', { absolute: true });
   const registry = new Registry(endpoint);
 
   // TODO(burdon): Errors swallowed!
@@ -30,8 +30,8 @@ export const createResolvers = config => {
 
   return {
     Query: {
-      wns_status: async () => {
-        log('WNS status...');
+      registry_status: async () => {
+        log('Registry status...');
         const data = await registry.getStatus();
 
         return {
@@ -43,8 +43,8 @@ export const createResolvers = config => {
         };
       },
 
-      wns_records: async (_, { attributes }) => {
-        log('WNS records...');
+      registry_records: async (_, { attributes }) => {
+        log('Registry records...');
         const data = await registry.queryRecords(attributes);
 
         return {
@@ -56,8 +56,8 @@ export const createResolvers = config => {
         };
       },
 
-      wns_log: async () => {
-        log('WNS log...');
+      registry_log: async () => {
+        log('Registry log...');
 
         // Cache and merge previous state.
         const data = await registry.getLogs();

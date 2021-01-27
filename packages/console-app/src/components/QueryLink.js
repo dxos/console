@@ -33,14 +33,14 @@ const QUERY = `
 `;
 
 /**
- * Render link to record in WNS.
+ * Render link to record in Registry.
  * @param {Object} config
  * @param {string} id
  * @param {string} [text]
  * @param {boolean} icon
  */
 const QueryLink = ({ config, id, text, icon = false }) => {
-  const baseURL = getServiceUrl(config, 'wns.webui');
+  const baseURL = getServiceUrl(config, 'registry.webui');
   const query = QUERY.replace('%ID%', id);
 
   // NOTE: Playground bug opens two tabs.

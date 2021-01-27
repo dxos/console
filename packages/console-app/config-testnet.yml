@@ -24,9 +24,9 @@ services:
     prefix: '/app'
     server: 'https://apollo1.kube.moon.dxos.network'
 
-  wns:
-    server: 'https://apollo1.kube.moon.dxos.network/dxos/wns/api'
-    webui: 'https://apollo1.kube.moon.dxos.network/dxos/wns/console'
+  registry:
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/registry/api'
+    webui: 'https://apollo1.kube.moon.dxos.network/dxos/registry/console'
 
   signal:
     server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'

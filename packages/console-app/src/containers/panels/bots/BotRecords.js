@@ -5,7 +5,7 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
+import REGISTRY_RECORDS from '../../../gql/registry_records.graphql';
 
 import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 
@@ -21,16 +21,16 @@ import moment from 'moment';
 const BotRecords = () => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('createTime', false);
-  const { data } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data } = useQueryStatusReducer(useQuery(REGISTRY_RECORDS, {
     pollInterval: config.api.intervalQuery,
-    variables: { attributes: { type: 'wrn:bot' } }
+    variables: { attributes: { type: 'dxn:bot' } }
   }));
 
   if (!data) {
     return null;
   }
 
-  const records = JSON.parse(data.wns_records.json);
+  const records = JSON.parse(data.registry_records.json);
 
   return (
     <Table>

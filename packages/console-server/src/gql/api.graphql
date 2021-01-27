@@ -20,7 +20,7 @@ type Query {
   service_status: JSONResult!
   signal_status: JSONResult!
   system_status: JSONResult!
-  wns_status: JSONResult!
+  registry_status: JSONResult!
   bot_list: JSONResult!
   extensions: JSONResult!
 }

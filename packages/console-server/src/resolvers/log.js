@@ -40,7 +40,7 @@ const getLogCache = (name) => {
 };
 
 const getLogs = async (name, incremental = false, lines = 100) => {
-  const command = 'wire';
+  const command = 'dx';
   const args = ['service', 'logs', '--lines', lines, name];
 
   const child = spawnSync(command, args, { encoding: 'utf8' });

@@ -22,9 +22,9 @@ routes:
   app:
     server: '/app'
 
-  wns:
-    server: '/dxos/wns/api'
-    webui: '/dxos/wns/console'
+  registry:
+    server: '/dxos/registry/api'
+    webui: '/dxos/registry/console'
 
   signal:
     api: '/dxos/signal/api'

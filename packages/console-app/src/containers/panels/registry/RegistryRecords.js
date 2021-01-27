@@ -12,7 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
+import REGISTRY_RECORDS from '../../../gql/registry_records.graphql';
 
 import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 
@@ -31,13 +31,13 @@ const useStyles = makeStyles(theme => ({
 
 const types = [
   { key: null, label: 'ALL' },
-  { key: 'wrn:kube', label: 'Kube' },
-  { key: 'wrn:service', label: 'Service' },
-  { key: 'wrn:app', label: 'App' },
-  { key: 'wrn:bot', label: 'Bot' },
-  { key: 'wrn:bot-factory', label: 'Bot Factory' },
-  { key: 'wrn:file', label: 'File' },
-  { key: 'wrn:type', label: 'Type' }
+  { key: 'dxn:kube', label: 'Kube' },
+  { key: 'dxn:service', label: 'Service' },
+  { key: 'dxn:app', label: 'App' },
+  { key: 'dxn:bot', label: 'Bot' },
+  { key: 'dxn:bot-factory', label: 'Bot Factory' },
+  { key: 'dxn:file', label: 'File' },
+  { key: 'dxn:type', label: 'Type' }
 ];
 
 export const RecordType = ({ type = types[0].key, onChange }) => {
@@ -68,7 +68,7 @@ export const RecordType = ({ type = types[0].key, onChange }) => {
 const RegistryRecords = ({ type }) => {
   const { config } = useContext(ConsoleContext);
   const [sorter, sortBy] = useSorter('createTime', false);
-  const { data } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data } = useQueryStatusReducer(useQuery(REGISTRY_RECORDS, {
     pollInterval: config.api.intervalQuery,
     variables: { attributes: { type } }
   }));
@@ -77,7 +77,7 @@ const RegistryRecords = ({ type }) => {
     return null;
   }
 
-  const records = JSON.parse(data.wns_records.json);
+  const records = JSON.parse(data.registry_records.json);
 
   return (
     <Table>
@@ -104,12 +104,12 @@ const RegistryRecords = ({ type }) => {
               pkgLink = (<PackageLink config={config} type={type} pkg={pkg} />);
             }
 
-            if (type === 'wrn:app') {
+            if (type === 'dxn:app') {
               appLinks = (
                 <>
-                  {names.map(wrn =>
-                    <div key={wrn}>
-                      <AppLink config={config} wrn={wrn} />
+                  {names.map(dxn =>
+                    <div key={dxn}>
+                      <AppLink config={config} dxn={dxn} />
                     </div>
                   )}
                 </>

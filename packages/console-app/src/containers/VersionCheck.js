@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
 
 import SYSTEM_STATUS from '../gql/system_status.graphql';
-import WNS_RECORDS from '../gql/wns_records.graphql';
+import REGISTRY_RECORDS from '../gql/registry_records.graphql';
 
 import { useQueryStatusReducer } from '../hooks';
 
@@ -31,22 +31,22 @@ const VersionCheck = () => {
   const classes = useStyles();
   const [{ current, latest }, setUpgrade] = useState({});
   const { data: statusResponse } = useQueryStatusReducer(useQuery(SYSTEM_STATUS));
-  const { data: wnsResponse } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data: registryResponse } = useQueryStatusReducer(useQuery(REGISTRY_RECORDS, {
     pollInterval: CHECK_INTERVAL,
-    variables: { attributes: { type: 'wrn:resource' } }
+    variables: { attributes: { type: 'dxn:resource' } }
   }));
 
   // Check version.
   useEffect(() => {
-    if (statusResponse && wnsResponse) {
+    if (statusResponse && registryResponse) {
       const statusData = JSON.parse(statusResponse.system_status.json);
-      const wnsData = JSON.parse(wnsResponse.wns_records.json);
+      const registryData = JSON.parse(registryResponse.registry_records.json);
 
       const current = get(statusData, 'dxos.kube.version', '0.0.0');
 
       let latest = current;
-      wnsData.forEach(({ attributes: { name, version } }) => {
-        // TODO(burdon): Filter by type (WRN?)
+      registryData.forEach(({ attributes: { name, version } }) => {
+        // TODO(burdon): Filter by type (DXN?)
         if (name.startsWith('dxos/kube:')) {
           if (compareVersions(version, latest) > 0) {
             latest = version;
@@ -56,7 +56,7 @@ const VersionCheck = () => {
 
       setUpgrade({ current, latest: latest !== current ? latest : undefined });
     }
-  }, [statusResponse, wnsResponse]);
+  }, [statusResponse, registryResponse]);
 
   // TODO(burdon): Link to Github page with upgrade info.
   return (

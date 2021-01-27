@@ -89,7 +89,7 @@ const Registry = () => {
 
         {tab === TAB_LOG && (
           <div className={classes.panel}>
-            <LogPoller service='wns-lite' />
+            <LogPoller service='dxns-lite' />
           </div>
         )}
       </TabContext>

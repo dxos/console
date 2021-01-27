@@ -34,7 +34,7 @@
     "@dxos/cli-app": "2.0.20-alpha.0",
     "@dxos/cli-bot": "2.0.20-alpha.0",
     "@dxos/cli-data": "2.0.20-alpha.0",
-    "@dxos/cli-wns": "2.0.20-alpha.0",
+    "@dxos/cli-registry": "^2.0.20-alpha.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
     "eslint-config-semistandard": "^15.0.0",

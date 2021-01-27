@@ -13,7 +13,7 @@ import Json from '../../../components/Json';
 
 import { ConsoleContext, useQueryStatusReducer, useRegistry } from '../../../hooks';
 
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
+import REGISTRY_RECORDS from '../../../gql/registry_records.graphql';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 
@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 
 const types = [
   { key: 'authority', label: 'Authority' },
-  { key: 'wrn', label: 'WRN' }
+  { key: 'dxn', label: 'DXN' }
 ];
 
 export const LookupType = ({ scope = types[0].key, onChange }) => {
@@ -74,7 +74,7 @@ const RegistryLookup = ({ scope }) => {
   const [result, setResult] = useState({});
   const [inputValue, setInputValue] = useState('');
 
-  const { data } = useQueryStatusReducer(useQuery(WNS_RECORDS, {
+  const { data } = useQueryStatusReducer(useQuery(REGISTRY_RECORDS, {
     pollInterval: config.api.intervalQuery
   }));
 
@@ -82,12 +82,12 @@ const RegistryLookup = ({ scope }) => {
     return null;
   }
 
-  const records = JSON.parse(data.wns_records.json);
+  const records = JSON.parse(data.registry_records.json);
 
   const getNames = () => {
     let ret;
     switch (scope) {
-      case 'wrn': {
+      case 'dxn': {
         ret = [];
         records.forEach(item => ret.push(...item.names));
         break;
@@ -95,12 +95,12 @@ const RegistryLookup = ({ scope }) => {
 
       case 'authority': {
         // Use the known names to come up with a default list of authorities.
-        // TODO(telackey): Should we be able to query WNS for a list of authorities?
+        // TODO(telackey): Should we be able to query Registry for a list of authorities?
         const names = new Set();
         for (const record of records) {
           for (const name of record.names) {
-            // TODO(telackey): We need a general purpose WRN handling library.
-            names.add(name.replace('wrn://', '').split('/')[0]);
+            // TODO(telackey): We need a general purpose DXN handling library.
+            names.add(name.replace('dxn://', '').split('/')[0]);
           }
         }
         ret = Array.from(names.values());
@@ -120,7 +120,7 @@ const RegistryLookup = ({ scope }) => {
 
     let result;
     switch (scope) {
-      case 'wrn':
+      case 'dxn':
         result = await registry.lookupNames([newInputValue], true);
         break;
 
