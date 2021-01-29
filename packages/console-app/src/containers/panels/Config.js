@@ -4,11 +4,10 @@
 
 import React, { useContext } from 'react';
 
-import { ConsoleContext } from '../../hooks';
-
+import Json from '../../components/Json';
 import Panel from '../../components/Panel';
 import Toolbar from '../../components/Toolbar';
-import Json from '../../components/Json';
+import { ConsoleContext } from '../../hooks';
 
 const Config = () => {
   const { config } = useContext(ConsoleContext);

@@ -5,8 +5,8 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import MuiTableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core';
+import MuiTableCell from '@material-ui/core/TableCell';
 
 const useStyles = makeStyles(() => ({
   icon: {

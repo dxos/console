@@ -3,22 +3,22 @@
 //
 
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 
+import { makeStyles } from '@material-ui/core';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+
+import LogPoller from '../../../components/LogPoller';
 import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
-
 import AppRecords from './AppRecords';
-import LogPoller from '../../../components/LogPoller';
 
 const TAB_RECORDS = 'records';
 const TAB_LOG = 'log';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {}
-}));
+});
 
 const Apps = () => {
   // eslint-disable-next-line

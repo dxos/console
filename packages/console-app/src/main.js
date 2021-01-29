@@ -7,7 +7,6 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import config from './config';
-
 import Main from './containers/Main';
 
 debug.enable(config.system.debug);

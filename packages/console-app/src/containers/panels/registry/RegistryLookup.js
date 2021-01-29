@@ -2,20 +2,18 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useContext, useState } from 'react';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core';
-
 import { useQuery } from '@apollo/react-hooks';
+import React, { useContext, useState } from 'react';
+
+import { makeStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import Json from '../../../components/Json';
-
-import { ConsoleContext, useQueryStatusReducer, useRegistry } from '../../../hooks';
-
 import WNS_RECORDS from '../../../gql/wns_records.graphql';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Button from '@material-ui/core/Button';
+import { ConsoleContext, useQueryStatusReducer, useRegistry } from '../../../hooks';
 
 const useStyles = makeStyles(theme => ({
   root: {

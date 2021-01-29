@@ -3,14 +3,14 @@
 //
 
 import React, { useContext } from 'react';
+
 import { makeStyles } from '@material-ui/core';
 
 import { FullScreen } from '@dxos/gem-core';
 
-import { ConsoleContext } from '../hooks';
-
 import AppBar from '../components/AppBar';
 import Sidebar from '../components/Sidebar';
+import { ConsoleContext } from '../hooks';
 import StatusBar from './StatusBar';
 
 const useStyles = makeStyles((theme) => ({

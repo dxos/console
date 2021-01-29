@@ -3,6 +3,7 @@
 //
 
 import React, { useState } from 'react';
+
 import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
@@ -12,9 +13,8 @@ import TabContext from '@material-ui/lab/TabContext';
 import LogPoller from '../../../components/LogPoller';
 import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
-
-import RegistryRecords, { RecordType } from './RegistryRecords';
 import RegistryLookup, { LookupType } from './RegistryLookup';
+import RegistryRecords, { RecordType } from './RegistryRecords';
 import RegistryStatus from './RegistryStatus';
 
 const TAB_RECORDS = 'records';

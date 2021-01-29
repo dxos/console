@@ -2,9 +2,9 @@
 // Copyright 2019 DXOS.org
 //
 
-import { createMuiTheme } from '@material-ui/core/styles';
-import teal from '@material-ui/core/colors/teal';
 import orange from '@material-ui/core/colors/orange';
+import teal from '@material-ui/core/colors/teal';
+import { createMuiTheme } from '@material-ui/core/styles';
 
 export const createTheme = (theme) => createMuiTheme({
 

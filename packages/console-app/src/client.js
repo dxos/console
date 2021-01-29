@@ -2,10 +2,10 @@
 // Copyright 2020 DXOS.org
 //
 
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { createResolvers } from './resolvers';
 import { getServiceUrl } from './util/config';

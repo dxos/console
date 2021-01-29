@@ -2,8 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import React, { useContext } from 'react';
 
 import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -12,8 +12,8 @@ import TableRow from '@material-ui/core/TableRow';
 
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
-import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 import SERVICE_STATUS from '../../../gql/service_status.graphql';
+import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 
 const format = (value, unit, symbol = '') => Math.floor(value / unit).toLocaleString() + symbol;
 

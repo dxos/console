@@ -2,11 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useContext, useRef, useEffect, useState, useCallback } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import useComponentSize from '@rehooks/component-size';
-import moment from 'moment';
 import get from 'lodash.get';
+import moment from 'moment';
+import React, { useContext, useRef, useEffect, useState, useCallback } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,12 +15,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
 
+import NetworkGraph from '../../../components/NetworkGraph';
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
-import NetworkGraph from '../../../components/NetworkGraph';
-
 import SIGNAL_STATUS from '../../../gql/signal_status.graphql';
-
 import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
 const NODE_ID_LENGTH = 8;
@@ -67,11 +65,15 @@ const useDataGraph = (response) => {
   const [dataGraph, setDataGraph] = useState({ updatedAt: 0, nodes: [], links: [] });
 
   useEffect(() => {
-    if (!response) return;
+    if (!response) {
+      return;
+    }
     const { id: rootId, nodes = [] } = response.signal_status;
     const updatedAt = moment(response.signal_status.updatedAt).valueOf();
 
-    if (dataGraph.updatedAt >= updatedAt) return;
+    if (dataGraph.updatedAt >= updatedAt) {
+      return;
+    }
 
     const graph = buildDataGraph(rootId, dataGraph, nodes);
     setDataGraph({

@@ -3,10 +3,11 @@
 //
 
 import React, { useEffect, useState } from 'react';
+
+import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles(() => ({
   root: {

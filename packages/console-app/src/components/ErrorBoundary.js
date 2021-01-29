@@ -3,6 +3,7 @@
 //
 
 import React, { Component } from 'react';
+
 import Typography from '@material-ui/core/Typography';
 
 /**
@@ -21,7 +22,7 @@ class ErrorBoundary extends Component {
     error: null
   };
 
-  componentDidCatch (error, errorInfo) {
+  componentDidCatch (error) {
     const { onError } = this.props;
 
     // TODO(burdon): Show error indicator.

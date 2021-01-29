@@ -2,16 +2,13 @@
 // Copyright 2020 DXOS.org
 //
 
+import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
 
-import { useQuery } from '@apollo/react-hooks';
-
+import Json from '../../../components/Json';
 import IPFS_STATUS from '../../../gql/ipfs_status.graphql';
 import WNS_RECORDS from '../../../gql/wns_records.graphql';
-
 import { useQueryStatusReducer } from '../../../hooks';
-
-import Json from '../../../components/Json';
 
 const RECORD_TYPE = 'wrn:service';
 const SERVICE_TYPE = 'ipfs';

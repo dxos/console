@@ -13,7 +13,7 @@
     "test": "lerna run test"
   },
   "author": "DXOS.org",
-  "license": "AGPLv3",
+  "license": "AGPL-3.0",
   "workspaces": {
     "packages": [
       "packages/*"

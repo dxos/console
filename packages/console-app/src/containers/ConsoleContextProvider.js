@@ -2,11 +2,10 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useEffect, useReducer } from 'react';
 import defaultsDeep from 'lodash.defaultsdeep';
+import React, { useEffect, useReducer } from 'react';
 
 import ErrorBoundary from '../components/ErrorBoundary';
-
 import { ConsoleContext, statusReducer, STATUS, SET_STATUS } from '../hooks';
 
 const defaultState = {};

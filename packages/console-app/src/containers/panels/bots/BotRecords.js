@@ -2,21 +2,19 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import moment from 'moment';
+import React, { useContext } from 'react';
 
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
-
-import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
-
+import Link from '@material-ui/core/Link';
+import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody';
-import Link from '@material-ui/core/Link';
 
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
-import moment from 'moment';
+import WNS_RECORDS from '../../../gql/wns_records.graphql';
+import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 
 const BotRecords = () => {
   const { config } = useContext(ConsoleContext);

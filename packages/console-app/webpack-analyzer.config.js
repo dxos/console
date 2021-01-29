@@ -8,8 +8,8 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const baseConfig = require('./webpack-common.config');
 
 module.exports = merge(baseConfig, {
-
   entry: './src/main',
+  mode: 'development',
 
   plugins: [
     // http://127.0.0.1:8888

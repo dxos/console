@@ -2,13 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import React, { useContext } from 'react';
 
 import Json from '../../../components/Json';
-
 import SYSTEM_STATUS from '../../../gql/system_status.graphql';
-
 import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
 const Info = () => {

@@ -19,8 +19,8 @@ import yargs from 'yargs';
 
 import SYSTEM_STATUS from '@dxos/console-app/src/gql/system_status.graphql';
 
-import API_SCHEMA from '../gql/api.graphql';
-import { resolvers } from '../resolvers';
+import { resolvers } from './resolvers';
+import API_SCHEMA from './gql/api.graphql';
 
 const argv = yargs
   .option('config', {
@@ -45,9 +45,8 @@ if (!configFile) {
 
 const config = yaml.safeLoad(fs.readFileSync(configFile));
 
-const log = debug('dxos:console:server');
-
 debug.enable(config.system.debug);
+const log = debug('dxos:console:server');
 
 if (argv.verbose) {
   log(JSON.stringify(config, undefined, 2));

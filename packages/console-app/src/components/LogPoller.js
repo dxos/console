@@ -2,13 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-
-import { ConsoleContext, useQueryStatusReducer } from '../hooks';
+import React, { useContext } from 'react';
 
 import LOGS from '../gql/logs.graphql';
-
+import { ConsoleContext, useQueryStatusReducer } from '../hooks';
 import Log from './Log';
 
 const MAX_LINES = 1000;

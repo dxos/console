@@ -5,21 +5,20 @@
 import clsx from 'clsx';
 import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
+
 import { makeStyles } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
-import ErrorIcon from '@material-ui/icons/Error';
-import LoadingIcon from '@material-ui/icons/Wifi';
-import RunningIcon from '@material-ui/icons/CheckCircle';
-import PublicIcon from '@material-ui/icons/Public';
-import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
+import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
-
-import { ConsoleContext, useStatusReducer } from '../hooks';
+import RunningIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
+import PublicIcon from '@material-ui/icons/Public';
+import LoadingIcon from '@material-ui/icons/Wifi';
 
 import Error from '../components/Error';
-
+import { ConsoleContext, useStatusReducer } from '../hooks';
 import VersionCheck from './VersionCheck';
 
 const useStyles = makeStyles((theme) => ({

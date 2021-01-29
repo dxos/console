@@ -2,7 +2,7 @@
   "name": "@dxos/console-server",
   "version": "1.2.9-alpha.7",
   "description": "KUBE Console Server",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "author": "DXOS.org",
   "main": "dist/es/index.js",
   "bin": {
@@ -13,17 +13,27 @@
     "dist/es"
   ],
   "scripts": {
-    "build": "npm run clean && tsc --build",
+    "build": "npm run clean && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
     "clean": "rm -rf ./dist",
-    "lint": "eslint --format codeframe './src/**/*.[t|j]s'",
-    "start": "CONFIG_FILE=${CONFIG_FILE=./config.yml} ts-node src/server.js",
+    "dev": "VERBOSE=true webpack-dev-server --mode development --watch",
+    "lint": "semistandard 'src/**/*.js'",
+    "start": "CONFIG_FILE=${CONFIG_FILE=./config.yml} BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server.js -- --verbose",
     "test": "jest --rootDir ./src --passWithNoTests --no-cache"
   },
   "eslintConfig": {
-    "extends": "plugin:@dxos/react"
+    "parser": "babel-eslint",
+    "plugins": [
+      "babel"
+    ],
+    "extends": [
+      "plugin:jest/recommended",
+      "semistandard"
+    ],
+    "rules": {
+      "babel/semi": 1
+    }
   },
   "jest": {
-    "preset": "ts-jest/presets/default",
     "testEnvironment": "node"
   },
   "dependencies": {
@@ -35,6 +45,7 @@
     "apollo-server-express": "^2.13.1",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
+    "cors": "^2.8.5",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
@@ -54,7 +65,14 @@
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.10",
+    "@babel/cli": "7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-export-default-from": "^7.5.2",
+    "@babel/preset-env": "^7.4.5",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.8.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-import-graphql": "^2.7.0",
@@ -62,12 +80,18 @@
     "babel-plugin-inline-json-import": "^0.3.2",
     "dotenv-webpack": "^1.8.0",
     "eslint": "^6.7.2",
+    "eslint-config-semistandard": "^15.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-loader": "^3.0.3",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^23.13.1",
+    "eslint-plugin-jsdoc": "^21.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.8.0",
     "nodemon": "^2.0.4",
     "semistandard": "^14.2.0",
-    "ts-jest": "^26.1.4",
-    "ts-node": "^9.1.1",
-    "typescript": "~4.0.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0",
@@ -75,5 +99,13 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "semistandard": {
+    "parser": "babel-eslint",
+    "env": [
+      "jest",
+      "node",
+      "browser"
+    ]
   }
 }
