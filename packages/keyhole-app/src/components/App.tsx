@@ -56,6 +56,7 @@ const useStyles = makeStyles(() => ({
 const App = () => {
   const classes = useStyles();
 
+  // TODO(burdon): Post PIN to dx app serve (sets cookie and redirects).
   const handleSubmit = (value: string) => {
     console.log(value);
   };
