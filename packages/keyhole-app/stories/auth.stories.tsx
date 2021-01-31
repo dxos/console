@@ -4,12 +4,14 @@
 
 import React from 'react';
 
+import { App } from '../src';
+
 export default {
-  title: 'Login'
+  title: 'Keyhole'
 };
 
-export const Login = () => {
+export const withApp = () => {
   return (
-    <div>Login</div>
+    <App />
   );
 };
