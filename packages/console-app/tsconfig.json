@@ -9,7 +9,6 @@
     ],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmit": true,
     "removeComments": false,
     "resolveJsonModule": true,
     "skipLibCheck": true,

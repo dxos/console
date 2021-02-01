@@ -92,9 +92,14 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        use: {
-          loader: 'ts-loader'
-        }
+        use: [
+          {
+            loader: 'ts-loader'
+          },
+          {
+            loader: 'babel-loader'
+          }
+        ]
       },
 
       // https://github.com/eemeli/yaml-loader
