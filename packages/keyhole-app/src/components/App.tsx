@@ -9,7 +9,7 @@ import superagent from 'superagent';
 import { makeStyles } from '@material-ui/core';
 
 // TODO(burdon): Snowpack error: Buffer is not defined.
-// import { Passcode } from '@dxos/react-ux';
+import { Passcode } from '@dxos/react-ux';
 
 import Logo from './Logo';
 
@@ -99,13 +99,15 @@ const App = () => {
       </div>
       <div className={classes.code}>
         <button onClick={() => handleSubmit('')}>TEST</button>
-        {/*
+        
         <Passcode
           editable={true}
           length={6}
           onSubmit={handleSubmit}
+          attempt={0}
+          onChange={() => {}}
         />
-        */}
+       
       </div>
     </div>
   );

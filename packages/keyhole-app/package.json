@@ -47,6 +47,8 @@
     "superagent": "^6.1.0"
   },
   "devDependencies": {
+    "rollup-plugin-node-globals": "^1.4.0",
+    "@types/superagent": "^4.1.10",
     "@dxos/eslint-plugin": "~1.0.10",
     "@snowpack/plugin-typescript": "^1.2.1",
     "@storybook/addon-knobs": "^6.1.14",

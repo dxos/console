@@ -16,7 +16,12 @@ module.exports = {
   ],
   packageOptions: {
     installTypes: true,
-    polyfillNode: true
+    polyfillNode: true,
+    rollup: {
+      plugins: [
+        require('rollup-plugin-node-globals')(),
+      ]
+    }
   },
   devOptions: {
   },
