@@ -19,7 +19,7 @@ module.exports = {
     polyfillNode: true,
     rollup: {
       plugins: [
-        require('rollup-plugin-node-globals')(),
+        require('rollup-plugin-node-globals')()
       ]
     }
   },
@@ -30,6 +30,6 @@ module.exports = {
   optimize: {
     bundle: true,
     minify: true,
-    target: 'es2018',
-  },
+    target: 'es2018'
+  }
 };
