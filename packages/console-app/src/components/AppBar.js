@@ -3,6 +3,7 @@
 //
 
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core';
 import MuiAppBar from '@material-ui/core/AppBar';
 import Link from '@material-ui/core/Link';
@@ -11,8 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import GraphQLIcon from '@material-ui/icons/Adb';
 
-import DXOSIcon from '../icons/DXOS';
 import { graphqlApi } from '../client';
+import DXOSIcon from '../icons/DXOS';
 
 const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.denseToolbar,

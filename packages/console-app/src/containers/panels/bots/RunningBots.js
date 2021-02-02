@@ -2,21 +2,20 @@
 // Copyright 2020 DXOS.org
 //
 
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import moment from 'moment';
 import React, { useState, useEffect, useContext } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+
+import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody';
-
-import BOT_LIST from '../../../gql/bot_list.graphql';
-import BOT_KILL from '../../../gql/bot_kill.graphql';
-
-import { ConsoleContext, useQueryStatusReducer, useStatusReducer, useSorter } from '../../../hooks';
 
 import BotControls from '../../../components/BotControls';
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
+import BOT_KILL from '../../../gql/bot_kill.graphql';
+import BOT_LIST from '../../../gql/bot_list.graphql';
+import { ConsoleContext, useQueryStatusReducer, useStatusReducer, useSorter } from '../../../hooks';
 
 const RunningBots = () => {
   const [sorter, sortBy] = useSorter('started', false);

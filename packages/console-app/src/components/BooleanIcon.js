@@ -4,10 +4,9 @@
 
 import React from 'react';
 
+import { makeStyles } from '@material-ui/core/styles';
 import YesIcon from '@material-ui/icons/CheckCircleOutline';
 import NoIcon from '@material-ui/icons/RadioButtonUnchecked';
-
-import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   error: {

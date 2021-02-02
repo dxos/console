@@ -67,6 +67,7 @@ dist/
 
 out/
 dist/
+build/
 
 .idea/workspace.xml
 

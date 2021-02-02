@@ -3,11 +3,12 @@
 //
 
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {}
-}));
+});
 
 const Signal = () => {
   const classes = useStyles();

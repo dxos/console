@@ -2,12 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
+import { spawnSync } from 'child_process';
 import fs from 'fs';
-import moment from 'moment';
 import pick from 'lodash.pick';
+import moment from 'moment';
 import os from 'os';
 import si from 'systeminformation';
-import { spawnSync } from 'child_process';
 
 const num = new Intl.NumberFormat('en', { maximumSignificantDigits: 3 });
 
@@ -48,7 +48,7 @@ const getCliVersionInfo = () => {
 const getSystemInfo = async () => {
   const ifaces = os.networkInterfaces();
   const addresses = Object.entries(ifaces).reduce((result, [, values]) => {
-    values.forEach(({ family, address }) => {
+    values.forEach(({ address }) => {
       address = address.toLowerCase();
       // TODO(telackey): Include link-local IPv6?
       if (!address.startsWith('127.') && !address.startsWith('fe80::') && !address.startsWith('::1')) {

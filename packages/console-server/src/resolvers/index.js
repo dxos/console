@@ -5,11 +5,11 @@
 import debug from 'debug';
 import defaultsDeep from 'lodash.defaultsdeep';
 
+import { botsResolvers } from './bots';
 import { extensionResolvers } from './extensions';
 import { ipfsResolvers } from './ipfs';
-import { systemResolvers } from './system';
 import { logResolvers } from './log';
-import { botsResolvers } from './bots';
+import { systemResolvers } from './system';
 
 // eslint-disable-next-line
 const log = debug('dxos:console:server:resolvers');

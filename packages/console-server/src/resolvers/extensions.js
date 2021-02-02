@@ -42,7 +42,7 @@ const ifSentry = () => {
 
 export const extensionResolvers = {
   Query: {
-    extensions: async (_, __, { config }) => {
+    extensions: async () => {
       return {
         timestamp: new Date().toUTCString(),
         json: JSON.stringify([

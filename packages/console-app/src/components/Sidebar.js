@@ -2,9 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
+import { useQuery } from '@apollo/react-hooks';
 import clsx from 'clsx';
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
 import { useHistory, useParams } from 'react-router';
 
 import { makeStyles } from '@material-ui/core';
@@ -12,8 +12,8 @@ import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import LinkIcon from '@material-ui/icons/ExitToApp';
 import ListItemText from '@material-ui/core/ListItemText';
+import LinkIcon from '@material-ui/icons/ExitToApp';
 
 import EXTENSIONS from '../gql/extensions.graphql';
 import { useQueryStatusReducer } from '../hooks';

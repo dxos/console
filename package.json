@@ -1,8 +1,7 @@
 {
   "name": "@dxos/console",
   "version": "1.2.9-alpha.0",
-  "description": "Console",
-  "main": "index.js",
+  "description": "KUBE Console",
   "private": true,
   "scripts": {
     "build": "lerna run build",
@@ -14,61 +13,17 @@
     "test": "lerna run test"
   },
   "author": "DXOS.org",
-  "license": "AGPLv3",
+  "license": "AGPL-3.0",
   "workspaces": {
     "packages": [
       "packages/*"
     ]
   },
-  "browserslist": [
-    "> 5%"
-  ],
-  "jest": {
-    "testEnvironment": "node"
-  },
-  "dependencies": {
-    "lerna": "^3.19.0"
-  },
   "devDependencies": {
-    "@dxos/cli": "2.0.20-alpha.0",
-    "@dxos/cli-app": "2.0.20-alpha.0",
-    "@dxos/cli-bot": "2.0.20-alpha.0",
-    "@dxos/cli-data": "2.0.20-alpha.0",
-    "@dxos/cli-wns": "2.0.20-alpha.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.7.2",
-    "eslint-config-semistandard": "^15.0.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-loader": "^3.0.3",
-    "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^23.13.1",
-    "eslint-plugin-jsdoc": "^21.0.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-standard": "^4.0.1",
+    "eslint": "^7.7.0",
+    "lerna": "^3.19.0",
     "lint-staged": "^9.5.0",
     "pre-commit": "^1.2.2",
-    "webpack-cli": "^3.3.11"
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": [
-      "plugin:jest/recommended",
-      "semistandard"
-    ],
-    "plugins": [
-      "babel"
-    ],
-    "rules": {
-      "babel/semi": 1
-    }
-  },
-  "semistandard": {
-    "parser": "babel-eslint",
-    "env": [
-      "jest",
-      "node",
-      "browser"
-    ]
+    "wsrun": "^5.2.4"
   }
 }

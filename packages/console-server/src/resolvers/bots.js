@@ -6,8 +6,8 @@ import { spawn } from 'child_process';
 import debug from 'debug';
 import fs from 'fs';
 import yaml from 'js-yaml';
-import path from 'path';
 import os from 'os';
+import path from 'path';
 import kill from 'tree-kill';
 
 const DEFAULT_BOT_FACTORY_CWD = '.wire/bots';

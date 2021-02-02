@@ -2,14 +2,14 @@
 // Copyright 2020 DXOS.org
 //
 
-import AppsIcon from '@material-ui/icons/Apps';
 import BotsIcon from '@material-ui/icons/Android';
+import AppsIcon from '@material-ui/icons/Apps';
+import KubeIcon from '@material-ui/icons/Dns';
 import StatsIcon from '@material-ui/icons/Equalizer';
-import RegistryIcon from '@material-ui/icons/Language';
 import IPFSIcon from '@material-ui/icons/GraphicEq';
+import RegistryIcon from '@material-ui/icons/Language';
 import ConfigIcon from '@material-ui/icons/Settings';
 import SignalIcon from '@material-ui/icons/Traffic';
-import KubeIcon from '@material-ui/icons/Dns';
 
 /**
  * Paths should match Main routes.

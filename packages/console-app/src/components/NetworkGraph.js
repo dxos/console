@@ -1,9 +1,12 @@
-import React, { useEffect, useRef, useReducer, useMemo, useCallback } from 'react';
-import { forceLink, forceSimulation, forceCenter, forceCollide, forceManyBody, forceRadial } from 'd3-force';
+//
+// Copyright 2021 DXOS.org
+//
 
 import { Graph } from '@visx/network';
 import { Tooltip, useTooltip, defaultStyles } from '@visx/tooltip';
 import { Zoom } from '@visx/zoom';
+import { forceLink, forceSimulation, forceCenter, forceCollide, forceManyBody, forceRadial } from 'd3-force';
+import React, { useEffect, useRef, useReducer, useMemo, useCallback } from 'react';
 
 import * as colors from '@material-ui/core/colors';
 

@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import { Registry } from '@wirelineio/registry-client';
+import { Registry } from '@dxos/registry-client';
 
 import { getServiceUrl } from '../util/config';
 

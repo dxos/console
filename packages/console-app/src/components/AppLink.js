@@ -2,8 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import React from 'react';
 import get from 'lodash.get';
+import React from 'react';
+
 import Link from '@material-ui/core/Link';
 
 import { getServiceUrl } from '../util/config';

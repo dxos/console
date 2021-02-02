@@ -2,32 +2,30 @@
 // Copyright 2020 DXOS.org
 //
 
+import { ApolloProvider } from '@apollo/react-hooks';
 import React from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { ThemeProvider } from '@material-ui/core/styles';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 import { ErrorHandler } from '@dxos/debug';
 
-import { build } from '../version.json';
-
 import { clientFactory } from '../client';
-import { createTheme } from '../theme';
 import modules from '../modules';
-
-import Layout from './Layout';
+import { createTheme } from '../theme';
+import { build } from '../version.json';
 import ConsoleContextProvider from './ConsoleContextProvider';
-
+import Layout from './Layout';
+import Config from './panels/Config';
+import Metadata from './panels/Metadata';
 import Apps from './panels/apps/Apps';
 import Bots from './panels/bots/Bots';
-import Kubes from './panels/kubes/Kubes';
-import Config from './panels/Config';
 import IPFS from './panels/ipfs/IPFS';
-import Metadata from './panels/Metadata';
+import Kubes from './panels/kubes/Kubes';
+import Registry from './panels/registry/Registry';
 import Signaling from './panels/signal/Signaling';
 import System from './panels/system/System';
-import Registry from './panels/registry/Registry';
 
 // Global error handler.
 const errorHandler = new ErrorHandler();

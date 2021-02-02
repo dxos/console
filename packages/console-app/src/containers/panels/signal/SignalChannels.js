@@ -2,8 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import React, { useContext } from 'react';
 
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
@@ -11,9 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
-
 import SIGNAL_STATUS from '../../../gql/signal_status.graphql';
-
 import { ConsoleContext, useQueryStatusReducer } from '../../../hooks';
 
 const SignalChannels = () => {

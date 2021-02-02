@@ -2,23 +2,21 @@
 // Copyright 2020 DXOS.org
 //
 
-import React from 'react';
-import get from 'lodash.get';
-
 import { useQuery } from '@apollo/react-hooks';
+import get from 'lodash.get';
+import React from 'react';
+
 import { makeStyles } from '@material-ui/core';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import IPFS_STATUS from '../../../gql/ipfs_status.graphql';
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
-
-import { useQueryStatusReducer } from '../../../hooks';
-
+import { BooleanIcon } from '../../../components/BooleanIcon';
 import Table from '../../../components/Table';
 import TableCell from '../../../components/TableCell';
-import { BooleanIcon } from '../../../components/BooleanIcon';
+import IPFS_STATUS from '../../../gql/ipfs_status.graphql';
+import WNS_RECORDS from '../../../gql/wns_records.graphql';
+import { useQueryStatusReducer } from '../../../hooks';
 
 const RECORD_TYPE = 'wrn:service';
 const SERVICE_TYPE = 'ipfs';

@@ -2,16 +2,16 @@
 // Copyright 2020 DXOS.org
 //
 
-import compression from 'compression';
+import { ApolloServer, gql } from 'apollo-server-express';
 import bodyParser from 'body-parser';
+import compression from 'compression';
 import cors from 'cors';
 import debug from 'debug';
 import express from 'express';
-import mustache from 'mustache-express';
 import fs from 'fs';
-import yaml from 'js-yaml';
-import { ApolloServer, gql } from 'apollo-server-express';
 import { print } from 'graphql/language';
+import yaml from 'js-yaml';
+import mustache from 'mustache-express';
 import yargs from 'yargs';
 
 // TODO(burdon): Use once published by @ashwinp.
@@ -19,9 +19,8 @@ import yargs from 'yargs';
 
 import SYSTEM_STATUS from '@dxos/console-app/src/gql/system_status.graphql';
 
-import { resolvers } from '../resolvers';
-
-import API_SCHEMA from '../gql/api.graphql';
+import { resolvers } from './resolvers';
+import API_SCHEMA from './gql/api.graphql';
 
 const argv = yargs
   .option('config', {
@@ -46,9 +45,8 @@ if (!configFile) {
 
 const config = yaml.safeLoad(fs.readFileSync(configFile));
 
-const log = debug('dxos:console:server');
-
 debug.enable(config.system.debug);
+const log = debug('dxos:console:server');
 
 if (argv.verbose) {
   log(JSON.stringify(config, undefined, 2));

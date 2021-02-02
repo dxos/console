@@ -3,10 +3,11 @@
 //
 
 import React from 'react';
+
+import IconButton from '@material-ui/core/IconButton';
+import StopIcon from '@material-ui/icons/HighlightOff';
 import OpenIcon from '@material-ui/icons/OpenInBrowser';
 import StartIcon from '@material-ui/icons/PlayCircleOutline';
-import StopIcon from '@material-ui/icons/HighlightOff';
-import IconButton from '@material-ui/core/IconButton';
 
 const ControlButtons = ({ onStart, onStop, onOpen }) => {
   return (

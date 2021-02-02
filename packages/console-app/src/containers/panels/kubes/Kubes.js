@@ -3,20 +3,20 @@
 //
 
 import React, { useState } from 'react';
+
 import { makeStyles } from '@material-ui/core';
-import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 
 import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
-
 import KubeRecords from './KubeRecords';
 
 const TAB_RECORDS = 'records';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {}
-}));
+});
 
 const Kubes = () => {
   // eslint-disable-next-line

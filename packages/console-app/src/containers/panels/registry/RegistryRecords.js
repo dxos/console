@@ -2,26 +2,24 @@
 // Copyright 2020 DXOS.org
 //
 
+import { useQuery } from '@apollo/react-hooks';
 import moment from 'moment';
 import React, { useContext } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+
 import { makeStyles } from '@material-ui/core';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody';
 
-import WNS_RECORDS from '../../../gql/wns_records.graphql';
-
-import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
-
-import Table from '../../../components/Table';
-import TableCell from '../../../components/TableCell';
-
+import AppLink from '../../../components/AppLink';
 import PackageLink from '../../../components/PackageLink';
 import QueryLink from '../../../components/QueryLink';
-import AppLink from '../../../components/AppLink';
+import Table from '../../../components/Table';
+import TableCell from '../../../components/TableCell';
+import WNS_RECORDS from '../../../gql/wns_records.graphql';
+import { ConsoleContext, useQueryStatusReducer, useSorter } from '../../../hooks';
 
 const useStyles = makeStyles(theme => ({
   selected: {

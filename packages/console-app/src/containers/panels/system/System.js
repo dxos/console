@@ -3,8 +3,8 @@
 //
 
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core';
 
+import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
@@ -12,7 +12,6 @@ import TabContext from '@material-ui/lab/TabContext';
 
 import Panel from '../../../components/Panel';
 import Toolbar from '../../../components/Toolbar';
-
 import Info from './Info';
 import Services from './Services';
 

@@ -11,20 +11,26 @@
     "dist/es"
   ],
   "scripts": {
-    "build": "npm run clean && npm run build:client && npm run build:server",
-    "build:client": "PUBLIC_URL=/console webpack --mode development",
-    "build:server": "babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
+    "build": "npm run clean && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
     "clean": "rm -rf ./dist",
     "dev": "VERBOSE=true webpack-dev-server --mode development --watch",
     "lint": "semistandard 'src/**/*.js'",
-    "test": "jest --rootDir ./src --passWithNoTests --no-cache",
-    "start": "CONFIG_FILE=${CONFIG_FILE=./config.yml} BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server/main.js -- --verbose"
+    "start": "CONFIG_FILE=${CONFIG_FILE=./config.yml} BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server.js -- --verbose",
+    "test": "jest --rootDir ./src --passWithNoTests --no-cache"
   },
-  "author": "DXOS.org",
-  "license": "GPL-3.0",
-  "browserslist": [
-    "> 5%"
-  ],
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "plugins": [
+      "babel"
+    ],
+    "extends": [
+      "plugin:jest/recommended",
+      "semistandard"
+    ],
+    "rules": {
+      "babel/semi": 1
+    }
+  },
   "jest": {
     "testEnvironment": "node"
   },
@@ -37,6 +43,7 @@
     "apollo-server-express": "^2.13.1",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
+    "cors": "^2.8.5",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
@@ -83,26 +90,13 @@
     "jest": "^24.8.0",
     "nodemon": "^2.0.4",
     "semistandard": "^14.2.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.11",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": [
-      "plugin:jest/recommended",
-      "semistandard"
-    ],
-    "plugins": [
-      "babel"
-    ],
-    "rules": {
-      "babel/semi": 1
-    }
   },
   "semistandard": {
     "parser": "babel-eslint",
