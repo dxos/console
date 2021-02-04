@@ -19,16 +19,9 @@ const ifBlockExplorer = () => {
 };
 
 const ifRadicle = () => {
-  try {
-    const result = childProcess.execSync('docker ps -f "ancestor=dxos/radicle-seed-node" -q');
-    if (result && result.toString()) {
-      return {
-        title: 'Radicle',
-        url: '/radicle/'
-      };
-    }
-  } catch (err) {
-    console.error(err);
+  return {
+    title: 'Radicle',
+    url: 'http://radicle.moon.dxos.network/'
   }
 };
 
