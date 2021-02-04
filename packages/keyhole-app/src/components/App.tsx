@@ -8,7 +8,7 @@ import superagent from 'superagent';
 
 import { makeStyles } from '@material-ui/core';
 
-import { Kube } from '@dxos/gem-experimental';
+import gem from '@dxos/gem-experimental';
 import { Passcode } from '@dxos/react-ux';
 
 import Logo from './Logo';
@@ -83,7 +83,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const App = ({ kube = false }) => {
+const App = ({ kube = true }) => {
   const classes = useStyles();
   const [className, setClassname] = useState('');
   const [attempt, setAttempt] = useState(0);
@@ -117,7 +117,7 @@ const App = ({ kube = false }) => {
         )}
         {kube && (
           <div>
-            <Kube config={{
+            <gem.Kube config={{
               minDistance: 100,
               particleCount: 400
             }}
