@@ -13,6 +13,8 @@ import { Passcode } from '@dxos/react-ux';
 
 import Logo from './Logo';
 
+const APP_AUTH_PATH = '/app/auth';
+
 // TODO(burdon): Change theme (dark) and use standard palette in react-ux.
 const useStyles = makeStyles(() => ({
   '@global': {
@@ -87,21 +89,25 @@ const App = ({ kube = true }) => {
   const classes = useStyles();
   const [className, setClassname] = useState('');
   const [attempt, setAttempt] = useState(0);
+  const [authenticated, setAuthenticated] = useState(false);
 
   // TODO(burdon): Post PIN to dx app serve (sets cookie and redirects).
   const handleSubmit = (code: string) => {
-    superagent.post('/') // TODO(burdon): Const.
+    superagent.post(APP_AUTH_PATH)
       .send({ code })
       .set('accept', 'json')
       .end((err: string, res: any = {}) => {
-        const { success } = res;
-        if (err || !success) {
+        if (!res.ok) {
           setClassname(classes.spin);
           setTimeout(() => setClassname(''), 1000);
           setAttempt(attempt + 1);
         } else {
+          setAuthenticated(true);
           setClassname(classes.vannish);
-          // TODO(burdon): Redirect to app.
+          const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
+          if (redirect) {
+            window.location.href = redirect;
+          }
         }
       });
   };
@@ -125,15 +131,17 @@ const App = ({ kube = true }) => {
           </div>
         )}
       </div>
-      <div className={classes.code}>
-        <Passcode
-          editable={true}
-          length={6}
-          attempt={attempt}
-          onSubmit={handleSubmit}
-          onChange={() => {}}
-        />
-      </div>
+      { !authenticated && (
+        <div className={classes.code}>
+          <Passcode
+            editable={true}
+            length={6}
+            attempt={attempt}
+            onSubmit={handleSubmit}
+            onChange={() => {}}
+          />
+        </div>
+      )}
     </div>
   );
 };
