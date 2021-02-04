@@ -8,7 +8,7 @@ import superagent from 'superagent';
 
 import { makeStyles } from '@material-ui/core';
 
-// TODO(burdon): Snowpack error: Buffer is not defined.
+import gem from '@dxos/gem-experimental';
 import { Passcode } from '@dxos/react-ux';
 
 import Logo from './Logo';
@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
       margin: 0,
       padding: 0,
       overflow: 'hidden',
-      backgroundColor: '#222'
+      backgroundColor: '#000'
     }
   },
   fullscreen: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    margin: 64
+    margin: 80
   },
   main: {
     display: 'flex',
@@ -53,39 +53,56 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center'
   },
   spin: {
-    animation: '$spinner 1s linear'
+    animation: '$spinner .5s linear'
+  },
+  vannish: {
+    animation: '$vannish .5s linear',
+    opacity: 0
   },
   '@keyframes spinner': {
     '0%': {
-      transform: 'scale(1) rotate(0deg)',
-      opacity: 1
+      transform: 'scale(1)'
     },
     '50%': {
-      transform: 'scale(0.5) rotate(90deg)',
-      opacity: 0.4
+      transform: 'scale(0.75)',
+      color: 'red'
     },
     '100%': {
-      transform: 'scale(0) rotate(180deg)',
+      transform: 'scale(1)'
+    }
+  },
+  '@keyframes vannish': {
+    '0%': {
+      transform: 'scale(1)',
+      opacity: 1
+    },
+    '100%': {
+      transform: 'scale(2)',
       opacity: 0
     }
   }
 }));
 
-const App = () => {
+const App = ({ kube = true }) => {
   const classes = useStyles();
-  const [spin, setSpin] = useState(false);
+  const [className, setClassname] = useState('');
+  const [attempt, setAttempt] = useState(0);
 
   // TODO(burdon): Post PIN to dx app serve (sets cookie and redirects).
   const handleSubmit = (code: string) => {
-    setSpin(true);
-    setTimeout(() => setSpin(false), 1000);
-
-    // TODO(burdon): Test JSON result and redirect.
-    superagent.post('/')
+    superagent.post('/') // TODO(burdon): Const.
       .send({ code })
       .set('accept', 'json')
-      .end((err: string, res: any) => {
-        console.log(err, res);
+      .end((err: string, res: any = {}) => {
+        const { success } = res;
+        if (err || !success) {
+          setClassname(classes.spin);
+          setTimeout(() => setClassname(''), 1000);
+          setAttempt(attempt + 1);
+        } else {
+          setClassname(classes.vannish);
+          // TODO(burdon): Redirect to app.
+        }
       });
   };
 
@@ -93,21 +110,29 @@ const App = () => {
   return (
     <div className={clsx(classes.fullscreen, classes.root)}>
       <div className={classes.main}>
-        <div>
-          <Logo className={clsx(spin && classes.spin)} style={{ width: 360, height: 360 }} />
-        </div>
+        {!kube && (
+          <div>
+            <Logo className={className} style={{ width: 360, height: 360 }} />
+          </div>
+        )}
+        {kube && (
+          <div>
+            <gem.Kube config={{
+              minDistance: 100,
+              particleCount: 400
+            }}
+            />
+          </div>
+        )}
       </div>
       <div className={classes.code}>
-        <button onClick={() => handleSubmit('')}>TEST</button>
-        
         <Passcode
           editable={true}
           length={6}
+          attempt={attempt}
           onSubmit={handleSubmit}
-          attempt={0}
           onChange={() => {}}
         />
-       
       </div>
     </div>
   );

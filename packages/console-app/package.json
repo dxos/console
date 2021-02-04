@@ -12,8 +12,8 @@
   ],
   "scripts": {
     "analyzer": "webpack --config webpack-analyzer.config.js",
-    "clean": "rm -rf dist",
     "build": "npm run clean && CONFIG_FILE=config-production.yml webpack",
+    "clean": "rm -rf dist",
     "lint": "eslint --format codeframe './src/**/*.[j|t]s'",
     "server": "http-server ./dist/production",
     "start": "CONFIG_FILE=${CONFIG_FILE:-config-testnet.yml} VERBOSE=true webpack-dev-server --mode development",
