@@ -6,10 +6,7 @@
   "bugs": {
     "url": "https://github.com/dxos/console/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dxos/console.git"
-  },
+  "repository": "https://github.com/dxos/console",
   "license": "AGPL-3.0",
   "author": "DXOS.org",
   "main": "dist/src/index.js",
@@ -19,7 +16,7 @@
     "src"
   ],
   "scripts": {
-    "build": "snowpack build",
+    "build": "snowpack build --bundle",
     "clean": "rm -rf ./dist",
     "lint": "eslint --format codeframe './src/**/*.ts'",
     "start": "snowpack dev",
