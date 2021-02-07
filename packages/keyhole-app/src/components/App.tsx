@@ -38,6 +38,8 @@ const useStyles = makeStyles(() => ({
     marginBottom: 80
   },
   main: {
+    position: 'relative',
+    overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
@@ -52,6 +54,11 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexShrink: 0,
     justifyContent: 'center',
+    // TODO(burdon): Update react-ux.
+    '& input': {
+      position: 'absolute',
+      left: -1000
+    },
     '& div': {
       borderRadius: 8
     }
@@ -117,3 +124,6 @@ const App = () => {
 };
 
 export default App;
+/*
+
+*/
