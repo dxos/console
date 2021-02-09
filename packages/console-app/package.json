@@ -26,7 +26,6 @@
     "extends": "plugin:@dxos/react"
   },
   "jest": {
-    "preset": "ts-jest/presets/default",
     "testEnvironment": "node"
   },
   "dependencies": {
