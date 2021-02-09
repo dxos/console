@@ -1,6 +1,6 @@
 {
   "name": "@dxos/console-server",
-  "version": "1.2.9-alpha.11",
+  "version": "1.2.9-alpha.12",
   "description": "Kubenet Console Server",
   "main": "dist/es/index.js",
   "bin": {
@@ -37,7 +37,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
     "@babel/runtime": "^7.8.7",
-    "@dxos/console-app": "^1.2.9-alpha.11",
+    "@dxos/console-app": "^1.2.9-alpha.12",
     "@wirelineio/wns-schema": "^0.1.1",
     "apollo-boost": "^0.4.9",
     "apollo-server-express": "^2.13.1",
