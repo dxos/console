@@ -13,7 +13,7 @@ for appdir in `find ./packages -name '*-app' -type d | grep -v node_modules`; do
 
   cat <<EOF > app.yml
 name: $PKG_NAME
-build: yarn dist
+build: yarn build
 EOF
 
   cat app.yml
