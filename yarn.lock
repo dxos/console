@@ -2249,13 +2249,13 @@
     source-map-support "^0.5.12"
     tiny-lru "^7.0.6"
 
-"@dxos/cli-app@2.0.37-alpha.0":
-  version "2.0.37-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli-app/-/cli-app-2.0.37-alpha.0.tgz#1222f0ceee64d8e98fa4248a7e18023a2dab673c"
-  integrity sha512-VDVIXr5Jumw7SzPx2ts8UPNL3bzd04TWNeDS4VPkSaJhHSsK2126SUY2odkbpdUXNvIVByV9FJe2v16jJRXgWA==
+"@dxos/cli-app@2.0.38-alpha.0":
+  version "2.0.38-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli-app/-/cli-app-2.0.38-alpha.0.tgz#a1995885016616133b9bd5d8dc089a017f951329"
+  integrity sha512-5qUXcpZCxpxPFkqr+/wA2/yW/na6oKTI2FN2eRpHTLg/b2DIlvCPB0H7UId8OhzQCb3rJGW49N0Qbi3/2SwZAA==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@dxos/cli-core" "^2.0.37-alpha.0"
+    "@dxos/cli-core" "^2.0.38-alpha.0"
     "@dxos/debug" "^1.0.0-beta.67"
     "@otplib/plugin-thirty-two" "^12.0.1"
     "@wirelineio/registry-client" "^1.1.0-beta.0"
@@ -2285,15 +2285,15 @@
     url-join "^4.0.1"
     yargs "^16.2.0"
 
-"@dxos/cli-bot@2.0.37-alpha.0":
-  version "2.0.37-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli-bot/-/cli-bot-2.0.37-alpha.0.tgz#528a5ae157658b52ea96aa2e6e24075b32b8f8f9"
-  integrity sha512-KYz7h01PEIdF0fWRS6X+e3DBUGETYOm5hCLePuq7TbCJ14PSbW1JGe/MgHvqGnP+zqeJZuFV0u1QJHP7ebM9mA==
+"@dxos/cli-bot@2.0.38-alpha.0":
+  version "2.0.38-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli-bot/-/cli-bot-2.0.38-alpha.0.tgz#f4d34da35a88ae20b8cc0381ba25f2bc22332b92"
+  integrity sha512-AFhHHhKEguYkXO6O0Xwkvqw41VnVUZKzd5JbJ2+rcqHxoQb5RGlWSNb4lQvzxvTL+aasbgwPwJ3dFc/1Ylmyng==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@dxos/botkit" "2.7.44"
     "@dxos/botkit-client" "2.7.44"
-    "@dxos/cli-core" "^2.0.37-alpha.0"
+    "@dxos/cli-core" "^2.0.38-alpha.0"
     "@dxos/config" "^1.0.0-beta.67"
     "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/debug" "^1.0.0-beta.67"
@@ -2315,10 +2315,10 @@
     semver "^7.1.1"
     yargs "^16.2.0"
 
-"@dxos/cli-core@^2.0.37-alpha.0":
-  version "2.0.37-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli-core/-/cli-core-2.0.37-alpha.0.tgz#2e1180941d4a7d1940a8e6ed7d4b2fcd18db1afe"
-  integrity sha512-5+Pg7ceLYDQELzepw3Q7sHzTNHqdqaO4G13TR9tJRDh1m9gqTKu7ygon8pq4yr4IBlRqD4G1Yyq55ccDRu5/aw==
+"@dxos/cli-core@^2.0.38-alpha.0":
+  version "2.0.38-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli-core/-/cli-core-2.0.38-alpha.0.tgz#bd5b0b498bf08c6c44692aec93c2c2776a3a3be0"
+  integrity sha512-x25FfJdOG6T9KlLhR4jfz8i9GBg1gaeMQ0vnx0TYvbilLS+fyPHdclSD5GbKxJzmUuNWnjpQXpBfB76H36rz1A==
   dependencies:
     "@babel/runtime" "7.7.2"
     "@dxos/config" "^1.0.0-beta.67"
@@ -2349,13 +2349,13 @@
     yargs-parser "^19.0.4"
     yargs-unparser "^1.6.4"
 
-"@dxos/cli-data@2.0.37-alpha.0":
-  version "2.0.37-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli-data/-/cli-data-2.0.37-alpha.0.tgz#5cd07995f0ec62df949cc33c35d9eda1a73655dc"
-  integrity sha512-ysP/m8ITvxf+SNhXp2RYxPNFDBm6uqPCxv9P8DYDCbTydS5ZSHSuXdM4NqY0sKOgQ3gWDR9W3H41wIxmoGrAgA==
+"@dxos/cli-data@2.0.38-alpha.0":
+  version "2.0.38-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli-data/-/cli-data-2.0.38-alpha.0.tgz#b0f9ba5d78ba31f566d07f7d6f3e9e60199fae76"
+  integrity sha512-FwIoC/utHb6H7TO37bJFHYJ86YAz6mVK+tKgmaXHzTvaNwgQgN9HF/4OsiFz7qyB+wZqPbUebfl+ELV0lsLXkw==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@dxos/cli-core" "^2.0.37-alpha.0"
+    "@dxos/cli-core" "^2.0.38-alpha.0"
     "@dxos/client" "2.7.44"
     "@dxos/credentials" "2.1.10-beta.0"
     "@dxos/crypto" "^1.0.0-beta.1"
@@ -2371,13 +2371,13 @@
     random-access-memory "^3.1.1"
     yargs "^16.2.0"
 
-"@dxos/cli-wns@2.0.37-alpha.0":
-  version "2.0.37-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli-wns/-/cli-wns-2.0.37-alpha.0.tgz#19505afef2494378e2e0ba8102e8c9bb920bcbb0"
-  integrity sha512-deV7L6pivju8Z6iKTUICJsnrUOPqSZUZMXhDFefrniVeAHM+R2RRu/EJE96uyhif8qQsz0S1eiUZtwMHYuBctQ==
+"@dxos/cli-wns@2.0.38-alpha.0":
+  version "2.0.38-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli-wns/-/cli-wns-2.0.38-alpha.0.tgz#0ba0936c6700501b61e8dbc2818c6c4128082641"
+  integrity sha512-ewImfKGR6cXyOPzNbEo19Xv5Q/alx9q9jmFXL00KZt5gldpngBvJu3Amme04pCY/gt2iS0KbkVj/QqQbtcM4Zg==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@dxos/cli-core" "^2.0.37-alpha.0"
+    "@dxos/cli-core" "^2.0.38-alpha.0"
     "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/debug" "^1.0.0-beta.67"
     "@wirelineio/registry-client" "^1.1.0-beta.3"
@@ -2392,13 +2392,13 @@
     tree-kill "^1.2.1"
     yargs "^16.2.0"
 
-"@dxos/cli@2.0.37-alpha.0":
-  version "2.0.37-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli/-/cli-2.0.37-alpha.0.tgz#5061b5902197eb4f046ec043e4a7ad123ae50deb"
-  integrity sha512-rJbdVRJqzeg227kjcV7NbxnwiKM4hyl6YGGq0ZPNnof438GRKaI6W8RJy43OZ6x5KjmJMYpPu8fFIMv6HqzuxQ==
+"@dxos/cli@2.0.38-alpha.0":
+  version "2.0.38-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli/-/cli-2.0.38-alpha.0.tgz#483ba41db805bf36d1dff409d1ec21fbd222d9f1"
+  integrity sha512-tZJIHri0jC8AFwAyaeLPGXEy1p3IwdMmnfhBAIP19D+FLYgE25BGX7N3/5McCHWJfSWdu7/6fu10Akn1DycYfw==
   dependencies:
     "@babel/runtime" "7.7.2"
-    "@dxos/cli-core" "^2.0.37-alpha.0"
+    "@dxos/cli-core" "^2.0.38-alpha.0"
     "@dxos/debug" "^1.0.0-beta.67"
     "@dxos/random-access-multi-storage" "1.1.0-beta.7"
     assert "^2.0.0"
