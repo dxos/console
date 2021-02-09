@@ -22,7 +22,7 @@ const ifRadicle = () => {
   return {
     title: 'Radicle',
     url: 'http://radicle.moon.dxos.network/'
-  }
+  };
 };
 
 // TODO(telackey): Use the local Sentry.
