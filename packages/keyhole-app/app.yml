@@ -1,13 +1,2 @@
-build: yarn dist
+build: yarn build
 name: keyhole
-version: 1.2.9-alpha.7
-author: DXOS.org
-license: AGPL-3.0
-description: KUBE Authenticator.
-homepage: 'https://github.com/dxos/console#readme'
-repository: 'https://github.com/dxos/console'
-bugs:
-  url: 'https://github.com/dxos/console/issues'
-package:
-  /: QmXM97RRgvnnjBLwXngG24uDXMtZD4W2hGKzQfnxjhtkUK
-repositoryVersion: v1.2.9-alpha.8-4-g9a91cfeb604a7c427b07652a9d4a626da3fff7d4-dirty

@@ -25,6 +25,8 @@ EOF
 
   if [ -d "dist/production" ]; then
     yarn -s wire app publish --path './dist/production'
+  elif [ -d "build" ]; then
+    yarn -s wire app publish --path './build'
   else
     yarn -s wire app publish
   fi
