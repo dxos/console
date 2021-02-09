@@ -1,2 +1,2 @@
+build: yarn build
 name: console
-build: yarn dist
