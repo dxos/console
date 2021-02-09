@@ -24,7 +24,7 @@ const getAppUrl = (config, { wrn }) => {
 
   // TODO(burdon): Make names URL safe so that encoding is not required.
   // pathComponents.push(encodeURIComponent(wrn));
-  pathComponents.push(wrn);
+  pathComponents.push(wrn.replace('://', '/').split('/').join(':'));
   return `${pathComponents.join('/')}/`;
 };
 
