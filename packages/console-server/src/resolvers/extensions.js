@@ -33,6 +33,13 @@ const ifSentry = () => {
   };
 };
 
+const ifNPM = () => {
+  return {
+    title: 'NPM',
+    url: 'http://npm.moon.dxos.network/'
+  };
+};
+
 export const extensionResolvers = {
   Query: {
     extensions: async () => {
@@ -41,7 +48,8 @@ export const extensionResolvers = {
         json: JSON.stringify([
           ifBlockExplorer(),
           ifRadicle(),
-          ifSentry()
+          ifSentry(),
+          ifNPM()
         ].filter(x => x))
       };
     }
