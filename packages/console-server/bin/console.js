@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-module.exports = require('../dist/es/server/main.js');
+module.exports = require('../dist/es/server.js');

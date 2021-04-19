@@ -22,6 +22,7 @@ module.exports = {
     'inline-json-import',
 
     '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-export-default-from'
+    '@babel/plugin-proposal-export-default-from',
+    '@babel/plugin-transform-runtime'
   ]
 };
