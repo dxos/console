@@ -50,7 +50,7 @@
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "graphql-tools": "^6.0.3",
-    "ipfs-http-client": "^44.1.0",
+    "ipfs-http-client": "44.1.0",
     "js-yaml": "^3.14.0",
     "lodash.defaultsdeep": "^4.6.1",
     "lodash.pick": "^4.4.0",
