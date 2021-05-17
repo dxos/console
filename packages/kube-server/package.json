@@ -37,7 +37,6 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
     "@babel/runtime": "^7.8.7",
-    "@wirelineio/wns-schema": "^0.1.1",
     "apollo-boost": "^0.4.9",
     "apollo-server-express": "^2.13.1",
     "body-parser": "^1.19.0",
