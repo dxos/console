@@ -4,7 +4,8 @@
 
 import debug from 'debug';
 import IpfsHttpClient from 'ipfs-http-client';
-const log = debug('dxos:console:server:resolvers');
+
+const log = debug('dxos:kube:server:resolvers');
 
 export const ipfsResolvers = {
   Query: {

@@ -4,11 +4,10 @@
 #
 
 app:
-  title: 'Console'
+  title: 'KUBE Server'
   org': 'DXOS.org'
   theme: 'dark'
   website: 'https://dxos.org'
-  publicUrl: '/console'
 
 api:
   path: '/api'
@@ -17,7 +16,7 @@ api:
   pollInterval: 10000
 
 system:
-  debug: 'dxos:console:*'
+  debug: 'dxos:kube:*'
 
 services:
   app:
