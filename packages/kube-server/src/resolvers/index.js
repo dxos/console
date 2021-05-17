@@ -12,7 +12,7 @@ import { logResolvers } from './log';
 import { systemResolvers } from './system';
 
 // eslint-disable-next-line
-const log = debug('dxos:console:server:resolvers');
+const log = debug('dxos:kube:server:resolvers');
 
 /**
  * Resolvers
