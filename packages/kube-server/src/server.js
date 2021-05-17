@@ -97,6 +97,7 @@ const apolloServer = new ApolloServer({
     authToken: req.headers.authorization
   }),
 
+  // TODO(burdon): Config option (security?)
   // https://www.apollographql.com/docs/apollo-server/testing/graphql-playground
   // https://github.com/prisma-labs/graphql-playground#usage
   // introspection: true,
