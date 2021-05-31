@@ -33,5 +33,5 @@ yarn build
 When running the KUBE server, either set the `CONFIG_FILE` environment variable or set the `--config` option.
 
 ```bash
-  ./bin/kube-server.js --config ./config.yml
+  ./bin/kube-server.js --config ~/.wire/profile/local.yml
 ```

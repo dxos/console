@@ -11,7 +11,8 @@ module.exports = {
     [
       'babel-plugin-inline-import', {
         extensions: [
-          '.graphql'
+          '.graphql',
+          '.yml'
         ]
       }
     ],

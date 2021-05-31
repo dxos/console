@@ -7,7 +7,7 @@ import yaml from 'js-yaml';
 
 import { Config } from '@dxos/config';
 
-import defaultConfig from '../config.yml'
+import baseConfig from '../config.yml';
 
 export const getConfig = (configPath) => {
   if (!existsSync) {
@@ -15,9 +15,7 @@ export const getConfig = (configPath) => {
   }
 
   const profileConfig = yaml.safeLoad(readFileSync(configPath));
-  const config = new Config(profileConfig, yaml.safeLoad(defaultConfig));
-
-  console.log('>>>>>>>>>>>>', JSON.stringify(config.values, null, 4));
+  const config = new Config(profileConfig, yaml.load(baseConfig));
 
   return config;
 };

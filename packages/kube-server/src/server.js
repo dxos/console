@@ -2,20 +2,19 @@
 // Copyright 2020 DXOS.org
 //
 
-import { ApolloServer, gql } from 'apollo-server-express';
+import { ApolloServer /*, gql */ } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
 import debug from 'debug';
 import express from 'express';
-import fs from 'fs';
-import { print } from 'graphql/language';
-import yaml from 'js-yaml';
+// import { print } from 'graphql/language';
 import yargs from 'yargs';
 
 // TODO(burdon): Factor out GraphQL definitions.
-import SYSTEM_STATUS_QUERY from '@dxos/console-app/src/gql/system_status.graphql';
+// import SYSTEM_STATUS_QUERY from '@dxos/console-app/src/gql/system_status.graphql';
 
+import { getConfig } from './config';
 import { resolvers } from './resolvers';
 import API_SCHEMA from './gql/api.graphql';
 
@@ -34,13 +33,7 @@ const argv = yargs
   .alias('help', 'h')
   .argv;
 
-const configFile = argv.config || process.env.CONFIG_FILE;
-if (!configFile) {
-  yargs.showHelp();
-  process.exit(1);
-}
-
-const config = yaml.safeLoad(fs.readFileSync(configFile));
+const config = getConfig(argv.config || process.env.CONFIG_FILE).values;
 
 debug.enable(config.system.debug);
 const log = debug('dxos:kube:server');
@@ -108,8 +101,8 @@ const apolloServer = new ApolloServer({
     tabs: [
       {
         name: 'Status',
-        endpoint: config.api.path,
-        query: print(gql(SYSTEM_STATUS_QUERY))
+        endpoint: config.api.path
+        // query: print(gql(SYSTEM_STATUS_QUERY))
       }
     ]
   }

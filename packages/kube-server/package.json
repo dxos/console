@@ -15,7 +15,7 @@
     "build": "npm run clean && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
     "clean": "rm -rf ./dist",
     "lint": "semistandard 'src/**/*.js'",
-    "start": "CONFIG_FILE=${CONFIG_FILE=./config.yml} BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server.js -- --verbose",
+    "start": "CONFIG_FILE=${CONFIG_FILE=~/.wire/profile/default} BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server.js -- --verbose",
     "test": "jest --rootDir ./src --passWithNoTests --no-cache"
   },
   "eslintConfig": {
@@ -37,6 +37,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
     "@babel/runtime": "^7.8.7",
+    "@dxos/config": "~2.10.2",
     "apollo-boost": "^0.4.9",
     "apollo-server-express": "^2.13.1",
     "body-parser": "^1.19.0",
@@ -74,7 +75,6 @@
     "babel-plugin-import-graphql": "^2.7.0",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-inline-json-import": "^0.3.2",
-    "dotenv-webpack": "^1.8.0",
     "eslint": "^6.7.2",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-config-standard": "^14.1.1",
@@ -87,11 +87,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.8.0",
     "nodemon": "^2.0.4",
-    "semistandard": "^14.2.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^4.2.2"
+    "semistandard": "^14.2.0"
   },
   "publishConfig": {
     "access": "public"
