@@ -1,8 +1,3 @@
-#
-# NODE_ENV=production
-# NOTE: Set CONFIG_FILE to swap out this config file.
-#
-
 app:
   title: 'KUBE Server'
   org': 'DXOS.org'
@@ -17,23 +12,3 @@ api:
 
 system:
   debug: 'dxos:kube:*'
-
-services:
-  app:
-    prefix: '/app'
-    server: 'http://127.0.0.1:5999'
-
-  wns:
-    server: 'http://127.0.0.1:9473/api'
-    webui: 'http://127.0.0.1:9473/console'
-
-  signal:
-    server: 'ws://127.0.0.1:4000'
-    api: 'http://127.0.0.1:4000/api'
-
-  ipfs:
-    server: 'http://127.0.0.1:5001'
-    gateway: 'http://127.0.0.1:8888/ipfs/'
-
-  wellknown:
-    endpoint: 'http://127.0.0.1:9000/.well-known/dxos'
