@@ -3,8 +3,11 @@
 //
 
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const VersionFile = require('webpack-version-file-plugin');
 
 const path = require('path');
+
+const { ConfigPlugin } = require('@dxos/config/ConfigPlugin');
 
 const distDir = path.join(__dirname, 'dist');
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
@@ -42,11 +45,23 @@ module.exports = {
   },
 
   plugins: [
+    new ConfigPlugin({
+      path: path.resolve(__dirname, 'config'),
+      dynamic: process.env.CONFIG_DYNAMIC
+    }),
+
     new HtmlWebPackPlugin({
       template: './public/index.html',
       templateParameters: {
         title: 'DXOS Console'
       }
+    }),
+
+    // https://www.npmjs.com/package/webpack-version-file-plugin
+    new VersionFile({
+      template: path.join(__dirname, 'version.ejs'),
+      packageFile: path.join(__dirname, 'package.json'),
+      outputFile: path.join(distDir, 'version.json')
     })
   ],
 

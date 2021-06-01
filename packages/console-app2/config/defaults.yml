@@ -1,0 +1,42 @@
+#
+# App-specific constants and defaults.
+#
+
+app:
+  title: 'Console'
+  org': 'DXOS.org'
+  theme: 'dark'
+  website: 'https://dxos.org'
+  publicUrl: '/console'
+
+api:
+  server: 'https://apollo1.kube.moon.dxos.network'
+  path: '/api'
+  intervalLog: 5000
+  pollInterval: 10000
+
+system:
+  debug: 'dxos:console:*'
+
+services:
+  app:
+    prefix: '/app'
+    server: 'https://apollo1.kube.moon.dxos.network'
+
+  wns:
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/wns/api'
+    webui: 'https://apollo1.kube.moon.dxos.network/dxos/wns/console'
+
+  dxns:
+    server: 'wss://apollo1.kube.moon.dxos.network/dxns'
+
+  signal:
+    server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
+    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
+
+  ipfs:
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/api'
+    gateway: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway'
+
+  wellknown:
+    endpoint: 'https://apollo1.kube.moon.dxos.network/.well-known/dxos'

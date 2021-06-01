@@ -1,0 +1,20 @@
+#
+# This config file is loadded **ONLY** in local development.
+# It will be replaced by a config/config.json request when served with wire app serve.
+#
+
+app:
+  title: 'Console'
+  org': 'DXOS.org'
+  theme: 'dark'
+  website: 'https://dxos.org'
+  publicUrl: '/console'
+
+api:
+  server: 'https://apollo1.kube.moon.dxos.network'
+  path: '/api'
+  intervalLog: 5000
+  pollInterval: 10000
+
+system:
+  debug: 'dxos:console:*'
