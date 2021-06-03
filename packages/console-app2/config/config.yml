@@ -18,3 +18,18 @@ api:
 
 system:
   debug: 'dxos:console:*'
+
+rpc: {}
+
+devKeyring: true
+
+types:
+  Auction:
+    name: Vec<u8>
+    highest_bidder: AccountId
+    highest_bid: u128
+    end_block: BlockNumber
+  Content:
+    schema: Multihash
+    data: Vec<u8>
+  Multihash: '[u8; 34]'

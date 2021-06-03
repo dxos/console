@@ -28,7 +28,7 @@ services:
     webui: 'https://apollo1.kube.moon.dxos.network/dxos/wns/console'
 
   dxns:
-    server: 'wss://apollo1.kube.moon.dxos.network/dxns'
+    server: 'wss://substrate.kube.moon.dxos.network/substrate/'
 
   signal:
     server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'

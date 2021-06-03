@@ -1,10 +1,13 @@
+//
+// Copyright 2021 DXOS.org
+//
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './App';
+import App from './main';
 import { loadConfig } from './config';
 
 loadConfig().then(config => {
-  console.log('>>>>>>>>', config.values);
-  ReactDOM.render(<App config={config} />, document.querySelector('#root'));
+  ReactDOM.render(<App config={config.values} />, document.querySelector('#root'));
 });

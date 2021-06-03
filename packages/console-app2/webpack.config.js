@@ -38,6 +38,10 @@ module.exports = {
     filename: '[name].bundle.js',
     publicPath: PUBLIC_URL
   },
+  
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
+  },
 
   devServer: {
     inline: true,
