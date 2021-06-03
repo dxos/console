@@ -3,33 +3,25 @@
 # It will be replaced by a config/config.json request when served with wire app serve.
 #
 
-app:
-  title: 'Console'
-  org': 'DXOS.org'
-  theme: 'dark'
-  website: 'https://dxos.org'
-  publicUrl: '/console'
+services:
+  app:
+    prefix: '/app'
+    server: 'https://apollo1.kube.moon.dxos.network'
 
-api:
-  server: 'https://apollo1.kube.moon.dxos.network'
-  path: '/api'
-  intervalLog: 5000
-  pollInterval: 10000
+  wns:
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/wns/api'
+    webui: 'https://apollo1.kube.moon.dxos.network/dxos/wns/console'
 
-system:
-  debug: 'dxos:console:*'
+  dxns:
+    server: 'wss://substrate.kube.moon.dxos.network/substrate/'
 
-rpc: {}
+  signal:
+    server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
+    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
 
-devKeyring: true
+  ipfs:
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/api'
+    gateway: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway'
 
-types:
-  Auction:
-    name: Vec<u8>
-    highest_bidder: AccountId
-    highest_bid: u128
-    end_block: BlockNumber
-  Content:
-    schema: Multihash
-    data: Vec<u8>
-  Multihash: '[u8; 34]'
+  wellknown:
+    endpoint: 'https://apollo1.kube.moon.dxos.network/.well-known/dxos'

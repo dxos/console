@@ -18,25 +18,15 @@ api:
 system:
   debug: 'dxos:console:*'
 
-services:
-  app:
-    prefix: '/app'
-    server: 'https://apollo1.kube.moon.dxos.network'
+devKeyring: true
 
-  wns:
-    server: 'https://apollo1.kube.moon.dxos.network/dxos/wns/api'
-    webui: 'https://apollo1.kube.moon.dxos.network/dxos/wns/console'
-
-  dxns:
-    server: 'wss://substrate.kube.moon.dxos.network/substrate/'
-
-  signal:
-    server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
-    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
-
-  ipfs:
-    server: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/api'
-    gateway: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway'
-
-  wellknown:
-    endpoint: 'https://apollo1.kube.moon.dxos.network/.well-known/dxos'
+types:
+  Auction:
+    name: Vec<u8>
+    highest_bidder: AccountId
+    highest_bid: u128
+    end_block: BlockNumber
+  Content:
+    schema: Multihash
+    data: Vec<u8>
+  Multihash: '[u8; 34]'
