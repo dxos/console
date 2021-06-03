@@ -11,34 +11,13 @@ import queryString from 'query-string';
 import React, { useReducer, useContext } from 'react';
 import { definitions } from '@dxos/registry-api';
 
-const config: any = {
-  RPC: {},
-  APP_NAME: 'Test',
-  PROVIDER_SOCKET: 'wss://substrate.kube.moon.dxos.network/substrate/',
-  DEVELOPMENT_KEYRING: true,
-  types: {
-    "Auction": {
-       "name": "Vec<u8>",
-       "highest_bidder": "AccountId",
-       "highest_bid": "u128",
-       "end_block": "BlockNumber"
-    },
-    "Content": {
-       "schema": "Multihash",
-       "data": "Vec<u8>"
-    },
-    "Multihash": "[u8; 34]"
- }
-}
-
-const parsedQuery = queryString.parse(window.location.search);
-const connectedSocket = parsedQuery.rpc || config.PROVIDER_SOCKET;
-console.log(`Connected socket: ${connectedSocket}`);
+// import { useConfig } from '../hooks/config';
 
 ///
 // Initial state for `useReducer`
 
 export interface SubstrateState {
+  config: any,
   socket: any,
   jsonrpc: any,
   types: any,
@@ -47,17 +26,20 @@ export interface SubstrateState {
   api: null | ApiPromise,
   apiError: null | string,
   apiState: null | string
+  connectionAttempted: boolean
 }
 
 const INIT_STATE: SubstrateState = {
-  socket: connectedSocket,
-  jsonrpc: { ...jsonrpc, ...config.RPC },
-  types: config.types,
+  config: null,
+  socket: null,
+  jsonrpc: { ...jsonrpc },
+  types: null,
   keyring: null,
   keyringState: null,
   api: null,
   apiError: null,
-  apiState: null
+  apiState: null,
+  connectionAttempted: false
 };
 
 ///
@@ -66,8 +48,11 @@ const INIT_STATE: SubstrateState = {
 const reducer = (state, action) => {
   console.log('>>>>ACTION>>>>>',action.type);
   switch (action.type) {
+    case 'CONFIG_INIT':
+      return { ...state, apiState: 'CONFIG_INIT', config: action.payload, socket: action.payload.PROVIDER_SOCKET, types: action.payload.types };
+
     case 'CONNECT_INIT':
-      return { ...state, apiState: 'CONNECT_INIT' };
+      return { ...state, apiState: 'CONNECT_INIT', connectionAttempted: true };
 
     case 'CONNECT':
       return { ...state, api: action.payload, apiState: 'CONNECTING' };
@@ -96,9 +81,15 @@ const reducer = (state, action) => {
 // Connecting to the Substrate node
 
 const connect = (state, dispatch) => {
-  const { apiState, socket, jsonrpc, types } = state;
+  const { connectionAttempted, socket, jsonrpc, types } = state;
+  console.log('>>>>>>>>>', socket)
+
+  if (!socket) {
+    return;
+  }
+
   // We only want this function to be performed once
-  if (apiState) {
+  if (connectionAttempted) {
     return;
   }
 
@@ -124,6 +115,10 @@ const connect = (state, dispatch) => {
 
 let loadAccts = false;
 const loadAccounts = (state, dispatch) => {
+  const { config } = state;
+  if (!config) {
+    return;
+  }
   const asyncLoadAccounts = async () => {
     dispatch({ type: 'LOAD_KEYRING' });
     try {
@@ -156,9 +151,43 @@ const loadAccounts = (state, dispatch) => {
   asyncLoadAccounts();
 };
 
+const setConfig = (state, dispatch, conf) => {
+  const { config } = state;
+  if (config) {
+    return;
+  }
+
+  dispatch({ type: 'CONFIG_INIT', payload: conf })
+}
+
 const SubstrateContext = React.createContext<SubstrateState>(INIT_STATE);
 
 const SubstrateContextProvider = (props) => {
+
+  const config: any = {
+    RPC: {},
+    APP_NAME: 'Test',
+    PROVIDER_SOCKET: 'wss://substrate.kube.moon.dxos.network/substrate/',
+    DEVELOPMENT_KEYRING: true,
+    types: {
+      "Auction": {
+         "name": "Vec<u8>",
+         "highest_bidder": "AccountId",
+         "highest_bid": "u128",
+         "end_block": "BlockNumber"
+      },
+      "Content": {
+         "schema": "Multihash",
+         "data": "Vec<u8>"
+      },
+      "Multihash": "[u8; 34]"
+   }
+  };
+  
+  const parsedQuery = queryString.parse(window.location.search);
+  const connectedSocket = parsedQuery.rpc || config.PROVIDER_SOCKET;
+  console.log(`Connected socket: ${connectedSocket}`);
+
   // filtering props and merge with default param value
   const initState: SubstrateState = { ...INIT_STATE };
   const neededPropNames = ['socket', 'types'];
@@ -167,6 +196,9 @@ const SubstrateContextProvider = (props) => {
   });
 
   const [state, dispatch] = useReducer(reducer, initState);
+
+  setConfig(state, dispatch, config);
+
   connect(state, dispatch);
   loadAccounts(state, dispatch);
 
