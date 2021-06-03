@@ -7,11 +7,8 @@ import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import keyring from '@polkadot/ui-keyring';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import React, { useReducer, useContext } from 'react';
 import { definitions } from '@dxos/registry-api';
-
-// import { useConfig } from '../hooks/config';
 
 ///
 // Initial state for `useReducer`
@@ -46,10 +43,9 @@ const INIT_STATE: SubstrateState = {
 // Reducer function for `useReducer`
 
 const reducer = (state, action) => {
-  console.log('>>>>ACTION>>>>>',action.type);
   switch (action.type) {
     case 'CONFIG_INIT':
-      return { ...state, apiState: 'CONFIG_INIT', config: action.payload, socket: action.payload.PROVIDER_SOCKET, types: action.payload.types };
+      return { ...state, apiState: 'CONFIG_INIT', config: action.payload, socket: action.payload.services.dxns.server, types: action.payload.types };
 
     case 'CONNECT_INIT':
       return { ...state, apiState: 'CONNECT_INIT', connectionAttempted: true };
@@ -82,7 +78,6 @@ const reducer = (state, action) => {
 
 const connect = (state, dispatch) => {
   const { connectionAttempted, socket, jsonrpc, types } = state;
-  console.log('>>>>>>>>>', socket)
 
   if (!socket) {
     return;
@@ -123,11 +118,11 @@ const loadAccounts = (state, dispatch) => {
     dispatch({ type: 'LOAD_KEYRING' });
     try {
 
-      await web3Enable(config.APP_NAME);
+      await web3Enable(config.app.title);
       let allAccounts = await web3Accounts();
       allAccounts = allAccounts.map(({ address, meta }) =>
         ({ address, meta: { ...meta, name: `${meta.name} (${meta.source})` } }));
-      keyring.loadAll({ isDevelopment: config.DEVELOPMENT_KEYRING }, allAccounts);
+      keyring.loadAll({ isDevelopment: config.devKeyring }, allAccounts);
       dispatch({ type: 'SET_KEYRING', payload: keyring });
 
     } catch (e) {
@@ -163,31 +158,6 @@ const setConfig = (state, dispatch, conf) => {
 const SubstrateContext = React.createContext<SubstrateState>(INIT_STATE);
 
 const SubstrateContextProvider = (props) => {
-
-  const config: any = {
-    RPC: {},
-    APP_NAME: 'Test',
-    PROVIDER_SOCKET: 'wss://substrate.kube.moon.dxos.network/substrate/',
-    DEVELOPMENT_KEYRING: true,
-    types: {
-      "Auction": {
-         "name": "Vec<u8>",
-         "highest_bidder": "AccountId",
-         "highest_bid": "u128",
-         "end_block": "BlockNumber"
-      },
-      "Content": {
-         "schema": "Multihash",
-         "data": "Vec<u8>"
-      },
-      "Multihash": "[u8; 34]"
-   }
-  };
-  
-  const parsedQuery = queryString.parse(window.location.search);
-  const connectedSocket = parsedQuery.rpc || config.PROVIDER_SOCKET;
-  console.log(`Connected socket: ${connectedSocket}`);
-
   // filtering props and merge with default param value
   const initState: SubstrateState = { ...INIT_STATE };
   const neededPropNames = ['socket', 'types'];
@@ -197,7 +167,7 @@ const SubstrateContextProvider = (props) => {
 
   const [state, dispatch] = useReducer(reducer, initState);
 
-  setConfig(state, dispatch, config);
+  setConfig(state, dispatch, props.config);
 
   connect(state, dispatch);
   loadAccounts(state, dispatch);

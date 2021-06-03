@@ -6,24 +6,22 @@ import React from 'react';
 
 import JSONTree from '@dxos/react-json-tree'
 
-import { useChainApi } from '../chain-api-context';
+import { useChainApi } from '../hooks/chain-api';
 import { useChainQuery } from '../hooks/chain-query';
 
-export default function RecordList () {
+function RecordList () {
   const chainApi = useChainApi();
-
-  console.log('<<<< CHAIN API <<<<', chainApi);
-
   const [error, records] = useChainQuery(async () => chainApi?.registry.getRecords(), [chainApi]);
+
   if (error) {
     throw error;
   }
 
-  console.log('>>>>>>>', records);
-
   return (
     <div>
-      
+      {(records ?? []).map(record => <JSONTree key={record.cid.toString()} data={record} />)}
     </div>
   );
 }
+
+export default RecordList;

@@ -6,7 +6,7 @@ import { web3FromSource } from '@polkadot/extension-dapp';
 import React, { useContext, useEffect, useState } from 'react';
 import { ChainApi } from '@dxos/registry-api';
 
-import { useSubstrate } from './substrate-lib';
+import { useSubstrate } from '../substrate-lib';
 
 const ChainApiContext = React.createContext(undefined);
 

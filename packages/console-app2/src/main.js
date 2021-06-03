@@ -6,12 +6,11 @@ import React from 'react';
 
 import JSONTree from '@dxos/react-json-tree'
 
-import { Dimmer, Loader, Grid, Sticky, Message } from 'semantic-ui-react';
+import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react';
 
 import RecordList from './components/RecordList';
 
-import { WithChainApi } from './chain-api-context';
-import { configContext } from './hooks/config';
+import { WithChainApi } from './hooks/chain-api';
 import { SubstrateContextProvider, useSubstrate } from './substrate-lib';
 
 function Main({ config }) {
@@ -37,34 +36,30 @@ function Main({ config }) {
   if (apiState === 'ERROR') {
     return message(apiError);
   } else if (apiState !== 'READY') {
-    return loader('Connecting to Substrate: ' + apiState);
+    return loader('Connecting to Substrate');
   }
 
   if (keyringState !== 'READY') {
     return loader('Loading accounts (please review any extension\'s authorization)');
-  } else {
-    console.log(keyring.getPairs());
   }
 
   return (
     <div>
       <WithChainApi accountPair={accountPair}>
-        <configContext.Provider value={config}>
+          <h1>Config</h1>
           <JSONTree data={config}/>
+          <h1>Records</h1>
           <RecordList />
-        </configContext.Provider>
       </WithChainApi>
     </div>
   );
 }
 
-export default function App () {
-  const publicUrl = window.location.pathname;
-
+export default function App ({ config }) {
   return (
-    <SubstrateContextProvider>
-      <Main />
-    </SubstrateContextProvider>
+      <SubstrateContextProvider config={config}>
+        <Main config={config} />
+      </SubstrateContextProvider>
   );
 }
 
