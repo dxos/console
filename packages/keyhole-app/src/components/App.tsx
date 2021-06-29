@@ -3,7 +3,7 @@
 //
 
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import superagent from 'superagent';
 
 import { makeStyles } from '@material-ui/core';
@@ -11,7 +11,9 @@ import { makeStyles } from '@material-ui/core';
 import gem from '@dxos/gem-experimental';
 import { Passcode } from '@dxos/react-ux';
 
-const APP_AUTH_PATH = '/app/auth';
+import { useContentScript } from '../hooks';
+
+const APP_AUTH_PATH = 'http://localhost:5999/app/auth';
 
 // TODO(burdon): Change theme (dark) and use standard palette in react-ux.
 const useStyles = makeStyles(() => ({
@@ -79,6 +81,19 @@ const App = () => {
   const classes = useStyles();
   const [className, setClassname] = useState('');
   const [attempt, setAttempt] = useState(0);
+  const { rpcClient: contentScript } = useContentScript();
+  const rpcClient = contentScript?.rpc;
+
+  useEffect(() => {
+    if (rpcClient === undefined) {
+      return;
+    }
+
+    setImmediate(async () => {
+      const profile = await rpcClient.GetProfile({});
+      alert(JSON.stringify(profile));
+    });
+  });
 
   const handleSubmit = (code: string) => {
     setTimeout(() => {
@@ -91,11 +106,13 @@ const App = () => {
             setTimeout(() => setClassname(''), 1000);
             setAttempt(attempt + 1);
           } else {
-            setClassname(classes.success);
-            const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
-            if (redirect) {
-              window.location.href = redirect;
-            }
+            alert('Logged in!');
+            setAttempt(attempt + 1);
+            // setClassname(classes.success);
+            // const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
+            // if (redirect) {
+            //   window.location.href = redirect;
+            // }
           }
         });
     }, 500);
