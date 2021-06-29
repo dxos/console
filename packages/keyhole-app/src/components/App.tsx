@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core';
 import gem from '@dxos/gem-experimental';
 import { Passcode } from '@dxos/react-ux';
 
-import { useContentScript } from '../hooks';
+// import { useContentScript } from '../hooks';
 
 const APP_AUTH_PATH = 'http://localhost:5999/app/auth';
 
@@ -81,19 +81,19 @@ const App = () => {
   const classes = useStyles();
   const [className, setClassname] = useState('');
   const [attempt, setAttempt] = useState(0);
-  const { rpcClient: contentScript } = useContentScript();
-  const rpcClient = contentScript?.rpc;
+  // const { rpcClient: contentScript } = useContentScript();
+  // const rpcClient = contentScript?.rpc;
 
   useEffect(() => {
-    if (rpcClient === undefined) {
-      return;
-    }
+    // if (rpcClient === undefined) {
+    //   return;
+    // }
 
-    setImmediate(async () => {
-      const profile = await rpcClient.GetProfile({});
-      alert(JSON.stringify(profile));
-    });
-  });
+    // setImmediate(async () => {
+    //   const profile = await rpcClient.GetProfile({});
+    //   alert(JSON.stringify(profile));
+    // });
+  }, []);
 
   const handleSubmit = (code: string) => {
     setTimeout(() => {
