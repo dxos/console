@@ -8,10 +8,10 @@ import superagent from 'superagent';
 
 import { makeStyles } from '@material-ui/core';
 
-import gem from '@dxos/gem-experimental';
+import { Kube } from '@dxos/gem-experimental';
 import { Passcode } from '@dxos/react-ux';
 
-// import { useContentScript } from '../hooks';
+import { useContentScript } from '../hooks';
 
 const APP_AUTH_PATH = 'http://localhost:5999/app/auth';
 
@@ -81,19 +81,19 @@ const App = () => {
   const classes = useStyles();
   const [className, setClassname] = useState('');
   const [attempt, setAttempt] = useState(0);
-  // const { rpcClient: contentScript } = useContentScript();
-  // const rpcClient = contentScript?.rpc;
+  const { rpcClient: contentScript } = useContentScript();
+  const rpcClient = contentScript?.rpc;
 
   useEffect(() => {
-    // if (rpcClient === undefined) {
-    //   return;
-    // }
+    if (rpcClient === undefined) {
+      return;
+    }
 
-    // setImmediate(async () => {
-    //   const profile = await rpcClient.GetProfile({});
-    //   alert(JSON.stringify(profile));
-    // });
-  }, []);
+    setImmediate(async () => {
+      const profile = await rpcClient.GetProfile({});
+      alert(JSON.stringify(profile));
+    });
+  }, [rpcClient]);
 
   const handleSubmit = (code: string) => {
     setTimeout(() => {
@@ -108,11 +108,11 @@ const App = () => {
           } else {
             alert('Logged in!');
             setAttempt(attempt + 1);
-            // setClassname(classes.success);
-            // const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
-            // if (redirect) {
-            //   window.location.href = redirect;
-            // }
+            setClassname(classes.success);
+            const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
+            if (redirect) {
+              window.location.href = redirect;
+            }
           }
         });
     }, 500);
@@ -121,7 +121,7 @@ const App = () => {
   return (
     <div className={clsx(classes.fullscreen, classes.root)}>
       <div className={classes.main}>
-        <gem.Kube config={{
+        <Kube config={{
           minDistance: 100,
           particleCount: 400
         }}
