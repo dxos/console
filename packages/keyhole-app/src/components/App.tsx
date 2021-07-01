@@ -14,6 +14,7 @@ import { Passcode } from '@dxos/react-ux';
 import { useContentScript } from '../hooks';
 
 const APP_AUTH_PATH = 'http://localhost:5999/app/auth';
+const WALLET_AUTH_PATH = 'http://localhost:5999/wallet/auth';
 
 // TODO(burdon): Change theme (dark) and use standard palette in react-ux.
 const useStyles = makeStyles(() => ({
@@ -84,6 +85,16 @@ const App = () => {
   const { rpcClient: contentScript } = useContentScript();
   const rpcClient = contentScript?.rpc;
 
+  const onLogin = () => {
+    alert('Logged in!');
+    setAttempt(attempt + 1);
+    // setClassname(classes.success);
+    // const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
+    // if (redirect) {
+    //   window.location.href = redirect;
+    // }
+  };
+
   useEffect(() => {
     if (rpcClient === undefined) {
       return;
@@ -91,7 +102,16 @@ const App = () => {
 
     setImmediate(async () => {
       const profile = await rpcClient.GetProfile({});
-      alert(JSON.stringify(profile));
+      superagent.post(WALLET_AUTH_PATH)
+        .send({ key: profile.publicKey })
+        .set('accept', 'json')
+        .end((err: string, res: any = {}) => {
+          if (err || !res.ok) {
+            console.log('Couldn\'t login with wallet identity');
+          } else {
+            onLogin();
+          }
+        });
     });
   }, [rpcClient]);
 
@@ -106,13 +126,7 @@ const App = () => {
             setTimeout(() => setClassname(''), 1000);
             setAttempt(attempt + 1);
           } else {
-            alert('Logged in!');
-            setAttempt(attempt + 1);
-            setClassname(classes.success);
-            const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
-            if (redirect) {
-              window.location.href = redirect;
-            }
+            onLogin();
           }
         });
     }, 500);
