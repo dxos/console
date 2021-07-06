@@ -35,8 +35,8 @@
   },
   "dependencies": {
     "@dxos/gem-experimental": "^1.0.0-beta.33",
-    "@dxos/react-ux": "2.10.10-alpha.1",
-    "@dxos/wallet-core": "2.10.10-alpha.1",
+    "@dxos/react-ux": "2.10.10",
+    "@dxos/wallet-core": "2.10.12",
     "@material-ui/core": "^4.9.10",
     "clsx": "^1.1.0",
     "debug": "^4.1.1",

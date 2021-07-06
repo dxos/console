@@ -88,11 +88,6 @@ const App = () => {
   const onLogin = () => {
     alert('Logged in!');
     setAttempt(attempt + 1);
-    // setClassname(classes.success);
-    // const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
-    // if (redirect) {
-    //   window.location.href = redirect;
-    // }
   };
 
   useEffect(() => {
@@ -155,6 +150,3 @@ const App = () => {
 };
 
 export default App;
-/*
-
-*/
