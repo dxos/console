@@ -13,8 +13,8 @@ import { Passcode } from '@dxos/react-ux';
 
 import { useContentScript } from '../hooks';
 
-const APP_AUTH_PATH = 'http://localhost:5999/app/auth';
-const WALLET_AUTH_PATH = 'http://localhost:5999/wallet/auth';
+const APP_AUTH_PATH = '/app/auth';
+const WALLET_AUTH_PATH = '/wallet/auth';
 
 // TODO(burdon): Change theme (dark) and use standard palette in react-ux.
 const useStyles = makeStyles(() => ({
@@ -86,8 +86,11 @@ const App = () => {
   const rpcClient = contentScript?.rpc;
 
   const onLogin = () => {
-    alert('Logged in!');
-    setAttempt(attempt + 1);
+    setClassname(classes.success);
+    const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
+    if (redirect) {
+      window.location.href = redirect;
+    }
   };
 
   useEffect(() => {
