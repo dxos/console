@@ -105,7 +105,7 @@ const App = () => {
         .set('accept', 'json')
         .end((err: string, res: any = {}) => {
           if (err || !res.ok) {
-            console.log('Couldn\'t login with wallet identity');
+            console.log('Couldn\'t login with wallet identity. Falling back to TOTP');
           } else {
             onLogin();
           }
