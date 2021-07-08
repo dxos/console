@@ -3,15 +3,18 @@
 //
 
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import superagent from 'superagent';
 
 import { makeStyles } from '@material-ui/core';
 
-import gem from '@dxos/gem-experimental';
+import { Kube } from '@dxos/gem-experimental';
 import { Passcode } from '@dxos/react-ux';
 
+import { useContentScript } from '../hooks';
+
 const APP_AUTH_PATH = '/app/auth';
+const WALLET_AUTH_PATH = '/wallet/auth';
 
 // TODO(burdon): Change theme (dark) and use standard palette in react-ux.
 const useStyles = makeStyles(() => ({
@@ -79,6 +82,36 @@ const App = () => {
   const classes = useStyles();
   const [className, setClassname] = useState('');
   const [attempt, setAttempt] = useState(0);
+  const { rpcClient: contentScript } = useContentScript();
+  const rpcClient = contentScript?.rpc;
+
+  const onLogin = () => {
+    setClassname(classes.success);
+    const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
+    if (redirect) {
+      window.location.href = redirect;
+    }
+  };
+
+  useEffect(() => {
+    if (rpcClient === undefined) {
+      return;
+    }
+
+    setImmediate(async () => {
+      const profile = await rpcClient.GetProfile({});
+      superagent.post(WALLET_AUTH_PATH)
+        .send({ key: profile.publicKey })
+        .set('accept', 'json')
+        .end((err: string, res: any = {}) => {
+          if (err || !res.ok) {
+            console.log('Couldn\'t login with wallet identity. Falling back to TOTP');
+          } else {
+            onLogin();
+          }
+        });
+    });
+  }, [rpcClient]);
 
   const handleSubmit = (code: string) => {
     setTimeout(() => {
@@ -91,11 +124,7 @@ const App = () => {
             setTimeout(() => setClassname(''), 1000);
             setAttempt(attempt + 1);
           } else {
-            setClassname(classes.success);
-            const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
-            if (redirect) {
-              window.location.href = redirect;
-            }
+            onLogin();
           }
         });
     }, 500);
@@ -104,7 +133,7 @@ const App = () => {
   return (
     <div className={clsx(classes.fullscreen, classes.root)}>
       <div className={classes.main}>
-        <gem.Kube config={{
+        <Kube config={{
           minDistance: 100,
           particleCount: 400
         }}
@@ -124,6 +153,3 @@ const App = () => {
 };
 
 export default App;
-/*
-
-*/
