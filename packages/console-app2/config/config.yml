@@ -1,0 +1,26 @@
+#
+# This config file is loadded **ONLY** in local development.
+# It will be replaced by a config/config.json request when served with wire app serve.
+#
+
+services:
+  app:
+    prefix: '/app'
+    server: 'https://apollo1.kube.moon.dxos.network'
+
+  wns:
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/wns/api'
+    webui: 'https://apollo1.kube.moon.dxos.network/dxos/wns/console'
+
+  dxns:
+    server: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
+  signal:
+    server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
+    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
+
+  ipfs:
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/api'
+    gateway: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway'
+
+  wellknown:
+    endpoint: 'https://apollo1.kube.moon.dxos.network/.well-known/dxos'
