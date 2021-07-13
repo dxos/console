@@ -10,8 +10,7 @@ import PropTypes from 'prop-types';
 import React, { useReducer, useContext } from 'react';
 import { definitions } from '@dxos/registry-api';
 
-///
-// Initial state for `useReducer`
+// Initial state for `useReducer`.
 
 export interface SubstrateState {
   config: any,
@@ -39,8 +38,7 @@ const INIT_STATE: SubstrateState = {
   connectionAttempted: false
 };
 
-///
-// Reducer function for `useReducer`
+// Reducer function for `useReducer`.
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -73,8 +71,7 @@ const reducer = (state, action) => {
   }
 };
 
-///
-// Connecting to the Substrate node
+// Connecting to the Substrate node.
 
 const connect = (state, dispatch) => {
   const { connectionAttempted, socket, jsonrpc, types } = state;
@@ -83,7 +80,7 @@ const connect = (state, dispatch) => {
     return;
   }
 
-  // We only want this function to be performed once
+  // We only want this function to be performed once.
   if (connectionAttempted) {
     return;
   }
@@ -105,8 +102,7 @@ const connect = (state, dispatch) => {
   _api.on('error', err => dispatch({ type: 'CONNECT_ERROR', payload: err }));
 };
 
-///
-// Loading accounts from dev and polkadot-js extension
+// Loading accounts from dev and polkadot-js extension.
 
 let loadAccts = false;
 const loadAccounts = (state, dispatch) => {
@@ -141,7 +137,7 @@ const loadAccounts = (state, dispatch) => {
     return dispatch({ type: 'SET_KEYRING', payload: keyring });
   }
 
-  // This is the heavy duty work
+  // This is the heavy duty work.
   loadAccts = true;
   asyncLoadAccounts();
 };
@@ -158,7 +154,7 @@ const setConfig = (state, dispatch, conf) => {
 const SubstrateContext = React.createContext<SubstrateState>(INIT_STATE);
 
 const SubstrateContextProvider = (props) => {
-  // filtering props and merge with default param value
+  // Filtering props and merge with default param value.
   const initState: SubstrateState = { ...INIT_STATE };
   const neededPropNames = ['socket', 'types'];
   neededPropNames.forEach(key => {
@@ -177,7 +173,7 @@ const SubstrateContextProvider = (props) => {
   </SubstrateContext.Provider>;
 };
 
-// prop typechecking
+// Prop typechecking.
 SubstrateContextProvider.propTypes = {
   socket: PropTypes.string,
   types: PropTypes.object

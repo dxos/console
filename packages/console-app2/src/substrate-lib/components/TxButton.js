@@ -20,7 +20,7 @@ function TxButton ({
   attrs = null,
   disabled = false
 }) {
-  // Hooks
+  // Hooks.
   const { api } = useSubstrate();
   const [unsub, setUnsub] = useState(null);
   const [sudoKey, setSudoKey] = useState(null);
@@ -54,7 +54,7 @@ function TxButton ({
     } = accountPair;
     let fromAcct;
 
-    // signer is from Polkadot-js browser extension
+    // Signer is from Polkadot-js browser extension.
     if (isInjected) {
       const injected = await web3FromSource(source);
       fromAcct = address;
@@ -100,7 +100,7 @@ function TxButton ({
   const signedTx = async () => {
     const fromAcct = await getFromAcct();
     const transformed = transformParams(paramFields, inputParams);
-    // transformed can be empty parameters
+    // Transformed can be empty parameters.
 
     const txExecute = transformed
       ? api.tx[palletRpc][callable](...transformed)
@@ -113,7 +113,7 @@ function TxButton ({
 
   const unsignedTx = async () => {
     const transformed = transformParams(paramFields, inputParams);
-    // transformed can be empty parameters
+    // Transformed can be empty parameters.
     const txExecute = transformed
       ? api.tx[palletRpc][callable](...transformed)
       : api.tx[palletRpc][callable]();
@@ -162,7 +162,7 @@ function TxButton ({
 
   const transformParams = (paramFields, inputParams, opts = { emptyAsNull: true }) => {
     // if `opts.emptyAsNull` is true, empty param value will be added to res as `null`.
-    //   Otherwise, it will not be added
+    //   Otherwise, it will not be added.
     const paramVal = inputParams.map(inputParam => {
       // To cater the js quirk that `null` is a type of `object`.
       if (typeof inputParam === 'object' && inputParam !== null && typeof inputParam.value === 'string') {
@@ -181,7 +181,7 @@ function TxButton ({
 
       let converted = value;
 
-      // Deal with a vector
+      // Deal with a vector.
       if (type.indexOf('Vec<') >= 0) {
         converted = converted.split(',').map(e => e.trim());
         converted = converted.map(single => isNumType(type)
@@ -191,7 +191,7 @@ function TxButton ({
         return [...memo, converted];
       }
 
-      // Deal with a single value
+      // Deal with a single value.
       if (isNumType(type)) {
         converted = converted.indexOf('.') >= 0 ? Number.parseFloat(converted) : Number.parseInt(converted);
       }
@@ -243,7 +243,7 @@ function TxButton ({
   );
 }
 
-// prop type checking
+// Prop type checking.
 TxButton.propTypes = {
   accountPair: PropTypes.object,
   setStatus: PropTypes.func.isRequired,

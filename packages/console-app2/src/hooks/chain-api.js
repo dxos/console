@@ -4,6 +4,7 @@
 
 import { web3FromSource } from '@polkadot/extension-dapp';
 import React, { useContext, useEffect, useState } from 'react';
+
 import { ChainApi } from '@dxos/registry-api';
 
 import { useSubstrate } from '../substrate-lib';
@@ -30,7 +31,7 @@ function WithChainApi ({ children, accountPair }) {
       } = accountPair;
       let fromAcct;
 
-      // signer is from Polkadot-js browser extension
+      // Signer is from Polkadot-js browser extension.
       if (isInjected) {
         const injected = await web3FromSource(source);
         fromAcct = address;
