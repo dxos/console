@@ -13,7 +13,7 @@ import kill from 'tree-kill';
 const DEFAULT_BOT_FACTORY_CWD = '.wire/bots';
 const SERVICE_CONFIG_FILENAME = 'service.yml';
 
-const log = debug('dxos:console:server:resolvers');
+const log = debug('dxos:kube:server:resolvers');
 
 let topic;
 const getBotFactoryTopic = (botFactoryCwd) => {

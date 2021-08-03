@@ -3,6 +3,9 @@
 //
 
 import childProcess from 'child_process';
+import debug from 'debug';
+
+const error = debug('dxos:kube:error');
 
 // TODO(telackey): Make pluggable.
 
@@ -14,7 +17,7 @@ const ifBlockExplorer = () => {
       url: (result && result.toString()) ? 'http://%HOST%:3080/' : 'http://blockexplorer.moon.dxos.network:3080/'
     };
   } catch (err) {
-    console.error(err);
+    error(err);
   }
 };
 

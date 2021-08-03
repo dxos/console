@@ -11,8 +11,8 @@ module.exports = {
     [
       'babel-plugin-inline-import', {
         extensions: [
-          '.mustache',
-          '.graphql'
+          '.graphql',
+          '.yml'
         ]
       }
     ],

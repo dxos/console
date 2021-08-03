@@ -2,23 +2,19 @@
 // Copyright 2020 DXOS.org
 //
 
-import { ApolloServer, gql } from 'apollo-server-express';
+import { ApolloServer /*, gql */ } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
 import debug from 'debug';
 import express from 'express';
-import fs from 'fs';
-import { print } from 'graphql/language';
-import yaml from 'js-yaml';
-import mustache from 'mustache-express';
+// import { print } from 'graphql/language';
 import yargs from 'yargs';
 
-// TODO(burdon): Use once published by @ashwinp.
-// import { extensions as WNS_EXTENSIONS, schema as WNS_SCHEMA } from '@wirelineio/wns-schema';
+// TODO(burdon): Factor out GraphQL definitions.
+// import SYSTEM_STATUS_QUERY from '@dxos/console-app/src/gql/system_status.graphql';
 
-import SYSTEM_STATUS from '@dxos/console-app/src/gql/system_status.graphql';
-
+import { getConfig } from './config';
 import { resolvers } from './resolvers';
 import API_SCHEMA from './gql/api.graphql';
 
@@ -37,16 +33,10 @@ const argv = yargs
   .alias('help', 'h')
   .argv;
 
-const configFile = argv.config || process.env.CONFIG_FILE;
-if (!configFile) {
-  yargs.showHelp();
-  process.exit(1);
-}
-
-const config = yaml.safeLoad(fs.readFileSync(configFile));
+const config = getConfig(argv.config || process.env.CONFIG_FILE).values;
 
 debug.enable(config.system.debug);
-const log = debug('dxos:console:server');
+const log = debug('dxos:kube:server');
 
 if (argv.verbose) {
   log(JSON.stringify(config, undefined, 2));
@@ -56,18 +46,14 @@ if (argv.verbose) {
 // Express server.
 //
 
-const { app: { publicUrl } } = config;
-
 const app = express();
 
 app.set('views', `${__dirname}/views`);
-app.set('view engine', 'mustache');
-app.engine('mustache', mustache());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());
 
 app.get('/', (req, res) => {
-  res.redirect(publicUrl);
+  res.redirect(config.api.path);
 });
 
 //
@@ -83,32 +69,12 @@ app.use(cors({
 }));
 
 //
-// React app
-//
-
-const bundles = [
-  'runtime', 'vendor', 'material-ui', 'dxos', 'main'
-];
-
-app.use(`${publicUrl}/lib`, express.static('./dist/client'));
-
-// TODO(burdon): Isn't this loaded via IPFS?
-app.get(publicUrl, (req, res) => {
-  res.render('console', {
-    title: 'Console',
-    container: 'root',
-    config: JSON.stringify(config),
-    scripts: bundles.map(bundle => ({ src: `${publicUrl}/lib/${bundle}.bundle.js` }))
-  });
-});
-
-//
 // Apollo Server and middleware
 // https://www.apollographql.com/docs/apollo-server/api/apollo-server
 // https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserverapplymiddleware
 //
 
-const server = new ApolloServer({
+const apolloServer = new ApolloServer({
   typeDefs: [
     API_SCHEMA
   ],
@@ -124,6 +90,7 @@ const server = new ApolloServer({
     authToken: req.headers.authorization
   }),
 
+  // TODO(burdon): Config option (security?)
   // https://www.apollographql.com/docs/apollo-server/testing/graphql-playground
   // https://github.com/prisma-labs/graphql-playground#usage
   // introspection: true,
@@ -134,14 +101,17 @@ const server = new ApolloServer({
     tabs: [
       {
         name: 'Status',
-        endpoint: config.api.path,
-        query: print(gql(SYSTEM_STATUS))
+        endpoint: config.api.path
+        // query: print(gql(SYSTEM_STATUS_QUERY))
       }
     ]
   }
 });
 
-server.applyMiddleware({ app, path: config.api.path });
+apolloServer.applyMiddleware({
+  app,
+  path: config.api.path
+});
 
 //
 // Start server
@@ -149,5 +119,5 @@ server.applyMiddleware({ app, path: config.api.path });
 
 const { api: { port } } = config;
 app.listen({ port }, () => {
-  log(`Running: http://localhost:${port}`);
+  log(`Open the GraphQL playground: http://localhost:${port}${config.api.path}`);
 });
