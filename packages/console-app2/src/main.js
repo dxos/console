@@ -8,7 +8,7 @@ import JSONTree from '@dxos/react-json-tree'
 
 import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react';
 
-import RecordList from './components/RecordList';
+import ResourceList from './components/ResourceList';
 
 import { WithChainApi } from './hooks/chain-api';
 import { SubstrateContextProvider, useSubstrate } from './substrate-lib';
@@ -46,10 +46,10 @@ function Main({ config }) {
   return (
     <div>
       <WithChainApi accountPair={accountPair}>
+          <h1>Records</h1>
+          <ResourceList config={config}/>
           <h1>Config</h1>
           <JSONTree data={config}/>
-          <h1>Records</h1>
-          <RecordList />
       </WithChainApi>
     </div>
   );

@@ -6,21 +6,26 @@
 services:
   app:
     prefix: '/app'
-    server: 'https://apollo1.kube.moon.dxos.network'
-
-  wns:
-    server: 'https://apollo1.kube.moon.dxos.network/dxos/wns/api'
-    webui: 'https://apollo1.kube.moon.dxos.network/dxos/wns/console'
+    server: 'https://enterprise.kube.dxos.network'
 
   dxns:
     server: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
+    schema:
+      cid:
+      fqn:
+        app: '.dxos.App'
+        bot: '.dxos.Bot'
+        botFactory: '.dxos.BotFactory'
+        KUBE: '.dxos.KUBE'
+        service: '.dxos.Service'
+        file: '.dxos.File'
   signal:
-    server: 'wss://apollo1.kube.moon.dxos.network/dxos/signal'
-    api: 'https://apollo1.kube.moon.dxos.network/dxos/signal/api'
+    server: 'wss://enterprise.kube.dxos.network/dxos/signal'
+    api: 'https://enterprise.kube.dxos.network/dxos/signal/api'
 
   ipfs:
-    server: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/api'
-    gateway: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway'
+    server: 'https://enterprise.kube.dxos.network/dxos/ipfs/api'
+    gateway: 'https://enterprise.kube.dxos.network/dxos/ipfs/gateway'
 
   wellknown:
-    endpoint: 'https://apollo1.kube.moon.dxos.network/.well-known/dxos'
+    endpoint: 'https://enterprise.kube.dxos.network/.well-known/dxos'
