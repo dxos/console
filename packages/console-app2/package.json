@@ -1,6 +1,6 @@
 {
   "name": "@dxos/console-app2",
-  "version": "1.2.9-alpha.15",
+  "version": "1.2.9-alpha.17",
   "description": "Kubenet Console Client",
   "private": true,
   "dependencies": {
@@ -24,8 +24,8 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "query-string": "^7.0.0",
     "prop-types": "^15.7.2",
+    "query-string": "^7.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
