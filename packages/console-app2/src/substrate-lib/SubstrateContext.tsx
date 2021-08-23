@@ -40,7 +40,7 @@ const INIT_STATE: SubstrateState = {
 
 // Reducer function for `useReducer`.
 
-const reducer = (state, action) => {
+const reducer = (state: SubstrateState, action) => {
   switch (action.type) {
     case 'CONFIG_INIT':
       return { ...state, apiState: 'CONFIG_INIT', config: action.payload, socket: action.payload.services.dxns.server, types: action.payload.types };
@@ -142,7 +142,7 @@ const loadAccounts = (state, dispatch) => {
   asyncLoadAccounts();
 };
 
-const setConfig = (state, dispatch, conf) => {
+const setConfig = (state: SubstrateState, dispatch, conf) => {
   const { config } = state;
   if (config) {
     return;
@@ -153,7 +153,14 @@ const setConfig = (state, dispatch, conf) => {
 
 const SubstrateContext = React.createContext<SubstrateState>(INIT_STATE);
 
-const SubstrateContextProvider = (props) => {
+interface Props {
+  socket?: string;
+  types?: object;
+  config: object;
+  children: React.ReactNode;
+}
+
+const SubstrateContextProvider = (props: Props) => {
   // Filtering props and merge with default param value.
   const initState: SubstrateState = { ...INIT_STATE };
   const neededPropNames = ['socket', 'types'];
@@ -171,12 +178,6 @@ const SubstrateContextProvider = (props) => {
   return <SubstrateContext.Provider value={state}>
     {props.children}
   </SubstrateContext.Provider>;
-};
-
-// Prop typechecking.
-SubstrateContextProvider.propTypes = {
-  socket: PropTypes.string,
-  types: PropTypes.object
 };
 
 const useSubstrate = () => useContext(SubstrateContext);

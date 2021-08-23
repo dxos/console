@@ -7,14 +7,16 @@ import { useSubstrate } from '../';
 
 export default function DeveloperConsole () {
   const { api, apiState, keyring, keyringState } = useSubstrate();
+  const win: Record<string, any> = window;
+
   if (apiState === 'READY') {
-    window.api = api;
+    win.api = api;
   }
   if (keyringState === 'READY') {
-    window.keyring = keyring;
+    win.keyring = keyring;
   }
-  window.util = require('@polkadot/util');
-  window.utilCrypto = require('@polkadot/util-crypto');
+  win.util = require('@polkadot/util');
+  win.utilCrypto = require('@polkadot/util-crypto');
 
   return null;
 }

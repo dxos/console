@@ -13,7 +13,7 @@ const distDir = path.join(__dirname, 'dist');
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
 
   devtool: 'eval-source-map',
 

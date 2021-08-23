@@ -2,6 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
+import { Codec } from '@polkadot/types/types';
 import { web3FromSource } from '@polkadot/extension-dapp';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
@@ -139,7 +140,7 @@ function TxButton ({
   };
 
   const constant = () => {
-    const result = api.consts[palletRpc][callable];
+    const result = api.consts[palletRpc][callable] as Codec & { isNone?: boolean };
     result.isNone ? setStatus('None') : setStatus(result.toString());
   };
 
@@ -231,7 +232,7 @@ function TxButton ({
   return (
     <Button
       basic
-      color={color}
+      // color={color}
       style={style}
       type='submit'
       onClick={transaction}

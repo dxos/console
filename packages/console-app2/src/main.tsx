@@ -34,7 +34,7 @@ function Main({ config }) {
     </Grid>;
 
   if (apiState === 'ERROR') {
-    return message(apiError);
+    return message('apiError');
   } else if (apiState !== 'READY') {
     return loader('Connecting to Substrate');
   }
@@ -62,5 +62,3 @@ export default function App ({ config }) {
       </SubstrateContextProvider>
   );
 }
-
-export default App;
