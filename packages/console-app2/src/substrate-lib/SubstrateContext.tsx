@@ -6,8 +6,8 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import keyring from '@polkadot/ui-keyring';
-import PropTypes from 'prop-types';
 import React, { useReducer, useContext } from 'react';
+
 import { definitions } from '@dxos/registry-api';
 
 // Initial state for `useReducer`.
@@ -110,17 +110,17 @@ const loadAccounts = (state, dispatch) => {
   if (!config) {
     return;
   }
+
   const asyncLoadAccounts = async () => {
     dispatch({ type: 'LOAD_KEYRING' });
-    try {
 
+    try {
       await web3Enable(config.app.title);
       let allAccounts = await web3Accounts();
       allAccounts = allAccounts.map(({ address, meta }) =>
         ({ address, meta: { ...meta, name: `${meta.name} (${meta.source})` } }));
       keyring.loadAll({ isDevelopment: config.devKeyring }, allAccounts);
       dispatch({ type: 'SET_KEYRING', payload: keyring });
-
     } catch (e) {
       console.error(e);
       dispatch({ type: 'KEYRING_ERROR' });
@@ -148,8 +148,8 @@ const setConfig = (state: SubstrateState, dispatch, conf) => {
     return;
   }
 
-  dispatch({ type: 'CONFIG_INIT', payload: conf })
-}
+  dispatch({ type: 'CONFIG_INIT', payload: conf });
+};
 
 const SubstrateContext = React.createContext<SubstrateState>(INIT_STATE);
 

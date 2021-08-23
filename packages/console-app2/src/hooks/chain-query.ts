@@ -32,7 +32,6 @@ export function useChainQuery<T> (
       }
     };
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockNumer, ...deps]);
 
   return [error, queriedData];

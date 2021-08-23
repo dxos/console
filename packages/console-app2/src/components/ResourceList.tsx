@@ -2,13 +2,12 @@
 // Copyright 2021 DXOS.org
 //
 
-import React, { useEffect, useState } from 'react';
-import { List } from 'semantic-ui-react'
+import { useEffect, useState } from 'react';
+import { List } from 'semantic-ui-react';
 import urlJoin from 'url-join';
 
 import { useChainApi } from '../hooks/chain-api';
 import { useChainQuery } from '../hooks/chain-query';
-
 
 /**
  * Placeholder for All DXNS resources.
@@ -26,7 +25,7 @@ function ResourceList ({ config }) {
       setApps(resources.filter(({ messageFqn }) => messageFqn === config.services.dxns.schema.fqn.app));
       setKubes(resources.filter(({ messageFqn }) => messageFqn === config.services.dxns.schema.fqn.KUBE));
     }
-  }, [resources])
+  }, [resources]);
 
   if (error) {
     throw error;
@@ -38,8 +37,8 @@ function ResourceList ({ config }) {
       <List>
         {(apps ?? []).map(app => {
           const link = urlJoin(config.services.app.server, config.services.app.prefix, `${app.id.domain}:${app.id.resource}`);
-          return (<List.Item><a key={app.cid.toString()} href={link}>{link}</a></List.Item>)})
-        }
+          return (<List.Item><a key={app.cid.toString()} href={link}>{link}</a></List.Item>);
+        })}
       </List>
       <h2>KUBEs</h2>
       <List>

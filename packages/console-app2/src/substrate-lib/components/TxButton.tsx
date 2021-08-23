@@ -2,8 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Codec } from '@polkadot/types/types';
 import { web3FromSource } from '@polkadot/extension-dapp';
+import { Codec } from '@polkadot/types/types';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { Button } from 'semantic-ui-react';
@@ -15,7 +15,7 @@ function TxButton ({
   accountPair = null,
   label,
   setStatus,
-  color = 'blue',
+  // color = 'blue',
   style = null,
   type = 'QUERY',
   attrs = null,
