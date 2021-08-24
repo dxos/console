@@ -35,7 +35,7 @@ function ResourceList ({ config }) {
     <div>
       <h2>Apps</h2>
       <List>
-        {(apps ?? []).map(app => {
+        {apps.map(app => {
           const link = urlJoin(config.services.app.server, config.services.app.prefix, `${app.id.domain}:${app.id.resource}`);
           return (<List.Item><a key={app.cid.toString()} href={link}>{link}</a></List.Item>);
         })}
