@@ -15,7 +15,7 @@ function TxButton ({
   accountPair = null,
   label,
   setStatus,
-  // color = 'blue',
+  // color = 'blue', TODO: support colorful buttons
   style = null,
   type = 'QUERY',
   attrs = null,
@@ -232,7 +232,7 @@ function TxButton ({
   return (
     <Button
       basic
-      // color={color}
+      // color={color}, TODO: support colorful buttons
       style={style}
       type='submit'
       onClick={transaction}
