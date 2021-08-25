@@ -5,8 +5,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { loadConfig } from './config';
 import App from './main';
+import { loadConfig } from './config';
 
 loadConfig().then(config => {
   ReactDOM.render(<App config={config.values} />, document.querySelector('#root'));

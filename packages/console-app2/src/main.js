@@ -3,15 +3,17 @@
 //
 
 import React from 'react';
+
+import JSONTree from '@dxos/react-json-tree'
+
 import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react';
 
-import JSONTree from '@dxos/react-json-tree';
-
 import ResourceList from './components/ResourceList';
+
 import { WithChainApi } from './hooks/chain-api';
 import { SubstrateContextProvider, useSubstrate } from './substrate-lib';
 
-function Main ({ config }) {
+function Main({ config }) {
   const { keyring, keyringState, apiState } = useSubstrate();
 
   const accountPair = keyringState === 'READY' ? keyring.getPairs()[0] : null;
@@ -32,7 +34,7 @@ function Main ({ config }) {
     </Grid>;
 
   if (apiState === 'ERROR') {
-    return message('apiError');
+    return message(apiError);
   } else if (apiState !== 'READY') {
     return loader('Connecting to Substrate');
   }
@@ -60,3 +62,5 @@ export default function App ({ config }) {
       </SubstrateContextProvider>
   );
 }
+
+export default App;
