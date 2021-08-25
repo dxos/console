@@ -5,10 +5,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { loadConfig } from '@dxos/console-app2/src/config';
+import { App as ActualApp, Root } from './components';
+import { loadConfig } from './config';
 
 // Rename ActualApp
-import { App as ActualApp, Root } from './components';
 import { ConfigContext } from './hooks';
 import { WithChainApi } from './hooks/useChainApi';
 import { SubstrateContextProvider, useSubstrate } from './substrate-lib';

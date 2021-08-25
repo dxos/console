@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useBlockNumber } from './block-number';
+import { useBlockNumber } from './useBlockNumber';
 
 export function useChainQuery<T> (
   query: () => Promise<T>,

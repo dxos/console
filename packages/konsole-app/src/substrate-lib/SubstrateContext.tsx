@@ -40,7 +40,7 @@ const INIT_STATE: SubstrateState = {
 
 // Reducer function for `useReducer`.
 
-const reducer = (state: SubstrateState, action) => {
+const reducer = (state: SubstrateState, action): SubstrateState => {
   switch (action.type) {
     case 'CONFIG_INIT':
       return { ...state, apiState: 'CONFIG_INIT', config: action.payload, socket: action.payload.services.dxns.server, types: action.payload.types };

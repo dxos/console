@@ -9,13 +9,13 @@ import { ChainApi } from '@dxos/registry-api';
 
 import { useSubstrate } from '../substrate-lib';
 
-const ChainApiContext = React.createContext(undefined);
+const ChainApiContext = React.createContext<ChainApi | undefined>(undefined);
 
 const useChainApi = () => useContext(ChainApiContext);
 
 function WithChainApi ({ children, accountPair }) {
   const { api } = useSubstrate();
-  const [chainApi, setChainApi] = useState(undefined);
+  const [chainApi, setChainApi] = useState<ChainApi | undefined>(undefined);
 
   useEffect(() => {
     if (!api) {
