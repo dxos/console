@@ -3,3 +3,4 @@
 //
 
 export * from './useConfig';
+export * from './useRecords';

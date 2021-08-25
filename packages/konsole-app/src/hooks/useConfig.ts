@@ -7,7 +7,7 @@ import { createContext, useContext } from 'react';
 export interface IConfig {
   app: {
     name: string
-    theme: 'light' | 'dark' | undefined
+    theme?: 'light' | 'dark' | undefined
   }
 }
 

@@ -4,3 +4,4 @@
 
 export * from './App';
 export * from './Root';
+export * from './RecordsTable';
