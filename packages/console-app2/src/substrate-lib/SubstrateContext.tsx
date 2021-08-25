@@ -6,8 +6,8 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import keyring from '@polkadot/ui-keyring';
+import PropTypes from 'prop-types';
 import React, { useReducer, useContext } from 'react';
-
 import { definitions } from '@dxos/registry-api';
 
 // Initial state for `useReducer`.
@@ -40,7 +40,7 @@ const INIT_STATE: SubstrateState = {
 
 // Reducer function for `useReducer`.
 
-const reducer = (state: SubstrateState, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case 'CONFIG_INIT':
       return { ...state, apiState: 'CONFIG_INIT', config: action.payload, socket: action.payload.services.dxns.server, types: action.payload.types };
@@ -110,17 +110,17 @@ const loadAccounts = (state, dispatch) => {
   if (!config) {
     return;
   }
-
   const asyncLoadAccounts = async () => {
     dispatch({ type: 'LOAD_KEYRING' });
-
     try {
+
       await web3Enable(config.app.title);
       let allAccounts = await web3Accounts();
       allAccounts = allAccounts.map(({ address, meta }) =>
         ({ address, meta: { ...meta, name: `${meta.name} (${meta.source})` } }));
       keyring.loadAll({ isDevelopment: config.devKeyring }, allAccounts);
       dispatch({ type: 'SET_KEYRING', payload: keyring });
+
     } catch (e) {
       console.error(e);
       dispatch({ type: 'KEYRING_ERROR' });
@@ -142,25 +142,18 @@ const loadAccounts = (state, dispatch) => {
   asyncLoadAccounts();
 };
 
-const setConfig = (state: SubstrateState, dispatch, conf) => {
+const setConfig = (state, dispatch, conf) => {
   const { config } = state;
   if (config) {
     return;
   }
 
-  dispatch({ type: 'CONFIG_INIT', payload: conf });
-};
+  dispatch({ type: 'CONFIG_INIT', payload: conf })
+}
 
 const SubstrateContext = React.createContext<SubstrateState>(INIT_STATE);
 
-interface Props {
-  socket?: string;
-  types?: object;
-  config: object;
-  children: React.ReactNode;
-}
-
-const SubstrateContextProvider = (props: Props) => {
+const SubstrateContextProvider = (props) => {
   // Filtering props and merge with default param value.
   const initState: SubstrateState = { ...INIT_STATE };
   const neededPropNames = ['socket', 'types'];
@@ -178,6 +171,12 @@ const SubstrateContextProvider = (props: Props) => {
   return <SubstrateContext.Provider value={state}>
     {props.children}
   </SubstrateContext.Provider>;
+};
+
+// Prop typechecking.
+SubstrateContextProvider.propTypes = {
+  socket: PropTypes.string,
+  types: PropTypes.object
 };
 
 const useSubstrate = () => useContext(SubstrateContext);
