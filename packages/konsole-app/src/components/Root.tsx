@@ -5,11 +5,11 @@
 import React from 'react';
 
 import { CssBaseline } from '@material-ui/core';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
 
 import { useConfig } from '../hooks';
 
-const createTheme = (theme: 'light' | 'dark' | undefined) => createMuiTheme({
+const createCustomTheme = (theme: 'light' | 'dark' | undefined) => createTheme({
   palette: {
     type: theme
   },
@@ -33,7 +33,7 @@ export const Root = ({ children }: { children: any }) => {
   const config = useConfig();
 
   return (
-    <MuiThemeProvider theme={createTheme(config.app.theme)}>
+    <MuiThemeProvider theme={createCustomTheme(config.app.theme)}>
       <CssBaseline />
       {children}
     </MuiThemeProvider>
