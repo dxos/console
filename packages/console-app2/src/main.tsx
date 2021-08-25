@@ -44,10 +44,10 @@ function Main ({ config }) {
   return (
     <div>
       <WithChainApi accountPair={accountPair}>
-          <h1>Records</h1>
-          <ResourceList config={config}/>
-          <h1>Config</h1>
-          <JSONTree data={config}/>
+        <h1>Records</h1>
+        <ResourceList config={config}/>
+        <h1>Config</h1>
+        <JSONTree data={config}/>
       </WithChainApi>
     </div>
   );
@@ -55,8 +55,8 @@ function Main ({ config }) {
 
 export default function App ({ config }) {
   return (
-      <SubstrateContextProvider config={config}>
-        <Main config={config} />
-      </SubstrateContextProvider>
+    <SubstrateContextProvider config={config}>
+      <Main config={config} />
+    </SubstrateContextProvider>
   );
 }

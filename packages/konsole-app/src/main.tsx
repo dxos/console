@@ -5,25 +5,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { App, Root } from './components';
+import { loadConfig } from '@dxos/console-app2/src/config';
+
+// Rename ActualApp
+import { App as ActualApp, Root } from './components';
 import { ConfigContext } from './hooks';
+import { WithChainApi } from './hooks/useChainApi';
+import { SubstrateContextProvider, useSubstrate } from './substrate-lib';
 
-// TODO(burdon): Load from environment.
-const config = {
-  app: {
-    name: 'Konsole',
-    theme: 'dark'
+function WithChainMain ({ config }) {
+  const { keyring, keyringState, apiState } = useSubstrate();
+
+  const accountPair = keyringState === 'READY' ? keyring.getPairs()[0] : null;
+
+  if (apiState === 'ERROR') {
+    return <div>Api error</div>;
+  } else if (apiState !== 'READY') {
+    return <div>Connecting to Substrate</div>;
   }
-};
 
-const start = (config: {}) => {
-  ReactDOM.render((
+  if (keyringState !== 'READY') {
+    return <div>Loading accounts (please review any extension authorization)</div>;
+  }
+
+  return (
+    <div>
+      <WithChainApi accountPair={accountPair}>
+        <ActualApp/>
+      </WithChainApi>
+    </div>
+  );
+}
+
+const App = ({ config }) => {
+  return (
     <ConfigContext.Provider value={config}>
       <Root>
-        <App />
+        <SubstrateContextProvider config={config}>
+          <WithChainMain config={config} />
+        </SubstrateContextProvider>
       </Root>
-    </ConfigContext.Provider>
-  ), document.getElementById('root'));
+    </ConfigContext.Provider>);
 };
 
-start(config);
+loadConfig().then(config => {
+  ReactDOM.render(<App config={config.values} />, document.querySelector('#root'));
+});
