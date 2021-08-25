@@ -27,7 +27,7 @@ export const mockRecordTypes = [
 
 const mockRecordTypeStrings = mockRecordTypes.slice(1).map(({ type }) => type);
 
-export const mockRecords = Array.from({ length: 10 }).map(() => ({
+export const mockRecords = Array.from({ length: 20 }).map(() => ({
   cid: faker.datatype.uuid(),
   name: `dxn:/${faker.internet.domainWord()}/${faker.system.directoryPath()}`,
   type: faker.random.arrayElement(mockRecordTypeStrings),

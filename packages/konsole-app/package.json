@@ -46,8 +46,8 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
-    "@storybook/addon-knobs": "^6.1.14",
-    "@storybook/react": "^6.1.14",
+    "@storybook/addon-knobs": "^6.3.0",
+    "@storybook/react": "^6.3.7",
     "@types/faker": "^5.5.8",
     "@types/superagent": "^4.1.10",
     "babel-loader": "^8.1.0",
