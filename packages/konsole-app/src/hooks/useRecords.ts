@@ -6,6 +6,8 @@
 export interface IRecord {
   id: string
   title: string
+  type: string
+  name: string
 }
 
 /**
@@ -17,15 +19,21 @@ export const useRecords = (): IRecord[] => {
   return [
     {
       id: 'record-1',
-      title: 'Record 1'
+      title: 'Record 1',
+      type: 'record-1',
+      name: 'Record 1'
     },
     {
       id: 'record-2',
-      title: 'Record 2'
+      title: 'Record 2',
+      type: 'record-2',
+      name: 'Record 2'
     },
     {
       id: 'record-3',
-      title: 'Record 3'
+      title: 'Record 3',
+      type: 'record-3',
+      name: 'Record 3'
     }
   ];
 };
