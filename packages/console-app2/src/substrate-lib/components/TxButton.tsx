@@ -3,6 +3,7 @@
 //
 
 import { web3FromSource } from '@polkadot/extension-dapp';
+import { Codec } from '@polkadot/types/types';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { Button } from 'semantic-ui-react';
@@ -14,7 +15,7 @@ function TxButton ({
   accountPair = null,
   label,
   setStatus,
-  color = 'blue',
+  // color = 'blue', TODO: support colorful buttons
   style = null,
   type = 'QUERY',
   attrs = null,
@@ -139,7 +140,7 @@ function TxButton ({
   };
 
   const constant = () => {
-    const result = api.consts[palletRpc][callable];
+    const result = api.consts[palletRpc][callable] as Codec & { isNone?: boolean };
     result.isNone ? setStatus('None') : setStatus(result.toString());
   };
 
@@ -231,7 +232,7 @@ function TxButton ({
   return (
     <Button
       basic
-      color={color}
+      // color={color}, TODO: support colorful buttons
       style={style}
       type='submit'
       onClick={transaction}

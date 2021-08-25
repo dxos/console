@@ -1,0 +1,12 @@
+{
+  "extends": "plugin:@dxos/recomended",
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "no-use-before-define": "off"
+      }
+    }
+  ]
+}
+
