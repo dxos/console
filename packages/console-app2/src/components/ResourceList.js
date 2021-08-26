@@ -9,7 +9,6 @@ import urlJoin from 'url-join';
 import { useChainApi } from '../hooks/chain-api';
 import { useChainQuery } from '../hooks/chain-query';
 
-
 /**
  * Placeholder for All DXNS resources.
  * TODO: Evolve into various tabs.

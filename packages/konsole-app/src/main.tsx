@@ -6,22 +6,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { App, Root } from './components';
-import { ConfigContext } from './hooks';
+import { ConfigContext, IConfig, RegistryContext } from './hooks';
+import { MockRegistryClient } from './testing';
 
 // TODO(burdon): Load from environment.
-const config = {
+const config: IConfig = {
   app: {
     name: 'Konsole',
     theme: 'dark'
   }
 };
 
-const start = (config: {}) => {
+const start = (config: IConfig) => {
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <Root>
-        <App />
-      </Root>
+      <RegistryContext.Provider value={new MockRegistryClient()}>
+        <Root>
+          <App />
+        </Root>
+      </RegistryContext.Provider>
     </ConfigContext.Provider>
   ), document.getElementById('root'));
 };

@@ -11,8 +11,8 @@ export interface IConfig {
   }
 }
 
-export const ConfigContext = createContext({});
+export const ConfigContext = createContext<IConfig | undefined>(undefined);
 
-export const useConfig = () => {
-  return useContext(ConfigContext) as IConfig;
+export const useConfig = (): IConfig => {
+  return useContext(ConfigContext)!;
 };

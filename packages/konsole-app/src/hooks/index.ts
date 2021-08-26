@@ -3,4 +3,4 @@
 //
 
 export * from './useConfig';
-export * from './useRecords';
+export * from './useRegistryClient';
