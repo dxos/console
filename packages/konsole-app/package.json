@@ -48,22 +48,22 @@
     "@dxos/eslint-plugin": "~1.0.10",
     "@storybook/addon-knobs": "^6.3.0",
     "@storybook/react": "^6.3.7",
-    "@types/faker": "^5.5.8",
+    "@types/faker": "^4.1.12",
     "@types/superagent": "^4.1.10",
     "babel-loader": "^8.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-inline-import": "^3.0.0",
     "eslint": "^7.7.0",
     "eslint-plugin-react": "^7.22.0",
-    "faker": "^5.5.3",
+    "faker": "^4.1.0",
     "jest": "^25.5.2",
-    "rollup-plugin-node-globals": "^1.4.0",
+    "html-webpack-plugin": "^5.3.2",
     "ts-jest": "^26.1.4",
     "ts-loader": "~8.1.0",
     "typescript": "~4.2.4",
-    "webpack": "4.44.2",
-    "webpack-cli": "^4.7.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"

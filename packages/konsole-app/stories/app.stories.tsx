@@ -14,7 +14,7 @@ export default {
   title: 'App'
 };
 
-export const withApp = () => {
+export const Primary = () => {
   const config: IConfig = {
     app: {
       name: 'Test'
