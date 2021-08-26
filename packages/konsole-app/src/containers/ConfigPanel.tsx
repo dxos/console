@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 /**
- * Display records panel
+ * Displays the config panel
  * @constructor
  */
 export const ConfigPanel = () => {

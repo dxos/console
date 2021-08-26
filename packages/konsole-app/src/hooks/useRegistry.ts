@@ -28,16 +28,16 @@ export interface IRegistryClient {
 
 export const RegistryContext = createContext<IRegistryClient | undefined>(undefined);
 
-export const useRegistryClient = (): IRegistryClient => {
+export const useRegistry = (): IRegistryClient => {
   return useContext(RegistryContext)!;
 };
 
 export const useRecordTypes = (): IRecordType[] => {
-  const registryClient = useRegistryClient();
+  const registryClient = useRegistry();
   return registryClient.getRecordTypes();
 };
 
 export const useRecords = (query?: IQuery): IRecord[] => {
-  const registryClient = useRegistryClient();
+  const registryClient = useRegistry();
   return registryClient.queryRecords(query);
 };
