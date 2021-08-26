@@ -2,14 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { ComponentType } from 'react';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import React from 'react';
 
-export interface IPanel {
-  path: string
-  label: string
-  component: ComponentType
-}
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+
+import { IPanel } from '../panels';
 
 interface SidebarProperties {
   panels: IPanel[]
@@ -22,19 +19,19 @@ interface SidebarProperties {
  * @constructor
  */
 export const Sidebar = ({ panels, selected, onSelect }: SidebarProperties) => {
-
-  console.log('::::', selected);
-
   return (
     <div>
       <List>
-        {panels.map(({ path, label }, i) => (
+        {panels.map(({ path, label, icon: Icon }, i) => (
           <ListItem
             key={i}
             button
             selected={path === selected}
             onClick={() => onSelect(path)}
           >
+            <ListItemIcon>
+              <Icon />
+            </ListItemIcon>
             <ListItemText
               primary={label}
             />

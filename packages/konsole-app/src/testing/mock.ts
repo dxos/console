@@ -13,6 +13,10 @@ export const mockRecordTypes = [
     label: 'ALL'
   },
   {
+    type: 'schema',
+    label: 'Schema'
+  },
+  {
     type: 'kube',
     label: 'KUBE'
   },
@@ -23,6 +27,14 @@ export const mockRecordTypes = [
   {
     type: 'app',
     label: 'App'
+  },
+  {
+    type: 'frame',
+    label: 'Frame'
+  },
+  {
+    type: 'bot',
+    label: 'Bot'
   }
 ];
 

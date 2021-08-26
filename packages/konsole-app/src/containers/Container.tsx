@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    padding: theme.spacing(2)
+    padding: theme.spacing(1)
   },
   contentHeader: {
     // Necessary for content to be below app bar.
