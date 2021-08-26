@@ -55,6 +55,12 @@ module.exports = {
       template: path.resolve(__dirname, 'public/index.html'),
       filename: 'index.html',
       title: 'Konsole' // TODO(burdon): From config.
+    }),
+    // https://www.npmjs.com/package/webpack-version-file-plugin
+    new VersionFile({
+      template: path.join(__dirname, 'version.ejs'),
+      packageFile: path.join(__dirname, 'package.json'),
+      outputFile: path.join(distDir, 'version.json')
     })
   ]
 };
