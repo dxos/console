@@ -42,13 +42,17 @@
     "clsx": "^1.1.0",
     "debug": "^4.1.1",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "react-dom": "^16.14.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
     "@storybook/addon-knobs": "^6.3.0",
     "@storybook/react": "^6.3.7",
     "@types/faker": "^4.1.12",
+    "@types/react-router": "^5.1.8",
+    "@types/react-router-dom": "^5.1.8",
     "@types/superagent": "^4.1.10",
     "babel-loader": "^8.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
