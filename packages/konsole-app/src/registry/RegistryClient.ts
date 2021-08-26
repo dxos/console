@@ -3,81 +3,61 @@
 //
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
-import keyring from '@polkadot/ui-keyring';
-import PropTypes from 'prop-types';
-import React, { useReducer, useContext } from 'react';
+// TODO(marcin) -> can we avoid React -> then RegistryClient wrapper is general purpose and stack agnostic
+import { useReducer } from 'react';
 
-import { definitions } from '@dxos/registry-api';
+import { ChainApi, definitions } from '@dxos/registry-api';
 
 import { IQuery, IRecord, IRecordType, IRegistryClient } from './contract';
 
-export interface SubstrateState {
-  config: any,
-  socket: any,
+interface ClientState {
+  endpoint: string,
   jsonrpc: any,
   types: any,
-  keyring: null | any,
-  keyringState: null | string,
-  api: null | ApiPromise,
+  api: null | ChainApi,
   apiError: null | string,
   apiState: null | string
   connectionAttempted: boolean
 }
 
-const INIT_STATE: SubstrateState = {
-  config: null,
-  socket: null,
+const INIT_STATE: ClientState = {
+  endpoint: '',
   jsonrpc: { ...jsonrpc },
   types: null,
-  keyring: null,
-  keyringState: null,
   api: null,
   apiError: null,
   apiState: null,
   connectionAttempted: false
 };
 
-// Reducer function for `useReducer`.
+type Action =
+  | { type: 'CONNECT_INIT' }
+  | { type: 'CONNECT', api: ApiPromise }
+  | { type: 'CONNECT_SUCCESS'}
+  | { type: 'CONNECT_ERROR', error: any }
 
-const reducer = (state, action) => {
+const reducer = (state: ClientState, action: Action): ClientState => {
   switch (action.type) {
-    case 'CONFIG_INIT':
-      return { ...state, apiState: 'CONFIG_INIT', config: action.payload, socket: action.payload.services.dxns.server, types: action.payload.types };
-
     case 'CONNECT_INIT':
-      return { ...state, apiState: 'CONNECT_INIT', connectionAttempted: true };
+      return { ...state, apiState: 'connecting', connectionAttempted: true };
 
     case 'CONNECT':
-      return { ...state, api: action.payload, apiState: 'CONNECTING' };
+      return { ...state, api: new ChainApi(action.api, undefined), apiState: 'connecting' };
 
     case 'CONNECT_SUCCESS':
-      return { ...state, apiState: 'READY' };
+      return { ...state, apiState: 'ready' };
 
     case 'CONNECT_ERROR':
-      return { ...state, apiState: 'ERROR', apiError: action.payload };
-
-    case 'LOAD_KEYRING':
-      return { ...state, keyringState: 'LOADING' };
-
-    case 'SET_KEYRING':
-      return { ...state, keyring: action.payload, keyringState: 'READY' };
-
-    case 'KEYRING_ERROR':
-      return { ...state, keyring: null, keyringState: 'ERROR' };
-
-    default:
-      throw new Error(`Unknown type: ${action.type}`);
+      return { ...state, apiState: 'error', apiError: action.error };
   }
 };
 
-// Connecting to the Substrate node.
+const connect = (state: ClientState, dispatch: (action: Action) => void) => {
+  const { connectionAttempted, endpoint, jsonrpc, types } = state;
 
-const connect = (state, dispatch) => {
-  const { connectionAttempted, socket, jsonrpc, types } = state;
-
-  if (!socket) {
+  // TODO(marcin): can't just return without note for user
+  if (!endpoint) {
     return;
   }
 
@@ -90,82 +70,51 @@ const connect = (state, dispatch) => {
 
   const typesWithDefinitions = Object.values(definitions).reduce((res, { types }) => ({ ...res, ...types }), types);
 
-  const provider = new WsProvider(socket);
-  const _api = new ApiPromise({ provider, types: typesWithDefinitions, rpc: jsonrpc });
+  const provider = new WsProvider(endpoint);
+  const apiPromise = new ApiPromise({ provider, types: typesWithDefinitions, rpc: jsonrpc });
 
   // Set listeners for disconnection and reconnection event.
-  _api.on('connected', () => {
-    dispatch({ type: 'CONNECT', payload: _api });
+  apiPromise.on('connected', () => {
+    dispatch({ type: 'CONNECT', api: apiPromise });
     // `ready` event is not emitted upon reconnection and is checked explicitly here.
-    _api.isReady.then(() => dispatch({ type: 'CONNECT_SUCCESS' }));
+    apiPromise.isReady.then(() => dispatch({ type: 'CONNECT_SUCCESS' }));
   });
-  _api.on('ready', () => dispatch({ type: 'CONNECT_SUCCESS' }));
-  _api.on('error', err => dispatch({ type: 'CONNECT_ERROR', payload: err }));
-};
-
-// Loading accounts from dev and polkadot-js extension.
-
-let loadAccts = false;
-const loadAccounts = (state, dispatch) => {
-  const { config } = state;
-  if (!config) {
-    return;
-  }
-  const asyncLoadAccounts = async () => {
-    dispatch({ type: 'LOAD_KEYRING' });
-    try {
-      await web3Enable(config.app.title);
-      let allAccounts = await web3Accounts();
-      allAccounts = allAccounts.map(({ address, meta }) =>
-        ({ address, meta: { ...meta, name: `${meta.name} (${meta.source})` } }));
-      keyring.loadAll({ isDevelopment: config.devKeyring }, allAccounts);
-      dispatch({ type: 'SET_KEYRING', payload: keyring });
-    } catch (e) {
-      console.error(e);
-      dispatch({ type: 'KEYRING_ERROR' });
-    }
-  };
-
-  const { keyringState } = state;
-  // If `keyringState` is not null `asyncLoadAccounts` is running.
-  if (keyringState) {
-    return;
-  }
-  // If `loadAccts` is true, the `asyncLoadAccounts` has been run once.
-  if (loadAccts) {
-    return dispatch({ type: 'SET_KEYRING', payload: keyring });
-  }
-
-  // This is the heavy duty work.
-  loadAccts = true;
-  asyncLoadAccounts();
-};
-
-const setConfig = (state, dispatch, conf) => {
-  const { config } = state;
-  if (config) {
-    return;
-  }
-
-  dispatch({ type: 'CONFIG_INIT', payload: conf });
+  apiPromise.on('ready', () => dispatch({ type: 'CONNECT_SUCCESS' }));
+  apiPromise.on('error', err => dispatch({ type: 'CONNECT_ERROR', error: err }));
 };
 
 export class RegistryClient implements IRegistryClient {
-  constructor ({ socket, types } : {socket?: string, types?: object}) {
-    const initState: SubstrateState = { ...INIT_STATE };
-    initState.socket = socket || initState.socket;
-    initState.types = types || initState.types;
-    const [state, dispatch] = useReducer(reducer, initState);
+  private state: ClientState;
 
-    setConfig(state, dispatch, props.config);
+  constructor ({ endpoint, types } : {endpoint: string, types?: object}) {
+    const initialState: ClientState = { ...INIT_STATE, endpoint, types };
+    const [state, dispatch] = useReducer(reducer, initialState);
+    this.state = state;
+    // TODO(marcin) How to communicate state transition to end users in order to start querying only when state = ready
+
     connect(state, dispatch);
   }
 
-  getRecordTypes (): IRecordType[] {
-    return [];
+  async getRecordTypes (): Promise<IRecordType[]> {
+    const records = await this.state.api?.registry.getRecords() ?? [];
+    return records.map(apiRecord => ({
+      type: apiRecord.messageFqn,
+      label: apiRecord.messageFqn
+    }));
   }
 
-  queryRecords (query: IQuery | undefined): IRecord[] {
-    return [];
+  async queryRecords (query: IQuery | undefined): Promise<IRecord[]> {
+    let records = (await this.state.api?.registry.getRecords()) ?? [];
+
+    if (query) {
+      records = records.filter(r => r.messageFqn === query.type);
+    }
+
+    return records.map(apiRecord => ({
+      cid: apiRecord.cid.toB58String(),
+      name: apiRecord.cid.toB58String(),
+      type: apiRecord.messageFqn,
+      title: apiRecord.cid.toB58String()
+    }));
   }
 }

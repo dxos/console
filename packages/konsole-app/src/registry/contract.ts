@@ -19,6 +19,6 @@ export interface IRecordType {
 }
 
 export interface IRegistryClient {
-    getRecordTypes: () => IRecordType[]
-    queryRecords: (query?: IQuery) => IRecord[];
+    getRecordTypes: () => Promise<IRecordType[]>
+    queryRecords: (query?: IQuery) => Promise<IRecord[]>;
 }
