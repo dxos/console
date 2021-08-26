@@ -6,9 +6,10 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import keyring from '@polkadot/ui-keyring';
-import PropTypes from 'prop-types';
-import React, { useReducer, useContext } from 'react';
+import { useReducer } from 'react';
+import { IConfig } from '../hooks';
 
+import { Config } from '@dxos/config';
 import { definitions } from '@dxos/registry-api';
 
 import { IQuery, IRecord, IRecordType, IRegistryClient } from './contract';
@@ -41,7 +42,7 @@ const INIT_STATE: SubstrateState = {
 
 // Reducer function for `useReducer`.
 
-const reducer = (state, action) => {
+const reducer = (state: SubstrateState, action): SubstrateState => {
   switch (action.type) {
     case 'CONFIG_INIT':
       return { ...state, apiState: 'CONFIG_INIT', config: action.payload, socket: action.payload.services.dxns.server, types: action.payload.types };
@@ -74,7 +75,7 @@ const reducer = (state, action) => {
 
 // Connecting to the Substrate node.
 
-const connect = (state, dispatch) => {
+const connect = (state: SubstrateState, dispatch): void => {
   const { connectionAttempted, socket, jsonrpc, types } = state;
 
   if (!socket) {
@@ -106,11 +107,12 @@ const connect = (state, dispatch) => {
 // Loading accounts from dev and polkadot-js extension.
 
 let loadAccts = false;
-const loadAccounts = (state, dispatch) => {
+const loadAccounts = (state: SubstrateState, dispatch): void => {
   const { config } = state;
   if (!config) {
     return;
   }
+
   const asyncLoadAccounts = async () => {
     dispatch({ type: 'LOAD_KEYRING' });
     try {
@@ -131,6 +133,7 @@ const loadAccounts = (state, dispatch) => {
   if (keyringState) {
     return;
   }
+
   // If `loadAccts` is true, the `asyncLoadAccounts` has been run once.
   if (loadAccts) {
     return dispatch({ type: 'SET_KEYRING', payload: keyring });
@@ -141,7 +144,7 @@ const loadAccounts = (state, dispatch) => {
   asyncLoadAccounts();
 };
 
-const setConfig = (state, dispatch, conf) => {
+const setConfig = (state: SubstrateState, dispatch, conf) => {
   const { config } = state;
   if (config) {
     return;
@@ -151,13 +154,13 @@ const setConfig = (state, dispatch, conf) => {
 };
 
 export class RegistryClient implements IRegistryClient {
-  constructor ({ socket, types } : {socket?: string, types?: object}) {
+  constructor (config: IConfig, substrateConfig: Config) {
     const initState: SubstrateState = { ...INIT_STATE };
-    initState.socket = socket || initState.socket;
-    initState.types = types || initState.types;
+    initState.socket = ('socket' in substrateConfig) || initState.socket;
+    initState.types = ('types' in substrateConfig) || initState.types;
     const [state, dispatch] = useReducer(reducer, initState);
 
-    setConfig(state, dispatch, props.config);
+    setConfig(state, dispatch, config);
     connect(state, dispatch);
   }
 

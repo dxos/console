@@ -34,6 +34,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "@dxos/config": "~2.10.2",
     "@dxos/gem-experimental": "^1.0.0-beta.33",
     "@dxos/react-ux": "2.10.10",
     "@dxos/wallet-core": "2.10.12",
