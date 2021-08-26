@@ -2,6 +2,6 @@
 // Copyright 2020 DXOS.org
 //
 
-export * from './App';
-export * from './ConfigPanel';
-export * from './RecordPanel';
+export * from './Container';
+export * from './Root';
+export * from './Sidebar';
