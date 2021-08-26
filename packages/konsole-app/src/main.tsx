@@ -13,10 +13,12 @@ import {
   useParams
 } from 'react-router-dom';
 
+import { Config } from '@dxos/config';
+
 import { Container, Root, Sidebar } from './containers';
 import { ConfigContext, IConfig, RegistryContext } from './hooks';
 import { panels } from './panels';
-import { MockRegistryClient } from './testing';
+import { RegistryClient } from './registry/RegistryClient';
 
 // TODO(burdon): Load from environment.
 const config: IConfig = {
@@ -55,10 +57,10 @@ const App = () => {
   )
 };
 
-const start = (config: IConfig) => {
+const start = (config: IConfig, substrateConfig: Config) => {
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={new MockRegistryClient()}>
+      <RegistryContext.Provider value={new RegistryClient(config, substrateConfig)}>
         <Router>
           <Switch>
             <Route path='/:panel'>
@@ -72,4 +74,4 @@ const start = (config: IConfig) => {
   ), document.getElementById('root'));
 };
 
-start(config);
+start(config, {} as any);

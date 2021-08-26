@@ -7,7 +7,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { DataGrid, GridColDef, GridCellParams } from '@material-ui/data-grid';
 
-import { IRecord } from '../hooks';
+import { IRecord } from '../registry';
 
 interface RecordsTableProperties {
   records: IRecord[]

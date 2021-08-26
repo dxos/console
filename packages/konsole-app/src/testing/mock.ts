@@ -5,7 +5,7 @@
 // TODO(burdon): v5 clashes with HtmlWebpackPlugin (Error: [CaseSensitivePathsPlugin])
 import faker from 'faker';
 
-import { IRegistryClient, IQuery } from '../hooks';
+import { IQuery, IRegistryClient } from '../registry';
 
 export const mockRecordTypes = [
   {
