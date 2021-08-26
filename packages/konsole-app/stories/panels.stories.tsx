@@ -4,17 +4,31 @@
 
 import React from 'react';
 
-import { IConfig, RecordPanel, ConfigContext, RegistryContext } from '../src';
+import { IConfig, RecordPanel, ConfigPanel, ConfigContext, RegistryContext } from '../src';
 import { MockRegistryClient } from '../src/testing';
 
 // TODO(burdon): Module not found: Error: [CaseSensitivePathsPlugin]
 // https://github.com/storybookjs/storybook/issues/7704
 
 export default {
-  title: 'App'
+  title: 'Panels'
 };
 
-export const Primary = () => {
+export const Config = () => {
+  const config: IConfig = {
+    app: {
+      name: 'Test'
+    }
+  };
+
+  return (
+    <ConfigContext.Provider value={config}>
+      <ConfigPanel />
+    </ConfigContext.Provider>
+  );
+};
+
+export const Records = () => {
   const config: IConfig = {
     app: {
       name: 'Test'
