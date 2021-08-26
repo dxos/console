@@ -6,7 +6,7 @@ import React from 'react';
 
 import { DataGrid } from '@material-ui/data-grid';
 
-import { IRecord } from '../hooks';
+import { IRecord } from '../registry';
 
 interface RecordsTableProperties {
   records: IRecord[]

@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 
 import { App, Root } from './components';
 import { ConfigContext, IConfig, RegistryContext } from './hooks';
-import { MockRegistryClient } from './testing';
+import { RegistryClient } from './registry/RegistryClient';
 
 // TODO(burdon): Load from environment.
 const config: IConfig = {
@@ -20,7 +20,7 @@ const config: IConfig = {
 const start = (config: IConfig) => {
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={new MockRegistryClient()}>
+      <RegistryContext.Provider value={new RegistryClient()}>
         <Root>
           <App />
         </Root>
