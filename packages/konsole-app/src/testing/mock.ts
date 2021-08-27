@@ -46,7 +46,7 @@ const createMockRecord = () => {
   return {
     cid: faker.random.uuid(),
     type,
-    created: faker.date.recent(30).toUTCString(),
+    created: faker.date.recent(90).toUTCString(),
     name: `dxn:/${faker.internet.domainWord()}/${faker.internet.domainWord()}`,
     title: faker.commerce.productName(),
     url: type === 'app' ? faker.internet.url() : undefined

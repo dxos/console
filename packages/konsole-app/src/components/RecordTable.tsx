@@ -27,6 +27,8 @@ const useStyles = makeStyles(theme => ({
 
 // TODO(burdon): Common fields for all records.
 // TODO(burdon): Different record type views may have different column sets.
+// TODO(burdon): Upgrade to XGrid to have resizable columns.
+//   https://material-ui.com/components/data-grid/#mit-vs-commercial
 // https://material-ui.com/components/data-grid/columns
 const columns: GridColDef[] = [
   {
@@ -41,7 +43,7 @@ const columns: GridColDef[] = [
   {
     field: 'created',
     headerName: 'Created',
-    width: 200,
+    width: 140,
     valueFormatter: (params) => {
       return getRelativeTime(new Date(params.value as string));
     },
@@ -51,17 +53,19 @@ const columns: GridColDef[] = [
   {
     field: 'type',
     headerName: 'Type',
-    width: 120
+    width: 120,
+    cellClassName: (params: GridCellParams) => 'mono'
   },
   {
     field: 'name',
     headerName: 'Name',
-    width: 300
+    minWidth: 300,
+    cellClassName: (params: GridCellParams) => 'mono'
   },
   {
     field: 'title',
     headerName: 'Display Name',
-    width: 300,
+    minWidth: 300,
   },
   {
     field: 'url',
