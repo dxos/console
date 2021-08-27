@@ -4,26 +4,38 @@
 
 import React from 'react';
 
-import { DataGrid } from '@material-ui/data-grid';
+import { makeStyles } from '@material-ui/core';
+import { DataGrid, GridColDef, GridCellParams } from '@material-ui/data-grid';
 
 import { IRecord } from '../registry';
 
 interface RecordsTableProperties {
   records: IRecord[]
 }
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& .mono': {
+      fontFamily: 'monospace'
+    }
+  }
+}));
 
 // TODO(burdon): Common fields for all records.
 // TODO(burdon): Different record type views may have different column sets.
-const columns = [
+// https://material-ui.com/components/data-grid/columns/
+const columns: GridColDef[] = [
   {
     field: 'cid',
     headerName: 'CID',
-    width: 300
-  },
-  {
-    field: 'name',
-    headerName: 'Name',
-    width: 300
+    width: 120,
+    cellClassName: (params: GridCellParams) => 'mono',
+    valueFormatter: (params) => {
+      return (params.value as string).slice(0, 8) + '...';
+    },
+    // https://material-ui.com/components/data-grid/style/#styling-cells
+    // renderCell: (params: GridCellParams) => (
+    //   <div>{params.value}</div>
+    // )
   },
   {
     field: 'type',
@@ -31,8 +43,13 @@ const columns = [
     width: 120
   },
   {
+    field: 'name',
+    headerName: 'Name',
+    width: 300
+  },
+  {
     field: 'title',
-    headerName: 'Title',
+    headerName: 'Display Name',
     width: 300
   }
 ];
@@ -42,10 +59,13 @@ const columns = [
  * @constructor
  */
 export const RecordTable = ({ records }: RecordsTableProperties) => {
+  const classes = useStyles();
+
   // https://material-ui.com/components/data-grid/#mit-version
   return (
     <div style={{ height: 58 + 52 * (8 + 1), width: '100%' }}>
       <DataGrid
+        className={classes.root}
         rows={records}
         columns={columns}
         getRowId={({ cid }) => cid}
