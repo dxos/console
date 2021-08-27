@@ -9,101 +9,34 @@ import { ChainApi, definitions } from '@dxos/registry-api';
 
 import { IQuery, IRecord, IRecordType, IRegistryClient } from './contract';
 
-interface ClientState {
-  endpoint: string,
-  jsonrpc: any,
-  types: any,
-  api: null | ChainApi,
-  apiError: null | string,
-  apiState: null | string,
-  connectionAttempted: boolean,
-}
-
-const INIT_STATE: ClientState = {
-  endpoint: '',
-  jsonrpc: { ...jsonrpc },
-  types: null,
-  api: null,
-  apiError: null,
-  apiState: null,
-  connectionAttempted: false
-};
-
-type Action =
-  | { type: 'CONNECT_INIT' }
-  | { type: 'CONNECT', api: ApiPromise }
-  | { type: 'CONNECT_SUCCESS'}
-  | { type: 'CONNECT_ERROR', error: any }
-
-const reducer = (state: ClientState, action: Action): ClientState => {
-  console.log('ACTION: ' + action.type);
-  switch (action.type) {
-    case 'CONNECT_INIT':
-      return { ...state, apiState: 'connecting', connectionAttempted: true };
-
-    case 'CONNECT':
-      return { ...state, api: new ChainApi(action.api, undefined), apiState: 'connecting' };
-
-    case 'CONNECT_SUCCESS':
-      return { ...state, apiState: 'ready' };
-
-    case 'CONNECT_ERROR':
-      return { ...state, apiState: 'error', apiError: action.error };
-  }
-};
-
-const connect = (state: ClientState, dispatch: (action: Action) => void) => {
-  const { connectionAttempted, endpoint, jsonrpc, types } = state;
-
-  // TODO(marcin): can't just return without note for user
-  if (!endpoint) {
-    return;
-  }
-
-  // We only want this function to be performed once.
-  if (connectionAttempted) {
-    return;
-  }
-
-  dispatch({ type: 'CONNECT_INIT' });
-
-  const typesWithDefinitions = Object.values(definitions).reduce((res, { types }) => ({ ...res, ...types }), types);
-
-  const provider = new WsProvider(endpoint);
-  const apiPromise = new ApiPromise({ provider, types: typesWithDefinitions, rpc: jsonrpc });
-
-  // Set listeners for disconnection and reconnection event.
-  apiPromise.on('connected', () => {
-    dispatch({ type: 'CONNECT', api: apiPromise });
-    // `ready` event is not emitted upon reconnection and is checked explicitly here.
-    apiPromise.isReady.then(() => dispatch({ type: 'CONNECT_SUCCESS' }));
-  });
-  apiPromise.on('ready', () => {
-    dispatch({ type: 'CONNECT_SUCCESS' });
-  });
-  apiPromise.on('error', err => dispatch({ type: 'CONNECT_ERROR', error: err }));
-};
-
 export class RegistryClient implements IRegistryClient {
-  state: ClientState;
+  _endpoint: string;
+  api: ChainApi | undefined;
+  ready = false;
 
   constructor ({ endpoint, types } : {endpoint: string, types?: object}) {
-    this.state = { ...INIT_STATE, endpoint, types };
-
-    // TODO(marcin) How to communicate state transition to end users in order to start querying only when state = ready
-
-    connect(this.state, this.useReducer());
+    this._endpoint = endpoint;
+    this.connect();
   }
 
-  useReducer () : (action: Action) => void {
-    const dispatch = (action: Action) => {
-      this.state = reducer(this.state, action);
-    };
-    return dispatch;
+  async connect () {
+    const types = Object.values(definitions).reduce((res, { types }): object => ({ ...res, ...types }), {});
+
+    const provider = new WsProvider(this._endpoint);
+    const apiPromise = new ApiPromise({ provider, types, rpc: jsonrpc });
+
+    return new Promise<void>((resolve, reject) => {
+      apiPromise.on('ready', () => {
+        this.ready = true;
+        this.api = new ChainApi(apiPromise, undefined);
+        resolve();
+      });
+      apiPromise.on('error', reject);
+    });
   }
 
   async getRecordTypes (): Promise<IRecordType[]> {
-    const records = await this.state.api?.registry.getResources() ?? [];
+    const records = await this.api?.registry.getResources() ?? [];
     return records.map(apiRecord => ({
       type: apiRecord.messageFqn,
       label: apiRecord.messageFqn
@@ -111,7 +44,7 @@ export class RegistryClient implements IRegistryClient {
   }
 
   async queryRecords (query: IQuery | undefined): Promise<IRecord[]> {
-    let records = (await this.state.api?.registry.getResources()) ?? [];
+    let records = (await this.api?.registry.getResources()) ?? [];
 
     if (query) {
       records = records.filter(r => r.messageFqn === query.type);
