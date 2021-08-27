@@ -7,7 +7,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { makeStyles, Paper, Toolbar, Typography } from '@material-ui/core';
 
 import { RecordTable, RecordTypeSelector } from '../components';
-import { useRecordTypes, useRecords } from '../hooks';
+import { useRecordTypes, useRecords, useRegistryClient } from '../hooks';
+import { IRecord, IRecordType } from '../registry';
 
 const useStyles = makeStyles(theme => ({
   panel: {
@@ -24,13 +25,24 @@ const useStyles = makeStyles(theme => ({
  */
 export const RecordPanel = () => {
   const classes = useStyles();
-  const recordTypes = useRecordTypes();
-  const [recordType, setRecordType] = useState<string>(recordTypes.length > 0 ? recordTypes[0].type : '');
+  const registryClient = useRegistryClient();
+  const [recordType, setRecordType] = useState<string>('');
+  const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
+  const [records, setRecords] = useState<IRecord[]>([]);
+
   useEffect(() => {
-    console.log('record types: ' + recordTypes.map(x => (x.type)));
-    setRecordType(recordTypes.length > 0 ? recordTypes[0].type : '');
+    const fetchRecordTypes = async () => {
+      setRecordTypes(await registryClient.getRecordTypes());
+    };
+    setTimeout(() => fetchRecordTypes(), 2000);
+  }, [(registryClient as any).state]);
+
+  useEffect(() => {
+    const fetchRecords = async () => {
+      setRecords(await registryClient.queryRecords());
+    };
+    fetchRecords();
   }, [recordTypes]);
-  const records = [] as any;// useRecords(undefined);
 
   return (
     <Paper>

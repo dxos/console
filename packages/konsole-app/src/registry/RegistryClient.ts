@@ -15,8 +15,8 @@ interface ClientState {
   types: any,
   api: null | ChainApi,
   apiError: null | string,
-  apiState: null | string
-  connectionAttempted: boolean
+  apiState: null | string,
+  connectionAttempted: boolean,
 }
 
 const INIT_STATE: ClientState = {
@@ -78,7 +78,9 @@ const connect = (state: ClientState, dispatch: (action: Action) => void) => {
     // `ready` event is not emitted upon reconnection and is checked explicitly here.
     apiPromise.isReady.then(() => dispatch({ type: 'CONNECT_SUCCESS' }));
   });
-  apiPromise.on('ready', () => dispatch({ type: 'CONNECT_SUCCESS' }));
+  apiPromise.on('ready', () => {
+    dispatch({ type: 'CONNECT_SUCCESS' });
+  });
   apiPromise.on('error', err => dispatch({ type: 'CONNECT_ERROR', error: err }));
 };
 
@@ -101,15 +103,15 @@ export class RegistryClient implements IRegistryClient {
   }
 
   async getRecordTypes (): Promise<IRecordType[]> {
-    const records = await this.state.api?.registry.getRecords() ?? [];
+    const records = await this.state.api?.registry.getResources() ?? [];
     return records.map(apiRecord => ({
       type: apiRecord.messageFqn,
       label: apiRecord.messageFqn
-    }));
+    })).slice(0, 1); // TODO (marcin) -> get unique values
   }
 
   async queryRecords (query: IQuery | undefined): Promise<IRecord[]> {
-    let records = (await this.state.api?.registry.getRecords()) ?? [];
+    let records = (await this.state.api?.registry.getResources()) ?? [];
 
     if (query) {
       records = records.filter(r => r.messageFqn === query.type);
@@ -117,9 +119,9 @@ export class RegistryClient implements IRegistryClient {
 
     return records.map(apiRecord => ({
       cid: apiRecord.cid.toB58String(),
-      name: apiRecord.cid.toB58String(),
+      name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
       type: apiRecord.messageFqn,
-      title: apiRecord.cid.toB58String()
+      title: apiRecord.data?.attributes?.name
     }));
   }
 }
