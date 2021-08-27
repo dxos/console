@@ -18,6 +18,9 @@ export const Primary = () => {
   const config: IConfig = {
     app: {
       name: 'Test',
+      theme: "light"
+    },
+    registry: {
       endpoint: ''
     }
   };

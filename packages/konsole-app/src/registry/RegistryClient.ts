@@ -9,6 +9,7 @@ import { ChainApi, definitions } from '@dxos/registry-api';
 
 import { IQuery, IRecord, IRecordType, IRegistryClient } from './contract';
 
+// TODO(marcin): This brings little value but mere ApiPromise creation which is to be moved to RegistryApi. And rm this.
 export class RegistryClient implements IRegistryClient {
   _endpoint: string;
   api: ChainApi | undefined;
@@ -40,7 +41,7 @@ export class RegistryClient implements IRegistryClient {
     return records.map(apiRecord => ({
       type: apiRecord.messageFqn,
       label: apiRecord.messageFqn
-    })).slice(0, 1); // TODO (marcin) -> get unique values
+    })).slice(0, 1); // TODO(marcin): Get unique values instead of taking the first element.
   }
 
   async queryRecords (query: IQuery | undefined): Promise<IRecord[]> {

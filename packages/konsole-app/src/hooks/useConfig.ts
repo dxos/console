@@ -8,6 +8,8 @@ export interface IConfig {
   app: {
     name: string
     theme?: 'light' | 'dark' | undefined
+  },
+  registry: {
     endpoint: string
   }
 }

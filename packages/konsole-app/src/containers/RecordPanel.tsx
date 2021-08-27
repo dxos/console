@@ -7,8 +7,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { makeStyles, Paper, Toolbar, Typography } from '@material-ui/core';
 
 import { RecordTable, RecordTypeSelector } from '../components';
-import { useRecordTypes, useRecords, useRegistryClient } from '../hooks';
+import { useRegistryClient } from '../hooks';
 import { IRecord, IRecordType } from '../registry';
+import {RegistryClient} from "../registry/RegistryClient";
 
 const useStyles = makeStyles(theme => ({
   panel: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme => ({
  */
 export const RecordPanel = () => {
   const classes = useStyles();
-  const registryClient = useRegistryClient();
+  const registryClient = useRegistryClient() as RegistryClient;
   const [recordType, setRecordType] = useState<string>('');
   const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
   const [records, setRecords] = useState<IRecord[]>([]);
@@ -34,13 +35,13 @@ export const RecordPanel = () => {
     const fetchRecordTypes = async () => {
       setRecordTypes(await registryClient.getRecordTypes());
     };
-    // TODO(marcin): Create subscription to registry client being ready.
+    // TODO(marcin): Create subscription to registry client being ready instead of retrying till it succeeds.
     setTimeout(() => fetchRecordTypes(), 2000);
   }, [(registryClient as any).state]);
 
   useEffect(() => {
     const fetchRecords = async () => {
-      setRecords(await registryClient.queryRecords());
+      setRecords(await registryClient.queryRecords(undefined));
     };
     fetchRecords();
   }, [recordTypes]);

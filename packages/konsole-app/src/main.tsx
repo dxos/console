@@ -13,7 +13,9 @@ import { RegistryClient } from './registry/RegistryClient';
 const config: IConfig = {
   app: {
     name: 'Konsole',
-    theme: 'dark',
+    theme: 'dark'
+  },
+  registry: {
     endpoint: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
   }
 };
@@ -21,7 +23,7 @@ const config: IConfig = {
 const start = (config: IConfig) => {
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={new RegistryClient({ endpoint: config.app.endpoint })}>
+      <RegistryContext.Provider value={new RegistryClient({ endpoint: config.registry.endpoint })}>
         <Root>
           <App />
         </Root>
