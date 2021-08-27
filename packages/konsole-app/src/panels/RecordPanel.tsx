@@ -4,22 +4,18 @@
 
 import React, { useState } from 'react';
 
-import { makeStyles, Paper, Toolbar, Typography } from '@material-ui/core';
+import { makeStyles, IconButton, Toolbar } from '@material-ui/core';
+import { Sync as RefreshIcon } from '@material-ui/icons';
 
 import { RecordTable, RecordTypeSelector } from '../components';
 import { useRecordTypes, useRecords } from '../hooks';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1
-  },
+const useStyles = makeStyles(() => ({
   panel: {
     display: 'flex',
     flex: 1
   },
-  spacer: {
+  expand: {
     flex: 1
   }
 }));
@@ -32,18 +28,24 @@ export const RecordPanel = () => {
   const classes = useStyles();
   const recordTypes = useRecordTypes();
   const [recordType, setRecordType] = useState<string>(recordTypes[0].type);
-  const records = useRecords({ type: recordType });
+  const [records, refreshRecords] = useRecords({ type: recordType });
 
   return (
-    <Paper className={classes.root}>
+    <>
       <Toolbar variant='dense'>
-        <Typography>Records</Typography>
-        <div className={classes.spacer} />
-        <RecordTypeSelector types={recordTypes} type={recordType} onTypeChange={type => setRecordType(type)} />
+        <RecordTypeSelector
+          types={recordTypes}
+          type={recordType}
+          onTypeChange={type => setRecordType(type)}
+        />
+        <div className={classes.expand} />
+        <IconButton size='small' onClick={refreshRecords} >
+          <RefreshIcon />
+        </IconButton>
       </Toolbar>
       <div className={classes.panel}>
         <RecordTable records={records} />
       </div>
-    </Paper>
+    </>
   );
 };

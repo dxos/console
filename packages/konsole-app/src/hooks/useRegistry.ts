@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 export interface IRecordType {
   type: string
@@ -12,9 +12,11 @@ export interface IRecordType {
 // TODO(burdon): Protocol buffer definition?
 export interface IRecord {
   cid: string
-  name: string
   type: string
+  created: string
+  name: string
   title: string
+  url?: string
 }
 
 export interface IQuery {
@@ -23,7 +25,7 @@ export interface IQuery {
 
 export interface IRegistryClient {
   getRecordTypes: () => IRecordType[]
-  queryRecords: (query?: IQuery) => IRecord[];
+  queryRecords: (query?: IQuery) => IRecord[]
 }
 
 export const RegistryContext = createContext<IRegistryClient | undefined>(undefined);
@@ -37,7 +39,16 @@ export const useRecordTypes = (): IRecordType[] => {
   return registryClient.getRecordTypes();
 };
 
-export const useRecords = (query?: IQuery): IRecord[] => {
+export const useRecords = (query?: IQuery): [IRecord[], () => void] => {
   const registryClient = useRegistry();
-  return registryClient.queryRecords(query);
+  const [records, setRecords] = useState<IRecord[]>([]);
+
+  useEffect(() => {
+    setRecords(registryClient.queryRecords(query));
+  }, [JSON.stringify(query)]); // Otherwise inf. loop.
+
+  return [
+    records,
+    () => setRecords(registryClient.queryRecords(query)) // Refresh.
+  ];
 };

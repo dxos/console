@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import { makeStyles, Paper, Toolbar, Typography } from '@material-ui/core';
+import { makeStyles, Divider, Toolbar } from '@material-ui/core';
 
 import { useConfig } from '../hooks';
 
@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
   },
   panel: {
     margin: theme.spacing(1)
+  },
+  expand: {
+    flex: 1
   }
 }));
 
@@ -27,15 +30,16 @@ export const ConfigPanel = () => {
   const config = useConfig();
 
   return (
-    <Paper>
+    <>
       <Toolbar variant='dense'>
-        <Typography>Config</Typography>
+        <div className={classes.expand} />
       </Toolbar>
+      <Divider />
       <div className={classes.panel}>
         <pre className={classes.pre}>
           {JSON.stringify(config, undefined, 2)}
         </pre>
       </div>
-    </Paper>
+    </>
   );
 };

@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import React, { useState } from 'react';
 
 import {
-  makeStyles, AppBar, Divider, Drawer, IconButton, Toolbar, Typography
+  makeStyles, AppBar, Divider, Drawer, IconButton, Paper, Toolbar, Typography
 } from '@material-ui/core';
 import {
   Menu as MenuIcon,
@@ -72,6 +72,12 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0
   },
+  contentPaper: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
+    margin: theme.spacing(1)
+  },
   hide: {
     display: 'none'
   }
@@ -136,7 +142,9 @@ export const Container = ({ children, sidebar }: ContainerProperties) => {
         className={clsx(classes.content, { [classes.contentShift]: open })}
       >
         <div className={classes.contentHeader} />
-        {children}
+        <Paper className={classes.contentPaper}>
+          {children}
+        </Paper>
       </main>
     </div>
   );

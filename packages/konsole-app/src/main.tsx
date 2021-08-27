@@ -29,9 +29,10 @@ const config: IConfig = {
   }
 };
 
-const createCustomTheme = (theme: 'light' | 'dark' | undefined) => createTheme({
+// TODO(burdon): Factor out.
+const createCustomTheme = (config: IConfig) => createTheme({
   palette: {
-    type: theme
+    type: config.app.theme
   },
   props: {
     MuiAppBar: {
@@ -44,6 +45,10 @@ const createCustomTheme = (theme: 'light' | 'dark' | undefined) => createTheme({
   },
 });
 
+/**
+ * Main app container.
+ * @constructor
+ */
 const Main = () => {
   const history = useHistory();
   const { panel }: { panel: string } = useParams();
@@ -71,11 +76,15 @@ const Main = () => {
   )
 };
 
+/**
+ * React app bootstrap (providers and top-level routes).
+ * @param config
+ */
 const start = (config: IConfig) => {
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={new MockRegistryClient()}>
-        <MuiThemeProvider theme={createCustomTheme(config.app.theme)}>
+        <MuiThemeProvider theme={createCustomTheme(config)}>
           <CssBaseline />
           <Router>
             <Switch>
