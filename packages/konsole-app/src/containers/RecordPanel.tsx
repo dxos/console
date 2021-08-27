@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { makeStyles, Paper, Toolbar, Typography } from '@material-ui/core';
 
@@ -26,7 +26,11 @@ export const RecordPanel = () => {
   const classes = useStyles();
   const recordTypes = useRecordTypes();
   const [recordType, setRecordType] = useState<string>(recordTypes.length > 0 ? recordTypes[0].type : '');
-  const records = recordType !== '' ? useRecords({ type: recordType }) : [];
+  useEffect(() => {
+    console.log('record types: ' + recordTypes.map(x => (x.type)));
+    setRecordType(recordTypes.length > 0 ? recordTypes[0].type : '');
+  }, [recordTypes]);
+  const records = [] as any;// useRecords(undefined);
 
   return (
     <Paper>

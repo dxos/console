@@ -36,6 +36,7 @@ type Action =
   | { type: 'CONNECT_ERROR', error: any }
 
 const reducer = (state: ClientState, action: Action): ClientState => {
+  console.log('ACTION: ' + action.type);
   switch (action.type) {
     case 'CONNECT_INIT':
       return { ...state, apiState: 'connecting', connectionAttempted: true };
@@ -82,7 +83,7 @@ const connect = (state: ClientState, dispatch: (action: Action) => void) => {
 };
 
 export class RegistryClient implements IRegistryClient {
-  private state: ClientState;
+  state: ClientState;
 
   constructor ({ endpoint, types } : {endpoint: string, types?: object}) {
     this.state = { ...INIT_STATE, endpoint, types };

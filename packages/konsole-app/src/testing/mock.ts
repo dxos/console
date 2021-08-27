@@ -37,7 +37,7 @@ export const mockRecords = Array.from({ length: 20 }).map(() => ({
 
 export class MockRegistryClient implements IRegistryClient {
   getRecordTypes () : Promise<IRecordType[]> {
-    return new Promise(() => (mockRecordTypes));
+    return new Promise((resolve) => resolve(mockRecordTypes));
   }
 
   queryRecords (query?: IQuery) : Promise<IRecord[]> {
@@ -49,6 +49,6 @@ export class MockRegistryClient implements IRegistryClient {
         return recordType.type === type;
       }
     });
-    return new Promise(() => result);
+    return new Promise((resolve) => resolve(result));
   }
 }
