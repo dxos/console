@@ -1,10 +1,15 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 const path = require('path');
 const HtmlWebPackPlugin = require( 'html-webpack-plugin' );
 const isDevelopment = process.env.NODE_ENV !== 'production';
+const VersionFile = require('webpack-version-file-plugin');
+const { ConfigPlugin } = require('@dxos/config/ConfigPlugin');
+
+const distDir = path.join(__dirname, 'dist');
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 module.exports = {
   entry: './src/main.tsx',
@@ -33,15 +38,29 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
+  node: {
+    fs: 'empty'
+  },
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
+    path: distDir,
+    filename: '[name].bundle.js',
+    publicPath: PUBLIC_URL
   },
   plugins: [
+    new ConfigPlugin({
+      path: path.resolve(__dirname, 'config'),
+      dynamic: process.env.CONFIG_DYNAMIC
+    }),
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
       filename: 'index.html',
       title: 'Konsole' // TODO(burdon): From config.
+    }),
+    // https://www.npmjs.com/package/webpack-version-file-plugin
+    new VersionFile({
+      template: path.join(__dirname, 'version.ejs'),
+      packageFile: path.join(__dirname, 'package.json'),
+      outputFile: path.join(distDir, 'version.json')
     })
   ]
 };

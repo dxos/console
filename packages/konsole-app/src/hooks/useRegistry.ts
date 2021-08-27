@@ -4,27 +4,7 @@
 
 import { createContext, useContext } from 'react';
 
-export interface IRecordType {
-  type: string
-  label: string
-}
-
-// TODO(burdon): Protocol buffer definition?
-export interface IRecord {
-  cid: string
-  name: string
-  type: string
-  title: string
-}
-
-export interface IQuery {
-  type?: string
-}
-
-export interface IRegistryClient {
-  getRecordTypes: () => IRecordType[]
-  queryRecords: (query?: IQuery) => IRecord[];
-}
+import { IQuery, IRecord, IRecordType, IRegistryClient } from '../registry';
 
 export const RegistryContext = createContext<IRegistryClient | undefined>(undefined);
 

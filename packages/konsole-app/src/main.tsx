@@ -13,18 +13,10 @@ import {
   useParams
 } from 'react-router-dom';
 
+import { loadConfig, ConfigContext, IConfig, RegistryContext } from './hooks';
+import { RegistryClient } from './registry/RegistryClient';
 import { Container, Root, Sidebar } from './containers';
-import { ConfigContext, IConfig, RegistryContext } from './hooks';
 import { panels } from './panels';
-import { MockRegistryClient } from './testing';
-
-// TODO(burdon): Load from environment.
-const config: IConfig = {
-  app: {
-    name: 'Konsole',
-    theme: 'dark'
-  }
-};
 
 const App = () => {
   const history = useHistory();
@@ -58,7 +50,7 @@ const App = () => {
 const start = (config: IConfig) => {
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={new MockRegistryClient()}>
+      <RegistryContext.Provider value={new RegistryClient(config)}>
         <Router>
           <Switch>
             <Route path='/:panel'>
@@ -72,4 +64,4 @@ const start = (config: IConfig) => {
   ), document.getElementById('root'));
 };
 
-start(config);
+loadConfig().then(start);

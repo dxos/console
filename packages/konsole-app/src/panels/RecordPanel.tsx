@@ -25,8 +25,8 @@ const useStyles = makeStyles(theme => ({
 export const RecordPanel = () => {
   const classes = useStyles();
   const recordTypes = useRecordTypes();
-  const [recordType, setRecordType] = useState<string>(recordTypes[0].type);
-  const records = useRecords({ type: recordType });
+  const [recordType, setRecordType] = useState<string>(recordTypes.length > 0 ? recordTypes[0].type : '');
+  const records = recordType !== '' ? useRecords({ type: recordType }) : [];
 
   return (
     <Paper>

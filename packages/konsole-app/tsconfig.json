@@ -2,12 +2,15 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
+    "strict": false,
+    "resolveJsonModule": true,
     "jsx": "react",
     "lib": [
       "DOM",
       "es2019"
     ]
   },
+  "files": ["dist/version.json"],
   "include": [
     "src",
     "stories"
