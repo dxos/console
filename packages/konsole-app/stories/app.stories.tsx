@@ -17,7 +17,8 @@ export default {
 export const Primary = () => {
   const config: IConfig = {
     app: {
-      name: 'Test'
+      name: 'Test',
+      endpoint: ''
     }
   };
 
