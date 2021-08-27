@@ -13,24 +13,21 @@ export const useRegistryClient = (): IRegistryClient => {
 };
 
 export const useRecordTypes = (): IRecordType[] => {
-  const registryClient = useRegistryClient();
+  const registryClient = useRegistryClient() as any;
+
   const [data, setData] = useState<IRecordType[]>([]);
 
   useEffect(() => {
-    if ((registryClient as any).state.apiState !== 'ready') {
-      console.log('non-ready');
+    if (!registryClient.ready) {
       return;
     }
 
-    console.log('ready');
     const fetchRecordTypes = async () => {
       setData(await registryClient.getRecordTypes());
+      console.log('fetched types' + data.length);
     };
     fetchRecordTypes();
-    console.log('fetched types' + data.length);
-  }, [(registryClient as any).state.apiState]);
-
-  console.log('returning types' + data.length);
+  }, [registryClient.ready]);
   return data;
 };
 
@@ -41,7 +38,7 @@ export const useRecords = (query?: IQuery): IRecord[] => {
   useEffect(() => {
     console.log('query type: ' + query?.type);
     const fetchRecords = async () => {
-      setData(await registryClient.queryRecords(query));
+      setData(await registryClient!.queryRecords(query));
     };
     fetchRecords();
     console.log('fetched records' + data.length);
