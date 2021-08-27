@@ -158,10 +158,10 @@ export class RegistryClient implements IRegistryClient {
     const initState: SubstrateState = { ...INIT_STATE };
     initState.socket = ('socket' in substrateConfig) || initState.socket;
     initState.types = ('types' in substrateConfig) || initState.types;
-    const [state, dispatch] = useReducer(reducer, initState);
+    // const [state, dispatch] = useReducer(reducer, initState);
 
-    setConfig(state, dispatch, config);
-    connect(state, dispatch);
+    // setConfig(state, dispatch, config);
+    // connect(state, dispatch);
   }
 
   getRecordTypes (): IRecordType[] {
