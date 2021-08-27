@@ -4,8 +4,6 @@
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
-// TODO(marcin) -> can we avoid React -> then RegistryClient wrapper is general purpose and stack agnostic
-import { useReducer } from 'react';
 
 import { ChainApi, definitions } from '@dxos/registry-api';
 
@@ -87,12 +85,18 @@ export class RegistryClient implements IRegistryClient {
   private state: ClientState;
 
   constructor ({ endpoint, types } : {endpoint: string, types?: object}) {
-    const initialState: ClientState = { ...INIT_STATE, endpoint, types };
-    const [state, dispatch] = useReducer(reducer, initialState);
-    this.state = state;
+    this.state = { ...INIT_STATE, endpoint, types };
+
     // TODO(marcin) How to communicate state transition to end users in order to start querying only when state = ready
 
-    connect(state, dispatch);
+    connect(this.state, this.useReducer());
+  }
+
+  useReducer () : (action: Action) => void {
+    const dispatch = (action: Action) => {
+      this.state = reducer(this.state, action);
+    };
+    return dispatch;
   }
 
   async getRecordTypes (): Promise<IRecordType[]> {
