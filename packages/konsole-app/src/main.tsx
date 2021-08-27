@@ -13,7 +13,10 @@ import {
   useParams
 } from 'react-router-dom';
 
-import { Container, Root, Sidebar } from './containers';
+import { CssBaseline } from '@material-ui/core';
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+
+import { Container, Sidebar } from './containers';
 import { ConfigContext, IConfig, RegistryContext } from './hooks';
 import { panels } from './panels';
 import { MockRegistryClient } from './testing';
@@ -26,32 +29,45 @@ const config: IConfig = {
   }
 };
 
-const App = () => {
+const createCustomTheme = (theme: 'light' | 'dark' | undefined) => createTheme({
+  palette: {
+    type: theme
+  },
+  props: {
+    MuiAppBar: {
+      elevation: 0
+    },
+
+    MuiButtonBase: {
+      disableRipple: true
+    }
+  },
+});
+
+const Main = () => {
   const history = useHistory();
   const { panel }: { panel: string } = useParams();
 
   return (
-    <Root>
-      <Container
-        sidebar={
-          <Sidebar
-            panels={panels}
-            selected={`/${panel}`}
-            onSelect={path => history.push(path)}
+    <Container
+      sidebar={
+        <Sidebar
+          panels={panels}
+          selected={`/${panel}`}
+          onSelect={path => history.push(path)}
+        />
+      }
+    >
+      <>
+        {panels.map(({ path, component }) => (
+          <Route
+            key={path}
+            path={path}
+            component={component}
           />
-        }
-      >
-        <>
-          {panels.map(({ path, component }) => (
-            <Route
-              key={path}
-              path={path}
-              component={component}
-            />
-          ))}
-        </>
-      </Container>
-    </Root>
+        ))}
+      </>
+    </Container>
   )
 };
 
@@ -59,14 +75,17 @@ const start = (config: IConfig) => {
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={new MockRegistryClient()}>
-        <Router>
-          <Switch>
-            <Route path='/:panel'>
-              <App />
-            </Route>
-            <Redirect to={panels[0].path} />
-          </Switch>
-        </Router>
+        <MuiThemeProvider theme={createCustomTheme(config.app.theme)}>
+          <CssBaseline />
+          <Router>
+            <Switch>
+              <Route path='/:panel'>
+                <Main />
+              </Route>
+              <Redirect to={panels[0].path} />
+            </Switch>
+          </Router>
+        </MuiThemeProvider>
       </RegistryContext.Provider>
     </ConfigContext.Provider>
   ), document.getElementById('root'));

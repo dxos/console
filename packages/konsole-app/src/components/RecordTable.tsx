@@ -13,6 +13,9 @@ interface RecordsTableProperties {
   records: IRecord[]
 }
 const useStyles = makeStyles(theme => ({
+  container: {
+    flex: 1
+  },
   root: {
     '& .mono': {
       fontFamily: 'monospace'
@@ -63,7 +66,7 @@ export const RecordTable = ({ records }: RecordsTableProperties) => {
 
   // https://material-ui.com/components/data-grid/#mit-version
   return (
-    <div style={{ height: 58 + 52 * (8 + 1), width: '100%' }}>
+    <div className={classes.container}>
       <DataGrid
         className={classes.root}
         rows={records}

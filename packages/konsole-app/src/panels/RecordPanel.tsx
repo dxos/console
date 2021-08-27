@@ -10,8 +10,14 @@ import { RecordTable, RecordTypeSelector } from '../components';
 import { useRecordTypes, useRecords } from '../hooks';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1
+  },
   panel: {
-    margin: theme.spacing(1)
+    display: 'flex',
+    flex: 1
   },
   spacer: {
     flex: 1
@@ -29,7 +35,7 @@ export const RecordPanel = () => {
   const records = useRecords({ type: recordType });
 
   return (
-    <Paper>
+    <Paper className={classes.root}>
       <Toolbar variant='dense'>
         <Typography>Records</Typography>
         <div className={classes.spacer} />
