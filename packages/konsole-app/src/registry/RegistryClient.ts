@@ -7,7 +7,7 @@ import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import keyring from '@polkadot/ui-keyring';
 import { useReducer } from 'react';
-import { IConfig } from '../hooks';
+import { IConfig, useConfig } from '../hooks';
 
 import { Config } from '@dxos/config';
 import { definitions } from '@dxos/registry-api';
@@ -154,10 +154,10 @@ const setConfig = (state: SubstrateState, dispatch, conf) => {
 };
 
 export class RegistryClient implements IRegistryClient {
-  constructor (config: IConfig, substrateConfig: Config) {
+  constructor (config: IConfig) {
     const initState: SubstrateState = { ...INIT_STATE };
-    initState.socket = ('socket' in substrateConfig) || initState.socket;
-    initState.types = ('types' in substrateConfig) || initState.types;
+    initState.socket = ('socket' in config.substrate) || initState.socket;
+    initState.types = ('types' in config.substrate) || initState.types;
     // const [state, dispatch] = useReducer(reducer, initState);
 
     // setConfig(state, dispatch, config);

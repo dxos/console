@@ -13,21 +13,10 @@ import {
   useParams
 } from 'react-router-dom';
 
-import { Config } from '@dxos/config';
-
-import { ConfigContext, IConfig, RegistryContext } from './hooks';
+import { loadConfig, ConfigContext, IConfig, RegistryContext } from './hooks';
 import { RegistryClient } from './registry/RegistryClient';
-import { loadConfig } from './config';
 import { Container, Root, Sidebar } from './containers';
 import { panels } from './panels';
-
-// TODO(burdon): Load from environment.
-const config: IConfig = {
-  app: {
-    name: 'Konsole',
-    theme: 'dark'
-  }
-};
 
 const App = () => {
   const history = useHistory();
@@ -58,10 +47,10 @@ const App = () => {
   )
 };
 
-const start = (config: IConfig, substrateConfig: Config) => {
+const start = (config: IConfig) => {
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={new RegistryClient(config, substrateConfig)}>
+      <RegistryContext.Provider value={new RegistryClient(config)}>
         <Router>
           <Switch>
             <Route path='/:panel'>
@@ -75,4 +64,4 @@ const start = (config: IConfig, substrateConfig: Config) => {
   ), document.getElementById('root'));
 };
 
-loadConfig().then(sc => start(config, sc));
+loadConfig().then(start);

@@ -18,7 +18,8 @@ export const Config = () => {
   const config: IConfig = {
     app: {
       name: 'Test'
-    }
+    },
+    substrate: { _config: 0, values: {}, get: (key: string, defaultValue: any) => 0 }
   };
 
   return (
@@ -32,7 +33,8 @@ export const Records = () => {
   const config: IConfig = {
     app: {
       name: 'Test'
-    }
+    },
+    substrate: { _config: 0, values: {}, get: (key: string, defaultValue: any) => 0 }
   };
 
   return (
