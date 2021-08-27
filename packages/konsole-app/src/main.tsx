@@ -75,4 +75,4 @@ const start = (config: IConfig, substrateConfig: Config) => {
   ), document.getElementById('root'));
 };
 
-start(config, {} as any);
+loadConfig().then(sc => start(config, sc));
