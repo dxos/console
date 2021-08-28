@@ -4,9 +4,8 @@
 
 import { addons } from '@storybook/addons';
 
-// https://storybook.js.org/docs/configurations/options-parameter/
+// https://storybook.js.org/docs/configurations/options-parameter
 addons.setConfig({
-  // isFullscreen: true,
   isToolshown: false,
   panelPosition: 'bottom',
   sidebarAnimations: false,

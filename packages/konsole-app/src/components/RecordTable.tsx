@@ -14,6 +14,7 @@ import { getRelativeTime, sortDateStrings } from '../util';
 interface RecordsTableProperties {
   records: IRecord[]
 }
+
 const useStyles = makeStyles(theme => ({
   container: {
     flex: 1

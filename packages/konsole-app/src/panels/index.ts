@@ -8,6 +8,7 @@ import {
   Settings as SettingsIcon,
   ViewList as RecordsIcon
 } from '@material-ui/icons';
+
 import { ConfigPanel } from './ConfigPanel';
 import { RecordPanel } from './RecordPanel';
 
@@ -23,15 +24,15 @@ export interface IPanel {
 
 export const panels: IPanel[] = [
   {
-    path: '/config',
-    label: 'Config',
-    component: ConfigPanel,
-    icon: SettingsIcon
-  },
-  {
     path: '/records',
     label: 'Records',
     component: RecordPanel,
     icon: RecordsIcon
+  },
+  {
+    path: '/config',
+    label: 'Config',
+    component: ConfigPanel,
+    icon: SettingsIcon
   }
 ];

@@ -24,7 +24,7 @@ import { MockRegistryClient } from './testing';
 // TODO(burdon): Load from environment.
 const config: IConfig = {
   app: {
-    name: 'Konsole',
+    name: 'DXOS KONSOLE',
     theme: 'dark'
   }
 };
