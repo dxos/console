@@ -19,7 +19,7 @@
     "build": "webpack",
     "clean": "rm -rf ./dist",
     "lint": "eslint --format codeframe './src/**/*.ts'",
-    "start": "webpack serve --mode development",
+    "start": "webpack serve --mode development --host 0.0.0.0",
     "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },

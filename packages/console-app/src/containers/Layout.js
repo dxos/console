@@ -13,7 +13,7 @@ import Sidebar from '../components/Sidebar';
 import { ConsoleContext } from '../hooks';
 import StatusBar from './StatusBar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',

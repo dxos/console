@@ -31,6 +31,15 @@ const config: IConfig = {
 
 // TODO(burdon): Factor out.
 const createCustomTheme = (config: IConfig) => createTheme({
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        body: {
+          overflow: 'hidden' // Prevent bounce.
+        },
+      },
+    },
+  },
   palette: {
     type: config.app.theme
   },
@@ -38,7 +47,6 @@ const createCustomTheme = (config: IConfig) => createTheme({
     MuiAppBar: {
       elevation: 0
     },
-
     MuiButtonBase: {
       disableRipple: true
     }

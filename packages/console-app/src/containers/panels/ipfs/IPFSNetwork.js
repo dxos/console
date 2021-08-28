@@ -21,7 +21,7 @@ import { useQueryStatusReducer } from '../../../hooks';
 const RECORD_TYPE = 'wrn:service';
 const SERVICE_TYPE = 'ipfs';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   tableContainer: {
     flex: 1,
     overflowY: 'scroll'

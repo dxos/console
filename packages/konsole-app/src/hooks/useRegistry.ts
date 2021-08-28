@@ -21,6 +21,7 @@ export interface IRecord {
 
 export interface IQuery {
   type?: string
+  text?: string
 }
 
 export interface IRegistryClient {

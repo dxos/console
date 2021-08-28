@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
   },
   root: {
     '& .mono': {
-      fontFamily: 'monospace'
+      fontFamily: 'monospace',
+      fontSize: 15
     }
   }
 }));
@@ -35,7 +36,7 @@ const columns: GridColDef[] = [
   {
     field: 'cid',
     headerName: 'CID',
-    width: 120,
+    width: 130,
     cellClassName: (params: GridCellParams) => 'mono',
     valueFormatter: (params) => {
       return (params.value as string).slice(0, 8) + '...';

@@ -63,19 +63,24 @@ export class MockRegistryClient implements IRegistryClient {
   }
 
   queryRecords (query?: IQuery) {
-    const { type } = query || {};
+    const { type, text } = query || {};
 
     // TODO(burdon): Add configuration to test registry state having changed.
     // this._records.push(createMockRecord());
 
-    return this._records.filter(recordType => {
-      if (!type || type === '*') {
-        return true;
-      } else {
-        return recordType.type === type;
-      }
-    }).sort((v1, v2) => {
-      return sortDateStrings(v1.created, v2.created);
-    });
+    return this._records
+      .filter(record => {
+        if (!type || type === '*') {
+          return true;
+        } else {
+          return record.type === type;
+        }
+      })
+      .filter(record => {
+        return !text || record.name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+      })
+      .sort((v1, v2) => {
+        return sortDateStrings(v1.created, v2.created);
+      });
   }
 }

@@ -21,7 +21,7 @@ import Error from '../components/Error';
 import { ConsoleContext, useStatusReducer } from '../hooks';
 import VersionCheck from './VersionCheck';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
