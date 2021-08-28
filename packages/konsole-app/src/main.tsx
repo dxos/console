@@ -2,6 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
+import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -20,6 +21,9 @@ import { Container, Sidebar } from './containers';
 import { ConfigContext, IConfig, RegistryContext } from './hooks';
 import { panels } from './panels';
 import { MockRegistryClient } from './testing';
+
+const log = debug('dxos:console');
+debug.enable('dxos:*');
 
 // TODO(burdon): Load from environment.
 const config: IConfig = {
@@ -89,6 +93,8 @@ const Main = () => {
  * @param config
  */
 const start = (config: IConfig) => {
+  log('Starting...');
+
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={new MockRegistryClient()}>

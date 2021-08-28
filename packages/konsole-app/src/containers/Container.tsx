@@ -15,7 +15,7 @@ import {
 
 import { useConfig } from '../hooks';
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,7 +41,8 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    // backgroundColor: theme.palette.background.default
   },
   drawerHeader: {
     display: 'flex',
@@ -76,7 +77,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    margin: theme.spacing(1)
+    backgroundColor: theme.palette.background.default
+    // margin: theme.spacing(1)
   },
   hide: {
     display: 'none'
@@ -123,7 +125,7 @@ export const Container = ({ children, sidebar }: ContainerProperties) => {
       <Drawer
         className={classes.drawer}
         classes={{
-          paper: classes.drawerPaper,
+          paper: classes.drawerPaper
         }}
         variant='persistent'
         anchor='left'

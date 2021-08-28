@@ -20,6 +20,12 @@ const useStyles = makeStyles(theme => ({
     flex: 1
   },
   root: {
+    '& *': {
+      color: theme.palette.text.secondary
+    },
+    '& .title': {
+      color: theme.palette.text.primary
+    },
     '& .mono': {
       fontFamily: 'monospace',
       fontSize: 15
@@ -37,6 +43,7 @@ const columns: GridColDef[] = [
     field: 'cid',
     headerName: 'CID',
     width: 130,
+    sortable: false,
     cellClassName: (params: GridCellParams) => 'mono',
     valueFormatter: (params) => {
       return (params.value as string).slice(0, 8) + '...';
@@ -60,7 +67,7 @@ const columns: GridColDef[] = [
   },
   {
     field: 'name',
-    headerName: 'Name',
+    headerName: 'Resource Name',
     minWidth: 300,
     cellClassName: (params: GridCellParams) => 'mono'
   },
@@ -68,11 +75,13 @@ const columns: GridColDef[] = [
     field: 'title',
     headerName: 'Display Name',
     minWidth: 300,
+    cellClassName: (params: GridCellParams) => 'title'
   },
   {
     field: 'url',
     headerName: 'Link',
-    width: 120,
+    width: 80,
+    sortable: false,
     // https://material-ui.com/components/data-grid/style/#styling-cells
     renderCell: (params: GridCellParams) => {
       if (params.value) {

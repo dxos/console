@@ -2,11 +2,14 @@
 // Copyright 2020 DXOS.org
 //
 
+import debug from 'debug';
 // TODO(burdon): v5 clashes with HtmlWebpackPlugin (Error: [CaseSensitivePathsPlugin])
 import faker from 'faker';
 
 import { IRegistryClient, IQuery } from '../hooks';
 import { sortDateStrings } from '../util';
+
+const log = debug('dxos:console:registry');
 
 export const mockRecordTypes = [
   {
@@ -64,6 +67,8 @@ export class MockRegistryClient implements IRegistryClient {
 
   queryRecords (query?: IQuery) {
     const { type, text } = query || {};
+    const lowerText = text?.toLowerCase();
+    log('Query:', query);
 
     // TODO(burdon): Add configuration to test registry state having changed.
     // this._records.push(createMockRecord());
@@ -77,7 +82,9 @@ export class MockRegistryClient implements IRegistryClient {
         }
       })
       .filter(record => {
-        return !text || record.name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+        return !lowerText ||
+          record.name.toLowerCase().indexOf(lowerText) !== -1 ||
+          record.title.toLowerCase().indexOf(lowerText) !== -1;
       })
       .sort((v1, v2) => {
         return sortDateStrings(v1.created, v2.created);

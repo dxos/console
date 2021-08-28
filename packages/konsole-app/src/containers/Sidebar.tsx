@@ -4,9 +4,15 @@
 
 import React from 'react';
 
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { makeStyles, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
 import { IPanel } from '../panels';
+
+const useStyles = makeStyles(theme => ({
+  list: {
+    padding: 0
+  }
+}));
 
 interface SidebarProperties {
   panels: IPanel[]
@@ -19,9 +25,11 @@ interface SidebarProperties {
  * @constructor
  */
 export const Sidebar = ({ panels, selected, onSelect }: SidebarProperties) => {
+  const classes = useStyles();
+
   return (
     <div>
-      <List>
+      <List className={classes.list}>
         {panels.map(({ path, label, icon: Icon }, i) => (
           <ListItem
             key={i}

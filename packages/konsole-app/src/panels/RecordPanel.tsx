@@ -2,11 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { makeStyles, IconButton, Toolbar, TextField, Divider } from '@material-ui/core';
 import {
-  Search as SearchIcon,
+  Clear as ClearIcon,
   Sync as RefreshIcon
 } from '@material-ui/icons';
 
@@ -20,13 +20,11 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     flex: 1,
-    paddingLeft: theme.spacing(4)
+    paddingLeft: theme.spacing(4),
+    maxWidth: 300
   },
   iconButton: {
     marginLeft: theme.spacing(1)
-  },
-  searchBar: {
-    flex: 1
   },
   panel: {
     display: 'flex',
@@ -41,6 +39,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const delay = 500;
+
 /**
  * Display records panel
  * @constructor
@@ -50,7 +50,19 @@ export const RecordPanel = () => {
   const recordTypes = useRecordTypes();
   const [recordType, setRecordType] = useState<string>(recordTypes[0].type);
   const [search, setSearch] = useState('');
-  const [records, refreshRecords] = useRecords({ type: recordType, text: search });
+  const [delayedSearch, setDelayedSearch] = useState(search);
+  const [records, refreshRecords] = useRecords({ type: recordType, text: delayedSearch });
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      clearTimeout(t);
+      setDelayedSearch(search);
+    }, delay);
+
+    return () => {
+      clearTimeout(t);
+    }
+  }, [search])
 
   return (
     <>
@@ -72,8 +84,12 @@ export const RecordPanel = () => {
           className={classes.iconButton}
           size='small'
           aria-label='search'
+          onClick={() => {
+            setSearch('');
+            setDelayedSearch('');
+          }}
         >
-          <SearchIcon />
+          <ClearIcon />
         </IconButton>
         <div className={classes.expand} />
         <Divider className={classes.divider} orientation="vertical" />
