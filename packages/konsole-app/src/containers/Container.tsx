@@ -119,15 +119,16 @@ export const Container = ({ children, sidebar }: ContainerProperties) => {
         })}
       >
         <Toolbar>
-          <IconButton
-            className={clsx(classes.sidebarIcon, { [classes.hide]: open })}
-            aria-label='open drawer'
-            edge='start'
-            size='small'
-            onClick={() => setOpen(!open)}
-          >
-            <MenuIcon />
-          </IconButton>
+          <div className={clsx(classes.sidebarIcon, { [classes.hide]: open })}>
+            <IconButton
+              aria-label='open drawer'
+              edge='start'
+              size='small'
+              onClick={() => setOpen(!open)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </div>
           <Typography>
             {config.app.name}
           </Typography>
