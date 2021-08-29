@@ -14,6 +14,7 @@ import {
 } from '@material-ui/icons';
 
 import { useConfig } from '../hooks';
+import { DXOS as DXOSIcon } from '../icons';
 
 const drawerWidth = 220;
 
@@ -36,21 +37,28 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     })
   },
+  logo: {
+    display: 'flex',
+    color: theme.palette.text.secondary,
+    '& svg': {
+      width: 100,
+      height: 42
+    }
+  },
+  sidebarIcon: {
+    paddingRight: theme.spacing(2)
+  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0
   },
-  drawerPaper: {
-    width: drawerWidth,
-    // backgroundColor: theme.palette.background.default
-  },
-  drawerHeader: {
+  drawerToolbar: {
     display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    justifyContent: 'flex-end',
-    // Necessary for content to be below app bar.
-    ...theme.mixins.toolbar
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(1)
+  },
+  drawerPaper: {
+    width: drawerWidth
   },
   content: {
     display: 'flex',
@@ -82,6 +90,9 @@ const useStyles = makeStyles(theme => ({
   },
   hide: {
     display: 'none'
+  },
+  expand: {
+    flex: 1
   }
 }));
 
@@ -109,9 +120,10 @@ export const Container = ({ children, sidebar }: ContainerProperties) => {
       >
         <Toolbar>
           <IconButton
-            className={clsx({ [classes.hide]: open })}
+            className={clsx(classes.sidebarIcon, { [classes.hide]: open })}
             aria-label='open drawer'
             edge='start'
+            size='small'
             onClick={() => setOpen(!open)}
           >
             <MenuIcon />
@@ -131,11 +143,15 @@ export const Container = ({ children, sidebar }: ContainerProperties) => {
         anchor='left'
         open={open}
       >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={() => setOpen(false)}>
+        <Toolbar className={classes.drawerToolbar} disableGutters>
+          <div className={classes.logo}>
+            <DXOSIcon />
+          </div>
+          <div className={classes.expand} />
+          <IconButton size='small' onClick={() => setOpen(false)}>
             <ChevronLeftIcon />
           </IconButton>
-        </div>
+        </Toolbar>
         <Divider />
         {sidebar}
       </Drawer>

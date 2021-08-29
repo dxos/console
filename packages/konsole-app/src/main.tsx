@@ -28,7 +28,7 @@ debug.enable('dxos:*');
 // TODO(burdon): Load from environment.
 const config: IConfig = {
   app: {
-    name: 'DXOS KONSOLE',
+    name: 'CONSOLE',
     theme: 'dark'
   }
 };

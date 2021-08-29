@@ -11,6 +11,9 @@ import { IPanel } from '../panels';
 const useStyles = makeStyles(theme => ({
   list: {
     padding: 0
+  },
+  icon: {
+    minWidth: 38
   }
 }));
 
@@ -37,7 +40,7 @@ export const Sidebar = ({ panels, selected, onSelect }: SidebarProperties) => {
             selected={path === selected}
             onClick={() => onSelect(path)}
           >
-            <ListItemIcon>
+            <ListItemIcon className={classes.icon}>
               <Icon />
             </ListItemIcon>
             <ListItemText
