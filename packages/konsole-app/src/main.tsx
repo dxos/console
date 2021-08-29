@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 import debug from 'debug';
@@ -15,47 +15,17 @@ import {
 } from 'react-router-dom';
 
 import { CssBaseline } from '@material-ui/core';
-import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
+import config from './config';
 import { Container, Sidebar } from './containers';
 import { ConfigContext, IConfig, RegistryContext } from './hooks';
 import { panels } from './panels';
 import { MockRegistryClient } from './testing';
+import { createCustomTheme } from './theme';
 
-const log = debug('dxos:console');
-debug.enable('dxos:*');
-
-// TODO(burdon): Load from environment.
-const config: IConfig = {
-  app: {
-    name: 'CONSOLE',
-    theme: 'dark'
-  }
-};
-
-// TODO(burdon): Factor out.
-const createCustomTheme = (config: IConfig) => createTheme({
-  overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        body: {
-          overflow: 'hidden' // Prevent bounce.
-        },
-      },
-    },
-  },
-  palette: {
-    type: config.app.theme
-  },
-  props: {
-    MuiAppBar: {
-      elevation: 0
-    },
-    MuiButtonBase: {
-      disableRipple: true
-    }
-  },
-});
+const log = debug('dxos:console:main');
+debug.enable(config.system.debug);
 
 /**
  * Main app container.

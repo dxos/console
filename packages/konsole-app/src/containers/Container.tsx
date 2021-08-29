@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 import clsx from 'clsx';
@@ -9,6 +9,7 @@ import {
   makeStyles, AppBar, Divider, Drawer, IconButton, Paper, Toolbar, Typography
 } from '@material-ui/core';
 import {
+  AccountCircle as ProfileIcon,
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon
 } from '@material-ui/icons';
@@ -85,6 +86,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
+    overflow: 'hidden',
     backgroundColor: theme.palette.background.default
     // margin: theme.spacing(1)
   },
@@ -113,7 +115,7 @@ export const Container = ({ children, sidebar }: ContainerProperties) => {
   return (
     <div className={classes.root}>
       <AppBar
-        position="fixed"
+        position='fixed'
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open
         })}
@@ -129,9 +131,18 @@ export const Container = ({ children, sidebar }: ContainerProperties) => {
               <MenuIcon />
             </IconButton>
           </div>
-          <Typography>
-            {config.app.name}
+          <Typography variant='h6'>
+            {config.app.title}
           </Typography>
+          <div className={classes.expand} />
+          <IconButton
+            edge='end'
+            aria-label='account of current user'
+            aria-haspopup='true'
+            color='inherit'
+          >
+            <ProfileIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
 

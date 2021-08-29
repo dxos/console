@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 import React from 'react';
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 const config: IConfig = {
   app: {
-    name: 'Test'
+    title: 'Test'
   }
 };
 

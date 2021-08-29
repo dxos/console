@@ -1,20 +1,24 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 import React from 'react';
 
-import { makeStyles, Divider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+
+import { JsonTreeView } from '@dxos/react-ux';
 
 import { useConfig } from '../hooks';
 
 const useStyles = makeStyles(theme => ({
-  pre: {
-    margin: 0,
-    padding: theme.spacing(2)
-  },
   panel: {
+    display: 'flex',
+    flex: 1,
+    overflow: 'scroll',
     margin: theme.spacing(1)
+  },
+  json: {
+    width: '100%'
   }
 }));
 
@@ -27,13 +31,8 @@ export const ConfigPanel = () => {
   const config = useConfig();
 
   return (
-    <>
-      <Divider />
-      <div className={classes.panel}>
-        <pre className={classes.pre}>
-          {JSON.stringify(config, undefined, 2)}
-        </pre>
-      </div>
-    </>
+    <div className={classes.panel}>
+      <JsonTreeView className={classes.json} data={config} />
+    </div>
   );
 };
