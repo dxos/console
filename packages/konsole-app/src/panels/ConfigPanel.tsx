@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import { makeStyles, Paper, Toolbar, Typography } from '@material-ui/core';
+import { makeStyles, Divider } from '@material-ui/core';
 
 import { useConfig } from '../hooks';
 
@@ -27,15 +27,13 @@ export const ConfigPanel = () => {
   const config = useConfig();
 
   return (
-    <Paper>
-      <Toolbar variant='dense'>
-        <Typography>Config</Typography>
-      </Toolbar>
+    <>
+      <Divider />
       <div className={classes.panel}>
         <pre className={classes.pre}>
           {JSON.stringify(config, undefined, 2)}
         </pre>
       </div>
-    </Paper>
+    </>
   );
 };

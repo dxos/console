@@ -15,7 +15,7 @@ import GraphQLIcon from '@material-ui/icons/Adb';
 import { graphqlApi } from '../client';
 import DXOSIcon from '../icons/DXOS';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   offset: theme.mixins.denseToolbar,
 
   logo: {
