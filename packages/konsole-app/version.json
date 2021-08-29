@@ -1,7 +1,7 @@
 {
   "build": {
-    "name":      "@dxos/konsole",
-    "buildDate": "2021-08-29T17:48:36.564Z",
+    "name":      "@dxos/konsole-app",
+    "buildDate": "2021-08-29T18:26:01.445Z",
     "version":   "1.2.9-alpha.18"
   }
 }

@@ -2682,7 +2682,7 @@
     sodium-universal "~3.0.4"
     through2 "^3.0.1"
 
-"@dxos/gem-core@^1.0.0-beta.25":
+"@dxos/gem-core@^1.0.0-beta.25", "@dxos/gem-core@^1.0.0-beta.34":
   version "1.0.0-beta.34"
   resolved "https://registry.yarnpkg.com/@dxos/gem-core/-/gem-core-1.0.0-beta.34.tgz#a7b4b5233649ac19c801bc704e2bacecad10eade"
   integrity sha512-0i0ux9C6kKIpAJUKiTZskSD5MZKkbods9EuQbXLNKdPoqoDDOSBQs40JtF97mlrh74MUAtSY7zoBN6HVrq5+vg==
@@ -2718,6 +2718,27 @@
     react-resize-aware "^3.0.0"
     simple-react-console "^1.0.1"
     three "^0.124.0"
+
+"@dxos/gem-globe@~1.0.0-beta.34":
+  version "1.0.0-beta.34"
+  resolved "https://registry.yarnpkg.com/@dxos/gem-globe/-/gem-globe-1.0.0-beta.34.tgz#c46b6bd0bb4a95e535bb01404a6dff96f495f18d"
+  integrity sha512-Zk4p+ZtRzX/ujvmWJDcQDAV5TIqUeqJbqz5tD+FmlxNA7KukWw4xFhaNglKX+6HM3DUN9PvglQN+N1v72idmoA==
+  dependencies:
+    "@dxos/gem-core" "^1.0.0-beta.34"
+    "@material-ui/core" "^4.9.10"
+    clsx "^1.1.0"
+    d3 "^6.1.1"
+    d3-geo-projection "^2.9.0"
+    d3-inertia "^0.1.0"
+    debug "^4.1.1"
+    immutability-helper "^3.0.2"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+    react "^16.13.1"
+    react-dom "^16.13.1"
+    react-hotkeys "^2.0.0"
+    react-resize-aware "^3.0.0"
+    topojson "^3.0.2"
 
 "@dxos/metrics@~1.0.0-beta.9":
   version "1.0.0-beta.9"
@@ -12488,6 +12509,11 @@ cyclist@^1.0.1:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
+d3-array@1:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-1.2.4.tgz#635ce4d5eea759f6f605863dbcfc30edc737f71f"
+  integrity sha512-KHW6M86R+FUPYGb3R5XiYjXPq7VzwxZ22buHhAEVG5ztoEcZZMLov530mmccaqA1GghZArjQV46fuc8kUqhhHw==
+
 "d3-array@1 - 3", "d3-array@2 - 3", "d3-array@2.10.0 - 3":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-3.0.2.tgz#7a65593784cfc0150eee1aba8d3e69a6fe73be7b"
@@ -12554,6 +12580,11 @@ d3-delaunay@5:
   dependencies:
     delaunator "4"
 
+d3-dispatch@1:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/d3-dispatch/-/d3-dispatch-1.0.6.tgz#00d37bcee4dd8cd97729dd893a0ac29caaba5d58"
+  integrity sha512-fVjoElzjhCEy+Hbn8KygnmMS7Or0a9sI2UzGwoB7cCtvI1XpVN9GpoYlnb3xt2YV66oXYb1fLJ8GMvP4hdU1RA==
+
 "d3-dispatch@1 - 2", d3-dispatch@2:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/d3-dispatch/-/d3-dispatch-2.0.0.tgz#8a18e16f76dd3fcaef42163c97b926aa9b55e7cf"
@@ -12579,6 +12610,14 @@ d3-drag@2:
   dependencies:
     d3-dispatch "1 - 3"
     d3-selection "3"
+
+d3-drag@^1.2.1:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/d3-drag/-/d3-drag-1.2.5.tgz#2537f451acd39d31406677b7dc77c82f7d988f70"
+  integrity sha512-rD1ohlkKQwMZYkQlYVCrSFxsWPzI97+W+PaEIBNTMxRuxz9RF0Hi5nJWHGVJ3Om9d2fRTe1yOBINJyy/ahV95w==
+  dependencies:
+    d3-dispatch "1"
+    d3-selection "1"
 
 "d3-dsv@1 - 2", d3-dsv@2:
   version "2.0.0"
@@ -12636,6 +12675,16 @@ d3-force@2, d3-force@^2.1.1:
   resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-3.0.1.tgz#e41b81b2ab79277141ec1404aa5d05001da64084"
   integrity sha512-hdL7+HBIohpgfolhBxr1KX47VMD6+vVD/oEFrxk5yhmzV2prk99EkFKYpXuhVkFpTgHdJ6/4bYcjdLPPXV4tIA==
 
+d3-geo-projection@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/d3-geo-projection/-/d3-geo-projection-2.9.0.tgz#826db62f748e8ecd67cd00aced4c26a236ec030c"
+  integrity sha512-ZULvK/zBn87of5rWAfFMc9mJOipeSo57O+BBitsKIXmU4rTVAnX1kSsJkE0R+TxY8pGNoM1nbyRRE7GYHhdOEQ==
+  dependencies:
+    commander "2"
+    d3-array "1"
+    d3-geo "^1.12.0"
+    resolve "^1.1.10"
+
 d3-geo@2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-2.0.2.tgz#c065c1b71fe8c5f1be657e5f43d9bdd010383c40"
@@ -12643,10 +12692,27 @@ d3-geo@2:
   dependencies:
     d3-array "^2.5.0"
 
+d3-geo@^1.12.0:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.12.1.tgz#7fc2ab7414b72e59fbcbd603e80d9adc029b035f"
+  integrity sha512-XG4d1c/UJSEX9NfU02KwBL6BYPj8YKHxgBEw5om2ZnTRSbIcego6dhHwcxuSR3clxh0EpE38os1DVPOmnYtTPg==
+  dependencies:
+    d3-array "1"
+
 d3-hierarchy@2:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/d3-hierarchy/-/d3-hierarchy-2.0.0.tgz#dab88a58ca3e7a1bc6cab390e89667fcc6d20218"
   integrity sha512-SwIdqM3HxQX2214EG9GTjgmCc/mbSx4mQBn+DuEETubhOw6/U3fmnji4uCVrmzOydMHSO1nZle5gh6HB/wdOzw==
+
+d3-inertia@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/d3-inertia/-/d3-inertia-0.1.0.tgz#286724b4183c7e92f4c062fc1abab5feb2f3c504"
+  integrity sha512-tm+FRchVZWi07O13nIFMJd+EtoR2+oTXhuvNuqmZsX3oEjhsyaa7U6TbFcVt++76rUJqOsHnKTEp1t9RFRyDKg==
+  dependencies:
+    d3-drag "^1.2.1"
+    d3-selection "^1.1.0"
+    d3-timer "^1.0.7"
+    versor "^0.1"
 
 "d3-interpolate@1 - 2", "d3-interpolate@1.2.0 - 2", d3-interpolate@2:
   version "2.0.1"
@@ -12730,6 +12796,11 @@ d3-scale@3:
     d3-time "^2.1.1"
     d3-time-format "2 - 3"
 
+d3-selection@1, d3-selection@^1.1.0:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/d3-selection/-/d3-selection-1.4.2.tgz#dcaa49522c0dbf32d6c1858afc26b6094555bc5c"
+  integrity sha512-SJ0BqYihzOjDnnlfyeHT0e30k0K1+5sR3d5fNueCNeuhZTnGw4M4o8mqJchSwgKMXCNFo+e2VTChiSJ0vYtXkg==
+
 d3-selection@2:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/d3-selection/-/d3-selection-2.0.0.tgz#94a11638ea2141b7565f883780dabc7ef6a61066"
@@ -12784,6 +12855,11 @@ d3-shape@2:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/d3-timer/-/d3-timer-3.0.1.tgz#6284d2a2708285b1abb7e201eda4380af35e63b0"
   integrity sha512-ndfJ/JxxMd3nw31uyKoY2naivF+r29V+Lc0svZxe1JvvIRmi8hUsrMvdOwgS1o6uBHmiz91geQ0ylPP0aj1VUA==
+
+d3-timer@^1.0.7:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/d3-timer/-/d3-timer-1.0.10.tgz#dfe76b8a91748831b13b6d9c793ffbd508dd9de5"
+  integrity sha512-B1JDm0XDaQC+uvo4DT79H0XmBskgS3l6Ve+1SBCfxgmtIb1AVrPIoqd+nPSv+loMX8szQ0sVUhGngL7D5QPiXw==
 
 d3-transition@2:
   version "2.0.0"
@@ -25976,6 +26052,11 @@ react-input-autosize@^3.0.0:
   dependencies:
     prop-types "^15.5.8"
 
+react-intersection-observer@^8.32.1:
+  version "8.32.1"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-8.32.1.tgz#9b949871eb35eb1fc730732bbf8fcfaaaf3f5b02"
+  integrity sha512-FOmMkMw7MeJ8FkuADpU8TRcvGuTvPB+DRkaikS1QXcWArYLCWC3mjRorq2XeRGBuqmaueOBd27PUazTu9AgInw==
+
 react-is@^16.12.0, react-is@^16.6.0, react-is@^16.6.3, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -26959,7 +27040,7 @@ resolve@1.18.1:
     is-core-module "^2.0.0"
     path-parse "^1.0.6"
 
-resolve@^1.1.6, resolve@^1.10.0, resolve@^1.10.1, resolve@^1.11.0, resolve@^1.12.0, resolve@^1.14.2, resolve@^1.15.1, resolve@^1.17.0, resolve@^1.18.1, resolve@^1.19.0, resolve@^1.20.0, resolve@^1.3.2, resolve@^1.8.1, resolve@^1.9.0:
+resolve@^1.1.10, resolve@^1.1.6, resolve@^1.10.0, resolve@^1.10.1, resolve@^1.11.0, resolve@^1.12.0, resolve@^1.14.2, resolve@^1.15.1, resolve@^1.17.0, resolve@^1.18.1, resolve@^1.19.0, resolve@^1.20.0, resolve@^1.3.2, resolve@^1.8.1, resolve@^1.9.0:
   version "1.20.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.20.0.tgz#629a013fb3f70755d6f0b7935cc1c2c5378b1975"
   integrity sha512-wENBPt4ySzg4ybFQW2TT1zMQucPK95HSh/nq2CFTZVOGut2+pQvSsgtda4d26YrYcr067wjbmzOG8byDPBX63A==
@@ -29524,6 +29605,44 @@ toidentifier@1.0.0:
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
+topojson-client@3:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/topojson-client/-/topojson-client-3.1.0.tgz#22e8b1ed08a2b922feeb4af6f53b6ef09a467b99"
+  integrity sha512-605uxS6bcYxGXw9qi62XyrV6Q3xwbndjachmNxu8HWTtVPxZfEJN9fd/SZS1Q54Sn2y0TMyMxFj/cJINqGHrKw==
+  dependencies:
+    commander "2"
+
+topojson-client@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/topojson-client/-/topojson-client-3.0.0.tgz#1f99293a77ef42a448d032a81aa982b73f360d2f"
+  integrity sha1-H5kpOnfvQqRI0DKoGqmCtz82DS8=
+  dependencies:
+    commander "2"
+
+topojson-server@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/topojson-server/-/topojson-server-3.0.0.tgz#378e78e87c3972a7b5be2c5d604369b6bae69c5e"
+  integrity sha1-N4546Hw5cqe1vixdYENptrrmnF4=
+  dependencies:
+    commander "2"
+
+topojson-simplify@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/topojson-simplify/-/topojson-simplify-3.0.2.tgz#8a2403e639531500fafa0c6594e8b0fadebc2c02"
+  integrity sha512-gyYSVRt4jO/0RJXKZQPzTDQRWV+D/nOfiljNUv0HBXslFLtq3yxRHrl7jbrjdbda5Ytdr7M8BZUI4OxU7tnbRQ==
+  dependencies:
+    commander "2"
+    topojson-client "3"
+
+topojson@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/topojson/-/topojson-3.0.2.tgz#fcb927306c3e0fa76656fa58deed4555d2346fb4"
+  integrity sha512-u3zeuL6WEVL0dmsRn7uHZKc4Ao4gpW3sORUv+N3ezLTvY3JdCuyg0hvpWiIfFw8p/JwVN++SvAsFgcFEeR15rQ==
+  dependencies:
+    topojson-client "3.0.0"
+    topojson-server "3.0.0"
+    topojson-simplify "3.0.2"
+
 touch@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/touch/-/touch-3.1.0.tgz#fe365f5f75ec9ed4e56825e0bb76d24ab74af83b"
@@ -30573,6 +30692,11 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+versor@^0.1:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/versor/-/versor-0.1.2.tgz#0b145a22cd6376f222dace214ab1fd3b6369a8d9"
+  integrity sha512-/XNJOGXeis3j7OOOkdTp3LXzWDTxo/33wvYNtXLLbNOZ5lkTgESzTMPeThU6albr14UupCottC6KTXjcGDO0Lg==
+
 vfile-location@^3.0.0, vfile-location@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/vfile-location/-/vfile-location-3.2.0.tgz#d8e41fbcbd406063669ebf6c33d56ae8721d0f3c"
@@ -30688,10 +30812,8 @@ watchpack@^1.6.0, watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"

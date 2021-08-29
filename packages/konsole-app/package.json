@@ -1,5 +1,5 @@
 {
-  "name": "@dxos/konsole",
+  "name": "@dxos/konsole-app",
   "version": "1.2.9-alpha.18",
   "description": "KUBE Authenticator.",
   "homepage": "https://github.com/dxos/console#readme",
@@ -35,14 +35,15 @@
   },
   "dependencies": {
     "@dxos/gem-experimental": "^1.0.0-beta.33",
+    "@dxos/gem-globe": "~1.0.0-beta.34",
     "@dxos/react-ux": "2.10.10",
-    "@dxos/wallet-core": "2.10.12",
     "@material-ui/core": "^4.9.10",
     "@material-ui/data-grid": "^4.0.0-alpha.37",
     "clsx": "^1.1.0",
     "debug": "^4.1.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-intersection-observer": "^8.32.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0"
   },

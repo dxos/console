@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 import React, { useEffect, useState } from 'react';
@@ -7,7 +7,8 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles, IconButton, Toolbar, TextField, Divider } from '@material-ui/core';
 import {
   Clear as ClearIcon,
-  Sync as RefreshIcon
+  Sync as RefreshIcon,
+  ViewList as RecordsIcon
 } from '@material-ui/icons';
 
 import { RecordTable, RecordTypeSelector } from '../components';
@@ -108,3 +109,5 @@ export const RecordPanel = () => {
     </>
   );
 };
+
+RecordPanel.Icon = RecordsIcon;
