@@ -63,7 +63,10 @@ export class RegistryClient implements IRegistryClient {
       name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
       type: apiRecord.messageFqn,
       title: apiRecord.data?.attributes?.name,
-      url: urlJoin(this.config.services.app.server, this.config.services.app.prefix, `${apiRecord.id.domain}:${apiRecord.id.resource}`)
+      url: urlJoin(
+          this.config.services.app.server,
+          this.config.services.app.prefix,
+          `${apiRecord.id.domain}:${apiRecord.id.resource}`)
     }));
   }
 }
