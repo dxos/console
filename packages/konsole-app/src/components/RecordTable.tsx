@@ -54,7 +54,7 @@ const columns: GridColDef[] = [
     headerName: 'Created',
     width: 140,
     valueFormatter: (params) => {
-      return getRelativeTime(new Date(params.value as string));
+      return getRelativeTime(new Date()); // TODO (marcin): Fix. Previously: new Date(params.value as string));
     },
     // https://material-ui.com/components/data-grid/sorting
     sortComparator: (v1, v2) => sortDateStrings(v1 as string, v2 as string)

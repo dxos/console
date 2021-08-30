@@ -4,13 +4,16 @@
 
 export interface IQuery {
   type?: string
+  text?: string
 }
 
 export interface IRecord {
   cid: string
+  created: string
   name: string
   type: string
   title: string
+  url?: string
 }
 
 export interface IRecordType {
