@@ -5,7 +5,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { App, Root } from './components';
+import { Root } from './components';
+import { App } from './containers/App';
 import { ConfigContext, IConfig, RegistryContext } from './hooks';
 import { RegistryClient } from './registry/RegistryClient';
 

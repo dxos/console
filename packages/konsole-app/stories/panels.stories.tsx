@@ -18,6 +18,9 @@ export const Config = () => {
   const config: IConfig = {
     app: {
       name: 'Test'
+    },
+    registry: {
+      endpoint: ''
     }
   };
 
