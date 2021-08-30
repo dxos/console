@@ -62,7 +62,7 @@ const Main = () => {
  */
 const start = (config: IConfig) => {
   const log = debug('dxos:console:main');
-  log('Starting...');
+  log('Starting...', {config});
   debug.enable(config.system.debug);
 
   ReactDOM.render((

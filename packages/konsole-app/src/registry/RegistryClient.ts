@@ -4,6 +4,7 @@
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
+import urlJoin from 'proper-url-join';
 
 import { ChainApi, definitions } from '@dxos/registry-api';
 
@@ -62,8 +63,7 @@ export class RegistryClient implements IRegistryClient {
       name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
       type: apiRecord.messageFqn,
       title: apiRecord.data?.attributes?.name,
-      // TODO (marcin): Fix the hardcode below
-      url: `https://enterprise.kube.dxos.network/app/${apiRecord.id.domain}:${apiRecord.id.resource}`
+      url: urlJoin(this.config.services.app.server, this.config.services.app.prefix, `${apiRecord.id.domain}:${apiRecord.id.resource}`)
     }));
   }
 }
