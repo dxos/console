@@ -1,56 +1,99 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, IconButton, Link } from '@material-ui/core';
 import { DataGrid, GridColDef, GridCellParams } from '@material-ui/data-grid';
+import { Launch as LaunchIcon } from '@material-ui/icons';
 
 import { IRecord } from '../registry';
+import { getRelativeTime, sortDateStrings } from '../util';
 
 interface RecordsTableProperties {
   records: IRecord[]
 }
+
 const useStyles = makeStyles(theme => ({
+  container: {
+    flex: 1
+  },
   root: {
+    '& *': {
+      color: theme.palette.text.secondary
+    },
+    '& .title': {
+      color: theme.palette.text.primary
+    },
     '& .mono': {
-      fontFamily: 'monospace'
+      fontFamily: 'monospace',
+      fontSize: 15
     }
   }
 }));
 
 // TODO(burdon): Common fields for all records.
 // TODO(burdon): Different record type views may have different column sets.
-// https://material-ui.com/components/data-grid/columns/
+// TODO(burdon): Upgrade to XGrid to have resizable columns.
+//   https://material-ui.com/components/data-grid/#mit-vs-commercial
+// https://material-ui.com/components/data-grid/columns
 const columns: GridColDef[] = [
   {
     field: 'cid',
     headerName: 'CID',
-    width: 120,
+    width: 130,
+    sortable: false,
     cellClassName: (params: GridCellParams) => 'mono',
     valueFormatter: (params) => {
       return (params.value as string).slice(0, 8) + '...';
+    }
+  },
+  {
+    field: 'created',
+    headerName: 'Created',
+    width: 140,
+    valueFormatter: (params) => {
+      return getRelativeTime(new Date(params.value as string));
     },
-    // https://material-ui.com/components/data-grid/style/#styling-cells
-    // renderCell: (params: GridCellParams) => (
-    //   <div>{params.value}</div>
-    // )
+    // https://material-ui.com/components/data-grid/sorting
+    sortComparator: (v1, v2) => sortDateStrings(v1 as string, v2 as string)
   },
   {
     field: 'type',
     headerName: 'Type',
-    width: 120
+    width: 120,
+    cellClassName: (params: GridCellParams) => 'mono'
   },
   {
     field: 'name',
-    headerName: 'Name',
-    width: 300
+    headerName: 'Resource Name',
+    minWidth: 300,
+    cellClassName: (params: GridCellParams) => 'mono'
   },
   {
     field: 'title',
     headerName: 'Display Name',
-    width: 300
+    minWidth: 300,
+    cellClassName: (params: GridCellParams) => 'title'
+  },
+  {
+    field: 'url',
+    headerName: 'Link',
+    width: 80,
+    sortable: false,
+    // https://material-ui.com/components/data-grid/style/#styling-cells
+    renderCell: (params: GridCellParams) => {
+      if (params.value) {
+        return (
+          <Link target='link' href={params.value as string}>
+            <IconButton size='small'>
+              <LaunchIcon />
+            </IconButton>
+          </Link>
+        );
+      }
+    }
   }
 ];
 
@@ -63,7 +106,7 @@ export const RecordTable = ({ records }: RecordsTableProperties) => {
 
   // https://material-ui.com/components/data-grid/#mit-version
   return (
-    <div style={{ height: 58 + 52 * (8 + 1), width: '100%' }}>
+    <div className={classes.container}>
       <DataGrid
         className={classes.root}
         rows={records}

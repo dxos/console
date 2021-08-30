@@ -1,12 +1,13 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 import { createContext, useContext } from 'react';
 
+// TODO(burdon): Define JSON Schema for config file.
 export interface IConfig {
   app: {
-    name: string
+    title: string
     theme?: 'light' | 'dark' | undefined
   },
   registry: {

@@ -1,7 +1,6 @@
 //
-// Copyright 2020 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
-export * from './Root';
 export * from './RecordTable';
 export * from './RecordTypeSelector';
