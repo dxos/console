@@ -5,7 +5,7 @@
 // TODO(burdon): v5 clashes with HtmlWebpackPlugin (Error: [CaseSensitivePathsPlugin])
 import faker from 'faker';
 
-import { IRegistryClient, IQuery } from '../hooks';
+import { IQuery, IRecord, IRecordType, IRegistryClient } from '../registry';
 
 export const mockRecordTypes = [
   {
@@ -36,18 +36,19 @@ export const mockRecords = Array.from({ length: 20 }).map(() => ({
 }));
 
 export class MockRegistryClient implements IRegistryClient {
-  getRecordTypes () {
-    return mockRecordTypes;
+  getRecordTypes () : Promise<IRecordType[]> {
+    return new Promise((resolve) => resolve(mockRecordTypes));
   }
 
-  queryRecords (query?: IQuery) {
+  queryRecords (query?: IQuery) : Promise<IRecord[]> {
     const { type } = query || {};
-    return mockRecords.filter(recordType => {
+    const result = mockRecords.filter(recordType => {
       if (!type || type === '*') {
         return true;
       } else {
         return recordType.type === type;
       }
     });
+    return new Promise((resolve) => resolve(result));
   }
 }

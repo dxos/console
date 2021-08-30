@@ -18,6 +18,9 @@ export const Config = () => {
   const config: IConfig = {
     app: {
       name: 'Test'
+    },
+    registry: {
+      endpoint: ''
     }
   };
 
@@ -31,7 +34,11 @@ export const Config = () => {
 export const Records = () => {
   const config: IConfig = {
     app: {
-      name: 'Test'
+      name: 'Test',
+      theme: "light"
+    },
+    registry: {
+      endpoint: ''
     }
   };
 
