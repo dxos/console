@@ -9,9 +9,13 @@ export interface IConfig {
   app: {
     title: string
     theme?: 'light' | 'dark' | undefined
+  },
+  registry: {
+    endpoint: string
   }
 }
 
+// TODO(marcin) -> load config as in Console2
 export const ConfigContext = createContext<IConfig | undefined>(undefined);
 
 export const useConfig = (): IConfig => {

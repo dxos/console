@@ -26,6 +26,7 @@ import { createCustomTheme } from './theme';
 
 const log = debug('dxos:console:main');
 debug.enable(config.system.debug);
+import { RegistryClient } from './registry/RegistryClient';
 
 /**
  * Main app container.
@@ -73,7 +74,9 @@ const start = (config: IConfig) => {
           <Router>
             <Switch>
               <Route path='/:panel'>
-                <Main />
+                <RegistryContext.Provider value={new RegistryClient({ endpoint: config.registry.endpoint })}>
+                  <Main />
+                </RegistryContext.Provider>
               </Route>
               <Redirect to={panels[0].path} />
             </Switch>

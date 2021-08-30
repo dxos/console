@@ -6,7 +6,7 @@ import debug from 'debug';
 // TODO(burdon): v5 clashes with HtmlWebpackPlugin (Error: [CaseSensitivePathsPlugin])
 import faker from 'faker';
 
-import { IRegistryClient, IQuery } from '../hooks';
+import { IQuery, IRecord, IRecordType, IRegistryClient } from '../registry';
 import { sortDateStrings } from '../util';
 
 const log = debug('dxos:console:registry');
@@ -61,11 +61,11 @@ const createMockRecords = () => Array.from({ length: 30 }).map(createMockRecord)
 export class MockRegistryClient implements IRegistryClient {
   _records = createMockRecords();
 
-  getRecordTypes () {
-    return mockRecordTypes;
+  getRecordTypes () : Promise<IRecordType[]> {
+    return new Promise((resolve) => resolve(mockRecordTypes));
   }
 
-  queryRecords (query?: IQuery) {
+  queryRecords (query?: IQuery) : Promise<IRecord[]> {
     const { type, text } = query || {};
     const lowerText = text?.toLowerCase();
     log('Query:', query);
@@ -73,7 +73,7 @@ export class MockRegistryClient implements IRegistryClient {
     // TODO(burdon): Add configuration to test registry state having changed.
     // this._records.push(createMockRecord());
 
-    return this._records
+    return new Promise((resolve) => resolve(this._records
       .filter(record => {
         if (!type || type === '*') {
           return true;
@@ -88,6 +88,6 @@ export class MockRegistryClient implements IRegistryClient {
       })
       .sort((v1, v2) => {
         return sortDateStrings(v1.created, v2.created);
-      });
+      }));
   }
 }

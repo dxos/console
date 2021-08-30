@@ -27,6 +27,9 @@ const useStyles = makeStyles(theme => ({
 const config: IConfig = {
   app: {
     title: 'Test'
+  },
+  registry: {
+    endpoint: ''
   }
 };
 
