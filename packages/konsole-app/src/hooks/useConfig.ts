@@ -12,6 +12,9 @@ export interface IConfig {
   },
   registry: {
     endpoint: string
+  },
+  system: {
+    debug: string
   }
 }
 

@@ -2,7 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-// import debug from 'debug';
+import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -23,8 +23,6 @@ import { ConfigContext, IConfig, RegistryContext } from './hooks';
 import { panels } from './panels';
 import { createCustomTheme } from './theme';
 
-// const log = debug('dxos:console:main');
-// debug.enable(config.system.debug);
 import { RegistryClient } from './registry/RegistryClient';
 
 /**
@@ -63,7 +61,9 @@ const Main = () => {
  * @param config
  */
 const start = (config: IConfig) => {
-  // log('Starting...');
+  const log = debug('dxos:console:main');
+  log('Starting...');
+  debug.enable(config.system.debug);
 
   ReactDOM.render((
     <ConfigContext.Provider value={config}>

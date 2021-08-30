@@ -30,6 +30,9 @@ const config: IConfig = {
   },
   registry: {
     endpoint: ''
+  },
+  system: {
+    debug: 'stories'
   }
 };
 
