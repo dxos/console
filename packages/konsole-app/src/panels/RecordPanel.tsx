@@ -56,18 +56,12 @@ export const RecordPanel = () => {
   const [delayedSearch, setDelayedSearch] = useState(search);
 
   useEffect(() => {
-    const fetchRecordTypes = async () => {
-      setRecordTypes(await registryClient.getRecordTypes());
-    };
-    fetchRecordTypes();
-  }, [(registryClient as any).state]);
+    registryClient.getRecordTypes().then(setRecordTypes);
+  }, []);
 
   useEffect(() => {
-    const fetchRecords = async () => {
-      setRecords(await registryClient.queryRecords(undefined));
-    };
-    fetchRecords();
-  }, [recordTypes]);
+    registryClient.queryRecords().then(setRecords);
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => {
