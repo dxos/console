@@ -48,7 +48,7 @@ export class RegistryClient implements IRegistryClient {
     let records = (await this.api?.registry.getResources()) ?? [];
 
     if (query) {
-      records = records.filter(r => r.messageFqn === query.type);
+      records = records.filter(record => record.messageFqn === query.type);
     }
 
     return records.map(apiRecord => ({
