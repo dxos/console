@@ -67,7 +67,7 @@ const start = (config: IConfig) => {
 
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={new RegistryClient({ endpoint: config.registry.endpoint })}>
+      <RegistryContext.Provider value={new RegistryClient(config)}>
         <MuiThemeProvider theme={createCustomTheme(config)}>
           <CssBaseline />
           <Router>
