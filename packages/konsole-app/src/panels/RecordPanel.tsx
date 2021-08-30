@@ -55,13 +55,14 @@ export const RecordPanel = () => {
   const [search, setSearch] = useState('');
   const [delayedSearch, setDelayedSearch] = useState(search);
 
-  useEffect(() => {
+  function refreshData() {
+    setRecordTypes([]);
+    setRecords([]);
     registryClient.getRecordTypes().then(setRecordTypes);
-  }, []);
-
-  useEffect(() => {
     registryClient.queryRecords().then(setRecords);
-  }, []);
+  }
+
+  useEffect(refreshData, []);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -108,7 +109,7 @@ export const RecordPanel = () => {
           className={classes.iconButton}
           size='small'
           aria-label='refresh'
-          // onClick={refreshRecords} TODO (marcin): Fix refetching when fixing subscribing to the connect event.
+          onClick={refreshData}
         >
           <RefreshIcon />
         </IconButton>
