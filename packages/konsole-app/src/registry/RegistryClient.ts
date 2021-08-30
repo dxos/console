@@ -38,11 +38,11 @@ export class RegistryClient implements IRegistryClient {
 
   async getRecordTypes (): Promise<IRecordType[]> {
     const records = await this.api?.registry.getResources() ?? [];
-    const mapped = Object.values(Object.fromEntries(records.map(apiRecord => [apiRecord.messageFqn, ({
+    const mapped = records.map(apiRecord => ({
       type: apiRecord.messageFqn,
       label: apiRecord.messageFqn
-    })])));
-    return mapped;
+    }));
+    return Object.values(Object.fromEntries(mapped.map(record => [record.type, record])));
   }
 
   async queryRecords (query: IQuery | undefined): Promise<IRecord[]> {
