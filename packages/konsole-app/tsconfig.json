@@ -8,6 +8,7 @@
       "es2019"
     ]
   },
+  "files": ["version.json"],
   "include": [
     "src",
     "stories"

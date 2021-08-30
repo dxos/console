@@ -17,15 +17,12 @@ import {
 import { CssBaseline } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
-import config from './config';
+import { loadSubstrateConfig } from './config';
 import { Container, Sidebar } from './containers';
 import { ConfigContext, IConfig, RegistryContext } from './hooks';
 import { panels } from './panels';
-import { MockRegistryClient } from './testing';
 import { createCustomTheme } from './theme';
 
-const log = debug('dxos:console:main');
-debug.enable(config.system.debug);
 import { RegistryClient } from './registry/RegistryClient';
 
 /**
@@ -64,7 +61,9 @@ const Main = () => {
  * @param config
  */
 const start = (config: IConfig) => {
+  const log = debug('dxos:console:main');
   log('Starting...');
+  debug.enable(config.system.debug);
 
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
@@ -85,4 +84,4 @@ const start = (config: IConfig) => {
   ), document.getElementById('root'));
 };
 
-start(config);
+loadSubstrateConfig().then(start);

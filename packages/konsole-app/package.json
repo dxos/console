@@ -19,7 +19,7 @@
     "build": "webpack",
     "clean": "rm -rf ./dist",
     "lint": "eslint --format codeframe './src/**/*.ts'",
-    "start": "webpack serve --mode development",
+    "start": "webpack-dev-server",
     "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
@@ -34,6 +34,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "@dxos/config": "~2.10.2",
     "@dxos/gem-experimental": "^1.0.0-beta.33",
     "@dxos/react-ux": "2.10.10",
     "@material-ui/core": "^4.9.10",
