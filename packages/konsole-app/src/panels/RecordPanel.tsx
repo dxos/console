@@ -59,8 +59,7 @@ export const RecordPanel = () => {
     const fetchRecordTypes = async () => {
       setRecordTypes(await registryClient.getRecordTypes());
     };
-    // TODO(marcin): Create subscription to registry client being ready instead of retrying till it succeeds.
-    setTimeout(() => fetchRecordTypes(), 2000);
+    fetchRecordTypes();
   }, [(registryClient as any).state]);
 
   useEffect(() => {
