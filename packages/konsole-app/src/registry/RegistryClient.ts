@@ -19,10 +19,13 @@ export class RegistryClient implements IRegistryClient {
 
   constructor (config: IConfig) {
     this.config = config;
-    this.connect();
   }
 
   async connect () {
+    if (this.ready) {
+      return;
+    }
+
     const types = Object.values(definitions).reduce((res, { types }): object => ({ ...res, ...types }), {});
 
     const provider = new WsProvider(this.config.registry.endpoint);
@@ -39,18 +42,22 @@ export class RegistryClient implements IRegistryClient {
   }
 
   async getRecordTypes (): Promise<IRecordType[]> {
+    await this.connect();
+
     const records = await this.api?.registry.getResources() ?? [];
     const mapped = records.map(apiRecord => ({
       type: apiRecord.messageFqn,
       label: apiRecord.messageFqn
     }));
-    
+
     const distinct = Object.values(Object.fromEntries(mapped.map(record => [record.type, record])));
-    
+
     return distinct;
   }
 
   async queryRecords (query: IQuery | undefined): Promise<IRecord[]> {
+    await this.connect();
+
     let records = (await this.api?.registry.getResources()) ?? [];
 
     if (query) {
