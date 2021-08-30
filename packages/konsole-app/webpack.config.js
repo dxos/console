@@ -13,7 +13,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
-const CONFIG_FILE = path.relative('./src', process.env.CONFIG_FILE || 'config.yml');
+const { ConfigPlugin } = require('@dxos/config/ConfigPlugin');
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
@@ -62,6 +62,11 @@ module.exports = {
   },
 
   plugins: [
+    new ConfigPlugin({
+      path: path.resolve(__dirname, 'config'),
+      dynamic: process.env.CONFIG_DYNAMIC
+    }),
+
     new CopyWebPackPlugin({
       patterns: [
         {
@@ -88,11 +93,5 @@ module.exports = {
     new Dotenv({
       path: process.env.DOT_ENV || '.env'
     }),
-
-    // Define the build config file based on the target.
-    // https://webpack.js.org/plugins/normal-module-replacement-plugin
-    new webpack.NormalModuleReplacementPlugin(/(.*)__CONFIG_FILE__/, (resource) => {
-      resource.request = resource.request.replace(/__CONFIG_FILE__/, CONFIG_FILE);
-    })
   ]
 };
