@@ -11,7 +11,9 @@ import {
 } from '@material-ui/icons';
 
 import { RecordTable, RecordTypeSelector } from '../components';
-import { useRecordTypes, useRecords } from '../hooks';
+import {IRecord, IRecordType} from '../registry';
+import {RegistryClient} from "../registry/RegistryClient";
+import {useRegistryClient} from "../hooks";
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -47,11 +49,27 @@ const delay = 500;
  */
 export const RecordPanel = () => {
   const classes = useStyles();
-  const recordTypes = useRecordTypes();
-  const [recordType, setRecordType] = useState<string>(recordTypes[0].type);
+  const registryClient = useRegistryClient() as RegistryClient; // TODO (marcin): fix (abstraction) on connect fixing.
+  const [recordType, setRecordType] = useState<string>('');
+  const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
+  const [records, setRecords] = useState<IRecord[]>([]);
   const [search, setSearch] = useState('');
   const [delayedSearch, setDelayedSearch] = useState(search);
-  const [records, refreshRecords] = useRecords({ type: recordType, text: delayedSearch });
+
+  useEffect(() => {
+    const fetchRecordTypes = async () => {
+      setRecordTypes(await registryClient.getRecordTypes());
+    };
+    // TODO(marcin): Create subscription to registry client being ready instead of retrying till it succeeds.
+    setTimeout(() => fetchRecordTypes(), 2000);
+  }, [(registryClient as any).state]);
+
+  useEffect(() => {
+    const fetchRecords = async () => {
+      setRecords(await registryClient.queryRecords(undefined));
+    };
+    fetchRecords();
+  }, [recordTypes]);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -97,7 +115,7 @@ export const RecordPanel = () => {
           className={classes.iconButton}
           size='small'
           aria-label='refresh'
-          onClick={refreshRecords}
+          // onClick={refreshRecords} TODO (marcin): Fix refetching when fixing subscribing to the connect event.
         >
           <RefreshIcon />
         </IconButton>

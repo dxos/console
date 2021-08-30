@@ -88,6 +88,6 @@ export class MockRegistryClient implements IRegistryClient {
       })
       .sort((v1, v2) => {
         return sortDateStrings(v1.created, v2.created);
-      }));
+      })));
   }
 }

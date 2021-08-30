@@ -53,9 +53,12 @@ export class RegistryClient implements IRegistryClient {
 
     return records.map(apiRecord => ({
       cid: apiRecord.cid.toB58String(),
+      created: Date.now().toString(), // apiRecord.data?.attributes?.created, TODO (marcin): Fix date unwrapping from the DTO.
       name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
       type: apiRecord.messageFqn,
-      title: apiRecord.data?.attributes?.name
+      title: apiRecord.data?.attributes?.name,
+      // TODO (marcin): Fix the hardcode below
+      url: `https://enterprise.kube.dxos.network/app/${apiRecord.id.domain}:${apiRecord.id.resource}`
     }));
   }
 }

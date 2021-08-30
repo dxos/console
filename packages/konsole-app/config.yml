@@ -9,6 +9,8 @@ app:
   theme: 'dark'
   website: 'https://dxos.org'
   publicUrl: '/console'
+registry:
+  endpoint: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
 
 api:
   server: 'https://kube.local'
