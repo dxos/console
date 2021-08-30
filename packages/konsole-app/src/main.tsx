@@ -68,15 +68,13 @@ const start = (config: IConfig) => {
 
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={new MockRegistryClient()}>
+      <RegistryContext.Provider value={new RegistryClient({ endpoint: config.registry.endpoint })}>
         <MuiThemeProvider theme={createCustomTheme(config)}>
           <CssBaseline />
           <Router>
             <Switch>
               <Route path='/:panel'>
-                <RegistryContext.Provider value={new RegistryClient({ endpoint: config.registry.endpoint })}>
-                  <Main />
-                </RegistryContext.Provider>
+                <Main />
               </Route>
               <Redirect to={panels[0].path} />
             </Switch>
