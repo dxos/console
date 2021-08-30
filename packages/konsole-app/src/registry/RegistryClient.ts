@@ -42,7 +42,10 @@ export class RegistryClient implements IRegistryClient {
       type: apiRecord.messageFqn,
       label: apiRecord.messageFqn
     }));
-    return Object.values(Object.fromEntries(mapped.map(record => [record.type, record])));
+    
+    const distinct = Object.values(Object.fromEntries(mapped.map(record => [record.type, record])));
+    
+    return distinct;
   }
 
   async queryRecords (query: IQuery | undefined): Promise<IRecord[]> {
