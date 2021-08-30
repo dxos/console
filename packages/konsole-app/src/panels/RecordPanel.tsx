@@ -12,7 +12,6 @@ import {
 
 import { RecordTable, RecordTypeSelector } from '../components';
 import {IRecord, IRecordType} from '../registry';
-import {RegistryClient} from "../registry/RegistryClient";
 import {useRegistryClient} from "../hooks";
 
 const useStyles = makeStyles(theme => ({
@@ -49,7 +48,7 @@ const delay = 500;
  */
 export const RecordPanel = () => {
   const classes = useStyles();
-  const registryClient = useRegistryClient() as RegistryClient; // TODO (marcin): fix (abstraction) on connect fixing.
+  const registryClient = useRegistryClient();
   const [recordType, setRecordType] = useState<string>('');
   const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
   const [records, setRecords] = useState<IRecord[]>([]);
@@ -88,6 +87,7 @@ export const RecordPanel = () => {
         <RecordTypeSelector
           types={recordTypes}
           type={recordType}
+          // TODO(vitalik): Fix refetching with filtering on type change.
           onTypeChange={type => setRecordType(type)}
         />
         <TextField

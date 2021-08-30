@@ -15,7 +15,6 @@ export interface IConfig {
   }
 }
 
-// TODO(marcin) -> load config as in Console2
 export const ConfigContext = createContext<IConfig | undefined>(undefined);
 
 export const useConfig = (): IConfig => {
