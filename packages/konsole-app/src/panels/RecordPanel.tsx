@@ -56,19 +56,12 @@ export const RecordPanel = () => {
   const [delayedSearch, setDelayedSearch] = useState(search);
 
   useEffect(() => {
-    const fetchRecordTypes = async () => {
-      setRecordTypes(await registryClient.getRecordTypes());
-    };
-    // TODO(marcin): Create subscription to registry client being ready instead of retrying till it succeeds.
-    setTimeout(() => fetchRecordTypes(), 2000);
-  }, [(registryClient as any).state]);
+    registryClient.getRecordTypes().then(setRecordTypes);
+  }, []);
 
   useEffect(() => {
-    const fetchRecords = async () => {
-      setRecords(await registryClient.queryRecords(undefined));
-    };
-    fetchRecords();
-  }, [recordTypes]);
+    registryClient.queryRecords().then(setRecords);
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => {
