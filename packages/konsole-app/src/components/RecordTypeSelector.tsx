@@ -10,7 +10,7 @@ import { IRecordType } from '../registry';
 
 interface RecordTypeSelectorProperties {
   types: IRecordType[]
-  type: string
+  type?: string
   onTypeChange: (type: string) => void
 }
 
