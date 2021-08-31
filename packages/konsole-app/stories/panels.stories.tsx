@@ -31,6 +31,12 @@ const config: IConfig = {
   registry: {
     endpoint: ''
   },
+  services: {
+    app: {
+      prefix: 'test-prefix',
+      server: 'test-server'
+    }
+  },
   system: {
     debug: 'stories'
   }

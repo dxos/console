@@ -62,12 +62,12 @@ const Main = () => {
  */
 const start = (config: IConfig) => {
   const log = debug('dxos:console:main');
-  log('Starting...');
+  log('Starting...', {config});
   debug.enable(config.system.debug);
 
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={new RegistryClient({ endpoint: config.registry.endpoint })}>
+      <RegistryContext.Provider value={new RegistryClient(config)}>
         <MuiThemeProvider theme={createCustomTheme(config)}>
           <CssBaseline />
           <Router>

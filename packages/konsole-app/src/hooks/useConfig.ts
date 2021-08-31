@@ -13,6 +13,12 @@ export interface IConfig {
   registry: {
     endpoint: string
   },
+  services: {
+    app: {
+      server: string,
+      prefix: string
+    }
+  },
   system: {
     debug: string
   }
