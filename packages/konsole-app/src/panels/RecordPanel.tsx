@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const delay = 500;
+const delay = 100;
 
 /**
  * Display records panel
@@ -57,14 +57,13 @@ export const RecordPanel = () => {
 
   function refreshData() {
     (async function() {
-      setRecordTypes([]);
       setRecords([]);
       setRecordTypes(await registryClient.getRecordTypes());
-      setRecords(await registryClient.queryRecords({ type: recordType }));
+      setRecords(await registryClient.queryRecords({ type: recordType, text: delayedSearch }));
     })();
   }
 
-  useEffect(refreshData, [recordType]);
+  useEffect(refreshData, [recordType, delayedSearch]);
 
   useEffect(() => {
     const t = setTimeout(() => {
