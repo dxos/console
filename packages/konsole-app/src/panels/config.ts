@@ -5,7 +5,7 @@
 import { ComponentType } from 'react';
 
 import { ConfigPanel } from './ConfigPanel';
-import { NetworkPanel } from './NetworkPanel';
+// import { NetworkPanel } from './NetworkPanel';
 import { RecordPanel } from './RecordPanel';
 
 export interface IPanel {
@@ -22,12 +22,12 @@ export const panelConfig: IPanel[] = [
     component: RecordPanel,
     icon: RecordPanel.Icon
   },
-  {
-    path: '/network',
-    label: 'Network',
-    component: NetworkPanel,
-    icon: NetworkPanel.Icon
-  },
+  // {
+  //   path: '/network',
+  //   label: 'Network',
+  //   component: NetworkPanel,
+  //   icon: NetworkPanel.Icon
+  // },
   {
     path: '/config',
     label: 'Config',
