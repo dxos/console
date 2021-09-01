@@ -58,13 +58,13 @@ export class RegistryClient implements IRegistryClient {
   async queryRecords (query: IQuery | undefined): Promise<IRecord[]> {
     await this.connect();
 
-    let records = (await this.api?.registry.getResources()) ?? [];
+    let resources = (await this.api?.registry.getResources()) ?? [];
 
-    if (query) {
-      records = records.filter(record => record.messageFqn === query.type);
+    if (query?.type) {
+      resources = resources.filter(resource => resource.messageFqn === query.type);
     }
 
-    return records.map(apiRecord => ({
+    let records = resources.map(apiRecord => ({
       cid: apiRecord.cid.toB58String(),
       created: Date.now().toString(), // apiRecord.data?.attributes?.created, TODO (marcin): Fix date unwrapping from the DTO.
       name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
@@ -75,5 +75,12 @@ export class RegistryClient implements IRegistryClient {
           this.config.services.app.prefix,
           `${apiRecord.id.domain}:${apiRecord.id.resource}`)
     }));
+
+    const search = query?.text;
+    if (search) {
+      records = records.filter(record => (record.title + ' ' + record.name).match(search));
+    }
+
+    return records;
   }
 }
