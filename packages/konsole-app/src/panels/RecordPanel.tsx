@@ -49,20 +49,22 @@ const delay = 500;
 export const RecordPanel = () => {
   const classes = useStyles();
   const registryClient = useRegistryClient();
-  const [recordType, setRecordType] = useState<string>('');
+  const [recordType, setRecordType] = useState<string | undefined>(undefined);
   const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
   const [records, setRecords] = useState<IRecord[]>([]);
   const [search, setSearch] = useState('');
   const [delayedSearch, setDelayedSearch] = useState(search);
 
   function refreshData() {
-    setRecordTypes([]);
-    setRecords([]);
-    registryClient.getRecordTypes().then(setRecordTypes);
-    registryClient.queryRecords().then(setRecords);
+    (async function() {
+      setRecordTypes([]);
+      setRecords([]);
+      setRecordTypes(await registryClient.getRecordTypes());
+      setRecords(await registryClient.queryRecords({ type: recordType }));
+    })();
   }
 
-  useEffect(refreshData, []);
+  useEffect(refreshData, [recordType]);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -81,7 +83,6 @@ export const RecordPanel = () => {
         <RecordTypeSelector
           types={recordTypes}
           type={recordType}
-          // TODO(vitalik): Fix refetching with filtering on type change.
           onTypeChange={type => setRecordType(type)}
         />
         <TextField
