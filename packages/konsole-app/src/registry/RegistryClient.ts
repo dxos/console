@@ -60,7 +60,7 @@ export class RegistryClient implements IRegistryClient {
 
     let resources = (await this.api?.registry.getResources()) ?? [];
 
-    if (query?.type) {
+    if (query?.type !== undefined) {
       resources = resources.filter(resource => resource.messageFqn === query.type);
     }
 

@@ -11,10 +11,23 @@ import { IRecordType } from '../registry';
 interface RecordTypeSelectorProperties {
   types: IRecordType[]
   type?: string
-  onTypeChange: (type: string) => void
+  onTypeChange: (type: string | undefined) => void
 }
 
-export const RecordTypeSelector = ({ types, type: selected, onTypeChange }: RecordTypeSelectorProperties) => {
+const allType = 'all';
+
+export const RecordTypeSelector = ({ types, type: selectedRaw, onTypeChange }: RecordTypeSelectorProperties) => {
+  const selected = selectedRaw ?? allType;
+  const makeButton = ({ type, label }: IRecordType) => (
+    <Button
+    key={type}
+    variant={type === selected ? 'contained' : 'outlined'}
+    onClick={() => onTypeChange(type === allType ? undefined : type)}
+      >
+      {label}
+    </Button>
+  );
+
   return (
     <ButtonGroup
       disableRipple
@@ -23,15 +36,8 @@ export const RecordTypeSelector = ({ types, type: selected, onTypeChange }: Reco
       size='small'
       aria-label='text primary button group'
     >
-      {types.map(({ type, label }) => (
-        <Button
-          key={type}
-          variant={type === selected ? 'contained' : 'outlined'}
-          onClick={() => onTypeChange(type)}
-        >
-          {label}
-        </Button>
-      ))}
+      {makeButton({type: 'all', label: 'All'})}
+      {types.map(makeButton)}
     </ButtonGroup>
   );
 };
