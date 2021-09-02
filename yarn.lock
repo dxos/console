@@ -7518,6 +7518,13 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
 
+"@types/proper-url-join@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@types/proper-url-join/-/proper-url-join-2.1.1.tgz#e78f6cc7306f1140c5cac2fddf253070ecbdda85"
+  integrity sha512-OfcRK+o4tTHLwhB07ENYTeKZfzRn4ci4vOalLmdDraCYAcJxJJzvpxo0hLxExRM/QIuGzcF09pNeYol6hiyCXQ==
+  dependencies:
+    query-string "^6.3.0"
+
 "@types/pump@^1.1.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/pump/-/pump-1.1.1.tgz#edb3475e2bad0f4552bdaa91c6c43b82e08ff15e"
@@ -25310,6 +25317,13 @@ proper-lockfile@^4.1.1:
     retry "^0.12.0"
     signal-exit "^3.0.2"
 
+proper-url-join@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/proper-url-join/-/proper-url-join-2.1.1.tgz#ee4146edc08f512a0ee1053a355e06950691d06f"
+  integrity sha512-40x6taKMwsDn4TrWx4YvnVxv5mO1O9KUrbK/jx8N0oDYf38ZFUK/OHNSAwTvu7Aj+cQcjBuf5aDh5R328YrrXg==
+  dependencies:
+    query-string "^6.3.0"
+
 property-information@^5.0.0, property-information@^5.3.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/property-information/-/property-information-5.6.0.tgz#61675545fb23002f245c6540ec46077d4da3ed69"
@@ -25572,7 +25586,7 @@ query-string@^5.0.1:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-query-string@^6.12.1, query-string@^6.13.8:
+query-string@^6.12.1, query-string@^6.13.8, query-string@^6.3.0:
   version "6.14.1"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.14.1.tgz#7ac2dca46da7f309449ba0f86b1fd28255b0c86a"
   integrity sha512-XDxAeVmpfu1/6IjyT/gXHOl+S0vQ9owggJ30hhWKdHAsNPOcasn5o9BW0eejZqL2e4vMjhAxoW3jVHcD6mbcYw==
@@ -30688,10 +30702,8 @@ watchpack@^1.6.0, watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"

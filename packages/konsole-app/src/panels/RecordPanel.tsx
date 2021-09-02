@@ -2,17 +2,14 @@
 // Copyright 2021 DXOS.org
 //
 
-import React, { useEffect, useState } from 'react';
+import React, {useState} from 'react';
 
-import { makeStyles, IconButton, Toolbar, TextField, Divider } from '@material-ui/core';
-import {
-  Clear as ClearIcon,
-  Sync as RefreshIcon
-} from '@material-ui/icons';
+import {Divider, IconButton, makeStyles, TextField, Toolbar} from '@material-ui/core';
+import {Clear as ClearIcon} from '@material-ui/icons';
 
-import { RecordTable, RecordTypeSelector } from '../components';
-import {IRecord, IRecordType} from '../registry';
-import {useRegistryClient} from "../hooks";
+import {RecordTable, RecordTypeSelector} from '../components';
+import {useConfig, useResources} from "../hooks";
+import {mapRecords, mapRecordsTypes} from "../registry";
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -40,40 +37,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const delay = 500;
-
 /**
  * Display records panel
  * @constructor
  */
 export const RecordPanel = () => {
   const classes = useStyles();
-  const registryClient = useRegistryClient();
+  const config = useConfig();
+
   const [recordType, setRecordType] = useState<string>('');
-  const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
-  const [records, setRecords] = useState<IRecord[]>([]);
   const [search, setSearch] = useState('');
-  const [delayedSearch, setDelayedSearch] = useState(search);
 
-  function refreshData() {
-    setRecordTypes([]);
-    setRecords([]);
-    registryClient.getRecordTypes().then(setRecordTypes);
-    registryClient.queryRecords().then(setRecords);
-  }
+  const resources = useResources();
 
-  useEffect(refreshData, []);
-
-  useEffect(() => {
-    const t = setTimeout(() => {
-      clearTimeout(t);
-      setDelayedSearch(search);
-    }, delay);
-
-    return () => {
-      clearTimeout(t);
-    }
-  }, [search])
+  const recordTypes = mapRecordsTypes(resources);
+  const records = mapRecords(resources, {text: search, type: recordType}, config);
 
   return (
     <>
@@ -81,7 +59,6 @@ export const RecordPanel = () => {
         <RecordTypeSelector
           types={recordTypes}
           type={recordType}
-          // TODO(vitalik): Fix refetching with filtering on type change.
           onTypeChange={type => setRecordType(type)}
         />
         <TextField
@@ -98,21 +75,12 @@ export const RecordPanel = () => {
           aria-label='search'
           onClick={() => {
             setSearch('');
-            setDelayedSearch('');
           }}
         >
           <ClearIcon />
         </IconButton>
         <div className={classes.expand} />
         <Divider className={classes.divider} orientation="vertical" />
-        <IconButton
-          className={classes.iconButton}
-          size='small'
-          aria-label='refresh'
-          onClick={refreshData}
-        >
-          <RefreshIcon />
-        </IconButton>
       </Toolbar>
       <div className={classes.panel}>
         <RecordTable records={records} />

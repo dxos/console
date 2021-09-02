@@ -8,6 +8,7 @@ import { makeStyles, Paper } from '@material-ui/core';
 
 import { IConfig, RecordPanel, ConfigPanel, ConfigContext, RegistryContext } from '../src';
 import { MockRegistryClient } from '../src/testing';
+import { IDxnsApi } from '@dxos/registry-api';
 
 // TODO(burdon): Module not found: Error: [CaseSensitivePathsPlugin]
 // https://github.com/storybookjs/storybook/issues/7704
@@ -59,7 +60,7 @@ export const Records = () => {
 
   return (
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={new MockRegistryClient()}>
+      <RegistryContext.Provider value={{} as IDxnsApi}>
         <Paper className={classes.root}>
           <RecordPanel />
         </Paper>
