@@ -66,7 +66,7 @@ export class RegistryClient implements IRegistryClient {
 
     let records = resources.map(apiRecord => ({
       cid: apiRecord.cid.toB58String(),
-      created: Date.now().toString(), // apiRecord.data?.attributes?.created, TODO (marcin): Fix date unwrapping from the DTO.
+      created: apiRecord.data?.attributes?.created,
       name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
       type: apiRecord.messageFqn,
       title: apiRecord.data?.attributes?.name,
