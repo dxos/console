@@ -10,8 +10,8 @@ import { IRecordType } from '../registry';
 
 interface RecordTypeSelectorProperties {
   types: IRecordType[]
-  type: string
-  onTypeChange: (type: string) => void
+  type?: string
+  onTypeChange: (type: string | undefined) => void
 }
 
 export const RecordTypeSelector = ({ types, type: selected, onTypeChange }: RecordTypeSelectorProperties) => {
@@ -23,7 +23,13 @@ export const RecordTypeSelector = ({ types, type: selected, onTypeChange }: Reco
       size='small'
       aria-label='text primary button group'
     >
-      {types.map(({ type, label }) => (
+      <Button
+        variant={undefined === selected ? 'contained' : 'outlined'}
+        onClick={() => onTypeChange(undefined)}
+      >
+        all
+      </Button>
+      {types.map(({ type, label }: IRecordType) => (
         <Button
           key={type}
           variant={type === selected ? 'contained' : 'outlined'}
@@ -31,7 +37,8 @@ export const RecordTypeSelector = ({ types, type: selected, onTypeChange }: Reco
         >
           {label}
         </Button>
-      ))}
+      )
+      )}
     </ButtonGroup>
   );
 };

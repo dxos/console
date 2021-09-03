@@ -11,6 +11,7 @@ const VersionFile = require('webpack-version-file-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
+const distDir = path.join(__dirname, 'dist');
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 const { ConfigPlugin } = require('@dxos/config/ConfigPlugin');
@@ -21,7 +22,7 @@ module.exports = {
   devtool: isDevelopment ? 'eval-source-map' : false,
 
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
+    contentBase: distDir,
     compress: true,
     disableHostCheck: true,
     hotOnly: true,
@@ -36,7 +37,7 @@ module.exports = {
 
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: distDir,
     publicPath: PUBLIC_URL
   },
 
@@ -86,7 +87,7 @@ module.exports = {
     new VersionFile({
       template: path.join(__dirname, 'version.ejs'),
       packageFile: path.join(__dirname, 'package.json'),
-      outputFile: path.join(__dirname, 'version.json')
+      outputFile: path.join(distDir, 'version.json')
     }),
 
     // https://www.npmjs.com/package/dotenv-webpack#properties
