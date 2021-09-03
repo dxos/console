@@ -14,20 +14,7 @@ interface RecordTypeSelectorProperties {
   onTypeChange: (type: string | undefined) => void
 }
 
-const allType = 'all';
-
-export const RecordTypeSelector = ({ types, type: selectedRaw, onTypeChange }: RecordTypeSelectorProperties) => {
-  const selected = selectedRaw ?? allType;
-  const makeButton = ({ type, label }: IRecordType) => (
-    <Button
-    key={type}
-    variant={type === selected ? 'contained' : 'outlined'}
-    onClick={() => onTypeChange(type === allType ? undefined : type)}
-      >
-      {label}
-    </Button>
-  );
-
+export const RecordTypeSelector = ({ types, type: selected, onTypeChange }: RecordTypeSelectorProperties) => {
   return (
     <ButtonGroup
       disableRipple
@@ -36,8 +23,22 @@ export const RecordTypeSelector = ({ types, type: selectedRaw, onTypeChange }: R
       size='small'
       aria-label='text primary button group'
     >
-      {makeButton({type: 'all', label: 'All'})}
-      {types.map(makeButton)}
+      <Button
+        variant={undefined === selected ? 'contained' : 'outlined'}
+        onClick={() => onTypeChange(undefined)}
+      >
+        all
+      </Button>
+      {types.map(({ type, label }: IRecordType) => (
+        <Button
+          key={type}
+          variant={type === selected ? 'contained' : 'outlined'}
+          onClick={() => onTypeChange(type)}
+        >
+          {label}
+        </Button>
+      )
+      )}
     </ButtonGroup>
   );
 };
