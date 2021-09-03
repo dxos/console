@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const delay = 100;
+const delay = 500;
 
 /**
  * Display records panel
