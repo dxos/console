@@ -2,14 +2,14 @@
 // Copyright 2021 DXOS.org
 //
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-import {Divider, IconButton, makeStyles, TextField, Toolbar} from '@material-ui/core';
-import {Clear as ClearIcon} from '@material-ui/icons';
+import { Divider, IconButton, makeStyles, TextField, Toolbar } from '@material-ui/core';
+import { Clear as ClearIcon } from '@material-ui/icons';
 
-import {RecordTable, RecordTypeSelector} from '../components';
-import {useConfig, useResources} from "../hooks";
-import {mapRecords, mapRecordsTypes} from "../registry";
+import { RecordTable, RecordTypeSelector } from '../components';
+import { useConfig, useResources } from '../hooks';
+import { mapRecords, mapRecordsTypes } from '../registry';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -51,7 +51,7 @@ export const RecordPanel = () => {
   const resources = useResources();
 
   const recordTypes = mapRecordsTypes(resources);
-  const records = mapRecords(resources, {text: search, type: recordType}, config);
+  const records = mapRecords(resources, { text: search, type: recordType }, config);
 
   return (
     <>

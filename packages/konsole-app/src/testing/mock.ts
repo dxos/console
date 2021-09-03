@@ -54,7 +54,7 @@ const createMockRecord = () => {
     title: faker.commerce.productName(),
     url: type === 'app' ? faker.internet.url() : undefined
   };
-}
+};
 
 const createMockRecords = () => Array.from({ length: 30 }).map(createMockRecord);
 

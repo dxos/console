@@ -1,14 +1,20 @@
-import { Resource } from "@dxos/registry-api";
-import {useEffect, useState} from "react";
-import {useRegistryClient} from "./useRegistry";
+//
+// Copyright 2021 DXOS.org
+//
 
-export function useResources(): Resource[] {
-    const [resources, setResources] = useState<Resource[]>([]);
-    const registryClient = useRegistryClient();
+import { useEffect, useState } from 'react';
 
-    useEffect(function () {
-        registryClient.registry.getResources().then(setResources);
-    }, []);
+import { Resource } from '@dxos/registry-api';
 
-    return resources;
+import { useRegistryClient } from './useRegistry';
+
+export function useResources (): Resource[] {
+  const [resources, setResources] = useState<Resource[]>([]);
+  const registryClient = useRegistryClient();
+
+  useEffect(function () {
+    void registryClient.registry.getResources().then(setResources);
+  }, []);
+
+  return resources;
 }
