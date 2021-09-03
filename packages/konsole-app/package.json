@@ -18,7 +18,7 @@
   "scripts": {
     "build": "webpack",
     "clean": "rm -rf ./dist",
-    "lint": "eslint --format codeframe './src/**/*.ts'",
+    "lint": "eslint --fix --format codeframe './src/**/*.ts'",
     "start": "webpack serve",
     "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
     "ci": "npm run build && npm run test",
