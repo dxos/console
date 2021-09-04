@@ -4,17 +4,17 @@
 
 import { useEffect, useState } from 'react';
 
-import { Resource } from '@dxos/registry-api';
+import { IQuery, Resource } from '@dxos/registry-api';
 
 import { useRegistryClient } from './useRegistry';
 
-export function useResources (): Resource[] {
+export function useResources (query?: IQuery): Resource[] {
   const [resources, setResources] = useState<Resource[]>([]);
   const registryClient = useRegistryClient();
 
   useEffect(function () {
-    void registryClient.registry.getResources().then(setResources);
-  }, []);
+    void registryClient.registry.getResources(query).then(setResources);
+  }, [query]);
 
   return resources;
 }

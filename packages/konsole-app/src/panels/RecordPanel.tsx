@@ -2,14 +2,15 @@
 // Copyright 2021 DXOS.org
 //
 
+import urlJoin from 'proper-url-join';
 import React, { useState } from 'react';
 
 import { Divider, IconButton, makeStyles, TextField, Toolbar } from '@material-ui/core';
 import { Clear as ClearIcon } from '@material-ui/icons';
 
+import { Resource } from '../../../../../dot/registry-api';
 import { RecordTable, RecordTypeSelector } from '../components';
-import { useConfig, useResources } from '../hooks';
-import { mapRecords, mapRecordsTypes } from '../registry';
+import { IConfig, useConfig, useResources } from '../hooks';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -37,6 +38,44 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+export interface IRecordType {
+  type: string
+  label: string
+}
+
+export function mapRecordsTypes (records: Resource[]): IRecordType[] {
+  const mapped = records.map(apiRecord => ({
+    type: apiRecord.messageFqn,
+    label: apiRecord.messageFqn
+  }));
+
+  return Object.values(Object.fromEntries(mapped.map(record => [record.type, record])));
+}
+
+export interface IRecord {
+  cid: string
+  created: number
+  name: string
+  type: string
+  title: string
+  url?: string
+}
+
+export function mapRecords (records: Resource[], config: IConfig): IRecord[] {
+  return records.map(apiRecord => ({
+    cid: apiRecord.cid.toB58String(),
+    // TODO (marcin): Currently registry API does not expose that. Add that to the DTO.
+    created: apiRecord.data?.attributes?.created ?? Date.now(),
+    name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
+    type: apiRecord.messageFqn,
+    title: apiRecord.data?.attributes?.name,
+    url: urlJoin(
+      config.services.app.server,
+      config.services.app.prefix,
+        `${apiRecord.id.domain}:${apiRecord.id.resource}`)
+  }));
+}
+
 /**
  * Display records panel
  * @constructor
@@ -45,13 +84,17 @@ export const RecordPanel = () => {
   const classes = useStyles();
   const config = useConfig();
 
-  const [recordType, setRecordType] = useState<string>('');
+  const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
+  const [recordType, setRecordType] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState('');
 
-  const resources = useResources();
+  const resources = useResources({ type: recordType, text: search });
 
-  const recordTypes = mapRecordsTypes(resources);
-  const records = mapRecords(resources, { text: search, type: recordType }, config);
+  const newRecordTypes = mapRecordsTypes(resources);
+  if (newRecordTypes.length > recordTypes.length) {
+    setRecordTypes(newRecordTypes);
+  }
+  const records = mapRecords(resources, config);
 
   return (
     <>

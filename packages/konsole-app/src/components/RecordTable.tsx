@@ -8,7 +8,7 @@ import { makeStyles, IconButton, Link } from '@material-ui/core';
 import { DataGrid, GridColDef, GridCellParams } from '@material-ui/data-grid';
 import { Launch as LaunchIcon } from '@material-ui/icons';
 
-import { IRecord } from '../registry';
+import { IRecord } from '../panels';
 import { getRelativeTime, sortDateStrings } from '../util';
 
 interface RecordsTableProperties {

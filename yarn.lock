@@ -2935,10 +2935,10 @@
     lodash.isplainobject "^4.0.6"
     uuid "^3.3.3"
 
-"@dxos/registry-api@~0.1.1-alpha.2":
-  version "0.1.1-alpha.2"
-  resolved "https://registry.yarnpkg.com/@dxos/registry-api/-/registry-api-0.1.1-alpha.2.tgz#14f550c3381eb04bf8f0e05c3d8d924261ef0505"
-  integrity sha512-RObgZPyDP9078RNOBvyhAm9pGzRVqGZA/OHRgcqELP6B5PLnipthDlgDbTXkSuJxWhrh/ZJdSKVkVUf19aTxUA==
+"@dxos/registry-api@~0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@dxos/registry-api/-/registry-api-0.2.0.tgz#2c4fed65c9f63a5c98d420139a0b154ffce50e2c"
+  integrity sha512-kHtsVoAttbt3ZyB2w413+RCgPvPBY4hbQHbX6Ll1BHrkBgstFER5hbCGY1t34/l0kD6PVdFBaq0ZjNACvw09Pg==
   dependencies:
     "@dxos/util" "^2.4.0"
     "@polkadot/api" "4.17.1"
