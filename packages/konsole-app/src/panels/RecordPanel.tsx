@@ -3,10 +3,10 @@
 //
 
 import urlJoin from 'proper-url-join';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Divider, IconButton, makeStyles, TextField, Toolbar } from '@material-ui/core';
-import { Clear as ClearIcon } from '@material-ui/icons';
+import { Clear as ClearIcon, Sync as RefreshIcon } from '@material-ui/icons';
 
 import { Resource } from '../../../../../dot/registry-api';
 import { RecordTable, RecordTypeSelector } from '../components';
@@ -38,6 +38,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const delay = 500;
+
 export interface IRecordType {
   type: string
   label: string
@@ -63,7 +65,7 @@ export interface IRecord {
 
 export function mapRecords (records: Resource[], config: IConfig): IRecord[] {
   return records.map(apiRecord => ({
-    cid: apiRecord.cid?.toB58String() ?? 'entry',
+    cid: apiRecord.cid.toB58String(),
     // TODO (marcin): Currently registry API does not expose that. Add that to the DTO.
     created: apiRecord.data?.attributes?.created ?? Date.now(),
     name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
@@ -87,7 +89,8 @@ export const RecordPanel = () => {
   const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
   const [recordType, setRecordType] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState('');
-  const query = useMemo(() => ({ type: recordType, text: search }), [recordType, search]);
+  const [delayedSearch, setDelayedSearch] = useState(search);
+  const query = useMemo(() => ({ type: recordType, text: delayedSearch }), [recordType, delayedSearch]);
 
   const resources = useResources(query);
 
@@ -96,6 +99,22 @@ export const RecordPanel = () => {
     setRecordTypes(newRecordTypes);
   }
   const records = mapRecords(resources, config);
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      clearTimeout(t);
+      setDelayedSearch(search);
+    }, delay);
+
+    return () => {
+      clearTimeout(t);
+    };
+  }, [search]);
+
+  function refreshData () {
+    setRecordType(undefined);
+    setSearch('');
+  }
 
   return (
     <>
@@ -119,12 +138,21 @@ export const RecordPanel = () => {
           aria-label='search'
           onClick={() => {
             setSearch('');
+            setDelayedSearch('');
           }}
         >
           <ClearIcon />
         </IconButton>
         <div className={classes.expand} />
         <Divider className={classes.divider} orientation="vertical" />
+        <IconButton
+            className={classes.iconButton}
+            size='small'
+            aria-label='refresh'
+            onClick={refreshData}
+        >
+          <RefreshIcon />
+        </IconButton>
       </Toolbar>
       <div className={classes.panel}>
         <RecordTable records={records} />
