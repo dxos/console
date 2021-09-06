@@ -68,7 +68,7 @@ export function mapRecords (records: Resource[], config: IConfig): IRecord[] {
   return records.map(apiRecord => ({
     cid: apiRecord.cid.toB58String(),
     // TODO (marcin): Currently registry API does not expose that. Add that to the DTO.
-    created: apiRecord.data?.attributes?.created ?? Date.now(),
+    created: apiRecord.data?.attributes?.created,
     name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
     type: apiRecord.messageFqn,
     title: apiRecord.data?.attributes?.name,
@@ -93,7 +93,7 @@ export const RecordPanel = () => {
   const [delayedSearch, setDelayedSearch] = useState(search);
   const query = useMemo(() => ({ type: recordType, text: delayedSearch }), [recordType, delayedSearch]);
 
-  const resources = useResources(query);
+  const resources = useResources(query) ?? [];
 
   const newRecordTypes = mapRecordsTypes(resources);
   if (newRecordTypes.length > recordTypes.length) {
