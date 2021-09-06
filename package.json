@@ -10,6 +10,7 @@
     "lint:fix": "lerna run lint -- --fix",
     "lint:staged": "lint-staged",
     "sort-package-json": "lerna exec npx sort-package-json",
+    "ci": "lerna run ci",
     "test": "lerna run test"
   },
   "author": "DXOS.org",

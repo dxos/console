@@ -23,9 +23,7 @@ jobs:
           git config --global user.name "DXOS"
 
           yarn install
-          yarn build
-          yarn test
-          yarn lint
+          yarn ci
 
           # Uncomment for NPM publishing.
           npm whoami
