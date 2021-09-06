@@ -2,12 +2,16 @@
 // Copyright 2021 DXOS.org
 //
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext } from 'react';
 
-import { IQuery, IRecord, IRecordType, IRegistryClient } from '../registry';
+import { IDxnsApi } from '@dxos/registry-api';
 
-export const RegistryContext = createContext<IRegistryClient | undefined>(undefined);
+export const RegistryContext = createContext<IDxnsApi | undefined>(undefined);
 
-export const useRegistryClient = (): IRegistryClient => {
-  return useContext(RegistryContext)!;
+export const useRegistryClient = (): IDxnsApi => {
+  const api = useContext(RegistryContext);
+  if (!api) {
+    throw new Error('DxnsApi not provided');
+  }
+  return api;
 };

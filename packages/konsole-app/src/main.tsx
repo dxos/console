@@ -16,14 +16,13 @@ import {
 
 import { CssBaseline } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import { DxnsApi } from '@dxos/registry-api';
 
 import { loadSubstrateConfig } from './config';
 import { Container, Sidebar } from './containers';
 import { ConfigContext, IConfig, RegistryContext } from './hooks';
 import { panels } from './panels';
 import { createCustomTheme } from './theme';
-
-import { RegistryClient } from './registry/RegistryClient';
 
 /**
  * Main app container.
@@ -60,14 +59,16 @@ const Main = () => {
  * React app bootstrap (providers and top-level routes).
  * @param config
  */
-const start = (config: IConfig) => {
+const start = async (config: IConfig) => {
   const log = debug('dxos:console:main');
   log('Starting...', {config});
   debug.enable(config.system.debug);
 
+  const dxnsApi = await DxnsApi.create(config.registry.endpoint);
+
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={new RegistryClient(config)}>
+      <RegistryContext.Provider value={dxnsApi}>
         <MuiThemeProvider theme={createCustomTheme(config)}>
           <CssBaseline />
           <Router>

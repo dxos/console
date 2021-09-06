@@ -6,7 +6,7 @@ import React from 'react';
 
 import { Button, ButtonGroup } from '@material-ui/core';
 
-import { IRecordType } from '../registry';
+import { IRecordType } from '../panels';
 
 interface RecordTypeSelectorProperties {
   types: IRecordType[]

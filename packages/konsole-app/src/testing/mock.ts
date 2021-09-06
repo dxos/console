@@ -6,8 +6,20 @@ import debug from 'debug';
 // TODO(burdon): v5 clashes with HtmlWebpackPlugin (Error: [CaseSensitivePathsPlugin])
 import faker from 'faker';
 
-import { IQuery, IRecord, IRecordType, IRegistryClient } from '../registry';
-import { sortDateStrings } from '../util';
+import {
+  CID,
+  CIDLike,
+  DomainInfo,
+  DomainKey,
+  DXN,
+  IAuctionsApi,
+  IDxnsApi,
+  IQuery,
+  IRegistryApi,
+  RegistryRecord,
+  Resource,
+  Filtering
+} from '@dxos/registry-api';
 
 const log = debug('dxos:console:registry');
 
@@ -44,50 +56,99 @@ export const mockRecordTypes = [
 
 const mockRecordTypeStrings = mockRecordTypes.slice(1).map(({ type }) => type);
 
-const createMockRecord = () => {
+const createMockResource = <T = any>(): Resource<T> => {
+  const cid = CID.from(Uint8Array.from(Array.from({ length: 34 }).map(() => Math.floor(Math.random() * 255))));
   const type = faker.random.arrayElement(mockRecordTypeStrings);
   return {
-    cid: faker.random.uuid(),
-    type,
-    created: faker.date.recent(90).toUTCString(),
-    name: `dxn:${faker.internet.domainWord()}/${faker.internet.domainWord()}`,
-    title: faker.commerce.productName(),
-    url: type === 'app' ? faker.internet.url() : undefined
-  };
-}
+    messageFqn: type,
+    id: DXN.fromDomainName(faker.internet.domainWord(), faker.internet.domainWord()),
+    cid: cid,
+    data: { attributes: { name: faker.internet.domainWord() } } as unknown as T
+  } as Resource<T>;
+};
 
-const createMockRecords = () => Array.from({ length: 30 }).map(createMockRecord);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const createMockResources = <T = any>() => Array.from({ length: 30 }).map(item => createMockResource<T>());
 
-export class MockRegistryClient implements IRegistryClient {
-  _records = createMockRecords();
+// TODO(marcin): Implement missing methods.
+export class MockRegistryApi implements IRegistryApi {
+  _resources = createMockResources();
 
-  getRecordTypes () : Promise<IRecordType[]> {
-    return new Promise((resolve) => resolve(mockRecordTypes));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  addRawRecord (schema: CIDLike, data: Uint8Array, messageFqn: string): Promise<CID> {
+    return Promise.resolve(undefined as unknown as CID);
   }
 
-  queryRecords (query?: IQuery) : Promise<IRecord[]> {
-    const { type, text } = query || {};
-    const lowerText = text?.toLowerCase();
-    log('Query:', query);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  addRecord (data: unknown, schemaId: CIDLike, messageFqn: string): Promise<CID> {
+    return Promise.resolve(undefined as unknown as CID);
+  }
 
-    // TODO(burdon): Add configuration to test registry state having changed.
-    // this._records.push(createMockRecord());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  addSchema (root: protobuf.Root): Promise<CID> {
+    return Promise.resolve(undefined as unknown as CID);
+  }
 
-    return new Promise((resolve) => resolve(this._records
-      .filter(record => {
-        if (!type || type === '*') {
-          return true;
-        } else {
-          return record.type === type;
-        }
-      })
-      .filter(record => {
-        return !lowerText ||
-          record.name.toLowerCase().indexOf(lowerText) !== -1 ||
-          record.title.toLowerCase().indexOf(lowerText) !== -1;
-      })
-      .sort((v1, v2) => {
-        return sortDateStrings(v1.created, v2.created);
-      })));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  get<T = any> (id: DXN): Promise<Resource<T> | undefined> {
+    return Promise.resolve(undefined);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getDomains (): Promise<DomainInfo[]> {
+    return Promise.resolve([]);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getRecord<T = any> (cidLike: CIDLike): Promise<RegistryRecord<T> | undefined> {
+    return Promise.resolve(undefined);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getRecords<T = any> (query?: IQuery): Promise<RegistryRecord<T>[]> {
+    return Promise.resolve([]);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getResources<T = any> (query?: IQuery): Promise<Resource<T>[]> {
+    log(`getResources: query = ${query}`);
+    let result = this._resources as unknown as Resource<T>[];
+    result = result.filter(resource => Filtering.matchesResource(resource, query));
+    return Promise.resolve(result);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getSchema (cid: CIDLike): Promise<protobuf.Root | undefined> {
+    return Promise.resolve(undefined);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getSchemas (): Promise<RegistryRecord[]> {
+    return Promise.resolve([]);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  registerDomain (): Promise<DomainKey> {
+    return Promise.resolve(undefined as unknown as DomainKey);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  registerResource (domainKey: DomainKey, resourceName: string, contentCid: CID): Promise<void> {
+    return Promise.resolve(undefined);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  resolve (id: DXN): Promise<CID | undefined> {
+    return Promise.resolve(undefined);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  resolveDomainName (domainName: string): Promise<DomainKey> {
+    return Promise.resolve(undefined as unknown as DomainKey);
   }
 }
+
+export const MockDxnsApi = {
+  registry: new MockRegistryApi(),
+  auctions: undefined as unknown as IAuctionsApi // TODO(marcin): Add MockAuctionsApi.
+} as IDxnsApi;

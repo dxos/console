@@ -7,5 +7,4 @@ export * from './containers';
 export * from './hooks';
 export * from './icons';
 export * from './panels';
-export * from './util'
-export * from './registry';
+export * from './util';

@@ -35,5 +35,5 @@ export const createCustomTheme = (config: IConfig) => createTheme({
     MuiButtonBase: {
       disableRipple: true
     }
-  },
+  }
 });

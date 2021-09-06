@@ -2,17 +2,16 @@
 // Copyright 2021 DXOS.org
 //
 
-import React, { useEffect, useState } from 'react';
+import urlJoin from 'proper-url-join';
+import React, { useEffect, useMemo, useState } from 'react';
 
-import { makeStyles, IconButton, Toolbar, TextField, Divider } from '@material-ui/core';
-import {
-  Clear as ClearIcon,
-  Sync as RefreshIcon
-} from '@material-ui/icons';
+import { Divider, IconButton, makeStyles, TextField, Toolbar } from '@material-ui/core';
+import { Clear as ClearIcon, Sync as RefreshIcon } from '@material-ui/icons';
+
+import { Resource } from '@dxos/registry-api';
 
 import { RecordTable, RecordTypeSelector } from '../components';
-import {IRecord, IRecordType} from '../registry';
-import {useRegistryClient} from "../hooks";
+import { IConfig, useConfig, useResources } from '../hooks';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -42,28 +41,65 @@ const useStyles = makeStyles(theme => ({
 
 const delay = 500;
 
+export interface IRecordType {
+  type: string
+  label: string
+}
+
+export function mapRecordsTypes (records: Resource[]): IRecordType[] {
+  const mapped = records.map(apiRecord => ({
+    type: apiRecord.messageFqn,
+    label: apiRecord.messageFqn
+  }));
+
+  return Object.values(Object.fromEntries(mapped.map(record => [record.type, record])));
+}
+
+export interface IRecord {
+  cid: string
+  created: number
+  name: string
+  type: string
+  title: string
+  url?: string
+}
+
+export function mapRecords (records: Resource[], config: IConfig): IRecord[] {
+  return records.map(apiRecord => ({
+    cid: apiRecord.cid.toB58String(),
+    // TODO (marcin): Currently registry API does not expose that. Add that to the DTO.
+    created: apiRecord.data?.attributes?.created,
+    name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
+    type: apiRecord.messageFqn,
+    title: apiRecord.data?.attributes?.name,
+    url: urlJoin(
+      config.services.app.server,
+      config.services.app.prefix,
+        `${apiRecord.id.domain}:${apiRecord.id.resource}`)
+  }));
+}
+
 /**
  * Display records panel
  * @constructor
  */
 export const RecordPanel = () => {
   const classes = useStyles();
-  const registryClient = useRegistryClient();
-  const [recordType, setRecordType] = useState<string | undefined>(undefined);
+  const config = useConfig();
+
   const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
-  const [records, setRecords] = useState<IRecord[]>([]);
+  const [recordType, setRecordType] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState('');
   const [delayedSearch, setDelayedSearch] = useState(search);
+  const query = useMemo(() => ({ type: recordType, text: delayedSearch }), [recordType, delayedSearch]);
 
-  function refreshData() {
-    (async function() {
-      setRecords([]);
-      setRecordTypes(await registryClient.getRecordTypes());
-      setRecords(await registryClient.queryRecords({ type: recordType, text: delayedSearch }));
-    })();
+  const resources = useResources(query) ?? [];
+
+  const newRecordTypes = mapRecordsTypes(resources);
+  if (newRecordTypes.length > recordTypes.length) {
+    setRecordTypes(newRecordTypes);
   }
-
-  useEffect(refreshData, [recordType, delayedSearch]);
+  const records = mapRecords(resources, config);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -73,8 +109,13 @@ export const RecordPanel = () => {
 
     return () => {
       clearTimeout(t);
-    }
-  }, [search])
+    };
+  }, [search]);
+
+  function refreshData () {
+    setRecordType(undefined);
+    setSearch('');
+  }
 
   return (
     <>
@@ -106,10 +147,10 @@ export const RecordPanel = () => {
         <div className={classes.expand} />
         <Divider className={classes.divider} orientation="vertical" />
         <IconButton
-          className={classes.iconButton}
-          size='small'
-          aria-label='refresh'
-          onClick={refreshData}
+            className={classes.iconButton}
+            size='small'
+            aria-label='refresh'
+            onClick={refreshData}
         >
           <RefreshIcon />
         </IconButton>
