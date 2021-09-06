@@ -8,7 +8,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Divider, IconButton, makeStyles, TextField, Toolbar } from '@material-ui/core';
 import { Clear as ClearIcon, Sync as RefreshIcon } from '@material-ui/icons';
 
-import { Resource } from '../../../../../dot/registry-api';
+import { Resource } from '@dxos/registry-api';
+
 import { RecordTable, RecordTypeSelector } from '../components';
 import { IConfig, useConfig, useResources } from '../hooks';
 
