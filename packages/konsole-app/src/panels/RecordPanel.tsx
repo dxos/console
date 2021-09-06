@@ -3,7 +3,7 @@
 //
 
 import urlJoin from 'proper-url-join';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { Divider, IconButton, makeStyles, TextField, Toolbar } from '@material-ui/core';
 import { Clear as ClearIcon } from '@material-ui/icons';
@@ -63,7 +63,7 @@ export interface IRecord {
 
 export function mapRecords (records: Resource[], config: IConfig): IRecord[] {
   return records.map(apiRecord => ({
-    cid: apiRecord.cid.toB58String(),
+    cid: apiRecord.cid?.toB58String() ?? 'entry',
     // TODO (marcin): Currently registry API does not expose that. Add that to the DTO.
     created: apiRecord.data?.attributes?.created ?? Date.now(),
     name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
@@ -87,8 +87,9 @@ export const RecordPanel = () => {
   const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
   const [recordType, setRecordType] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState('');
+  const query = useMemo(() => ({ type: recordType, text: search }), [recordType, search]);
 
-  const resources = useResources({ type: recordType, text: search });
+  const resources = useResources(query);
 
   const newRecordTypes = mapRecordsTypes(resources);
   if (newRecordTypes.length > recordTypes.length) {
