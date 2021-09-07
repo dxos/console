@@ -23,9 +23,7 @@ jobs:
           git config --global user.name "DXOS"
 
           yarn install
-          yarn build
-          yarn test
-          yarn lint
+          yarn ci
 
           # Uncomment for NPM publishing.
           VERSION="`cat lerna.json | grep '"version":' | awk '{ print $2 }' | sed 's/[",]//g' | cut -d'-' -f1`"

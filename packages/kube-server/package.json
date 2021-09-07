@@ -16,6 +16,7 @@
     "clean": "rm -rf ./dist",
     "lint": "semistandard 'src/**/*.js'",
     "start": "CONFIG_FILE=${CONFIG_FILE=~/.wire/profile/default} BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server.js -- --verbose",
+    "ci": "npm run build && npm run lint && npm run test",
     "test": "jest --rootDir ./src --passWithNoTests --no-cache"
   },
   "eslintConfig": {

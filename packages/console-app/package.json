@@ -16,6 +16,7 @@
     "clean": "rm -rf dist",
     "lint": "eslint --format codeframe './src/**/*.[j|t]s'",
     "server": "http-server ./dist/production",
+    "ci": "npm run build && npm run test",
     "start": "CONFIG_FILE=${CONFIG_FILE:-config-testnet.yml} VERBOSE=true webpack-dev-server --mode development",
     "test": "jest --rootDir ./src --verbose --passWithNoTests --no-cache"
   },
