@@ -32,6 +32,9 @@ const config: IConfig = {
     endpoint: ''
   },
   services: {
+    dxns: {
+      server: 'test-dxns-server'
+    },
     app: {
       prefix: 'test-prefix',
       server: 'test-server'
