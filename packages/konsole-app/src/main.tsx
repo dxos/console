@@ -64,7 +64,7 @@ const start = async (config: IConfig) => {
   log('Starting...', {config});
   debug.enable(config.system.debug);
 
-  const dxnsApi = await DxnsApi.create(config.registry.endpoint);
+  const dxnsApi = await DxnsApi.create(config.services.dxns.server);
 
   ReactDOM.render((
     <ConfigContext.Provider value={config}>

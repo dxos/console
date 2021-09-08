@@ -14,6 +14,9 @@ export interface IConfig {
     endpoint: string
   },
   services: {
+    dxns: {
+      server: string
+    },
     app: {
       server: string,
       prefix: string
