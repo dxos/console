@@ -8,7 +8,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Divider, IconButton, makeStyles, TextField, Toolbar } from '@material-ui/core';
 import { Clear as ClearIcon, Sync as RefreshIcon } from '@material-ui/icons';
 
-import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord, RegistryDataRecord } from '@dxos/registry-api';
+import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 
 import { RecordTable, RecordTypeSelector } from '../components';
 import { IConfig, useConfig, useResources } from '../hooks';
@@ -56,12 +56,12 @@ export interface IRecord {
   url?: string
 }
 
-function getRecordTypeString(types: IRecordType[], res: Resource): string {
+function getRecordTypeString (types: IRecordType[], res: Resource): string {
   const record = res.record;
   if (RegistryRecord.isTypeRecord(record)) {
     return 'type';
   } else if (RegistryRecord.isDataRecord(record)) {
-    const matches = types.filter(({ type }) => type.equals(record.type))
+    const matches = types.filter(({ type }) => type.equals(record.type));
     if (matches.length !== 1) {
       throw new Error('Type not found');
     }

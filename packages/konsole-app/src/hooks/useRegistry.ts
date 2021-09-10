@@ -4,11 +4,11 @@
 
 import { createContext, useContext } from 'react';
 
-import { IDxnsApi } from '@dxos/registry-api';
+import { IRegistryApi } from '@dxos/registry-api';
 
-export const RegistryContext = createContext<IDxnsApi | undefined>(undefined);
+export const RegistryContext = createContext<IRegistryApi | undefined>(undefined);
 
-export const useRegistryClient = (): IDxnsApi => {
+export const useRegistryClient = (): IRegistryApi => {
   const api = useContext(RegistryContext);
   if (!api) {
     throw new Error('DxnsApi not provided');

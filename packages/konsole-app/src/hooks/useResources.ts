@@ -13,7 +13,7 @@ export function useResources (query?: IQuery): Resource[] | undefined {
   const registryClient = useRegistryClient();
 
   useEffect(function () {
-    void registryClient.registry.getResources(query).then(setResources);
+    void registryClient.getResources(query).then(setResources);
   }, [query]);
 
   return resources;

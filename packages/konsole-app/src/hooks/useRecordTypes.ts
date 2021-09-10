@@ -13,7 +13,7 @@ export function useRecordTypes (query?: IQuery): RegistryTypeRecord[] | undefine
   const registryClient = useRegistryClient();
 
   useEffect(function () {
-    void registryClient.registry.getTypes(query).then(setRegistryTypeRecords);
+    void registryClient.getTypes(query).then(setRegistryTypeRecords);
   }, [query]);
 
   return resources;
