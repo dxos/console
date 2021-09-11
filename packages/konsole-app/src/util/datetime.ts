@@ -27,5 +27,6 @@ export const getRelativeTime = (d1: Date, d2: Date = new Date()) => {
 export const sortDateStrings = (v1: string, v2: string) => {
   const d1 = new Date(v1).getTime();
   const d2 = new Date(v2).getTime();
+
   return d1 < d2 ? 1 : d1 > d2 ? -1 : 0;
 };

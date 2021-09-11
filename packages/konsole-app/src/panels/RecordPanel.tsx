@@ -39,20 +39,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const delay = 500;
-
 export interface IRecordType {
   type: string
   label: string
-}
-
-export function mapRecordsTypes (records: Resource[]): IRecordType[] {
-  const mapped = records.map(apiRecord => ({
-    type: apiRecord.messageFqn,
-    label: apiRecord.messageFqn
-  }));
-
-  return Object.values(Object.fromEntries(mapped.map(record => [record.type, record])));
 }
 
 export interface IRecord {
@@ -64,18 +53,33 @@ export interface IRecord {
   url?: string
 }
 
-export function mapRecords (records: Resource[], config: IConfig): IRecord[] {
-  return records.map(apiRecord => ({
-    cid: apiRecord.cid.toB58String(),
-    // TODO (marcin): Currently registry API does not expose that. Add that to the DTO.
-    created: apiRecord.data?.attributes?.created,
-    name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
+/**
+ * Creates an array of record types from an array of resource definitions.
+ */
+export function mapRecordsTypes (records: Resource[]): IRecordType[] {
+  const mapped = records.map(apiRecord => ({
     type: apiRecord.messageFqn,
-    title: apiRecord.data?.attributes?.name,
+    label: apiRecord.messageFqn
+  }));
+
+  return Object.values(Object.fromEntries(mapped.map(record => [record.type, record])));
+}
+
+/**
+ * Normalize API records.
+ */
+export function mapRecords (records: Resource[], config: IConfig): IRecord[] {
+  return records.map(record => ({
+    cid: record.cid.toB58String(),
+    // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
+    created: record.data?.attributes?.created,
+    name: `${record.id.domain}:${record.id.resource}`,
+    type: record.messageFqn,
+    title: record.data?.attributes?.name,
     url: urlJoin(
       config.services.app.server,
       config.services.app.prefix,
-        `${apiRecord.id.domain}:${apiRecord.id.resource}`)
+      `${record.id.domain}:${record.id.resource}`)
   }));
 }
 
@@ -86,6 +90,7 @@ export function mapRecords (records: Resource[], config: IConfig): IRecord[] {
 export const RecordPanel = () => {
   const classes = useStyles();
   const config = useConfig();
+  const delay = 500;
 
   const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
   const [recordType, setRecordType] = useState<string | undefined>(undefined);
@@ -95,10 +100,12 @@ export const RecordPanel = () => {
 
   const resources = useResources(query) ?? [];
 
+  // TODO(burdon): Registry API should provide this (i.e., not rely on limited set of queried resources).
   const newRecordTypes = mapRecordsTypes(resources);
   if (newRecordTypes.length > recordTypes.length) {
     setRecordTypes(newRecordTypes);
   }
+
   const records = mapRecords(resources, config);
 
   useEffect(() => {

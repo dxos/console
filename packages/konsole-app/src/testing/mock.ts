@@ -101,7 +101,7 @@ export class MockRegistryApi implements IRegistryApi {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getRecord<T = any> (cidLike: CIDLike): Promise<RegistryRecord<T> | undefined> {
-    return Promise.resolve(undefined);
+    return Promise.resolve(undefined); // TODO(burdon): Throw.
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
