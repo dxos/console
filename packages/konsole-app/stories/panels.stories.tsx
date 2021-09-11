@@ -5,10 +5,19 @@
 import faker from 'faker';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { makeStyles, Paper } from '@material-ui/core';
+import { makeStyles, CssBaseline, MuiThemeProvider, Paper } from '@material-ui/core';
 
-import { IConfig, RecordPanel, ConfigPanel, ConfigContext, Log, RegistryContext, ILogMessage } from '../src';
-import { MockDxnsApi } from '../src/testing';
+import {
+  createCustomTheme,
+  IConfig,
+  RecordPanel,
+  ConfigPanel,
+  ConfigContext,
+  Log,
+  MockDxnsApi,
+  RegistryContext,
+  ILogMessage
+} from '../src';
 
 // TODO(burdon): Module not found: Error: [CaseSensitivePathsPlugin]
 // https://github.com/storybookjs/storybook/issues/7704
@@ -27,7 +36,8 @@ const useStyles = makeStyles(() => ({
 
 const config: IConfig = {
   app: {
-    title: 'Test'
+    title: 'Test',
+    theme: 'dark'
   },
   registry: {
     endpoint: ''
@@ -77,7 +87,7 @@ const useTestMessages = (delta = 0) => {
     timestamp: new Date(ts).toISOString(),
     delta: previous ? (ts - previous) : undefined,
     level: faker.random.arrayElement(['DEBUG', 'WARN', 'ERROR']),
-    message: faker.lorem.sentences().replace(/\./g, '.\r\n')
+    message: faker.lorem.sentences().split('.').filter(Boolean).join('.\n') + '.'
   });
 
   const generateHistoricalMessages = (n: number, ts: number = Date.now()) => {
@@ -124,13 +134,16 @@ const useTestMessages = (delta = 0) => {
 
 export const Logs = () => {
   const classes = useStyles();
-  const messages = useTestMessages(5000);
+  const messages = useTestMessages(1000);
 
   return (
     <ConfigContext.Provider value={config}>
-      <Paper className={classes.root}>
-        <Log messages={messages}/>
-      </Paper>
+      <MuiThemeProvider theme={createCustomTheme(config)}>
+        <CssBaseline />
+        <Paper className={classes.root}>
+          <Log messages={messages}/>
+        </Paper>
+      </MuiThemeProvider>
     </ConfigContext.Provider>
   );
 };

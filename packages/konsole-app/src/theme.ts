@@ -23,6 +23,12 @@ export const createCustomTheme = (config: IConfig) => createTheme({
     }
   },
 
+  // TODO(burdon): Include font directly: https://material-ui.com/customization/typography
+  typography: {
+    fontFamily: 'DM Sans, sans-serif',
+    fontSize: 12
+  },
+
   palette: {
     type: config.app.theme,
     primary: colors.cyan

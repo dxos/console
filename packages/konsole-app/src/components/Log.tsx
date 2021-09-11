@@ -6,8 +6,10 @@ import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 
-import { colors, TableCell } from '@material-ui/core';
+import { colors, InputLabel, MenuItem, Select, TableCell } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
+// Data types
 
 export interface ILogMessage {
   timestamp: string
@@ -16,26 +18,75 @@ export interface ILogMessage {
   message: string
 }
 
+interface IFilter {
+  filterKey: keyof ILogMessage | undefined
+  filterValue: string | undefined
+}
+
+// Levels
+
+const levels = [
+  'DEBUG', 'WARN', 'ERROR'
+];
+
+interface LevelColorMap {
+  [key: string]: string
+}
+
+const levelColors: LevelColorMap = {
+  WARN: colors.orange[500],
+  ERROR: colors.red[400]
+};
+
+const getLevelColor = (level: string) => {
+  return levelColors[level];
+};
+
+// Time
+
+export const units = {
+  h: 60 * 60 * 1000,
+  m: 60 * 1000,
+  s: 1000,
+  ms: 1
+};
+
+const getRelativeTime = (d1: Date, d2: Date = new Date()) => {
+  const elapsed = d1.valueOf() - d2.valueOf();
+
+  let unit: keyof typeof units;
+  for (unit in units) {
+    if (Math.abs(elapsed) > units[unit] || unit === 'ms') {
+      return Math.round(elapsed / units[unit]) + unit;
+    }
+  }
+};
+
 const columns = [
   {
     dataKey: 'timestamp',
     label: 'Timestamp',
-    width: 210
+    width: 230,
+    flexShrink: 0
   },
   {
     dataKey: 'delta',
     label: 'ẟt',
-    width: 60
+    width: 80,
+    flexShrink: 0
   },
   {
     dataKey: 'level',
     label: 'Level',
-    width: 80
+    width: 80,
+    flexShrink: 0
   },
   {
     dataKey: 'message',
     label: 'Message',
-    width: 400 // TODO(burdon): Expand.
+    width: 500, // TODO(burdon): Causes error if not provided, but otherwise disables flex.
+    flexShrink: 1,
+    flexGrow: 1
   }
 ];
 
@@ -43,16 +94,23 @@ const useStyles = makeStyles(() => ({
   root: {},
   grid: {},
   table: {},
+  headerCell: {
+    flexDirection: 'column'
+  },
   tableRow: {
     position: 'inherit'
   },
   tableCell: {
     flex: 1,
     border: 'none',
-    padding: 4
+    padding: 4,
+    cursor: 'pointer',
+    fontFamily: 'DM Sans, sans-serif',
+    fontSize: 16
   },
   fixedWidth: {
-    fontFamily: 'monospace' // TODO(burdon): Roboto mono.
+    fontFamily: 'DM Mono, monospace',
+    fontSize: 15
   },
   flexContainer: {
     display: 'flex',
@@ -65,38 +123,6 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface LevelColorMap {
-  [key: string]: string
-}
-
-const levelColors: LevelColorMap = {
-  DEBUG: colors.grey[700],
-  WARN: colors.orange[500],
-  ERROR: colors.red[400]
-};
-
-const getLevelColor = (level: string) => {
-  return levelColors[level] || levelColors.DEBUG;
-};
-
-export const units = {
-  h: 60 * 60 * 1000,
-  m: 60 * 1000,
-  s: 1000,
-  ms: 1
-};
-
-export const getRelativeTime = (d1: Date, d2: Date = new Date()) => {
-  const elapsed = d1.valueOf() - d2.valueOf();
-
-  let unit: keyof typeof units;
-  for (unit in units) {
-    if (Math.abs(elapsed) > units[unit] || unit === 'ms') {
-      return Math.round(elapsed / units[unit]) + unit;
-    }
-  }
-};
-
 interface LogProperties {
   messages: ILogMessage[]
 }
@@ -105,29 +131,90 @@ interface LogProperties {
  * Virtual table for logging messages.
  * @constructor
  */
-// TODO(burdon): Getter/callback.
 export const Log = ({ messages }: LogProperties) => {
   const classes = useStyles();
+  const headerHeight = 60;
   const rowHeight = 28;
-
-  const [expanded, setExpanded] = useState(new Set<number>());
-  const [tail, setTail] = useState(true);
+  const lineHeight = 22;
 
   const tableRef = useRef<Table>();
+  const [filteredMessages, setFilteredMessages] = useState(messages);
+  const [expanded, setExpanded] = useState(new Set<number>()); // TODO(burdon): Should not be by index. Need unique ID.
+  const [{ filterKey, filterValue }, setFilter] = useState<IFilter>({ filterKey: undefined, filterValue: undefined });
+  const [tail, setTail] = useState(true);
+
+  // Filter.
+  useEffect(() => {
+    if (filterKey && filterValue) {
+      setFilteredMessages(messages.filter(message => {
+        return message[filterKey as keyof ILogMessage] === filterValue;
+      }));
+    } else {
+      setFilteredMessages(messages);
+    }
+  }, [messages, filterKey, filterValue]);
+
+  // Auto scroll if pinned.
   useEffect(() => {
     if (tail) {
       tableRef.current!.scrollToRow(Infinity);
     }
-  }, [tableRef, messages]);
+  }, [filteredMessages]);
 
-  const Header = ({ label, headerHeight }: { label: string | React.ReactNode, headerHeight?: number }) => {
+  const handleFilterChange = (dataKey: keyof ILogMessage) => (event: React.ChangeEvent<{ value: unknown }>) => {
+    setFilter({
+      filterKey: dataKey,
+      filterValue: event.target.value as string
+    });
+  };
+
+  const Header = ({ dataKey, label, headerHeight }: {
+    dataKey: string,
+    label: string | React.ReactNode,
+    headerHeight?: number
+  }) => {
+    const Filter = () => {
+      switch (dataKey) {
+        case 'level': {
+          // TODO(burdon): Closed on repaint; probably need to move outside of Grid.
+          // TODO(burdon): Multi select: https://material-ui.com/components/selects/#multiple-select
+          return (
+            <>
+              <InputLabel shrink id='label-header-level'>
+                {label}
+              </InputLabel>
+              <Select
+                labelId='label-header-level'
+                onChange={handleFilterChange(dataKey)}
+                value={filterKey === dataKey ? filterValue : undefined}
+              >
+                <MenuItem>
+                  <em>None</em>
+                </MenuItem>
+                {levels.map(level => (
+                  <MenuItem key={level} value={level}>{level}</MenuItem>
+                ))}
+              </Select>
+            </>
+          );
+        }
+
+        default:
+          return (
+            <InputLabel shrink>
+              {label}
+            </InputLabel>
+          );
+      }
+    };
+
     return (
       <TableCell
         component='div'
         style={{ height: headerHeight }}
-        className={clsx(classes.flexContainer, classes.tableCell)}
+        className={clsx(classes.flexContainer, classes.tableCell, classes.headerCell)}
       >
-        {label}
+        <Filter />
       </TableCell>
     );
   };
@@ -161,6 +248,7 @@ export const Log = ({ messages }: LogProperties) => {
           return (
             <div
               className={classes.fixedWidth}
+              style={{ color: colors.green[500] }}
             >
                {getRelativeTime(prev, now)}
             </div>
@@ -179,10 +267,9 @@ export const Log = ({ messages }: LogProperties) => {
         }
 
         case 'message': {
-          // TODO(burdon): Show expand if multi-line.
-          // const lines = data.split('\n').length;
+          const lines = (data as string).split('\n');
           return (
-            <div>{data}</div>
+            <div>{lines.map((line, i) => <div key={i}>{line}</div>)}</div>
           );
         }
 
@@ -219,10 +306,10 @@ export const Log = ({ messages }: LogProperties) => {
               gridClassName={classes.grid}
               width={width}
               height={height}
-              headerHeight={rowHeight}
+              headerHeight={headerHeight}
               rowClassName={() => clsx(classes.tableRow, classes.flexContainer)}
-              rowCount={messages.length}
-              rowGetter={({ index }) => messages[index]}
+              rowCount={filteredMessages.length}
+              rowGetter={({ index }) => filteredMessages[index]}
               // scrollToAlignment='end'
               // scrollToRow={Infinity}
               onScroll={({ clientHeight, scrollHeight, scrollTop }: {
@@ -235,15 +322,19 @@ export const Log = ({ messages }: LogProperties) => {
                 // inject an anchor dev as a sibling of the scroll container inside the Grid.
                 setTail(scrollHeight - clientHeight === scrollTop);
               }}
-              rowHeight={({ index }) => expanded.has(index) ? 5 * rowHeight : rowHeight} // TODO(burdon): Dynamic.
-              onRowClick={({ index }) => {
+              rowHeight={({ index }: { index: number }) => {
+                const message = messages[index].message;
+                const lines = message.split('\n').length;
+                return rowHeight + (expanded.has(index) ? (lines - 1) * lineHeight : 0);
+              }}
+              onRowClick={({ index }: { index: number }) => {
                 if (expanded.has(index)) {
                   expanded.delete(index);
                 } else {
                   expanded.add(index);
                 }
                 setExpanded(new Set(expanded));
-                tableRef.current!.forceUpdateGrid();
+                tableRef.current!.Grid.recomputeGridSize();
               }}
             >
               {columns.map(({ dataKey, label, width }) => (
