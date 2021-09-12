@@ -10,6 +10,7 @@ import { colors, InputLabel, MenuItem, Select, TableCell } from '@material-ui/co
 import { makeStyles } from '@material-ui/core/styles';
 
 // Data types
+// TODO(burdon): Rolling log abstraction.
 
 export interface ILogMessage {
   timestamp: string
@@ -25,8 +26,8 @@ interface IFilter {
 
 // Levels
 
-const levels = [
-  'DEBUG', 'WARN', 'ERROR'
+export const logLevels = [
+  'DEBUG', 'INFO', 'WARN', 'ERROR'
 ];
 
 interface LevelColorMap {
@@ -34,6 +35,7 @@ interface LevelColorMap {
 }
 
 const levelColors: LevelColorMap = {
+  INFO: colors.blue[500],
   WARN: colors.orange[500],
   ERROR: colors.red[400]
 };
@@ -120,6 +122,9 @@ const useStyles = makeStyles(() => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis', // TODO(burdon): Not working.
     whiteSpace: 'nowrap'
+  },
+  label: {
+    paddingBottom: 4
   }
 }));
 
@@ -128,16 +133,166 @@ interface LogProperties {
 }
 
 /**
- * Virtual table for logging messages.
- * @constructor
+ * Table header.
+ */
+const Header = ({ dataKey, label, headerHeight, filterKey, filterValue, onFilterChange, Component }: {
+  dataKey: string,
+  label: string | React.ReactNode,
+  headerHeight?: number,
+  filterKey?: string,
+  filterValue?: any,
+  onFilterChange: (filterKey: keyof ILogMessage, filterValue: any) => void,
+  Component: any
+}) => {
+  const classes = useStyles();
+
+  const handleFilterChange = (value: any) => {
+    onFilterChange(dataKey as keyof ILogMessage, value);
+  };
+
+  return (
+    <TableCell
+      component='div'
+      style={{ height: headerHeight }}
+      className={clsx(classes.flexContainer, classes.tableCell, classes.headerCell)}
+    >
+      {(Component && (
+        <Component
+          label={label}
+          value={dataKey === filterKey ? filterValue : undefined}
+          onChange={handleFilterChange}
+        />
+      )) || (
+        <InputLabel>
+          {label}
+        </InputLabel>
+      )}
+    </TableCell>
+  );
+};
+
+const LevelFilter = ({ label, value = '', onChange }: {
+  label: string,
+  value: any,
+  onChange: (value: string) => void
+}) => {
+  const classes = useStyles();
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    onChange(event.target.value as string);
+  };
+
+  return (
+    <div>
+      <InputLabel id='label-header-level' className={classes.label}>
+        {label}
+      </InputLabel>
+      <Select
+        labelId='label-header-level'
+        value={value || ''}
+        onChange={handleChange}
+        autoWidth
+      >
+        <MenuItem value=''>
+          <em>All</em>
+        </MenuItem>
+        {logLevels.map(level => (
+          <MenuItem key={level} value={level}>{level}</MenuItem>
+        ))}
+      </Select>
+    </div>
+  );
+};
+
+/**
+ * Table cell.
+ */
+const Cell = ({ dataKey, data, rowData, rowHeight }: {
+  dataKey: string,
+  data: string | React.ReactNode,
+  rowData: any,
+  rowHeight?: number
+}) => {
+  const classes = useStyles();
+
+  const Content = ({ data }: { data: string | number }) => {
+    switch (dataKey) {
+      case 'timestamp': {
+        return (
+          <div
+            className={classes.fixedWidth}
+          >
+            {(data as string).replace(/[TZ]/g, ' ')}
+          </div>
+        );
+      }
+
+      case 'delta': {
+        if (!data) {
+          return null;
+        }
+
+        const now = new Date(rowData.timestamp);
+        const prev = new Date(now.getTime() + (data as number));
+
+        return (
+          <div
+            className={classes.fixedWidth}
+            style={{ color: colors.green[500] }}
+          >
+            {getRelativeTime(prev, now)}
+          </div>
+        );
+      }
+
+      case 'level': {
+        return (
+          <div
+            className={classes.fixedWidth}
+            style={{ color: getLevelColor(data as string) }}
+          >
+            {data}
+          </div>
+        );
+      }
+
+      case 'message': {
+        const lines = (data as string).split('\n');
+        return (
+          <div>{lines.map((line, i) => <div key={i}>{line}</div>)}</div>
+        );
+      }
+
+      default: {
+        return (
+          <div>{data}</div>
+        );
+      }
+    }
+  };
+
+  return (
+    <TableCell
+      component='div'
+      variant='body'
+      style={{ height: rowHeight }}
+      className={clsx(classes.flexContainer, classes.tableCell, classes.hidden)}
+    >
+      {typeof data === 'object' ? data : <Content data={data as string} />}
+    </TableCell>
+  );
+};
+
+const headerHeight = 60;
+const rowHeight = 28;
+const lineHeight = 22;
+
+/**
+ * Log table.
  */
 export const Log = ({ messages }: LogProperties) => {
   const classes = useStyles();
-  const headerHeight = 60;
-  const rowHeight = 28;
-  const lineHeight = 22;
-
-  const tableRef = useRef<Table>();
+  const tableRef = useRef<Table>(null);
   const [filteredMessages, setFilteredMessages] = useState(messages);
   const [expanded, setExpanded] = useState(new Set<number>()); // TODO(burdon): Should not be by index. Need unique ID.
   const [{ filterKey, filterValue }, setFilter] = useState<IFilter>({ filterKey: undefined, filterValue: undefined });
@@ -161,147 +316,21 @@ export const Log = ({ messages }: LogProperties) => {
     }
   }, [filteredMessages]);
 
-  const handleFilterChange = (dataKey: keyof ILogMessage) => (event: React.ChangeEvent<{ value: unknown }>) => {
-    setFilter({
-      filterKey: dataKey,
-      filterValue: event.target.value as string
-    });
-  };
-
-  const Header = ({ dataKey, label, headerHeight }: {
-    dataKey: string,
-    label: string | React.ReactNode,
-    headerHeight?: number
-  }) => {
-    const Filter = () => {
-      switch (dataKey) {
-        case 'level': {
-          // TODO(burdon): Closed on repaint; probably need to move outside of Grid.
-          // TODO(burdon): Multi select: https://material-ui.com/components/selects/#multiple-select
-          return (
-            <>
-              <InputLabel shrink id='label-header-level'>
-                {label}
-              </InputLabel>
-              <Select
-                labelId='label-header-level'
-                onChange={handleFilterChange(dataKey)}
-                value={filterKey === dataKey ? filterValue : undefined}
-              >
-                <MenuItem>
-                  <em>None</em>
-                </MenuItem>
-                {levels.map(level => (
-                  <MenuItem key={level} value={level}>{level}</MenuItem>
-                ))}
-              </Select>
-            </>
-          );
-        }
-
-        default:
-          return (
-            <InputLabel shrink>
-              {label}
-            </InputLabel>
-          );
-      }
-    };
-
-    return (
-      <TableCell
-        component='div'
-        style={{ height: headerHeight }}
-        className={clsx(classes.flexContainer, classes.tableCell, classes.headerCell)}
-      >
-        <Filter />
-      </TableCell>
-    );
-  };
-
-  const Cell = ({ dataKey, data, rowData, rowHeight }: {
-    dataKey: string,
-    data: string | React.ReactNode,
-    rowData: any,
-    rowHeight?: number
-  }) => {
-    const Content = ({ data }: { data: string | number }) => {
-      switch (dataKey) {
-        case 'timestamp': {
-          return (
-            <div
-              className={classes.fixedWidth}
-            >
-              {(data as string).replace(/[TZ]/g, ' ')}
-            </div>
-          );
-        }
-
-        case 'delta': {
-          if (!data) {
-            return null;
-          }
-
-          const now = new Date(rowData.timestamp);
-          const prev = new Date(now.getTime() + (data as number));
-
-          return (
-            <div
-              className={classes.fixedWidth}
-              style={{ color: colors.green[500] }}
-            >
-               {getRelativeTime(prev, now)}
-            </div>
-          );
-        }
-
-        case 'level': {
-          return (
-            <div
-              className={classes.fixedWidth}
-              style={{ color: getLevelColor(data as string) }}
-            >
-              {data}
-            </div>
-          );
-        }
-
-        case 'message': {
-          const lines = (data as string).split('\n');
-          return (
-            <div>{lines.map((line, i) => <div key={i}>{line}</div>)}</div>
-          );
-        }
-
-        default: {
-          return (
-            <div>{data}</div>
-          );
-        }
-      }
-    };
-
-    return (
-      <TableCell
-        component='div'
-        variant='body'
-        style={{ height: rowHeight }}
-        className={clsx(classes.flexContainer, classes.tableCell, classes.hidden)}
-      >
-        {typeof data === 'object' ? data : <Content data={data as string} />}
-      </TableCell>
-    );
+  const handleFilterChange = (filterKey: keyof ILogMessage, filterValue: any) => {
+    setFilter({ filterKey, filterValue });
   };
 
   // https://material-ui.com/components/tables/#virtualized-table
   // https://github.com/bvaughn/react-virtualized/blob/master/docs/Table.md
+
   return (
-    <div className={classes.root} style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
-      <div style={{ display: 'flex', flex: '1 1 auto' }}>
+    <div className={classes.root} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}>
         <AutoSizer>
           {({ width, height }) => (
             <Table
               ref={tableRef}
+              // disableHeader
               className={classes.table}
               gridClassName={classes.grid}
               width={width}
@@ -344,7 +373,16 @@ export const Log = ({ messages }: LogProperties) => {
                   label={label}
                   width={width}
                   className={classes.flexContainer}
-                  headerRenderer={({ label, ...other }) => <Header label={label} {...other} />}
+                  headerRenderer={({ label, ...other }) => (
+                    <Header
+                      filterKey={filterKey}
+                      filterValue={filterValue}
+                      onFilterChange={handleFilterChange}
+                      Component={dataKey === 'level' ? LevelFilter : undefined}
+                      label={label}
+                      {...other}
+                    />
+                  )}
                   cellRenderer={({ cellData, ...other }) => <Cell data={cellData} {...other} />}
                 />
               ))}

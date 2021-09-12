@@ -9,6 +9,7 @@ import { makeStyles, CssBaseline, MuiThemeProvider, Paper } from '@material-ui/c
 
 import {
   createCustomTheme,
+  logLevels,
   IConfig,
   RecordPanel,
   ConfigPanel,
@@ -82,17 +83,17 @@ export const Records = () => {
   );
 };
 
-const useTestMessages = (delta = 0) => {
+const useTestMessages = (initial = 100, delta = 0) => {
   const generateMessage = (ts: number, previous?: number): ILogMessage => ({
     timestamp: new Date(ts).toISOString(),
     delta: previous ? (ts - previous) : undefined,
-    level: faker.random.arrayElement(['DEBUG', 'WARN', 'ERROR']),
+    level: faker.random.arrayElement(logLevels),
     message: faker.lorem.sentences().split('.').filter(Boolean).join('.\n') + '.'
   });
 
   const generateHistoricalMessages = (n: number, ts: number = Date.now()) => {
     let start = ts;
-    const times = [...new Array(10)].map(() => {
+    const times = [...new Array(n)].map(() => {
       const next = start - Math.abs(Math.random() * 12) * 3600 * 1000;
       start = next;
       return next;
@@ -105,7 +106,7 @@ const useTestMessages = (delta = 0) => {
     });
   };
 
-  const [messages, setMessages] = useState(generateHistoricalMessages(10));
+  const [messages, setMessages] = useState(generateHistoricalMessages(initial));
   const messagesRef = useRef(messages);
 
   useEffect(() => {
@@ -134,7 +135,7 @@ const useTestMessages = (delta = 0) => {
 
 export const Logs = () => {
   const classes = useStyles();
-  const messages = useTestMessages(1000);
+  const messages = useTestMessages(10, 5000);
 
   return (
     <ConfigContext.Provider value={config}>
