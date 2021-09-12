@@ -9,26 +9,7 @@ import { AutoSizer, Column, Table } from 'react-virtualized';
 import { colors, InputLabel, MenuItem, Select, TableCell } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-// Data types
-// TODO(burdon): Rolling log abstraction.
-
-export interface ILogMessage {
-  timestamp: string
-  delta?: number
-  level: string
-  message: string
-}
-
-interface IFilter {
-  filterKey: keyof ILogMessage | undefined
-  filterValue: string | undefined
-}
-
-// Levels
-
-export const logLevels = [
-  'DEBUG', 'INFO', 'WARN', 'ERROR'
-];
+import { logLevels, IFilter, ILogMessage } from '../logging';
 
 interface LevelColorMap {
   [key: string]: string
