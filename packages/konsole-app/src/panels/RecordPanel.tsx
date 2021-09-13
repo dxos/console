@@ -8,10 +8,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Divider, IconButton, makeStyles, TextField, Toolbar } from '@material-ui/core';
 import { Clear as ClearIcon, Sync as RefreshIcon } from '@material-ui/icons';
 
-import { Resource } from '@dxos/registry-api';
+import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 
 import { RecordTable, RecordTypeSelector } from '../components';
 import { IConfig, useConfig, useResources } from '../hooks';
+import { useRecordTypes } from '../hooks/useRecordTypes';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -42,40 +43,54 @@ const useStyles = makeStyles(theme => ({
 const delay = 500;
 
 export interface IRecordType {
-  type: string
+  type: CID
   label: string
-}
-
-export function mapRecordsTypes (records: Resource[]): IRecordType[] {
-  const mapped = records.map(apiRecord => ({
-    type: apiRecord.messageFqn,
-    label: apiRecord.messageFqn
-  }));
-
-  return Object.values(Object.fromEntries(mapped.map(record => [record.type, record])));
 }
 
 export interface IRecord {
   cid: string
-  created: number
+  created?: string
   name: string
   type: string
-  title: string
+  title?: string
   url?: string
 }
 
-export function mapRecords (records: Resource[], config: IConfig): IRecord[] {
+function getRecordTypeString (types: IRecordType[], res: Resource): string {
+  const record = res.record;
+  if (RegistryRecord.isTypeRecord(record)) {
+    return 'type';
+  } else if (RegistryRecord.isDataRecord(record)) {
+    const matches = types.filter(({ type }) => type.equals(record.type));
+    if (matches.length !== 1) {
+      throw new Error('Type not found');
+    }
+
+    return matches[0].label;
+  } else {
+    return 'expected two types' as never;
+  }
+}
+
+export function mapRecords (types: IRecordType[], records: Resource[], config: IConfig): IRecord[] {
   return records.map(apiRecord => ({
-    cid: apiRecord.cid.toB58String(),
+    cid: apiRecord.record.cid.toB58String(),
     // TODO (marcin): Currently registry API does not expose that. Add that to the DTO.
-    created: apiRecord.data?.attributes?.created,
-    name: `${apiRecord.id.domain}:${apiRecord.id.resource}`,
-    type: apiRecord.messageFqn,
-    title: apiRecord.data?.attributes?.name,
+    created: apiRecord.record.meta.created,
+    name: apiRecord.id.toString(),
+    type: getRecordTypeString(types, apiRecord),
+    title: apiRecord.record.meta.name,
     url: urlJoin(
       config.services.app.server,
       config.services.app.prefix,
-        `${apiRecord.id.domain}:${apiRecord.id.resource}`)
+      apiRecord.id.toString())
+  }));
+}
+
+export function mapTypes (records: RegistryTypeRecord[]): IRecordType[] {
+  return records.map(apiRecord => ({
+    type: apiRecord.cid,
+    label: apiRecord.messageName
   }));
 }
 
@@ -87,19 +102,16 @@ export const RecordPanel = () => {
   const classes = useStyles();
   const config = useConfig();
 
-  const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
-  const [recordType, setRecordType] = useState<string | undefined>(undefined);
+  const registryRecordTypes = useRecordTypes(undefined) ?? [];
+  const [recordType, setRecordType] = useState<CID | undefined>(undefined);
   const [search, setSearch] = useState('');
   const [delayedSearch, setDelayedSearch] = useState(search);
-  const query = useMemo(() => ({ type: recordType, text: delayedSearch }), [recordType, delayedSearch]);
+  const query = useMemo<IQuery>(() => ({ type: recordType, text: delayedSearch }), [recordType, delayedSearch]);
 
   const resources = useResources(query) ?? [];
 
-  const newRecordTypes = mapRecordsTypes(resources);
-  if (newRecordTypes.length > recordTypes.length) {
-    setRecordTypes(newRecordTypes);
-  }
-  const records = mapRecords(resources, config);
+  const recordTypes = mapTypes(registryRecordTypes);
+  const records = mapRecords(recordTypes, resources, config);
 
   useEffect(() => {
     const t = setTimeout(() => {

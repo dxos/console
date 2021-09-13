@@ -6,8 +6,9 @@ import React from 'react';
 
 import { makeStyles, Paper } from '@material-ui/core';
 
+import { MockRegistryApi } from '@dxos/registry-api';
+
 import { IConfig, RecordPanel, ConfigPanel, ConfigContext, RegistryContext } from '../src';
-import { MockDxnsApi } from '../src/testing';
 
 // TODO(burdon): Module not found: Error: [CaseSensitivePathsPlugin]
 // https://github.com/storybookjs/storybook/issues/7704
@@ -16,6 +17,7 @@ export default {
   title: 'Panels'
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -62,7 +64,7 @@ export const Records = () => {
 
   return (
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={MockDxnsApi}>
+      <RegistryContext.Provider value={MockRegistryApi}>
         <Paper className={classes.root}>
           <RecordPanel />
         </Paper>
