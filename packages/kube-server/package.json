@@ -4,7 +4,8 @@
   "description": "KUBE Server",
   "main": "dist/es/index.js",
   "bin": {
-    "kube-server": "bin/kube-server.js"
+    "kube-server": "bin/kube-server.js",
+    "dxos-console": "bin/kube-server.js"
   },
   "files": [
     "bin/",
