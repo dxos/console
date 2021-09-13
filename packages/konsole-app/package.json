@@ -18,10 +18,10 @@
   "scripts": {
     "build": "webpack",
     "clean": "rm -rf ./dist",
-    "lint": "eslint --format codeframe './src/**/*.ts'",
+    "lint": "eslint --fix --format codeframe './src/**/*.ts'",
     "start": "webpack serve",
     "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
-    "ci": "npm run build && npm run test",
+    "ci": "npm run build && npm run lint && npm run test",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "browserslist": [
@@ -59,7 +59,7 @@
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/eslint-plugin": "^1.0.14",
     "@storybook/addon-knobs": "^6.3.0",
     "@storybook/react": "^6.3.7",
     "@types/faker": "^4.1.12",
