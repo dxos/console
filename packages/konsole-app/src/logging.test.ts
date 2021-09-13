@@ -22,3 +22,6 @@ test('LogBuffer', () => {
   buffer.append(generateHistoricalMessages(30));
   expect(buffer.length).toBe(100);
 });
+
+// TODO(burdon): Parse string.
+// TODO(burdon): Diff when retrieving from server.

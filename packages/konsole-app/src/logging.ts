@@ -4,13 +4,15 @@
 
 import faker from 'faker';
 import { useEffect, useRef, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 
 // Data types
 
 export interface ILogMessage {
+  id: string
   timestamp: string
   delta?: number
-  level: string
+  level: string // TODO(burdon): Extend to `debug` library's location (e.g., foo:bar).
   message: string
 }
 
@@ -19,7 +21,7 @@ export interface IFilter {
   filterValue: string | undefined
 }
 
-export const logLevels = [
+export const logLevels = [ // TODO(burdon): Compute dynamically (e.g., general notion of location).
   'DEBUG', 'INFO', 'WARN', 'ERROR'
 ];
 
@@ -54,6 +56,7 @@ export class LogBuffer {
 }
 
 export const generateMessage = (ts: number, previous?: number): ILogMessage => ({
+  id: uuid(),
   timestamp: new Date(ts).toISOString(),
   delta: previous ? (ts - previous) : undefined,
   level: faker.random.arrayElement(logLevels),

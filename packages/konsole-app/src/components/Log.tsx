@@ -275,7 +275,7 @@ export const Log = ({ messages }: LogProperties) => {
   const classes = useStyles();
   const tableRef = useRef<Table>(null);
   const [filteredMessages, setFilteredMessages] = useState(messages);
-  const [expanded, setExpanded] = useState(new Set<number>()); // TODO(burdon): Should not be by index. Need unique ID.
+  const [expanded, setExpanded] = useState(new Set<string>());
   const [{ filterKey, filterValue }, setFilter] = useState<IFilter>({ filterKey: undefined, filterValue: undefined });
   const [tail, setTail] = useState(true);
 
@@ -327,24 +327,26 @@ export const Log = ({ messages }: LogProperties) => {
                 scrollHeight: number,
                 scrollTop: number
               }) => {
-                // Tail mode if scroll to bottom.
+                // Tail mode (pinned) if scrolled to bottom.
                 // NOTE: CSS overflow-anchor would work (https://blog.eqrion.net/pin-to-bottom) if we could
                 // inject an anchor dev as a sibling of the scroll container inside the Grid.
                 setTail(scrollHeight - clientHeight === scrollTop);
               }}
               rowHeight={({ index }: { index: number }) => {
-                const message = messages[index].message;
-                const lines = message.split('\n').length;
-                return rowHeight + (expanded.has(index) ? (lines - 1) * lineHeight : 0);
+                const message = filteredMessages[index];
+                const lines = message.message.split('\n').length;
+                return rowHeight + (expanded.has(message.id) ? (lines - 1) * lineHeight : 0);
               }}
+              // TODO(burdon): Toggle expanded on message; otherwith highlight row.
               onRowClick={({ index }: { index: number }) => {
-                if (expanded.has(index)) {
-                  expanded.delete(index);
+                const message = filteredMessages[index];
+                if (expanded.has(message.id)) {
+                  expanded.delete(message.id);
                 } else {
-                  expanded.add(index);
+                  expanded.add(message.id);
                 }
                 setExpanded(new Set(expanded));
-                tableRef.current!.Grid.recomputeGridSize();
+                tableRef.current!.recomputeRowHeights(index); // Refresh.
               }}
             >
               {columns.map(({ dataKey, label, width }) => (
