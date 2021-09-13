@@ -11,6 +11,7 @@
     "lint:staged": "lint-staged",
     "sort-package-json": "lerna exec npx sort-package-json",
     "ci": "lerna run ci",
+    "deploy": "lerna run deploy",
     "test": "lerna run test"
   },
   "author": "DXOS.org",

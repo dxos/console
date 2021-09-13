@@ -24,6 +24,7 @@
     "ci": "npm run build && npm run lint && npm run test",
     "chromatic": "npx chromatic --exit-zero-on-changes --auto-accept-changes",
     "chromatic-docs": "npx chromatic --exit-zero-on-changes --auto-accept-changes --build-script-name build-storybook-docs",
+    "deploy": "npm run chromatic-docs",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "browserslist": [
