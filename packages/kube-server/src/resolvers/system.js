@@ -9,6 +9,8 @@ import moment from 'moment';
 import os from 'os';
 import si from 'systeminformation';
 
+import { getServiceInfo } from '../handlers/system';
+
 const num = new Intl.NumberFormat('en', { maximumSignificantDigits: 3 });
 
 const size = (n, unit) => {
@@ -103,18 +105,6 @@ const getSystemInfo = async () => {
       }
     }
   };
-};
-
-/**
- * Get system inforamtion.
- * https://www.npmjs.com/package/systeminformation
- */
-const getServiceInfo = async () => {
-  const command = 'wire';
-  const args = ['service', '--json'];
-
-  const child = spawnSync(command, args, { encoding: 'utf8' });
-  return JSON.parse(child.stdout);
 };
 
 export const systemResolvers = {

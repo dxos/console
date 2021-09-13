@@ -1991,6 +1991,15 @@
   dependencies:
     protobufjs "^6.10.1"
 
+"@dxos/codec-protobuf@^2.12.14":
+  version "2.12.17"
+  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.12.17.tgz#a9bdaec4fa4a9ca4fcb61e4671e4aed7b827b31f"
+  integrity sha512-R7XtOW5Z5oLe7vwcl9hvr22T1uesX6hZnJQaMj1cr7EO3a0p6cU2QOAirvzq3eL/MSbFsx45p+ClASfFXHP6Yw==
+  dependencies:
+    assert "^2.0.0"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+
 "@dxos/config@^1.0.0-beta.67", "@dxos/config@~1.0.0-beta.74":
   version "1.0.0-beta.74"
   resolved "https://registry.yarnpkg.com/@dxos/config/-/config-1.0.0-beta.74.tgz#0451bb87cf67821a2ca0d390419fb7d4d2fd4cf5"
@@ -2935,14 +2944,16 @@
     lodash.isplainobject "^4.0.6"
     uuid "^3.3.3"
 
-"@dxos/registry-api@~0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@dxos/registry-api/-/registry-api-0.2.1.tgz#ecdf80b411870dcc92a6551262b8ed67ae493061"
-  integrity sha512-9V3d6wUDD+oST0lfO0uAoWNGWBHw5c++YQVkawKZ4RcgIjfUCLyWi9ojbRFbfiuRYNd7lE+gzK13DOl9qtce5A==
+"@dxos/registry-api@~0.3.1":
+  version "0.3.1"
+  resolved "https://registry.npmjs.org/@dxos/registry-api/-/registry-api-0.3.1.tgz#037f4d8811913340a2b2c625885707e7d33716fe"
+  integrity sha512-S5zg9iQFJj2TYlY+0jIBpQON7Zpjnt1w0urmHYVfr+Nv1Xz6N/0ePoyYajg4bk6tOVULfe86oOQnsCjOSysYRQ==
   dependencies:
+    "@dxos/codec-protobuf" "^2.12.14"
     "@dxos/util" "^2.4.0"
     "@polkadot/api" "4.17.1"
     crypto "^1.0.1"
+    faker "^5.5.3"
     fs-extra "^9.1.0"
     multihashes "^4.0.2"
     protobufjs "^6.10.2"
@@ -14532,6 +14543,11 @@ faker@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
   integrity sha1-HkW7vsxndLPBlfrSg1EJxtdIzD8=
+
+faker@^5.5.3:
+  version "5.5.3"
+  resolved "https://registry.npmjs.org/faker/-/faker-5.5.3.tgz#c57974ee484431b25205c2c8dc09fda861e51e0e"
+  integrity sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==
 
 fast-bitfield@^1.2.2:
   version "1.2.2"
