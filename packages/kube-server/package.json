@@ -55,6 +55,7 @@
     "js-yaml": "^3.14.0",
     "lodash.defaultsdeep": "^4.6.1",
     "lodash.pick": "^4.4.0",
+    "node-cache": "^5.1.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "source-map-support": "^0.5.12",

@@ -3,9 +3,12 @@
 //
 
 import { spawnSync } from 'child_process';
+import NodeCache from 'node-cache';
+
+const CACHE_TTL = 86400;
 
 class LogCache {
-  constructor (maxLines = 3000) {
+  constructor (maxLines = 500) {
     // Sets in JS iterate in insertion order.
     this.buffer = new Set();
     this.maxLines = maxLines;
@@ -28,7 +31,7 @@ class LogCache {
   }
 }
 
-const _caches = new Map();
+const _caches = new NodeCache({ stdTTL: CACHE_TTL, useClones: false });
 
 const getLogCache = (name) => {
   let cache = _caches.get(name);
@@ -39,14 +42,18 @@ const getLogCache = (name) => {
   return cache;
 };
 
-export const getLogs = async ({ name, incremental = false, lines = 100 }) => {
+export const getLogs = async ({ name, incremental = false, lines = 500, uniqueId }) => {
   const command = 'dx';
-  const args = ['service', 'logs', '--lines', lines, name];
+  const args = ['service', 'logs', name, '--lines', lines];
 
   const child = spawnSync(command, args, { encoding: 'utf8' });
   const logLines = child.stdout.split(/\n/);
-  const cache = getLogCache(name);
+  const cache = getLogCache(`${name}-${uniqueId}`);
   const added = cache.append(logLines);
 
-  return incremental ? added : Array.from(cache.buffer);
+  if (incremental) {
+    return added;
+  } else {
+    return Array.from(cache.buffer).slice(-1 * lines)
+  }
 };
