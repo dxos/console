@@ -54,6 +54,6 @@ export const getLogs = async ({ name, incremental = false, lines = 500, uniqueId
   if (incremental) {
     return added;
   } else {
-    return Array.from(cache.buffer).slice(-1 * lines)
+    return Array.from(cache.buffer).slice(-1 * lines);
   }
 };
