@@ -47,7 +47,7 @@ export const getLogs = async ({ name, incremental = false, lines = 500, uniqueId
   const args = ['service', 'logs', name, '--lines', lines];
 
   const child = spawnSync(command, args, { encoding: 'utf8' });
-  const logLines = child.stdout.split(/\n/);
+  const logLines = child.stdout.split(/\n/).filter(line => line).map(line => line.trim());
   const cache = getLogCache(`${name}-${uniqueId}`);
   const added = cache.append(logLines);
 
