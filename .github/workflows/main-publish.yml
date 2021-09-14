@@ -24,7 +24,7 @@ jobs:
 
           yarn install
           yarn ci
-		  yarn deploy
+          yarn deploy
 
           # Uncomment for NPM publishing.
           npm whoami
