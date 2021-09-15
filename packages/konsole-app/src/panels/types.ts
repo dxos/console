@@ -12,7 +12,7 @@ export interface IPanel {
 }
 
 // TODO(burdon): Protobuf?
-export interface IServices {
+export interface IService {
   name: string
   type: string
   exec: string

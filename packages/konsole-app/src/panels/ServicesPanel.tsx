@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/core';
 
 import { JsonTreeView } from '@dxos/react-ux';
 
+import { IService } from './types';
+
 const useStyles = makeStyles(theme => ({
   panel: {
     display: 'flex',
@@ -21,22 +23,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// curl -s https://discovery.kube.dxos.network/kube/services | jq
-
 // TODO(burdon): Config.
 const KUBE_SERVICES = 'https://logs.kube.dxos.network/kube/services';
 
-const useStatus = () => {
-  const [services, setServices] = useState([]);
+// curl -s https://discovery.kube.dxos.network/kube/services | jq
+
+const useServices = () => {
+  const [services, setServices] = useState<IService[]>([]);
 
   useEffect(() => {
+    console.log('Requesting', KUBE_SERVICES);
     setImmediate(async () => {
       const result = await superagent.get(KUBE_SERVICES)
-        .set('accept', 'json')
-        .withCredentials();
+        .set('accept', 'json'); // TODO(burdon): Change to POST.
 
-      console.log(result);
-      setServices([]);
+      const services = result.body;
+      setServices(services);
     });
   }, []);
 
@@ -49,11 +51,11 @@ const useStatus = () => {
  */
 export const ServicesPanel = () => {
   const classes = useStyles();
-  const status = useStatus();
+  const services = useServices();
 
   return (
     <div className={classes.panel}>
-      <JsonTreeView className={classes.json} data={status} />
+      <JsonTreeView className={classes.json} data={services} />
     </div>
   );
 };

@@ -21,24 +21,28 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// curl -s -H "Content-type: application/json" -X POST
-//   -d '{"name":"app-server", "incremental": true,"uniqueId":"<uniqueIdPerKonsoleAppInstance>"}'
-//   https://discovery.kube.dxos.network/kube/logs  | jq
-
 // TODO(burdon): Config.
-const KUBE_LOGS = 'https://logs.kube.dxos.network/kube/services';
+const KUBE_LOGS = 'https://logs.kube.dxos.network/kube/logs';
+
+// TODO(burdon): Create mocks.
+// curl -s -H "Content-type: application/json" -X POST -d '{"name":"app-server", "incremental": true,"uniqueId":"<uniqueIdPerKonsoleAppInstance>"}' https://discovery.kube.dxos.network/kube/logs | jq
+// "2021-09-15T13:45:32.254974423Z   dxos:cli-app:server Not found in DXNS: dxos:application +90ms\r",
 
 const useLogs = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
+    console.log('Requesting', KUBE_LOGS);
     setImmediate(async () => {
       const result = await superagent.post(KUBE_LOGS)
         .set('accept', 'json')
-        .withCredentials();
+        .send({
+          name: 'app-server',
+          lines: 100
+        });
 
-      console.log(result);
-      setServices([]);
+      const lines = result.body;
+      setServices(lines);
     });
   }, []);
 
@@ -47,8 +51,9 @@ const useLogs = () => {
 
 /**
  * Displays the config panel
- * @constructor
  */
+// TODO(burdon): Refresh button.
+// TODO(burdon): Tail polling button.
 export const LoggingPanel = () => {
   const classes = useStyles();
   const logs = useLogs();
