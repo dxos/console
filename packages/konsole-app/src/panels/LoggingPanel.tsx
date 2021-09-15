@@ -13,7 +13,6 @@ import {
 
 import { Log } from '../components';
 import { ILogMessage, ipfsLogParser, defaultLogParser } from '../logging';
-import { TEST_LOGS } from '../testing';
 
 const log = debug('dxos:console;panel:logging');
 

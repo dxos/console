@@ -109,5 +109,3 @@ export const ServicesPanel = () => {
     </div>
   );
 };
-
-// className={classes.iconButton}
