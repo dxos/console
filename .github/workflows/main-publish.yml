@@ -39,4 +39,6 @@ jobs:
           WIRE_WNS_USER_KEY: ${{secrets.wns_user_key}}
           WIRE_WNS_BOND_ID: ${{secrets.wns_bond_id}}
           WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           WIRE_PROFILE: ci
