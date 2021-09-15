@@ -7,7 +7,7 @@ import hash from 'string-hash';
 import React, { useEffect, useRef, useState } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 
-import { colors, InputLabel, MenuItem, Select, TableCell } from '@material-ui/core';
+import { colors, Divider, FormControl, FormHelperText, InputBase, MenuItem, Select, TableCell } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { logLevels, IFilter, ILogMessage } from '../logging';
@@ -153,9 +153,10 @@ const Header = ({ dataKey, label, headerHeight, filterKey, filterValue, onFilter
           onChange={handleFilterChange}
         />
       )) || (
-        <InputLabel>
-          {label}
-        </InputLabel>
+        <div>
+          <InputBase style={{ visibility: 'hidden' }} />
+          <FormHelperText>{label}</FormHelperText>
+        </div>
       )}
     </TableCell>
   );
@@ -173,24 +174,20 @@ const LevelFilter = ({ label, value = '', onChange }: {
   };
 
   return (
-    <div>
-      <InputLabel id='label-header-level' className={classes.label}>
-        {label}
-      </InputLabel>
+    <FormControl>
       <Select
-        labelId='label-header-level'
+        displayEmpty
         value={value || ''}
         onChange={handleChange}
-        autoWidth
       >
-        <MenuItem value=''>
-          <em>All</em>
-        </MenuItem>
+        <MenuItem value=''>ALL</MenuItem>
+        <Divider />
         {logLevels.map(level => (
           <MenuItem key={level} value={level}>{level}</MenuItem>
         ))}
       </Select>
-    </div>
+      <FormHelperText>Level</FormHelperText>
+    </FormControl>
   );
 };
 

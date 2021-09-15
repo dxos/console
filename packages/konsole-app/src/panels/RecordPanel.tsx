@@ -17,10 +17,6 @@ import { RecordTable, RecordTypeSelector } from '../components';
 import { IConfig, useConfig, useRecordTypes, useResources } from '../hooks';
 
 const useStyles = makeStyles(theme => ({
-  toolbar: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
-  },
   input: {
     flex: 1,
     paddingLeft: theme.spacing(4),
@@ -132,7 +128,7 @@ export const RecordPanel = () => {
 
   return (
     <>
-      <Toolbar className={classes.toolbar} disableGutters>
+      <Toolbar>
         <RecordTypeSelector
           types={recordTypes}
           type={recordType}
