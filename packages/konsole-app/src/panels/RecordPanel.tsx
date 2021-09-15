@@ -11,8 +11,7 @@ import { Clear as ClearIcon, Sync as RefreshIcon } from '@material-ui/icons';
 import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 
 import { RecordTable, RecordTypeSelector } from '../components';
-import { IConfig, useConfig, useResources } from '../hooks';
-import { useRecordTypes } from '../hooks/useRecordTypes';
+import { IConfig, useConfig, useRecordTypes, useResources } from '../hooks';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -39,8 +38,6 @@ const useStyles = makeStyles(theme => ({
     flex: 1
   }
 }));
-
-const delay = 500;
 
 export interface IRecordType {
   type: CID
@@ -75,7 +72,7 @@ function getRecordTypeString (types: IRecordType[], res: Resource): string {
 export function mapRecords (types: IRecordType[], records: Resource[], config: IConfig): IRecord[] {
   return records.map(apiRecord => ({
     cid: apiRecord.record.cid.toB58String(),
-    // TODO (marcin): Currently registry API does not expose that. Add that to the DTO.
+    // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
     created: apiRecord.record.meta.created,
     name: apiRecord.id.toString(),
     type: getRecordTypeString(types, apiRecord),
@@ -83,7 +80,8 @@ export function mapRecords (types: IRecordType[], records: Resource[], config: I
     url: urlJoin(
       config.services.app.server,
       config.services.app.prefix,
-      apiRecord.id.toString())
+      apiRecord.id.toString()
+    )
   }));
 }
 
@@ -101,6 +99,7 @@ export function mapTypes (records: RegistryTypeRecord[]): IRecordType[] {
 export const RecordPanel = () => {
   const classes = useStyles();
   const config = useConfig();
+  const delay = 500;
 
   const registryRecordTypes = useRecordTypes(undefined) ?? [];
   const [recordType, setRecordType] = useState<CID | undefined>(undefined);
@@ -109,7 +108,6 @@ export const RecordPanel = () => {
   const query = useMemo<IQuery>(() => ({ type: recordType, text: delayedSearch }), [recordType, delayedSearch]);
 
   const resources = useResources(query) ?? [];
-
   const recordTypes = mapTypes(registryRecordTypes);
   const records = mapRecords(recordTypes, resources, config);
 

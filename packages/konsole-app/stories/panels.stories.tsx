@@ -4,11 +4,20 @@
 
 import React from 'react';
 
-import { makeStyles, Paper } from '@material-ui/core';
+import { makeStyles, CssBaseline, MuiThemeProvider, Paper } from '@material-ui/core';
 
 import { MockRegistryApi } from '@dxos/registry-api';
 
-import { IConfig, RecordPanel, ConfigPanel, ConfigContext, RegistryContext } from '../src';
+import {
+  createCustomTheme,
+  useTestMessages,
+  IConfig,
+  ConfigPanel,
+  ConfigContext,
+  Log,
+  RecordPanel,
+  RegistryContext
+} from '../src';
 
 // TODO(burdon): Module not found: Error: [CaseSensitivePathsPlugin]
 // https://github.com/storybookjs/storybook/issues/7704
@@ -17,8 +26,7 @@ export default {
   title: 'Panels'
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -28,7 +36,8 @@ const useStyles = makeStyles(theme => ({
 
 const config: IConfig = {
   app: {
-    title: 'Test'
+    title: 'Test',
+    theme: 'dark'
   },
   registry: {
     endpoint: ''
@@ -69,6 +78,22 @@ export const Records = () => {
           <RecordPanel />
         </Paper>
       </RegistryContext.Provider>
+    </ConfigContext.Provider>
+  );
+};
+
+export const Logs = () => {
+  const classes = useStyles();
+  const messages = useTestMessages(10, 5000);
+
+  return (
+    <ConfigContext.Provider value={config}>
+      <MuiThemeProvider theme={createCustomTheme(config)}>
+        <CssBaseline />
+        <Paper className={classes.root}>
+          <Log messages={messages}/>
+        </Paper>
+      </MuiThemeProvider>
     </ConfigContext.Provider>
   );
 };

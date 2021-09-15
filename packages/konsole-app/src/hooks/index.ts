@@ -3,5 +3,6 @@
 //
 
 export * from './useConfig';
+export * from './useRecordTypes';
 export * from './useRegistry';
-export { useResources } from './useResources';
+export * from './useResources';
