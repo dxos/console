@@ -15,7 +15,7 @@ export interface ILogMessage {
   id: string
   timestamp: string
   delta?: number
-  level: string // TODO(burdon): Extend to `debug` library's location (e.g., foo:bar).
+  level?: string // TODO(burdon): Extend to `debug` library's location (e.g., foo:bar).
   message: string
 }
 
@@ -29,22 +29,22 @@ export const logLevels = [
   'DEBUG', 'INFO', 'WARN', 'ERROR'
 ];
 
-// TODO(burdon): Calculate delta.
-export const parseLogMessage = (line: string, previous?: Date): ILogMessage => {
-  // Test: https://regexr.com
-  // Example: "2021-09-14T20:53:46.632038879Z   dxos:cli-app:server:auth Not authenticated. +1s\r"
-  // Skip +1ms at end.
-  const regex = /^([^\s]+)\s+([^\s]+)\s(.+?)(\s\+.+|$)/
+type LogParser = (line: string, previous?: Date) => ILogMessage;
 
+const createInvalidLogMessage = (line: string) => {
+  log(`Failed to parse: ${line}`)
+  return {
+    id: uuid(),
+    timestamp: 'N/A',
+    level: 'N/A',
+    message: line
+  };
+}
+
+export const createLogParser = (regex: RegExp) => (line: string, previous?: Date) => {
   const parts = line.match(regex);
   if (!parts) {
-    log(`Failed to parse: ${line}`)
-    return {
-      id: uuid(),
-      timestamp: 'N/A',
-      level: 'N/A',
-      message: line
-    };
+    return createInvalidLogMessage(line);
   }
 
   return {
@@ -52,6 +52,29 @@ export const parseLogMessage = (line: string, previous?: Date): ILogMessage => {
     timestamp: parts[1],
     delta: 0,
     level: parts[2],
+    message: parts[3]
+  }
+};
+
+// Test: https://regexr.com
+
+// Example: "2021-09-14T20:53:46.632038879Z   dxos:cli-app:server:auth Not authenticated. +1s\r"
+// Skip +1ms at end.
+export const defaultLogParser = createLogParser(/^([^\s]+)\s+([^\s]+)\s(.+?)(\s\+.+|$)/);
+
+// Example: "2021-09-14 09:01:54.305: Initializing daemon..."
+export const ipfsLogParser = (line: string) => {
+  const regex = /^([^\s]+) ([^\s]+) (.*)$/
+  const parts = line.match(regex);
+  if (!parts) {
+    return createInvalidLogMessage(line);
+  }
+
+  const ts = new Date(`${parts[1]}T${parts[2].slice(0, -1)}Z`);
+  return {
+    id: uuid(),
+    timestamp: ts.toISOString(),
+    level: 'INFO', // TODO(burdon): Optional.
     message: parts[3]
   }
 };

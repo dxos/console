@@ -6,13 +6,13 @@ import debug from 'debug';
 import React, { useEffect, useState } from 'react';
 import superagent from 'superagent';
 
-import { makeStyles, IconButton, MenuItem, Select, Toolbar } from '@material-ui/core';
+import { makeStyles, Divider, IconButton, MenuItem, Select, Toolbar } from '@material-ui/core';
 import {
   Sync as RefreshIcon
 } from '@material-ui/icons';
 
 import { Log } from '../components';
-import { ILogMessage, parseLogMessage } from '../logging';
+import { ILogMessage, ipfsLogParser, defaultLogParser } from '../logging';
 import { TEST_LOGS } from '../testing';
 
 const log = debug('dxos:console;panel:logging');
@@ -22,10 +22,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column'
-  },
-  toolbar: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
   },
   expand: {
     flex: 1
@@ -46,6 +42,26 @@ const KUBE_LOGS = 'https://logs.kube.dxos.network/kube/logs';
 
 // curl -s -H "Content-type: application/json" -X POST -d '{"name":"app-server", "incremental": true,"uniqueId":"<uniqueIdPerKonsoleAppInstance>"}' https://discovery.kube.dxos.network/kube/logs | jq
 
+// TODO(burdon): Get from query.
+const services = [
+  'app-server',
+  'bot-factory',
+  'console',
+  'dxns', // TODO(burdon): Fix logging (double timestamp).
+  'ipfs',
+  'ipfs-swarm-connect',
+  'kube', // TODO(burdon): Fix logging (double timestamp).
+  'mdns',
+  'signal' // TODO(burdon): Logs multi-line excpetions to multiple lines.
+];
+
+const parsers: {[index: string]: any} = {
+  'ipfs': ipfsLogParser,
+  'ipfs-swarm-connect': ipfsLogParser
+};
+
+const getParser = (service: string) => parsers[service] || defaultLogParser;
+
 // TODO(burdon): Factor out pattern.
 const useLogs = (service: string): [ILogMessage[], () => void] => {
   const [time, setTime] = useState(Date.now());
@@ -65,7 +81,7 @@ const useLogs = (service: string): [ILogMessage[], () => void] => {
 
       if (active) {
         const lines = result.body as string[];
-        setLogs(lines.filter(Boolean).map(message => parseLogMessage(message)));
+        setLogs(lines.filter(Boolean).map(message => getParser(service)(message)));
       }
     });
 
@@ -74,20 +90,6 @@ const useLogs = (service: string): [ILogMessage[], () => void] => {
 
   return [logs, () => setTime(Date.now())];
 };
-
-// TODO(burdon): Get from query.
-// TODO(burdon): Map of services => log parsers.
-const services = [
-  'app-server',
-  'bot-factory',
-  'console',
-  'dxns',
-  'ipfs',
-  'ipfs-swarm-connect',
-  'kube',
-  'mdns',
-  'signal'
-]
 
 /**
  * Displays the config panel
@@ -104,9 +106,10 @@ export const LoggingPanel = () => {
 
   return (
     <div className={classes.root}>
-      <Toolbar className={classes.toolbar} disableGutters>
+      <Toolbar>
         <Select
           labelId='label-service'
+          variant='outlined'
           value={service || ''}
           onChange={handleServiceChange}
           autoWidth
@@ -124,6 +127,7 @@ export const LoggingPanel = () => {
           <RefreshIcon />
         </IconButton>
       </Toolbar>
+      <Divider />
       <div className={classes.panel}>
         <Log messages={logs} />
       </div>

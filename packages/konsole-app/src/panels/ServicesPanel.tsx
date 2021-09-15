@@ -20,20 +20,16 @@ const log = debug('dxos:console:panel:logging');
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    flex: 1,
-    flexDirection: 'column'
-  },
-  toolbar: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    flexDirection: 'column',
+    flex: 1
   },
   expand: {
     flex: 1
   },
   panel: {
     display: 'flex',
-    flex: 1,
-    margin: theme.spacing(1)
+    flexDirection: 'column',
+    flex: 1
   }
 }));
 
@@ -86,7 +82,6 @@ const useServices = (): [IService[], () => void] => {
 
 /**
  * Displays the config panel
- * @constructor
  */
 export const ServicesPanel = () => {
   const classes = useStyles();
@@ -94,7 +89,7 @@ export const ServicesPanel = () => {
 
   return (
     <div className={classes.root}>
-      <Toolbar className={classes.toolbar} disableGutters>
+      <Toolbar>
         <div className={classes.expand} />
         <IconButton
           size='small'
