@@ -8,6 +8,5 @@ export * from './hooks';
 export * from './icons';
 export * from './logging';
 export * from './panels';
-export * from './testing';
 export * from './theme';
 export * from './util';

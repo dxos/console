@@ -6,12 +6,14 @@ import React from 'react';
 
 import { Button, ButtonGroup } from '@material-ui/core';
 
+import { CID } from '@dxos/registry-api';
+
 import { IRecordType } from '../panels';
 
 interface RecordTypeSelectorProperties {
   types: IRecordType[]
-  type?: string
-  onTypeChange: (type: string | undefined) => void
+  type?: CID
+  onTypeChange: (type: CID | undefined) => void
 }
 
 export const RecordTypeSelector = ({ types, type: selected, onTypeChange }: RecordTypeSelectorProperties) => {
@@ -31,7 +33,7 @@ export const RecordTypeSelector = ({ types, type: selected, onTypeChange }: Reco
       </Button>
       {types.map(({ type, label }: IRecordType) => (
         <Button
-          key={type}
+          key={type.toString()}
           variant={type === selected ? 'contained' : 'outlined'}
           onClick={() => onTypeChange(type)}
         >

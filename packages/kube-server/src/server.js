@@ -16,6 +16,7 @@ import yargs from 'yargs';
 
 import { getConfig } from './config';
 import { resolvers } from './resolvers';
+import { router } from './router';
 import API_SCHEMA from './gql/api.graphql';
 
 const argv = yargs
@@ -51,6 +52,10 @@ const app = express();
 app.set('views', `${__dirname}/views`);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());
+
+// Endpoints for konsole-app.
+app.use(express.json());
+app.use(config.api.kubePath, router);
 
 app.get('/', (req, res) => {
   res.redirect(config.api.path);

@@ -8,10 +8,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Divider, IconButton, makeStyles, TextField, Toolbar } from '@material-ui/core';
 import { Clear as ClearIcon, Sync as RefreshIcon } from '@material-ui/icons';
 
-import { Resource } from '@dxos/registry-api';
+import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 
 import { RecordTable, RecordTypeSelector } from '../components';
-import { IConfig, useConfig, useResources } from '../hooks';
+import { IConfig, useConfig, useRecordTypes, useResources } from '../hooks';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -40,46 +40,55 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export interface IRecordType {
-  type: string
+  type: CID
   label: string
 }
 
 export interface IRecord {
   cid: string
-  created: number
+  created?: string
   name: string
   type: string
-  title: string
+  title?: string
   url?: string
 }
 
-/**
- * Creates an array of record types from an array of resource definitions.
- */
-export function mapRecordsTypes (records: Resource[]): IRecordType[] {
-  const mapped = records.map(apiRecord => ({
-    type: apiRecord.messageFqn,
-    label: apiRecord.messageFqn
-  }));
+function getRecordTypeString (types: IRecordType[], res: Resource): string {
+  const record = res.record;
+  if (RegistryRecord.isTypeRecord(record)) {
+    return 'type';
+  } else if (RegistryRecord.isDataRecord(record)) {
+    const matches = types.filter(({ type }) => type.equals(record.type));
+    if (matches.length !== 1) {
+      throw new Error('Type not found');
+    }
 
-  return Object.values(Object.fromEntries(mapped.map(record => [record.type, record])));
+    return matches[0].label;
+  } else {
+    return 'expected two types' as never;
+  }
 }
 
-/**
- * Normalize API records.
- */
-export function mapRecords (records: Resource[], config: IConfig): IRecord[] {
-  return records.map(record => ({
-    cid: record.cid.toB58String(),
+export function mapRecords (types: IRecordType[], records: Resource[], config: IConfig): IRecord[] {
+  return records.map(apiRecord => ({
+    cid: apiRecord.record.cid.toB58String(),
     // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
-    created: record.data?.attributes?.created,
-    name: `${record.id.domain}:${record.id.resource}`,
-    type: record.messageFqn,
-    title: record.data?.attributes?.name,
+    created: apiRecord.record.meta.created,
+    name: apiRecord.id.toString(),
+    type: getRecordTypeString(types, apiRecord),
+    title: apiRecord.record.meta.name,
     url: urlJoin(
       config.services.app.server,
       config.services.app.prefix,
-      `${record.id.domain}:${record.id.resource}`)
+      apiRecord.id.toString()
+    )
+  }));
+}
+
+export function mapTypes (records: RegistryTypeRecord[]): IRecordType[] {
+  return records.map(apiRecord => ({
+    type: apiRecord.cid,
+    label: apiRecord.messageName
   }));
 }
 
@@ -92,21 +101,15 @@ export const RecordPanel = () => {
   const config = useConfig();
   const delay = 500;
 
-  const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
-  const [recordType, setRecordType] = useState<string | undefined>(undefined);
+  const registryRecordTypes = useRecordTypes(undefined) ?? [];
+  const [recordType, setRecordType] = useState<CID | undefined>(undefined);
   const [search, setSearch] = useState('');
   const [delayedSearch, setDelayedSearch] = useState(search);
-  const query = useMemo(() => ({ type: recordType, text: delayedSearch }), [recordType, delayedSearch]);
+  const query = useMemo<IQuery>(() => ({ type: recordType, text: delayedSearch }), [recordType, delayedSearch]);
 
   const resources = useResources(query) ?? [];
-
-  // TODO(burdon): Registry API should provide this (i.e., not rely on limited set of queried resources).
-  const newRecordTypes = mapRecordsTypes(resources);
-  if (newRecordTypes.length > recordTypes.length) {
-    setRecordTypes(newRecordTypes);
-  }
-
-  const records = mapRecords(resources, config);
+  const recordTypes = mapTypes(registryRecordTypes);
+  const records = mapRecords(recordTypes, resources, config);
 
   useEffect(() => {
     const t = setTimeout(() => {

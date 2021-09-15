@@ -1,6 +1,6 @@
 {
   "name": "@dxos/konsole-app",
-  "version": "1.2.9-alpha.20",
+  "version": "1.2.9-alpha.28",
   "description": "KUBE Authenticator.",
   "homepage": "https://github.com/dxos/console#readme",
   "bugs": {
@@ -18,10 +18,13 @@
   "scripts": {
     "build": "webpack",
     "clean": "rm -rf ./dist",
-    "lint": "eslint --format codeframe './src/**/*.ts'",
+    "lint": "eslint --fix --format codeframe './src/**/*.ts'",
     "start": "webpack serve",
     "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
-    "ci": "npm run build && npm run test",
+    "build-storybook": "build-storybook --quiet",
+    "ci": "npm run build && npm run lint && npm run test",
+    "chromatic": "npx chromatic --exit-zero-on-changes --auto-accept-changes",
+    "deploy": "npm run chromatic",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "browserslist": [
@@ -38,7 +41,7 @@
     "@apollo/client": "^3.3.19",
     "@dxos/config": "~2.10.2",
     "@dxos/react-json-tree": "~0.12.0",
-    "@dxos/registry-api": "~0.2.1",
+    "@dxos/registry-api": "~0.3.1",
     "@material-ui/core": "^4.9.10",
     "@material-ui/data-grid": "^4.0.0-alpha.37",
     "@polkadot/api": "4.17.1",
@@ -62,7 +65,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/eslint-plugin": "^1.0.14",
     "@storybook/addon-knobs": "^6.3.0",
     "@storybook/react": "^6.3.7",
     "@types/faker": "^4.1.12",
@@ -76,6 +79,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-inline-import": "^3.0.0",
+    "chromatic": "^5.8.0",
     "eslint": "^7.10.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",

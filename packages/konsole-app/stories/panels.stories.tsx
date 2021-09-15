@@ -6,16 +6,17 @@ import React from 'react';
 
 import { makeStyles, CssBaseline, MuiThemeProvider, Paper } from '@material-ui/core';
 
+import { MockRegistryApi } from '@dxos/registry-api';
+
 import {
   createCustomTheme,
   useTestMessages,
   IConfig,
-  RecordPanel,
   ConfigPanel,
   ConfigContext,
   Log,
-  MockDxnsApi,
-  RegistryContext,
+  RecordPanel,
+  RegistryContext
 } from '../src';
 
 // TODO(burdon): Module not found: Error: [CaseSensitivePathsPlugin]
@@ -72,7 +73,7 @@ export const Records = () => {
 
   return (
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={MockDxnsApi}>
+      <RegistryContext.Provider value={MockRegistryApi}>
         <Paper className={classes.root}>
           <RecordPanel />
         </Paper>

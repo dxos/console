@@ -13,6 +13,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v1
         with:
           node-version: 16
@@ -24,6 +26,7 @@ jobs:
 
           yarn install
           yarn ci
+          yarn deploy
 
           # Uncomment for NPM publishing.
           npm whoami
@@ -38,4 +41,6 @@ jobs:
           WIRE_WNS_USER_KEY: ${{secrets.wns_user_key}}
           WIRE_WNS_BOND_ID: ${{secrets.wns_bond_id}}
           WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           WIRE_PROFILE: ci

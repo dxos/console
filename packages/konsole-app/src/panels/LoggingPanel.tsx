@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 //   https://discovery.kube.dxos.network/kube/logs  | jq
 
 // TODO(burdon): Config.
-const KUBE_LOGS = 'https://discovery.kube.dxos.network/kube/logs';
+const KUBE_LOGS = 'https://logs.kube.dxos.network/kube/services';
 
 const useLogs = () => {
   const [services, setServices] = useState([]);

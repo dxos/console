@@ -11,6 +11,7 @@
     "lint:staged": "lint-staged",
     "sort-package-json": "lerna exec npx sort-package-json",
     "ci": "lerna run ci",
+    "deploy": "lerna run deploy",
     "test": "lerna run test"
   },
   "author": "DXOS.org",
@@ -21,11 +22,11 @@
     ]
   },
   "devDependencies": {
-    "@dxos/cli": "2.0.38-alpha.0",
-    "@dxos/cli-app": "2.0.38-alpha.0",
-    "@dxos/cli-bot": "2.0.38-alpha.0",
-    "@dxos/cli-data": "2.0.38-alpha.0",
-    "@dxos/cli-wns": "2.0.38-alpha.0",
+    "@dxos/cli": "2.4.7",
+    "@dxos/cli-app": "2.4.7",
+    "@dxos/cli-bot": "2.4.7",
+    "@dxos/cli-data": "2.4.7",
+    "@dxos/cli-wns": "2.4.7",
     "eslint": "^7.7.0",
     "lerna": "^3.19.0",
     "lint-staged": "^9.5.0",

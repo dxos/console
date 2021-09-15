@@ -16,7 +16,8 @@ import {
 
 import { CssBaseline } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { DxnsApi } from '@dxos/registry-api';
+
+import { ApiFactory } from '@dxos/registry-api';
 
 import { loadSubstrateConfig } from './config';
 import { Container, Sidebar } from './containers';
@@ -52,7 +53,7 @@ const Main = () => {
         ))}
       </>
     </Container>
-  )
+  );
 };
 
 /**
@@ -61,14 +62,14 @@ const Main = () => {
  */
 const start = async (config: IConfig) => {
   const log = debug('dxos:console:main');
-  log('Starting...', {config});
+  log('Starting...', { config });
   debug.enable(config.system.debug);
 
-  const dxnsApi = await DxnsApi.create(config.services.dxns.server);
+  const registryApi = await ApiFactory.createRegistryApi(config.services.dxns.server);
 
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={dxnsApi}>
+      <RegistryContext.Provider value={registryApi}>
         <MuiThemeProvider theme={createCustomTheme(config)}>
           <CssBaseline />
           <Router>
@@ -85,4 +86,4 @@ const start = async (config: IConfig) => {
   ), document.getElementById('root'));
 };
 
-loadSubstrateConfig().then(start);
+void loadSubstrateConfig().then(start);
