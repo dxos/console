@@ -62,11 +62,12 @@ const Main = () => {
  */
 const start = async (config: IConfig) => {
   const log = debug('dxos:console:main');
-  log('Starting...', { config });
   debug.enable(config.system.debug);
 
+  log('Starting...', { config });
   const registryApi = await ApiFactory.createRegistryApi(config.services.dxns.server);
 
+  // TODO(burdon): Cache panels so that they don't need to render each time.
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={registryApi}>
