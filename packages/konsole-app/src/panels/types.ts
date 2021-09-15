@@ -17,7 +17,7 @@ export interface IService {
   type: string
   exec: string
   status: string
-  ports?: number[]
+  ports?: string // TODO(burdon): Array of numbers?
   memory: number
   cpu: number
 }

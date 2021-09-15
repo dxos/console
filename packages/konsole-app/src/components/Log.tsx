@@ -3,6 +3,7 @@
 //
 
 import clsx from 'clsx';
+import hash from 'string-hash';
 import React, { useEffect, useRef, useState } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 
@@ -10,6 +11,8 @@ import { colors, InputLabel, MenuItem, Select, TableCell } from '@material-ui/co
 import { makeStyles } from '@material-ui/core/styles';
 
 import { logLevels, IFilter, ILogMessage } from '../logging';
+
+// Levels
 
 interface LevelColorMap {
   [key: string]: string
@@ -21,8 +24,14 @@ const levelColors: LevelColorMap = {
   ERROR: colors.red[400]
 };
 
-const getLevelColor = (level: string) => {
-  return levelColors[level];
+// const hashedColors = Object.keys(colors);
+const hashedColors = [
+  'red', 'purple', 'indigo', 'blue', 'cyan', 'teal', 'green', 'lime', 'amber', 'orange', 'deepOrange', 'brown'
+];
+
+const getLevelColor = (level: string): string => {
+  // @ts-ignore
+  return levelColors[level] || colors[hashedColors[hash(level) % hashedColors.length]][500];
 };
 
 // Time
@@ -61,7 +70,7 @@ const columns = [
   {
     dataKey: 'level',
     label: 'Level',
-    width: 80,
+    width: 240,
     flexShrink: 0
   },
   {

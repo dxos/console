@@ -2,9 +2,12 @@
 // Copyright 2021 DXOS.org
 //
 
+import debug from 'debug';
 import faker from 'faker';
 import { useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
+
+const log = debug('dxos:console:warn');
 
 // Data types
 
@@ -21,9 +24,37 @@ export interface IFilter {
   filterValue: string | undefined
 }
 
-export const logLevels = [ // TODO(burdon): Compute dynamically (e.g., general notion of location).
+// TODO(burdon): Compute dynamically (e.g., general notion of location).
+export const logLevels = [
   'DEBUG', 'INFO', 'WARN', 'ERROR'
 ];
+
+// TODO(burdon): Calculate delta.
+export const parseLogMessage = (line: string, previous?: Date): ILogMessage => {
+  // Test: https://regexr.com
+  // Example: "2021-09-14T20:53:46.632038879Z   dxos:cli-app:server:auth Not authenticated. +1s\r"
+  // Skip +1ms at end.
+  const regex = /^([^\s]+)\s+([^\s]+)\s(.+?)(\s\+.+|$)/
+
+  const parts = line.match(regex);
+  if (!parts) {
+    log(`Failed to parse: ${line}`)
+    return {
+      id: uuid(),
+      timestamp: 'N/A',
+      level: 'N/A',
+      message: line
+    };
+  }
+
+  return {
+    id: uuid(),
+    timestamp: parts[1],
+    delta: 0,
+    level: parts[2],
+    message: parts[3]
+  }
+};
 
 /**
  * Limited size buffer of messages.

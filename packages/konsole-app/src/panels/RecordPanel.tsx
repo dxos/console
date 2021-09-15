@@ -5,8 +5,11 @@
 import urlJoin from 'proper-url-join';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Divider, IconButton, makeStyles, TextField, Toolbar } from '@material-ui/core';
-import { Clear as ClearIcon, Sync as RefreshIcon } from '@material-ui/icons';
+import { makeStyles, Divider, IconButton, TextField, Toolbar } from '@material-ui/core';
+import {
+  Clear as ClearIcon,
+  Sync as RefreshIcon
+} from '@material-ui/icons';
 
 import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 
@@ -157,10 +160,10 @@ export const RecordPanel = () => {
         <div className={classes.expand} />
         <Divider className={classes.divider} orientation="vertical" />
         <IconButton
-            className={classes.iconButton}
-            size='small'
-            aria-label='refresh'
-            onClick={refreshData}
+          className={classes.iconButton}
+          size='small'
+          aria-label='refresh'
+          onClick={refreshData}
         >
           <RefreshIcon />
         </IconButton>

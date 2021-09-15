@@ -2,14 +2,34 @@
 // Copyright 2021 DXOS.org
 //
 
+import debug from 'debug';
 import React, { useEffect, useState } from 'react';
 import superagent from 'superagent';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, IconButton, MenuItem, Select, Toolbar } from '@material-ui/core';
+import {
+  Sync as RefreshIcon
+} from '@material-ui/icons';
 
-import { JsonTreeView } from '@dxos/react-ux';
+import { Log } from '../components';
+import { ILogMessage, parseLogMessage } from '../logging';
+import { TEST_LOGS } from '../testing';
+
+const log = debug('dxos:console;panel:logging');
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column'
+  },
+  toolbar: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
+  },
+  expand: {
+    flex: 1
+  },
   panel: {
     display: 'flex',
     flex: 1,
@@ -24,43 +44,89 @@ const useStyles = makeStyles(theme => ({
 // TODO(burdon): Config.
 const KUBE_LOGS = 'https://logs.kube.dxos.network/kube/logs';
 
-// TODO(burdon): Create mocks.
 // curl -s -H "Content-type: application/json" -X POST -d '{"name":"app-server", "incremental": true,"uniqueId":"<uniqueIdPerKonsoleAppInstance>"}' https://discovery.kube.dxos.network/kube/logs | jq
-// "2021-09-15T13:45:32.254974423Z   dxos:cli-app:server Not found in DXNS: dxos:application +90ms\r",
 
-const useLogs = () => {
-  const [services, setServices] = useState([]);
+// TODO(burdon): Factor out pattern.
+const useLogs = (service: string): [ILogMessage[], () => void] => {
+  const [time, setTime] = useState(Date.now());
+  const [logs, setLogs] = useState<ILogMessage[]>([]);
 
   useEffect(() => {
-    console.log('Requesting', KUBE_LOGS);
+    let active = true;
+
+    log('Requesting', KUBE_LOGS);
     setImmediate(async () => {
       const result = await superagent.post(KUBE_LOGS)
         .set('accept', 'json')
         .send({
-          name: 'app-server',
+          name: service,
           lines: 100
         });
 
-      const lines = result.body;
-      setServices(lines);
+      if (active) {
+        const lines = result.body as string[];
+        setLogs(lines.filter(Boolean).map(message => parseLogMessage(message)));
+      }
     });
-  }, []);
 
-  return services;
+    return () => { active = false };
+  }, [service, time]);
+
+  return [logs, () => setTime(Date.now())];
 };
+
+// TODO(burdon): Get from query.
+// TODO(burdon): Map of services => log parsers.
+const services = [
+  'app-server',
+  'bot-factory',
+  'console',
+  'dxns',
+  'ipfs',
+  'ipfs-swarm-connect',
+  'kube',
+  'mdns',
+  'signal'
+]
 
 /**
  * Displays the config panel
  */
-// TODO(burdon): Refresh button.
 // TODO(burdon): Tail polling button.
 export const LoggingPanel = () => {
   const classes = useStyles();
-  const logs = useLogs();
+  const [service, setService] = useState(services[0]);
+  const [logs, handleRefresh] = useLogs(service);
+
+  const handleServiceChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setService(event.target.value as string);
+  };
 
   return (
-    <div className={classes.panel}>
-      <JsonTreeView className={classes.json} data={logs} />
+    <div className={classes.root}>
+      <Toolbar className={classes.toolbar} disableGutters>
+        <Select
+          labelId='label-service'
+          value={service || ''}
+          onChange={handleServiceChange}
+          autoWidth
+        >
+          {services.map(service => (
+            <MenuItem key={service} value={service}>{service}</MenuItem>
+          ))}
+        </Select>
+        <div className={classes.expand} />
+        <IconButton
+          size='small'
+          aria-label='refresh'
+          onClick={handleRefresh}
+        >
+          <RefreshIcon />
+        </IconButton>
+      </Toolbar>
+      <div className={classes.panel}>
+        <Log messages={logs} />
+      </div>
     </div>
   );
 };
