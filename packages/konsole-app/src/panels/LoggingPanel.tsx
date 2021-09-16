@@ -2,19 +2,14 @@
 // Copyright 2021 DXOS.org
 //
 
-import debug from 'debug';
 import React, { useEffect, useState } from 'react';
-import superagent from 'superagent';
 
 import { makeStyles, Divider, IconButton, MenuItem, Select, Toolbar } from '@material-ui/core';
-import {
-  Sync as RefreshIcon
-} from '@material-ui/icons';
+import { Sync as RefreshIcon } from '@material-ui/icons';
 
 import { Log } from '../components';
 import { ILogMessage, ipfsLogParser, defaultLogParser } from '../logging';
-
-const log = debug('dxos:console;panel:logging');
+import { useRequest } from '../hooks';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,33 +56,15 @@ const parsers: {[index: string]: any} = {
 
 const getParser = (service: string) => parsers[service] || defaultLogParser;
 
-// TODO(burdon): Factor out pattern.
 const useLogs = (service: string): [ILogMessage[], () => void] => {
-  const [time, setTime] = useState(Date.now());
+  const [data, refreshData] = useRequest<string[]>(KUBE_LOGS, { name: service, lines: 100 });
   const [logs, setLogs] = useState<ILogMessage[]>([]);
 
   useEffect(() => {
-    let active = true;
+    setLogs(data ? data.filter(Boolean).map((message: string) => getParser(service)(message)): []);
+  }, [data]);
 
-    log('Requesting', KUBE_LOGS);
-    setImmediate(async () => {
-      const result = await superagent.post(KUBE_LOGS)
-        .set('accept', 'json')
-        .send({
-          name: service,
-          lines: 100
-        });
-
-      if (active) {
-        const lines = result.body as string[];
-        setLogs(lines.filter(Boolean).map(message => getParser(service)(message)));
-      }
-    });
-
-    return () => { active = false };
-  }, [service, time]);
-
-  return [logs, () => setTime(Date.now())];
+  return [logs, refreshData];
 };
 
 /**
@@ -97,7 +74,7 @@ const useLogs = (service: string): [ILogMessage[], () => void] => {
 export const LoggingPanel = () => {
   const classes = useStyles();
   const [service, setService] = useState(services[0]);
-  const [logs, handleRefresh] = useLogs(service);
+  const [logs, refreshLogs] = useLogs(service);
 
   const handleServiceChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setService(event.target.value as string);
@@ -121,7 +98,7 @@ export const LoggingPanel = () => {
         <IconButton
           size='small'
           aria-label='refresh'
-          onClick={handleRefresh}
+          onClick={refreshLogs}
         >
           <RefreshIcon />
         </IconButton>
