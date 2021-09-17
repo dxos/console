@@ -317,7 +317,6 @@ export const Log = ({ messages }: LogProperties) => {
           {({ width, height }) => (
             <Table
               ref={tableRef}
-              // disableHeader
               className={classes.table}
               gridClassName={classes.grid}
               width={width}
