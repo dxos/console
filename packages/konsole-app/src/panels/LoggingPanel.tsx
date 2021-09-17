@@ -8,8 +8,8 @@ import { makeStyles, Divider, IconButton, MenuItem, Select, Toolbar } from '@mat
 import { Sync as RefreshIcon } from '@material-ui/icons';
 
 import { Log } from '../components';
-import { ILogMessage, ipfsLogParser, defaultLogParser } from '../logging';
 import { useRequest } from '../hooks';
+import { ILogMessage, ipfsLogParser, defaultLogParser } from '../logging';
 
 const useStyles = makeStyles(theme => ({
   root: {
