@@ -11,7 +11,7 @@ const log = debug('dxos:console:request');
 /**
  * HTTP request.
  */
-// TODO(burdon): Inject mock.
+// TODO(burdon): Inject mock server into context.
 export const useRequest = <T>(url: string, params: any = {}, post: boolean = true): [T | undefined, () => void] => {
   const [time, setTime] = useState(Date.now());
   const [data, setData] = useState<T>();

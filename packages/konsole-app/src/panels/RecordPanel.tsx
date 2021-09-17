@@ -52,44 +52,45 @@ export interface IRecord {
   url?: string
 }
 
-function getRecordTypeString (types: IRecordType[], res: Resource): string {
+// TODO(burdon): Comment.
+const getRecordTypeString = (types: IRecordType[], res: Resource): string | undefined => {
   const record = res.record;
   if (RegistryRecord.isTypeRecord(record)) {
-    return 'type';
+    return 'type'; // TODO(burdon): Const from protobuf?
   } else if (RegistryRecord.isDataRecord(record)) {
     const matches = types.filter(({ type }) => type.equals(record.type));
     if (matches.length !== 1) {
-      throw new Error('Type not found');
+      return;
     }
 
     return matches[0].label;
-  } else {
-    return 'expected two types' as never;
   }
-}
+};
 
-export function mapRecords (types: IRecordType[], records: Resource[], config: IConfig): IRecord[] {
-  return records.map(apiRecord => ({
-    cid: apiRecord.record.cid.toB58String(),
+// TODO(burdon): Comment.
+export const mapRecords = (types: IRecordType[], records: Resource[], config: IConfig): IRecord[] => {
+  return records.map(record => ({
+    cid: record.record.cid.toB58String(),
     // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
-    created: apiRecord.record.meta.created,
-    name: apiRecord.id.toString(),
-    type: getRecordTypeString(types, apiRecord),
-    title: apiRecord.record.meta.name,
+    created: record.record.meta.created,
+    name: record.id.toString(),
+    type: getRecordTypeString(types, record) || '', // TODO(burdon): ???
+    title: record.record.meta.name,
     url: urlJoin(
       config.services.app.server,
       config.services.app.prefix,
-      apiRecord.id.toString()
+      record.id.toString()
     )
   }));
-}
+};
 
-export function mapTypes (records: RegistryTypeRecord[]): IRecordType[] {
+// TODO(burdon): Comment.
+export const mapTypes = (records: RegistryTypeRecord[]): IRecordType[] => {
   return records.map(apiRecord => ({
     type: apiRecord.cid,
     label: apiRecord.messageName
   }));
-}
+};
 
 /**
  * Display records panel
