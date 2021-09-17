@@ -7,10 +7,12 @@ import hash from 'string-hash';
 import React, { useEffect, useRef, useState } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 
-import { colors, Divider, FormControl, FormHelperText, InputBase, MenuItem, Select, TableCell } from '@material-ui/core';
+import {
+  colors, Divider, FormControl, FormHelperText, InputBase, MenuItem, Select, TableCell
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { logLevels, IFilter, ILogMessage } from '../logging';
+import { IFilter, ILogMessage } from '../logging';
 
 // Levels
 
@@ -122,16 +124,21 @@ interface LogProperties {
   messages: ILogMessage[]
 }
 
+interface IContext {
+  levels: string[]
+}
+
 /**
  * Table header.
  */
-const Header = ({ dataKey, label, headerHeight, filterKey, filterValue, onFilterChange, Component }: {
+const Header = ({ dataKey, label, headerHeight, filterKey, filterValue, onFilterChange, context, Component }: {
   dataKey: string,
   label: string | React.ReactNode,
   headerHeight?: number,
   filterKey?: string,
   filterValue?: any,
   onFilterChange: (filterKey: keyof ILogMessage, filterValue: any) => void,
+  context: IContext,
   Component: any
 }) => {
   const classes = useStyles();
@@ -148,6 +155,7 @@ const Header = ({ dataKey, label, headerHeight, filterKey, filterValue, onFilter
     >
       {(Component && (
         <Component
+          context={context}
           label={label}
           value={dataKey === filterKey ? filterValue : undefined}
           onChange={handleFilterChange}
@@ -162,17 +170,19 @@ const Header = ({ dataKey, label, headerHeight, filterKey, filterValue, onFilter
   );
 };
 
-const LevelFilter = ({ label, value = '', onChange }: {
+const LevelFilter = ({ context, label, value = '', onChange }: {
+  context: IContext,
   label: string,
   value: any,
   onChange: (value: string) => void
 }) => {
-  const classes = useStyles();
+  const { levels } = context;
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     onChange(event.target.value as string);
   };
 
+  // TODO(burdon): Support multi-select.
   return (
     <FormControl>
       <Select
@@ -182,11 +192,11 @@ const LevelFilter = ({ label, value = '', onChange }: {
       >
         <MenuItem value=''>ALL</MenuItem>
         <Divider />
-        {logLevels.map(level => (
+        {levels.map(level => (
           <MenuItem key={level} value={level}>{level}</MenuItem>
         ))}
       </Select>
-      <FormHelperText>Level</FormHelperText>
+      <FormHelperText>{ label }</FormHelperText>
     </FormControl>
   );
 };
@@ -234,11 +244,13 @@ const Cell = ({ dataKey, data, rowData, rowHeight }: {
 
       case 'level': {
         return (
-          <div
-            className={classes.fixedWidth}
-            style={{ color: getLevelColor(data as string) }}
-          >
-            {data}
+          <div>
+            <div
+              className={classes.fixedWidth}
+              style={{ color: getLevelColor(data as string) }}
+            >
+              {data}
+            </div>
           </div>
         );
       }
@@ -281,12 +293,21 @@ export const Log = ({ messages }: LogProperties) => {
   const classes = useStyles();
   const tableRef = useRef<Table>(null);
   const [filteredMessages, setFilteredMessages] = useState(messages);
+  const [levels, setLevels] = useState<string[]>([]);
   const [expanded, setExpanded] = useState(new Set<string>());
   const [{ filterKey, filterValue }, setFilter] = useState<IFilter>({ filterKey: undefined, filterValue: undefined });
   const [tail, setTail] = useState(true);
 
   // Filter.
   useEffect(() => {
+    const levels = messages.reduce((values, message) => {
+      if (message.level) {
+        values.add(message.level);
+      }
+      return values;
+    }, new Set<string>());
+    setLevels(Array.from(levels));
+
     if (filterKey && filterValue) {
       setFilteredMessages(messages.filter(message => {
         return message[filterKey as keyof ILogMessage] === filterValue;
@@ -367,6 +388,7 @@ export const Log = ({ messages }: LogProperties) => {
                       filterValue={filterValue}
                       onFilterChange={handleFilterChange}
                       Component={dataKey === 'level' ? LevelFilter : undefined}
+                      context={{ levels }}
                       label={label}
                       {...other}
                     />
