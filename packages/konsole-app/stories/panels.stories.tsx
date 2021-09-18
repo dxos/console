@@ -14,6 +14,7 @@ import {
   IConfig,
   ConfigPanel,
   ConfigContext,
+  FlexTable,
   Log,
   RecordPanel,
   RegistryContext
@@ -30,7 +31,8 @@ const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh'
+    height: '100vh',
+    overflow: 'hidden'
   }
 }));
 
@@ -68,15 +70,56 @@ export const Config = () => {
   );
 };
 
+export const Table = () => {
+  const classes = useStyles();
+  const messages = useTestMessages(30);
+
+  const columns = [
+    {
+      id: 'timestamp',
+      label: 'ts'
+    },
+    {
+      id: 'level'
+    },
+    {
+      id: 'message'
+    }
+  ];
+
+  // TODO(burdon): Roboto/DM fonts.
+  return (
+    <ConfigContext.Provider value={config}>
+      <Paper className={classes.root}>
+        <FlexTable
+          columns={columns}
+          rows={messages}
+          cellRenderer={({ row, id }) => {
+            if (id === 'timestamp') {
+              return (
+                <div style={{ whiteSpace: 'nowrap', fontFamily: 'monospace', color: 'darkGreen' }}>{row[id]}</div>
+              );
+            }
+          }}
+        />
+      </Paper>
+    </ConfigContext.Provider>
+  );
+};
+
 export const Records = () => {
   const classes = useStyles();
 
+  // TODO(burdon): MockRegistryApi should be configurable to generate data. Not passed in by class or global.
   return (
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={MockRegistryApi}>
-        <Paper className={classes.root}>
-          <RecordPanel />
-        </Paper>
+        <MuiThemeProvider theme={createCustomTheme(config)}>
+          <CssBaseline />
+          <Paper className={classes.root}>
+            <RecordPanel />
+          </Paper>
+        </MuiThemeProvider>
       </RegistryContext.Provider>
     </ConfigContext.Provider>
   );

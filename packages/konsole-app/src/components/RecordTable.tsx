@@ -33,6 +33,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// TODO(burdon): Custom table using Table and TablePagination
+
 // TODO(burdon): Common fields for all records.
 // TODO(burdon): Different record type views may have different column sets.
 // TODO(burdon): Upgrade to XGrid to have resizable columns.
