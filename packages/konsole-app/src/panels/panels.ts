@@ -7,7 +7,7 @@ import {
   Settings as SettingsIcon,
   Storage as ServicesIcon,
   DynamicFeed as RecordsIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import { ConfigPanel } from './ConfigPanel';
 import { LoggingPanel } from './LoggingPanel';

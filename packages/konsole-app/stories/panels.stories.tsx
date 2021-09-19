@@ -4,7 +4,8 @@
 
 import React from 'react';
 
-import { makeStyles, CssBaseline, MuiThemeProvider, Paper } from '@material-ui/core';
+import { CssBaseline, ThemeProvider, Paper } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 import { MockRegistryApi } from '@dxos/registry-api';
 
@@ -77,10 +78,12 @@ export const Table = () => {
   const columns = [
     {
       id: 'timestamp',
-      label: 'ts'
+      label: 'ts',
+      sort: true
     },
     {
-      id: 'level'
+      id: 'level',
+      width: 150
     },
     {
       id: 'message'
@@ -94,6 +97,7 @@ export const Table = () => {
         <FlexTable
           columns={columns}
           rows={messages}
+          paging={true}
           cellRenderer={({ row, id }) => {
             if (id === 'timestamp') {
               return (
@@ -114,12 +118,12 @@ export const Records = () => {
   return (
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={MockRegistryApi}>
-        <MuiThemeProvider theme={createCustomTheme(config)}>
+        <ThemeProvider theme={createCustomTheme(config)}>
           <CssBaseline />
           <Paper className={classes.root}>
             <RecordPanel />
           </Paper>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </RegistryContext.Provider>
     </ConfigContext.Provider>
   );
@@ -131,12 +135,12 @@ export const Logs = () => {
 
   return (
     <ConfigContext.Provider value={config}>
-      <MuiThemeProvider theme={createCustomTheme(config)}>
+      <ThemeProvider theme={createCustomTheme(config)}>
         <CssBaseline />
         <Paper className={classes.root}>
           <Log messages={messages}/>
         </Paper>
-      </MuiThemeProvider>
+      </ThemeProvider>
     </ConfigContext.Provider>
   );
 };

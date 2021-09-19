@@ -4,9 +4,10 @@
 
 import React from 'react';
 
-import { makeStyles, IconButton, Toolbar } from '@material-ui/core';
-import { DataGrid, GridColDef } from '@material-ui/data-grid';
-import { Sync as RefreshIcon } from '@material-ui/icons';
+import { IconButton, Toolbar } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Sync as RefreshIcon } from '@mui/icons-material';
 
 import { useRequest } from '../hooks';
 import { IService } from './types';

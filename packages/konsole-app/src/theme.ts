@@ -2,14 +2,14 @@
 // Copyright 2021 DXOS.org
 //
 
-import { colors } from '@material-ui/core';
-import { createTheme } from '@material-ui/core/styles';
+import { colors } from '@mui/material';
+import { createTheme } from '@mui/styles';
 
 import { IConfig } from './hooks';
 
 /**
  * Create material theme.
- * https://material-ui.com/customization/theming
+ * https://mui.com/customization/theming
  * @param config
  */
 export const createCustomTheme = (config: IConfig) => createTheme({
@@ -23,7 +23,7 @@ export const createCustomTheme = (config: IConfig) => createTheme({
     }
   },
 
-  // TODO(burdon): Include font directly: https://material-ui.com/customization/typography
+  // TODO(burdon): Include font directly: https://mui.com/customization/typography
   typography: {
     fontFamily: 'DM Sans, sans-serif',
     // fontSize: 12

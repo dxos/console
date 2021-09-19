@@ -14,8 +14,8 @@ import {
   useParams
 } from 'react-router-dom';
 
-import { CssBaseline } from '@material-ui/core';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/styles';
 
 import { ApiFactory } from '@dxos/registry-api';
 
@@ -71,7 +71,7 @@ const start = async (config: IConfig) => {
   ReactDOM.render((
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={registryApi}>
-        <MuiThemeProvider theme={createCustomTheme(config)}>
+        <ThemeProvider theme={createCustomTheme(config)}>
           <CssBaseline />
           <Router>
             <Switch>
@@ -81,7 +81,7 @@ const start = async (config: IConfig) => {
               <Redirect to={panels[0].path} />
             </Switch>
           </Router>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </RegistryContext.Provider>
     </ConfigContext.Provider>
   ), document.getElementById('root'));

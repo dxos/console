@@ -4,8 +4,9 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { makeStyles, Divider, IconButton, MenuItem, Select, Toolbar } from '@material-ui/core';
-import { Sync as RefreshIcon } from '@material-ui/icons';
+import { Divider, IconButton, MenuItem, Select, SelectChangeEvent, Toolbar } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { Sync as RefreshIcon } from '@mui/icons-material';
 
 import { Log } from '../components';
 import { useRequest } from '../hooks';
@@ -76,7 +77,7 @@ export const LoggingPanel = () => {
   const [service, setService] = useState(services[0]);
   const [logs, refreshLogs] = useLogs(service);
 
-  const handleServiceChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleServiceChange = (event: SelectChangeEvent) => {
     setService(event.target.value as string);
   };
 

@@ -5,11 +5,11 @@
 import urlJoin from 'proper-url-join';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { makeStyles, Divider, IconButton, TextField, Toolbar } from '@material-ui/core';
-import {
-  Clear as ClearIcon,
+import { Divider, IconButton, TextField, Toolbar } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { Clear as ClearIcon,
   Sync as RefreshIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 

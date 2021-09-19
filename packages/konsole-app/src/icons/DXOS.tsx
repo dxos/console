@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import SvgIcon from '@material-ui/core/SvgIcon';
+import SvgIcon from '@mui/core/SvgIcon';
 
 export const DXOS = (props: any) => (
   <SvgIcon {...props} viewBox='0 0 3200 1067'>

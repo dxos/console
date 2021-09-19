@@ -7,12 +7,12 @@ import React, { useState } from 'react';
 
 import {
   makeStyles, AppBar, Divider, Drawer, IconButton, Paper, Toolbar, Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   AccountCircle as ProfileIcon,
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import { useConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';

@@ -4,9 +4,10 @@
 
 import React from 'react';
 
-import { makeStyles, IconButton, Link } from '@material-ui/core';
-import { DataGrid, GridColDef, GridCellParams } from '@material-ui/data-grid';
-import { Launch as LaunchIcon } from '@material-ui/icons';
+import { IconButton, Link } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { DataGrid, GridColDef, GridCellParams } from '@mui/x-data-grid';
+import { Launch as LaunchIcon } from '@mui/icons-material';
 
 import { IRecord } from '../panels';
 import { getRelativeTime, sortDateStrings } from '../util';
@@ -38,8 +39,8 @@ const useStyles = makeStyles(theme => ({
 // TODO(burdon): Common fields for all records.
 // TODO(burdon): Different record type views may have different column sets.
 // TODO(burdon): Upgrade to XGrid to have resizable columns.
-//   https://material-ui.com/components/data-grid/#mit-vs-commercial
-// https://material-ui.com/components/data-grid/columns
+//   https://mui.com/components/data-grid/#mit-vs-commercial
+// https://mui.com/components/data-grid/columns
 const columns: GridColDef[] = [
   {
     field: 'cid',
@@ -58,7 +59,7 @@ const columns: GridColDef[] = [
     valueFormatter: (params) => {
       return params.value && getRelativeTime(new Date(params.value as number));
     },
-    // https://material-ui.com/components/data-grid/sorting
+    // https://mui.com/components/data-grid/sorting
     sortComparator: (v1, v2) => sortDateStrings(v1 as string, v2 as string)
   },
   {
@@ -84,7 +85,7 @@ const columns: GridColDef[] = [
     headerName: 'Link',
     width: 80,
     sortable: false,
-    // https://material-ui.com/components/data-grid/style/#styling-cells
+    // https://mui.com/components/data-grid/style/#styling-cells
     renderCell: (params: GridCellParams) => {
       if (params.value) {
         return (
@@ -106,7 +107,7 @@ const columns: GridColDef[] = [
 export const RecordTable = ({ records }: RecordsTableProperties) => {
   const classes = useStyles();
 
-  // https://material-ui.com/components/data-grid/#mit-version
+  // https://mui.com/components/data-grid/#mit-version
   return (
     <div className={classes.root}>
       <DataGrid

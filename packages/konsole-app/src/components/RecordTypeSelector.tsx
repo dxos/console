@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button, ButtonGroup } from '@mui/material';
 
 import { CID } from '@dxos/registry-api';
 

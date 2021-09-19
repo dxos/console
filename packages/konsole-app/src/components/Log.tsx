@@ -8,9 +8,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 
 import {
-  colors, Divider, FormControl, FormHelperText, InputBase, MenuItem, Select, TableCell
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+  colors,
+  Divider,
+  FormControl,
+  FormHelperText,
+  InputBase,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TableCell
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 import { IFilter, ILogMessage } from '../logging';
 
@@ -178,7 +186,7 @@ const LevelFilter = ({ context, label, value = '', onChange }: {
 }) => {
   const { levels } = context;
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChange = (event: SelectChangeEvent) => {
     onChange(event.target.value as string);
   };
 
@@ -328,7 +336,7 @@ export const Log = ({ messages }: LogProperties) => {
     setFilter({ filterKey, filterValue });
   };
 
-  // https://material-ui.com/components/tables/#virtualized-table
+  // https://mui.com/components/tables/#virtualized-table
   // https://github.com/bvaughn/react-virtualized/blob/master/docs/Table.md
 
   return (

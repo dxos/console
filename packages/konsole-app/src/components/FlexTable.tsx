@@ -5,15 +5,66 @@
 import React from 'react';
 
 import {
-  makeStyles,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  TablePagination
-} from '@material-ui/core';
+  TablePagination,
+  TableSortLabel
+} from '@mui/material';
+
+interface FlexTableColumn {
+  id: string
+  label?: string
+  width?: number
+  sort?: boolean
+}
+
+interface FlexTableCellRenderer {
+  classes: any
+  id: string
+  row: any
+}
+
+interface FlexTableRowRenderer {
+  classes: any
+  key: string
+  columns: FlexTableColumn[]
+  row: any
+  cellRenderer?: (props: FlexTableCellRenderer) => JSX.Element | undefined
+}
+
+interface FlexTableProps {
+  columns: FlexTableColumn[]
+  rows: any[],
+  rowRenderer?: (props: FlexTableRowRenderer) => JSX.Element | undefined
+  cellRenderer?: (props: FlexTableCellRenderer) => JSX.Element | undefined
+  paging?: boolean
+}
+
+export const defaultRowRenderer = ({ classes, key, columns, row, cellRenderer }: FlexTableRowRenderer) => {
+  return (
+    <TableRow key={key}>
+      {columns.map(({ id }) => {
+        let element = row[id];
+        if (cellRenderer) {
+          element = cellRenderer({ classes, row, id });
+          if (element === undefined) {
+            element = row[id];
+          }
+        }
+
+        return (
+          <TableCell key={id} classes={{ root: classes.tableCell }}>
+            {element}
+          </TableCell>
+        )
+      })}
+    </TableRow>
+  )
+}
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,72 +83,67 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface FlexTableColumn {
-  id: string
-  label?: string
-}
-
-interface FlexTableCellRenderer {
-  id: string
-  row: any
-}
-
-interface FlexTableProps {
-  columns: FlexTableColumn[]
-  rows: any[],
-  cellRenderer?: (props: FlexTableCellRenderer) => JSX.Element | undefined
-}
-
-export const FlexTable = ({ columns, rows, cellRenderer }: FlexTableProps) => {
+export const FlexTable = ({ columns, rows, rowRenderer, cellRenderer, paging }: FlexTableProps) => {
   const classes = useStyles();
 
   // TODO(burdon): Expand multi-row.
   // TODO(burdon): Sorting.
   // TODO(burdon): Filtering.
-  // TODO(burdon): Custom cell class.
 
   // https://mui.com/components/tables
   return (
-    <div className={classes.root}>
+    <div
+      sx={{
+
+      }}
+    >
       <TableContainer>
-        <Table stickyHeader aria-label='sticky table'>
+        <Table stickyHeader aria-label='sticky table' sx={{ minWidth: 600 }}>
           <TableHead>
             <TableRow>
-              {columns.map(({ id, label }) => (
-                <TableCell key={id} classes={{ root: classes.tableCell }}>
-                  {label || id}
-                </TableCell>
-              ))}
+              {columns.map(({ id, label, width, sort }) => {
+                const styles = {};
+
+                return (
+                  <TableCell key={id} classes={{ root: classes.tableCell }} sx={{ color: 'red' }}>
+                    {sort && (
+                      <TableSortLabel
+                        onClick={() => {}}
+                      >
+                        {label || id}
+                      </TableSortLabel>
+                    ) || (label || id)}
+                  </TableCell>
+                );
+              })}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
-              <TableRow>
-                {columns.map(({ id }) => {
-                  const value = row[id];
-                  const element = cellRenderer && cellRenderer({ id, row });
-                  return (
-                    <TableCell key={id} classes={{ root: classes.tableCell }}>
-                      {element ? element : <div>{value}</div>}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            ))}
+            {rows.map((row, i) => {
+              const key = String(i);
+              const element = rowRenderer ? rowRenderer({ classes, key, columns, row, cellRenderer }) : undefined;
+              if (element !== undefined) {
+                return element;
+              }
+
+              return defaultRowRenderer({ classes, key, columns, row, cellRenderer });
+            })}
           </TableBody>
         </Table>
       </TableContainer>
 
-      <TablePagination
-        classes={{ root: classes.tablePagination }}
-        component='div'
-        rowsPerPageOptions={[25, 100]}
-        rowsPerPage={25}
-        count={rows.length}
-        page={1}
-        onPageChange={() => {}}
-        onRowsPerPageChange={() => {}}
-      />
+      {paging && (
+        <TablePagination
+          classes={{ root: classes.tablePagination }}
+          component='div'
+          rowsPerPageOptions={[25, 100]}
+          rowsPerPage={25}
+          count={rows.length}
+          page={1}
+          onPageChange={() => {}}
+          onRowsPerPageChange={() => {}}
+        />
+      )}
     </div>
   )
 };
