@@ -1,10 +1,10 @@
-# Console
+# Konsole App
 
-[DXOS console](./packages/konsole-app) displaying the following information:
+[DXOS Konsole App](./packages/konsole-app) displays various kinds of meta and state information about DXOS.
 
-- DXNS Registry information about all registered resources in the DXOS system
+See its [storybook](https://609d2a9c8202250039083fbb-qzdizbgwmn.chromatic.com/?path=/story/panels--records).
 
-TODO(marcin): insert a pic after nodes are upgraded by Egor. ATM the DXNS is broken.
+Live demo is available [here](https://enterprise.kube.dxos.network/app/marcin:app.konsole).
 
 # Legacy console
 
