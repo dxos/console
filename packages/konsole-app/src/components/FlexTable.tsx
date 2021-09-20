@@ -2,18 +2,21 @@
 // Copyright 2021 DXOS.org
 //
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
+  Box,
   Table,
   TableBody,
-  TableCell,
+  TableCell as MuiTableCell,
+  TableCellProps,
   TableContainer,
   TableHead,
   TableRow,
   TablePagination,
   TableSortLabel
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 interface FlexTableColumn {
   id: string
@@ -23,13 +26,11 @@ interface FlexTableColumn {
 }
 
 interface FlexTableCellRenderer {
-  classes: any
   id: string
   row: any
 }
 
 interface FlexTableRowRenderer {
-  classes: any
   key: string
   columns: FlexTableColumn[]
   row: any
@@ -44,20 +45,20 @@ interface FlexTableProps {
   paging?: boolean
 }
 
-export const defaultRowRenderer = ({ classes, key, columns, row, cellRenderer }: FlexTableRowRenderer) => {
+export const defaultRowRenderer = ({ key, columns, row, cellRenderer }: FlexTableRowRenderer) => {
   return (
     <TableRow key={key}>
       {columns.map(({ id }) => {
         let element = row[id];
         if (cellRenderer) {
-          element = cellRenderer({ classes, row, id });
+          element = cellRenderer({ row, id });
           if (element === undefined) {
             element = row[id];
           }
         }
 
         return (
-          <TableCell key={id} classes={{ root: classes.tableCell }}>
+          <TableCell key={id}>
             {element}
           </TableCell>
         )
@@ -66,35 +67,55 @@ export const defaultRowRenderer = ({ classes, key, columns, row, cellRenderer }:
   )
 }
 
-const useStyles = makeStyles(() => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-    overflow: 'hidden'
-  },
-  tableCell: {
-    verticalAlign: 'top'
-  },
-  tablePagination: {
-    display: 'flex',
-    flexShrink: 0,
-    flexDirection: 'row-reverse'
-  }
+const TableCell = styled(MuiTableCell)<TableCellProps>(() => ({
+  verticalAlign: 'top'
 }));
 
-export const FlexTable = ({ columns, rows, rowRenderer, cellRenderer, paging }: FlexTableProps) => {
-  const classes = useStyles();
+export const FlexTable = ({ columns, rows: allRows, rowRenderer, cellRenderer, paging }: FlexTableProps) => {
+  const pageSizes = [25, 100];
+  const [pageSize, setPageSize] = useState<number>(pageSizes[0]);
+
+  //
+  // TODO(burdon): Sorting.
+  //
+
+  //
+  // TODO(burdon): Filtering.
+  //
+
+  const handleSort = () => {};
+
+  //
+  // Paging.
+  //
+
+  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPage(0);
+    setPageSize(parseInt(event.target.value));
+  };
+
+  // TODO(burdon): Paging (pass page to external handler to query).
+  const [page, setPage] = useState<number>(0);
+  const handlePageChange = (_: any, page: number) => {
+    setPage(page);
+  };
+
+  const [rows, setRows] = useState<any[]>([]);
+  useEffect(() => {
+    setRows(allRows.slice(page * pageSize, (page + 1) * pageSize));
+  }, [allRows, page, pageSize]);
 
   // TODO(burdon): Expand multi-row.
-  // TODO(burdon): Sorting.
-  // TODO(burdon): Filtering.
 
   // https://mui.com/components/tables
   return (
-    <div
+    <Box
       sx={{
-
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        flex: 1,
+        overflow: 'hidden'
       }}
     >
       <TableContainer>
@@ -102,13 +123,11 @@ export const FlexTable = ({ columns, rows, rowRenderer, cellRenderer, paging }: 
           <TableHead>
             <TableRow>
               {columns.map(({ id, label, width, sort }) => {
-                const styles = {};
-
                 return (
-                  <TableCell key={id} classes={{ root: classes.tableCell }} sx={{ color: 'red' }}>
+                  <TableCell key={id} width={width}>
                     {sort && (
                       <TableSortLabel
-                        onClick={() => {}}
+                        onClick={handleSort}
                       >
                         {label || id}
                       </TableSortLabel>
@@ -121,12 +140,12 @@ export const FlexTable = ({ columns, rows, rowRenderer, cellRenderer, paging }: 
           <TableBody>
             {rows.map((row, i) => {
               const key = String(i);
-              const element = rowRenderer ? rowRenderer({ classes, key, columns, row, cellRenderer }) : undefined;
+              const element = rowRenderer ? rowRenderer({ key, columns, row, cellRenderer }) : undefined;
               if (element !== undefined) {
                 return element;
               }
 
-              return defaultRowRenderer({ classes, key, columns, row, cellRenderer });
+              return defaultRowRenderer({ key, columns, row, cellRenderer });
             })}
           </TableBody>
         </Table>
@@ -134,16 +153,20 @@ export const FlexTable = ({ columns, rows, rowRenderer, cellRenderer, paging }: 
 
       {paging && (
         <TablePagination
-          classes={{ root: classes.tablePagination }}
+          sx={{
+            display: 'flex',
+            flexShrink: 0,
+            flexDirection: 'row-reverse'
+          }}
           component='div'
-          rowsPerPageOptions={[25, 100]}
-          rowsPerPage={25}
-          count={rows.length}
-          page={1}
-          onPageChange={() => {}}
-          onRowsPerPageChange={() => {}}
+          rowsPerPageOptions={pageSizes}
+          rowsPerPage={pageSize}
+          count={allRows.length}
+          page={page}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
         />
       )}
-    </div>
+    </Box>
   )
 };

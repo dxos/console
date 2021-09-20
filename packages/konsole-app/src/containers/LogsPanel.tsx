@@ -4,38 +4,12 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Divider, IconButton, MenuItem, Select, SelectChangeEvent, Toolbar } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Box, Divider, IconButton, MenuItem, Select, SelectChangeEvent, Toolbar } from '@mui/material';
 import { Sync as RefreshIcon } from '@mui/icons-material';
 
-import { Log } from '../components';
+import { LogTable } from '../components';
 import { useRequest } from '../hooks';
 import { ILogMessage, ipfsLogParser, defaultLogParser } from '../logging';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column'
-  },
-  expand: {
-    flex: 1
-  },
-  panel: {
-    display: 'flex',
-    flex: 1,
-    overflow: 'scroll',
-    margin: theme.spacing(1)
-  },
-  json: {
-    width: '100%'
-  }
-}));
-
-// TODO(burdon): Config.
-const KUBE_LOGS = 'https://logs.kube.dxos.network/kube/logs';
-
-// curl -s -H "Content-type: application/json" -X POST -d '{"name":"app-server", "incremental": true,"uniqueId":"<uniqueIdPerKonsoleAppInstance>"}' https://discovery.kube.dxos.network/kube/logs | jq
 
 // TODO(burdon): Get from query.
 const services = [
@@ -57,8 +31,12 @@ const parsers: {[index: string]: any} = {
 
 const getParser = (service: string) => parsers[service] || defaultLogParser;
 
+// TODO(burdon): Config.
+// curl -s -H "Content-type: application/json" -X POST -d '{"name":"app-server", "incremental": true,"uniqueId":"<uniqueIdPerKonsoleAppInstance>"}' https://discovery.kube.dxos.network/kube/logs | jq
+const KUBE_LOGS = 'https://logs.kube.dxos.network/kube/logs';
+
 const useLogs = (service: string): [ILogMessage[], () => void] => {
-  const [data, refreshData] = useRequest<string[]>(KUBE_LOGS, { name: service, lines: 100 });
+  const [data, refreshData] = useRequest<string[]>({ url: KUBE_LOGS, params: { name: service, lines: 100 } });
   const [logs, setLogs] = useState<ILogMessage[]>([]);
 
   useEffect(() => {
@@ -71,9 +49,8 @@ const useLogs = (service: string): [ILogMessage[], () => void] => {
 /**
  * Displays the config panel
  */
-// TODO(burdon): Tail polling button.
-export const LoggingPanel = () => {
-  const classes = useStyles();
+// TODO(burdon): Polling button.
+export const LogsPanel = () => {
   const [service, setService] = useState(services[0]);
   const [logs, refreshLogs] = useLogs(service);
 
@@ -82,7 +59,13 @@ export const LoggingPanel = () => {
   };
 
   return (
-    <div className={classes.root}>
+    <Box
+      sx={{
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column'
+      }}
+    >
       <Toolbar>
         <Select
           labelId='label-service'
@@ -95,7 +78,7 @@ export const LoggingPanel = () => {
             <MenuItem key={service} value={service}>{service}</MenuItem>
           ))}
         </Select>
-        <div className={classes.expand} />
+        <Box sx={{ flex: 1 }} />
         <IconButton
           size='small'
           aria-label='refresh'
@@ -105,9 +88,16 @@ export const LoggingPanel = () => {
         </IconButton>
       </Toolbar>
       <Divider />
-      <div className={classes.panel}>
-        <Log messages={logs} />
-      </div>
-    </div>
+      <Box
+        sx={{
+          display: 'flex',
+          flex: 1,
+          overflow: 'scroll',
+          margin: theme => theme.spacing(1)
+        }}
+      >
+        <LogTable messages={logs} />
+      </Box>
+    </Box>
   );
 };

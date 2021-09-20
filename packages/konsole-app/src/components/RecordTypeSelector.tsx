@@ -8,15 +8,15 @@ import { Button, ButtonGroup } from '@mui/material';
 
 import { CID } from '@dxos/registry-api';
 
-import { IRecordType } from '../panels';
+import { IRecordType } from '../types';
 
-interface RecordTypeSelectorProperties {
-  types: IRecordType[]
+interface RecordTypeSelectorProps {
+  types?: IRecordType[]
   type?: CID
-  onTypeChange: (type: CID | undefined) => void
+  onChange: (type: CID | undefined) => void
 }
 
-export const RecordTypeSelector = ({ types, type: selected, onTypeChange }: RecordTypeSelectorProperties) => {
+export const RecordTypeSelector = ({ types = [], type: selected, onChange }: RecordTypeSelectorProps) => {
   return (
     <ButtonGroup
       disableRipple
@@ -27,15 +27,15 @@ export const RecordTypeSelector = ({ types, type: selected, onTypeChange }: Reco
     >
       <Button
         variant={undefined === selected ? 'contained' : 'outlined'}
-        onClick={() => onTypeChange(undefined)}
+        onClick={() => onChange(undefined)}
       >
-        all
+        ANY
       </Button>
       {types.map(({ type, label }: IRecordType) => (
         <Button
           key={type.toString()}
-          variant={type === selected ? 'contained' : 'outlined'}
-          onClick={() => onTypeChange(type)}
+          variant={selected && type.equals(selected) ? 'contained' : 'outlined'}
+          onClick={() => onChange(type)}
         >
           {label}
         </Button>

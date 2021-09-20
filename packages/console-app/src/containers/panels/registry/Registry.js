@@ -54,7 +54,7 @@ const Registry = () => {
             <Tab value={TAB_RECORDS} label='Records' />
             <Tab value={TAB_LOOKUP} label='Lookup' />
             <Tab value={TAB_STATUS} label='Status' />
-            <Tab value={TAB_LOG} label='Log' />
+            <Tab value={TAB_LOG} label='LogTable' />
           </Tabs>
 
           {tab === TAB_RECORDS && (

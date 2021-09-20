@@ -5,9 +5,9 @@
 import urlJoin from 'proper-url-join';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Divider, IconButton, TextField, Toolbar } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { Clear as ClearIcon,
+import { Box, Divider, IconButton, TextField, Toolbar } from '@mui/material';
+import {
+  Clear as ClearIcon,
   Sync as RefreshIcon
 } from '@mui/icons-material';
 
@@ -15,42 +15,7 @@ import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos
 
 import { RecordTable, RecordTypeSelector } from '../components';
 import { IConfig, useConfig, useRecordTypes, useResources } from '../hooks';
-
-const useStyles = makeStyles(theme => ({
-  input: {
-    flex: 1,
-    paddingLeft: theme.spacing(4),
-    maxWidth: 300
-  },
-  iconButton: {
-    marginLeft: theme.spacing(1)
-  },
-  panel: {
-    display: 'flex',
-    flex: 1
-  },
-  divider: {
-    height: 28,
-    margin: 4
-  },
-  expand: {
-    flex: 1
-  }
-}));
-
-export interface IRecordType {
-  type: CID
-  label: string
-}
-
-export interface IRecord {
-  cid: string
-  created?: string
-  name: string
-  type: string
-  title?: string
-  url?: string
-}
+import { IRecord, IRecordType } from '../types';
 
 // TODO(burdon): Comment.
 const getRecordTypeString = (types: IRecordType[], res: Resource): string | undefined => {
@@ -97,7 +62,6 @@ export const mapTypes = (records: RegistryTypeRecord[]): IRecordType[] => {
  * @constructor
  */
 export const RecordPanel = () => {
-  const classes = useStyles();
   const config = useConfig();
   const delay = 500;
 
@@ -133,10 +97,14 @@ export const RecordPanel = () => {
         <RecordTypeSelector
           types={recordTypes}
           type={recordType}
-          onTypeChange={type => setRecordType(type)}
+          onChange={type => setRecordType(type)}
         />
         <TextField
-          className={classes.input}
+          sx={{
+            flex: 1,
+            paddingLeft: theme => theme.spacing(4),
+            maxWidth: 300
+          }}
           placeholder='Search records'
           inputProps={{ 'aria-label': 'search' }}
           value={search}
@@ -144,7 +112,9 @@ export const RecordPanel = () => {
           onKeyDown={event => (event.key === 'Escape') && setSearch('')}
         />
         <IconButton
-          className={classes.iconButton}
+          sx={{
+            marginLeft: theme => theme.spacing(1)
+          }}
           size='small'
           aria-label='search'
           onClick={() => {
@@ -154,10 +124,18 @@ export const RecordPanel = () => {
         >
           <ClearIcon />
         </IconButton>
-        <div className={classes.expand} />
-        <Divider className={classes.divider} orientation="vertical" />
+        <Box sx={{ flex: 1 }} />
+        <Divider
+          orientation="vertical"
+          sx={{
+            height: 28,
+            margin: 4
+          }}
+        />
         <IconButton
-          className={classes.iconButton}
+          sx={{
+            marginLeft: theme => theme.spacing(1)
+          }}
           size='small'
           aria-label='refresh'
           onClick={refreshData}
@@ -165,9 +143,14 @@ export const RecordPanel = () => {
           <RefreshIcon />
         </IconButton>
       </Toolbar>
-      <div className={classes.panel}>
+      <Box
+        sx={{
+          display: 'flex',
+          flex: 1
+        }}
+      >
         <RecordTable records={records} />
-      </div>
+      </Box>
     </>
   );
 };

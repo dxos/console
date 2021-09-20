@@ -50,8 +50,8 @@ const IPFS = () => {
           <Tabs value={tab} onChange={(_, value) => setTab(value)}>
             <Tab value={TAB_STATUS} label='Status' />
             <Tab value={TAB_NETWORK} label='Network' />
-            <Tab value={TAB_LOG} label='Log' />
-            <Tab value={TAB_SWARM_LOG} label='Connection Log' />
+            <Tab value={TAB_LOG} label='LogTable' />
+            <Tab value={TAB_SWARM_LOG} label='Connection LogTable' />
           </Tabs>
         </Toolbar>
       }

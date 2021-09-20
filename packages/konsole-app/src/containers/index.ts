@@ -2,5 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-export * from './Container';
-export * from './Sidebar';
+export * from './ConfigPanel';
+export * from './LogsPanel';
+export * from './RecordPanel';
+export * from './ServicesPanel';

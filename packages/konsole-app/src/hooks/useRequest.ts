@@ -3,39 +3,54 @@
 //
 
 import debug from 'debug';
-import { useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import superagent from 'superagent';
 
 const log = debug('dxos:console:request');
 
+export interface IRequest {
+  url: string
+  params?: any
+  method?: string
+}
+
+export type ReqeustHandler = (request: IRequest) => Promise<any>;
+
+export const httpRequester = async ({ url, params, method }: IRequest) => {
+  // TODO(burdon): Error handling (try/catch).
+  const result = await (method === 'POST' ? superagent.post : superagent.get)(url)
+    .set('accept', 'json')
+    .send(params);
+
+  return result.body;
+};
+
+export const RequestContext = createContext<ReqeustHandler>(httpRequester);
+
 /**
  * HTTP request.
  */
-// TODO(burdon): Inject mock server into context.
-export const useRequest = <T>(url: string, params: any = {}, post: boolean = true): [T | undefined, () => void] => {
+export const useRequest = <T>({ url, params, method = 'POST' }: IRequest): [T | undefined, () => void] => {
+  const requester = useContext(RequestContext);
   const [time, setTime] = useState(Date.now());
   const [data, setData] = useState<T>();
 
   useEffect(() => {
     let active = true;
 
-    log(`Requesting: ${url} [${JSON.stringify(params)}]`);
     setData(undefined);
     setImmediate(async () => {
-      // TODO(burdon): Error handling.
-      const result = await (post ? superagent.post : superagent.get)(url)
-        .set('accept', 'json') // TODO(burdon): Change to POST.
-        .send(params);
+      log(`Requesting: ${JSON.stringify({ url, params, method })}`);
+      const data = await requester({ url, params, method });
 
       // Don't update if unmounted.
       if (active) {
-        log(`Success`);
-        setData(result.body);
+        setData(data);
       }
     });
 
     return () => { active = false };
-  }, [time, url, JSON.stringify(params), post]);
+  }, [time, url, JSON.stringify(params), method]);
 
   return [data, () => setTime(Date.now())];
 };

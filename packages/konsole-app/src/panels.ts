@@ -2,6 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
+import { ComponentType } from 'react';
+
 import {
   Reorder as LoggingIcon,
   Settings as SettingsIcon,
@@ -9,11 +11,19 @@ import {
   DynamicFeed as RecordsIcon
 } from '@mui/icons-material';
 
-import { ConfigPanel } from './ConfigPanel';
-import { LoggingPanel } from './LoggingPanel';
-import { RecordPanel } from './RecordPanel';
-import { ServicesPanel } from './ServicesPanel';
-import { IPanel } from './types';
+import {
+  ConfigPanel,
+  LogsPanel,
+  RecordPanel,
+  ServicesPanel
+} from './containers';
+
+export interface IPanel {
+  path: string
+  label: string
+  component: ComponentType
+  icon?: ComponentType
+}
 
 export const panels: IPanel[] = [
   {
@@ -31,7 +41,7 @@ export const panels: IPanel[] = [
   {
     path: '/logs',
     label: 'Logs',
-    component: LoggingPanel,
+    component: LogsPanel,
     icon: LoggingIcon
   },
   {

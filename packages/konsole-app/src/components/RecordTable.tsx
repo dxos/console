@@ -4,37 +4,13 @@
 
 import React from 'react';
 
-import { IconButton, Link } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { DataGrid, GridColDef, GridCellParams } from '@mui/x-data-grid';
+import { Box, IconButton, Link } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { Launch as LaunchIcon } from '@mui/icons-material';
+import { DataGrid, GridColDef, GridCellParams } from '@mui/x-data-grid';
 
-import { IRecord } from '../panels';
+import { IRecord } from '../types';
 import { getRelativeTime, sortDateStrings } from '../util';
-
-interface RecordsTableProperties {
-  records: IRecord[]
-}
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flex: 1
-  },
-  grid: {
-    '& *': {
-      color: theme.palette.text.secondary
-    },
-    '& .title': {
-      color: theme.palette.text.primary
-    },
-    '& .mono': {
-      fontFamily: 'DM Mono, monospace',
-      fontSize: 15
-    }
-  }
-}));
-
-// TODO(burdon): Custom table using Table and TablePagination
 
 // TODO(burdon): Common fields for all records.
 // TODO(burdon): Different record type views may have different column sets.
@@ -47,7 +23,7 @@ const columns: GridColDef[] = [
     headerName: 'CID',
     width: 130,
     sortable: false,
-    cellClassName: (params: GridCellParams) => 'mono',
+    cellClassName: (params: GridCellParams) => 'monospace',
     valueFormatter: (params) => {
       return (params.value as string).slice(0, 8) + '...';
     }
@@ -66,13 +42,13 @@ const columns: GridColDef[] = [
     field: 'type',
     headerName: 'Type',
     width: 120,
-    cellClassName: (params: GridCellParams) => 'mono'
+    cellClassName: (params: GridCellParams) => 'monospace'
   },
   {
     field: 'name',
     headerName: 'Resource Name',
     minWidth: 300,
-    cellClassName: (params: GridCellParams) => 'mono'
+    cellClassName: (params: GridCellParams) => 'monospace'
   },
   {
     field: 'title',
@@ -100,22 +76,41 @@ const columns: GridColDef[] = [
   }
 ];
 
+const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+  '& *': {
+    color: theme.palette.text.secondary
+  },
+  '& .title': {
+    color: theme.palette.text.primary
+  },
+  '& .monospace': {
+    fontFamily: 'DM Mono, monospace',
+    fontSize: 15
+  }
+}));
+
+interface RecordsTableProps {
+  records?: IRecord[]
+}
+
 /**
  * Table that displays all registry records.
- * @constructor
  */
-export const RecordTable = ({ records }: RecordsTableProperties) => {
-  const classes = useStyles();
-
+export const RecordTable = ({ records = [] }: RecordsTableProps) => {
+  // TODO(burdon): Convert to FlexTable.
+  // https://mui.com/api/data-grid/data-grid
   // https://mui.com/components/data-grid/#mit-version
   return (
-    <div className={classes.root}>
-      <DataGrid
-        className={classes.grid}
+    <Box
+      sx={{
+        flex: 1
+      }}
+    >
+      <StyledDataGrid
         rows={records}
         columns={columns}
         getRowId={({ cid }) => cid}
       />
-    </div>
+    </Box>
   );
 };

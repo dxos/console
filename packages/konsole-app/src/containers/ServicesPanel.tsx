@@ -4,30 +4,12 @@
 
 import React from 'react';
 
-import { IconButton, Toolbar } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Box, IconButton, Toolbar } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Sync as RefreshIcon } from '@mui/icons-material';
 
 import { useRequest } from '../hooks';
-import { IService } from './types';
-
-// TODO(burdon): Standarize panels.
-const useStyles = makeStyles(() => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1
-  },
-  expand: {
-    flex: 1
-  },
-  panel: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1
-  }
-}));
+import { IService } from '../types';
 
 const columns: GridColDef[] = [
   {
@@ -38,34 +20,35 @@ const columns: GridColDef[] = [
   {
     field: 'type',
     headerName: 'Type',
-    width: 120
+    width: 200
   },
   {
     field: 'status',
     headerName: 'Status',
-    width: 120
+    width: 140
   },
 ]
 
 // TODO(burdon): Config.
-const KUBE_SERVICES = 'https://logs.kube.dxos.network/kube/services';
-
 // curl -s https://discovery.kube.dxos.network/kube/services | jq
+const KUBE_SERVICES = 'https://logs.kube.dxos.network/kube/services';
 
 /**
  * Displays the config panel
  */
 export const ServicesPanel = () => {
-  const classes = useStyles();
-  const [services, refreshServices] = useRequest<IService[]>(KUBE_SERVICES, {}, false);
-  if (!services) {
-    return null;
-  }
+  const [services, refreshServices] = useRequest<IService[]>({ url: KUBE_SERVICES, method: 'GET' });
 
   return (
-    <div className={classes.root}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1
+      }}
+    >
       <Toolbar>
-        <div className={classes.expand} />
+        <Box sx={{ flex: 1 }} />
         <IconButton
           size='small'
           aria-label='refresh'
@@ -74,13 +57,19 @@ export const ServicesPanel = () => {
           <RefreshIcon />
         </IconButton>
       </Toolbar>
-      <div className={classes.panel}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1
+        }}
+      >
         <DataGrid
-          rows={services}
+          rows={services || []}
           columns={columns}
           getRowId={({ name }) => name}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

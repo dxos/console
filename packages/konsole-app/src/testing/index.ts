@@ -2,7 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { IService } from '../panels';
+import { IService } from '../types';
 
 export const TEST_SERVICES: IService[] = [
   {

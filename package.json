@@ -18,7 +18,8 @@
   "license": "AGPL-3.0",
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/keyhole-app",
+      "packages/konsole-app"
     ]
   },
   "devDependencies": {

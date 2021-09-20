@@ -19,8 +19,8 @@ import { ThemeProvider } from '@mui/styles';
 
 import { ApiFactory } from '@dxos/registry-api';
 
+import { Container, Sidebar } from './components';
 import { loadSubstrateConfig } from './config';
-import { Container, Sidebar } from './containers';
 import { ConfigContext, IConfig, RegistryContext } from './hooks';
 import { panels } from './panels';
 import { createCustomTheme } from './theme';

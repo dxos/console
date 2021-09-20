@@ -56,10 +56,16 @@ export const createLogParser = (regex: RegExp) => (line: string, previous?: Date
   }
 };
 
+// TODO(burdon): Fix multi-line (see below).
+export const logPrinter = ({ timestamp, level, message }: ILogMessage) => `${timestamp} ${level} ${message.replace(/[\r\n]/g, '')}`;
+
+//
 // Test: https://regexr.com
+//
 
 // Example: "2021-09-14T20:53:46.632038879Z   dxos:cli-app:server:auth Not authenticated. +1s\r"
 // Skip +1ms at end.
+// TODO(burdon): Doesn't match multi-line (i.e., text with \n breaks).
 export const defaultLogParser = createLogParser(/^([^\s]+)\s+([^\s]+)\s(.+?)(\s\+.+|$)/);
 
 // Example: "2021-09-14 09:01:54.305: Initializing daemon..."

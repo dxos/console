@@ -2,6 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
 import { createContext, useContext } from 'react';
 
 // TODO(burdon): Define JSON Schema for config file.
@@ -30,5 +31,7 @@ export interface IConfig {
 export const ConfigContext = createContext<IConfig | undefined>(undefined);
 
 export const useConfig = (): IConfig => {
-  return useContext(ConfigContext)!;
+  const config = useContext(ConfigContext)!;
+  assert(config);
+  return config;
 };

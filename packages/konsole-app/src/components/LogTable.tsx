@@ -7,8 +7,11 @@ import hash from 'string-hash';
 import React, { useEffect, useRef, useState } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 
+import { makeStyles } from '@mui/styles'; // TODO(burdon): Deprecated.
+
 import {
   colors,
+  Box,
   Divider,
   FormControl,
   FormHelperText,
@@ -18,7 +21,6 @@ import {
   SelectChangeEvent,
   TableCell
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 
 import { IFilter, ILogMessage } from '../logging';
 
@@ -41,7 +43,7 @@ const hashedColors = [
 
 const getLevelColor = (level: string): string => {
   // @ts-ignore
-  return levelColors[level] || colors[hashedColors[hash(level) % hashedColors.length]][500];
+  return level && (levelColors[level] || colors[hashedColors[hash(level) % hashedColors.length]][500]);
 };
 
 // Time
@@ -93,9 +95,6 @@ const columns = [
 ];
 
 const useStyles = makeStyles(() => ({
-  root: {},
-  grid: {},
-  table: {},
   headerCell: {
     flexDirection: 'column'
   },
@@ -127,10 +126,6 @@ const useStyles = makeStyles(() => ({
     paddingBottom: 4
   }
 }));
-
-interface LogProperties {
-  messages: ILogMessage[]
-}
 
 interface IContext {
   levels: string[]
@@ -294,10 +289,14 @@ const headerHeight = 60;
 const rowHeight = 28;
 const lineHeight = 22;
 
+interface LogProps {
+  messages?: ILogMessage[]
+}
+
 /**
  * Log table.
  */
-export const Log = ({ messages }: LogProperties) => {
+export const LogTable = ({ messages = [] }: LogProps) => {
   const classes = useStyles();
   const tableRef = useRef<Table>(null);
   const [filteredMessages, setFilteredMessages] = useState(messages);
@@ -336,18 +335,17 @@ export const Log = ({ messages }: LogProperties) => {
     setFilter({ filterKey, filterValue });
   };
 
+  // TODO(burdon): Replace with FlexTable.
   // https://mui.com/components/tables/#virtualized-table
   // https://github.com/bvaughn/react-virtualized/blob/master/docs/Table.md
 
   return (
-    <div className={classes.root} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-      <div style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}>
         <AutoSizer>
           {({ width, height }) => (
             <Table
               ref={tableRef}
-              className={classes.table}
-              gridClassName={classes.grid}
               width={width}
               height={height}
               headerHeight={headerHeight}
@@ -407,7 +405,7 @@ export const Log = ({ messages }: LogProperties) => {
             </Table>
           )}
         </AutoSizer>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

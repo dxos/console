@@ -9,4 +9,5 @@ export * from './icons';
 export * from './logging';
 export * from './panels';
 export * from './theme';
+export * from './types';
 export * from './util';

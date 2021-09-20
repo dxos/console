@@ -3,7 +3,7 @@
 //
 
 import { colors } from '@mui/material';
-import { createTheme } from '@mui/styles';
+import { createTheme } from '@mui/material/styles';
 
 import { IConfig } from './hooks';
 
@@ -13,15 +13,16 @@ import { IConfig } from './hooks';
  * @param config
  */
 export const createCustomTheme = (config: IConfig) => createTheme({
-  overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        body: {
-          overflow: 'hidden' // Prevent bounce.
-        }
-      }
-    }
-  },
+  // TODO(burdon): https://mui.com/customization/palette
+  // overrides: {
+  //   MuiCssBaseline: {
+  //     '@global': {
+  //       body: {
+  //         overflow: 'hidden' // Prevent bounce.
+  //       }
+  //     }
+  //   }
+  // },
 
   // TODO(burdon): Include font directly: https://mui.com/customization/typography
   typography: {
@@ -30,16 +31,21 @@ export const createCustomTheme = (config: IConfig) => createTheme({
   },
 
   palette: {
-    type: config.app.theme,
+    mode: config.app.theme,
     primary: colors.cyan
   },
 
-  props: {
+  // https://mui.com/customization/theme-components/#default-props
+  components: {
     MuiAppBar: {
-      elevation: 0
+      defaultProps: {
+        elevation: 0
+      }
     },
     MuiButtonBase: {
-      disableRipple: true
+      defaultProps: {
+        disableRipple: true
+      }
     }
   }
 });
