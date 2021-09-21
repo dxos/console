@@ -11,10 +11,10 @@ interface IScrollContainerProps {
 }
 
 interface IBounds {
-  top: number
-  height: number
-  visible: number
-  index: number
+  top: number       // Pixels from top of container.
+  height: number    // Height of container.
+  visible: number   // TODO(burdon): Rename rendered.
+  index: number     // Index of row at the top of the view port.
 }
 
 interface IRange {
@@ -25,12 +25,24 @@ interface IRange {
 
 const pad = (num: number, places: number) => String(num).padStart(places, '0')
 
+// TODO(burdon): Rename virtual.
 export const ScrollContainer = ({ rows: allRows = [] }: IScrollContainerProps) => {
   const containerRef = useRef<HTMLDivElement>();
   const boundsRef = useRef<IBounds>({ top: 0, height: 0, visible: 0, index: 0 });
   const [{ above, below, rows }, setRange] = useState<IRange>({ above: 0, below: 0, rows: [] });
 
+  // const rowsBefore = 5;
+  // const rowsAfter = 5;
   const rowHeight = 42; // TODO(burdon): Dynamic.
+
+  // TODO(burdon): Handle buffer above/below.
+  const createRange = (rows: any[], { index, visible }: IBounds) => {
+    return {
+      above: index,
+      below: rows.length - index - visible,
+      rows: rows.slice(index, index + visible)
+    };
+  };
 
   //
   // Scroll and resize events.
@@ -39,24 +51,18 @@ export const ScrollContainer = ({ rows: allRows = [] }: IScrollContainerProps) =
     const handleResize = () => {
       const top = containerRef.current!.scrollTop;
       const height = containerRef.current!.clientHeight;
-      const visible = Math.floor(height / rowHeight) + 2;
+      const visible = Math.floor(height / rowHeight) + 1;
       boundsRef.current = { top, height, visible, index: 0 };
     }
 
     const handleScroll = (event: Event) => {
       const top = containerRef.current!.scrollTop;
       const index = Math.floor(top / rowHeight);
-
       const changed = index !== boundsRef.current!.index;
-      if (changed) {
-        setRange({
-          above: index,
-          below: allRows.length - (index + boundsRef.current!.visible),
-          rows: allRows.slice(index, (index + boundsRef.current!.visible))
-        });
-      }
-
       boundsRef.current = { ...boundsRef.current, top, index };
+      if (changed) {
+        setRange(createRange(allRows, boundsRef.current));
+      }
     };
 
     handleResize();
@@ -71,13 +77,7 @@ export const ScrollContainer = ({ rows: allRows = [] }: IScrollContainerProps) =
   }, [containerRef]);
 
   useEffect(() => {
-    const { index, visible } = boundsRef.current!;
-
-    setRange({
-      above: index,
-      below: allRows.length - index - visible,
-      rows: allRows.slice(index, index + visible)
-    });
+    setRange(createRange(allRows, boundsRef.current));
   }, [allRows.length]);
 
   return (

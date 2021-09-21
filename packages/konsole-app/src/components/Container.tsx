@@ -151,7 +151,10 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
           <Box
             sx={{
               display: 'flex',
-              color: theme => theme.palette.text.secondary,
+              color: theme => {
+                console.log(theme.palette);
+                return theme.palette.text.primary
+              },
               '& svg': {
                 width: 100,
                 height: 42

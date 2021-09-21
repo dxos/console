@@ -28,6 +28,7 @@
     "@dxos/cli-bot": "2.4.7",
     "@dxos/cli-data": "2.4.7",
     "@dxos/cli-wns": "2.4.7",
+    "@dxos/version-check": "^0.1.16",
     "eslint": "^7.7.0",
     "lerna": "^3.19.0",
     "lint-staged": "^9.5.0",
