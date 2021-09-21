@@ -12,7 +12,7 @@ import { createCustomTheme, IConfig } from '../src';
 export const config: IConfig = {
   app: {
     title: 'Test',
-    theme: 'light' // TODO(burdon): Test dark.
+    theme: 'dark'
   },
   registry: {
     endpoint: ''

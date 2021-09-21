@@ -27,8 +27,6 @@ import { DXOS as DXOSIcon } from '../icons';
 
 const drawerWidth = 220;
 
-// TODO(burdon): https://mui.com/components/drawers
-
 const Main = styled('main', {
   shouldForwardProp: (prop) => prop !== 'open'
 })<{ open?: boolean; }>(({ theme, open }) => ({
@@ -46,7 +44,7 @@ const Main = styled('main', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    marginLeft: 0
   }),
 }));
 
@@ -67,17 +65,16 @@ const AppBar = styled(MuiAppBar, {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
+    })
+  })
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
-  // Necessary for content to be below AppBar.
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
+  ...theme.mixins.toolbar, // Necessary for content to be below AppBar.
+  justifyContent: 'flex-end'
 }));
 
 type ContainerProps = {
@@ -151,10 +148,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
           <Box
             sx={{
               display: 'flex',
-              color: theme => {
-                console.log(theme.palette);
-                return theme.palette.text.primary
-              },
+              color: theme => theme.palette.text.primary,
               '& svg': {
                 width: 100,
                 height: 42

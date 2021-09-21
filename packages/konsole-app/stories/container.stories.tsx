@@ -4,16 +4,8 @@
 
 import debug from 'debug';
 import React, { useState } from 'react';
-import {
-  HashRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-  useHistory,
-  useParams
-} from 'react-router-dom';
 
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 
 import {
   IPanel,
@@ -63,13 +55,19 @@ export const Primary = () => {
             />
           }
         >
-          <Box
+          <Paper
             sx={{
               padding: 2
             }}
           >
-            Container: {panel}
-          </Box>
+            <Box
+              sx={{
+                padding: 2
+              }}
+            >
+              Container: {panel}
+            </Box>
+          </Paper>
         </Container>
       </RootContainer>
     </ConfigContext.Provider>

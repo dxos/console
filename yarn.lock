@@ -1611,7 +1611,7 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/config@2.10.17", "@dxos/config@~2.10.12", "@dxos/config@~2.10.2":
+"@dxos/config@2.10.17", "@dxos/config@~2.10.12":
   version "2.10.17"
   resolved "https://registry.yarnpkg.com/@dxos/config/-/config-2.10.17.tgz#ca929346da7a09a53a5c65c68bed067003f03307"
   integrity sha512-isMRyrSRDWjm3sOXA72u9VNwG18IURucVbiADVy4zZNp3DPhDSfSf1q0whhXOnn3e3b2F16O7sLU2bsLlX0IyA==
@@ -1631,6 +1631,21 @@
   integrity sha512-jW5HhV/FGtvU6YKtAVEqkRRLv90lgk6PjUUJWuAYSpDJ35FvSY2Ar3s5ioNn1Bd0iUK3lq4FCxhuEjOVlGtZbw==
   dependencies:
     "@dxos/debug" "2.12.20"
+    ajv "~8.6.2"
+    boolean "^3.0.1"
+    debug "^4.1.1"
+    js-yaml "^3.13.1"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+    lodash.set "^4.3.2"
+    node-fetch "^2.6.0"
+
+"@dxos/config@~2.12.23":
+  version "2.12.23"
+  resolved "https://registry.yarnpkg.com/@dxos/config/-/config-2.12.23.tgz#e256c19b845903b94d10eb29e2f8a2ab8c83c72f"
+  integrity sha512-BdKVa4ADn9pOr/bfuC7U7nelnj/Q3oxIyDJhmaRitwvVStunb91Ba1Nv4of4Ozk4URX9mvUYph5yyh0L8uGCyA==
+  dependencies:
+    "@dxos/debug" "2.12.23"
     ajv "~8.6.2"
     boolean "^3.0.1"
     debug "^4.1.1"
@@ -1789,6 +1804,14 @@
   version "2.12.20"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.12.20.tgz#b2e4c879b087f9ea124ffa45343d3d20408f2176"
   integrity sha512-HoXEg7UB9hJ7t6NsjgInMqUI4FwctxYw76vzMRzF2y4Z1LlAjGRFWvymzoJaRHdzCp3vBSl9WSeLc8YIUSNbrg==
+  dependencies:
+    "@types/node" "^14.0.9"
+    debug "^4.1.1"
+
+"@dxos/debug@2.12.23":
+  version "2.12.23"
+  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.12.23.tgz#d24c00bb2fa79d18a4c58a2d5c985f4479b2943b"
+  integrity sha512-cosLjQm3u+6Bdv2Mt5DHPOvUN5M7J9u/kiOA+Td8+BrVH5CR+WOz2iJhSyn2aRAAJc0dcsRPOavW3H1RuoFufw==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
