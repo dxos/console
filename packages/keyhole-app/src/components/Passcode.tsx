@@ -6,7 +6,7 @@ import React, { createRef, useEffect, useState } from 'react';
 
 import { colors, Box } from '@mui/material';
 
-// TODO(burdon): Forked from @dxos/react-framework.
+// TODO(burdon): Forked from @dxos/react-ux; factor out into new lib.
 
 const DEFAULT_PATTERN = /^[0-9]*$/;
 

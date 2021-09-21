@@ -12,16 +12,12 @@ import { IConfig } from './hooks';
  * https://mui.com/customization/theming
  */
 export const createCustomTheme = (config: IConfig) => createTheme({
-  palette: {
-    mode: 'dark' // TODO(burdon): Doesn't change background.
-  }
 
   // https://mui.com/customization/palette
-  /*
   palette: {
     mode: config.app.theme,
-    primary: colors.red,
-    secondary: colors.pink
+    primary: colors.cyan,
+    secondary: colors.green
   },
 
   // TODO(burdon): Include font directly: https://mui.com/customization/typography
@@ -51,5 +47,4 @@ export const createCustomTheme = (config: IConfig) => createTheme({
       }
     }
   }
-  */
 });

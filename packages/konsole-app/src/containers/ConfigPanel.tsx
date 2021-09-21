@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import { JsonTreeView } from '@dxos/react-ux';
+// import { JsonTreeView } from '@dxos/react-ux';
 
 import { useConfig } from '../hooks';
 
@@ -15,6 +15,9 @@ export const ConfigPanel = () => {
   const config = useConfig();
 
   return (
-    <JsonTreeView data={config} />
+    <pre>
+      {JSON.stringify(config)}
+    </pre>
   );
 };
+// <JsonTreeView data={config} />

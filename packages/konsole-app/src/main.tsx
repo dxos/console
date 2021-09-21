@@ -94,16 +94,4 @@ const start = async (config: IConfig) => {
   ), document.getElementById('root'));
 };
 
-const test = (config: IConfig) => {
-  ReactDOM.render((
-    <ThemeProvider theme={createCustomTheme(config)}>
-      <Paper sx={{ padding: 2 }}>
-        <pre>
-          {JSON.stringify(config, undefined, 2)}
-        </pre>
-      </Paper>
-    </ThemeProvider>
-  ), document.getElementById('root'));
-}
-
 void loadConfig().then(start);
