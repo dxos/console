@@ -72,7 +72,7 @@ export const ScrollContainer = ({ rows: allRows = [] }: IScrollContainerProps) =
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      containerRef.current!.removeEventListener('scroll', handleScroll);
+      containerRef.current?.removeEventListener('scroll', handleScroll);
     }
   }, [containerRef]);
 
