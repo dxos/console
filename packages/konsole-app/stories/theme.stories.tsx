@@ -19,9 +19,8 @@ export default {
 };
 
 // TODO(burdon): Themes not working inside storybooks?
-
-// https://www.npmjs.com/package/storybook-addon-material-ui
 // TODO(burdon): https://storybook.js.org/addons/@react-theming/storybook-addon
+// https://www.npmjs.com/package/storybook-addon-material-ui
 
 const App = () => (
   <Paper>

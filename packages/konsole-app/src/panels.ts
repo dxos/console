@@ -2,7 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { ComponentType } from 'react';
+import { IPanel } from './types';
 
 import {
   Reorder as LoggingIcon,
@@ -25,13 +25,6 @@ import {
   ServicesPanel,
   SignalingPanel
 } from './containers';
-
-export interface IPanel {
-  path: string
-  label: string
-  component: ComponentType
-  icon?: ComponentType
-}
 
 export const panels: IPanel[] = [
   {

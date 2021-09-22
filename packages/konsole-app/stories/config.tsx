@@ -9,6 +9,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import { createCustomTheme, IConfig } from '../src';
 
+// TODO(burdon): Verify in sync with protobuf?
 export const config: IConfig = {
   app: {
     title: 'Test',

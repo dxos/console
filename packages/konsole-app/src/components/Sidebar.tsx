@@ -9,7 +9,7 @@ import {
   Apps as DefaultIcon,
 } from '@mui/icons-material';
 
-import { IPanel } from '../panels';
+import { IPanel } from '../types';
 
 interface SidebarProps {
   panels?: IPanel[]

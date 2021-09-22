@@ -2,23 +2,23 @@
 // Copyright 2021 DXOS.org
 //
 
-import debug from 'debug';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {
+  HashRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+  useParams
+} from 'react-router-dom';
 
-import { ApiFactory } from '@dxos/registry-api';
-
-import { loadConfig } from './config';
-import { ConfigContext, IConfig, RegistryContext } from './hooks';
-import { createCustomTheme } from './theme';
-import { panels } from './panels';
-// import { App } from './app';
-import { IPanel } from './types';
-import { HashRouter as Router, Redirect, Route, Switch, useHistory, useParams } from 'react-router-dom';
-import { Container, Sidebar } from './components';
 import { CssBaseline, Theme, ThemeProvider } from '@mui/material';
 
 import { IRegistryApi } from '@dxos/registry-api';
+
+import { Container, Sidebar } from './components';
+import { IConfig, ConfigContext, RegistryContext } from './hooks';
+import { IPanel } from './types';
 
 /**
  * Main Layout.
@@ -66,7 +66,7 @@ export const App = ({ config, theme, panels, registryApi }: AppProps) => {
   return (
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={registryApi}>
-        <ThemeProvider theme={createCustomTheme(config)}>
+        <ThemeProvider theme={theme}>
           <CssBaseline />
           <Router>
             <Switch>
@@ -81,26 +81,3 @@ export const App = ({ config, theme, panels, registryApi }: AppProps) => {
     </ConfigContext.Provider>
   );
 };
-
-/**
- * React app bootstrap (providers and top-level routes).
- */
-const start = async (config: IConfig) => {
-  debug.enable(config.system.debug);
-  const log = debug('dxos:console:main');
-  log('Starting...', { config });
-
-  const theme = createCustomTheme(config);
-  const registryApi = await ApiFactory.createRegistryApi(config.services.dxns.server);
-
-  ReactDOM.render((
-    <App
-      config={config}
-      theme={theme}
-      panels={panels}
-      registryApi={registryApi}
-    />
-  ), document.getElementById('root'));
-};
-
-void loadConfig().then(start);

@@ -16,6 +16,7 @@ import { createCustomTheme } from './theme';
 
 const AppBarOffset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
+// TODO(burdon): Factor out.
 const App = ({ config }: { config: IConfig }) => {
   return (
     <ThemeProvider theme={createCustomTheme(config)}>

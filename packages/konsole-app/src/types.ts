@@ -2,6 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
+import { ComponentType } from 'react';
+
 import { CID } from '@dxos/registry-api';
 
 export interface IRecordType {
@@ -26,4 +28,11 @@ export interface IService {
   ports?: string // TODO(burdon): Array of numbers?
   memory?: number
   cpu?: number
+}
+
+export interface IPanel {
+  path: string
+  label: string
+  component: ComponentType
+  icon?: ComponentType
 }
