@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Box, Divider, IconButton, MenuItem, Select, SelectChangeEvent, Toolbar } from '@mui/material';
+import { Box, Divider, FormControl, IconButton, MenuItem, Select, SelectChangeEvent, Toolbar } from '@mui/material';
 import { Sync as RefreshIcon } from '@mui/icons-material';
 
 import { LogTable } from '../components';
@@ -67,17 +67,18 @@ export const LogsPanel = () => {
       }}
     >
       <Toolbar>
-        <Select
-          labelId='label-service'
-          variant='outlined'
-          value={service || ''}
-          onChange={handleServiceChange}
-          autoWidth
-        >
-          {services.map(service => (
-            <MenuItem key={service} value={service}>{service}</MenuItem>
-          ))}
-        </Select>
+        <FormControl variant='standard'>
+          <Select
+            labelId='label-service'
+            value={service || ''}
+            onChange={handleServiceChange}
+            autoWidth
+          >
+            {services.map(service => (
+              <MenuItem key={service} value={service}>{service}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <Box sx={{ flex: 1 }} />
         <IconButton
           size='small'

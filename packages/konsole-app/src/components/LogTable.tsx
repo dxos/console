@@ -82,7 +82,7 @@ const columns = [
   {
     dataKey: 'level',
     label: 'Level',
-    width: 240,
+    width: 260,
     flexShrink: 0
   },
   {
@@ -94,6 +94,7 @@ const columns = [
   }
 ];
 
+// TODO(burdon): Change.
 const useStyles = makeStyles(() => ({
   headerCell: {
     flexDirection: 'column'
@@ -111,7 +112,7 @@ const useStyles = makeStyles(() => ({
   },
   fixedWidth: {
     fontFamily: 'DM Mono, monospace',
-    fontSize: 15
+    fontSize: 16
   },
   flexContainer: {
     display: 'flex',
@@ -187,11 +188,15 @@ const LevelFilter = ({ context, label, value = '', onChange }: {
 
   // TODO(burdon): Support multi-select.
   return (
-    <FormControl>
+    <FormControl variant='standard'>
       <Select
         displayEmpty
         value={value || ''}
         onChange={handleChange}
+        sx={{
+          fontFamily: 'DM Mono, monospace',
+          fontSize: 16
+        }}
       >
         <MenuItem value=''>ALL</MenuItem>
         <Divider />
@@ -217,6 +222,7 @@ const Cell = ({ dataKey, data, rowData, rowHeight }: {
 
   const Content = ({ data }: { data: string | number }) => {
     switch (dataKey) {
+      // TODO(burdon): Trim TS to 3 digit ms.
       case 'timestamp': {
         return (
           <div
