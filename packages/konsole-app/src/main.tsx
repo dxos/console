@@ -52,7 +52,6 @@ export const Main = ({ panels }: { panels: IPanel[] }) => {
 
 interface AppProps {
   config: IConfig
-  theme: Theme
   panels: IPanel[]
   registryApi: IRegistryApi
 }
@@ -62,7 +61,7 @@ interface AppProps {
  */
 // TODO(burdon): Pass in router.
 // TODO(burdon): Cache panels so that they are not rendered each time.
-export const App = ({ config, theme, panels, registryApi }: AppProps) => {
+export const App = ({ config, panels, registryApi }: AppProps) => {
   return (
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={registryApi}>
@@ -90,13 +89,13 @@ const start = async (config: IConfig) => {
   const log = debug('dxos:console:main');
   log('Starting...', { config });
 
-  const theme = createCustomTheme(config);
+  // const theme = createCustomTheme(config);
+  // theme={theme}
   const registryApi = await ApiFactory.createRegistryApi(config.services.dxns.server);
 
   ReactDOM.render((
     <App
       config={config}
-      theme={theme}
       panels={panels}
       registryApi={registryApi}
     />
