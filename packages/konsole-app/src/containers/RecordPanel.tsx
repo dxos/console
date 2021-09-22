@@ -146,7 +146,8 @@ export const RecordPanel = () => {
       <Box
         sx={{
           display: 'flex',
-          flex: 1
+          flex: 1,
+          padding: 1
         }}
       >
         <RecordTable records={records} />

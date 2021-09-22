@@ -59,7 +59,7 @@ const columns: GridColDef[] = [
   {
     field: 'url',
     headerName: 'Link',
-    width: 80,
+    width: 120,
     sortable: false,
     // https://mui.com/components/data-grid/style/#styling-cells
     renderCell: (params: GridCellParams) => {

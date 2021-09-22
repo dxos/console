@@ -113,7 +113,7 @@ export const App = () => {
             flexShrink: 0,
             justifyContent: 'top',
             alignItems: 'center',
-            height: 200
+            height: 250
           }}
         >
           <Passcode

@@ -8,14 +8,22 @@ import {
   Reorder as LoggingIcon,
   Settings as SettingsIcon,
   Storage as ServicesIcon,
-  DynamicFeed as RecordsIcon
+  DynamicFeed as RecordsIcon,
+  Share as SignalingIcon,
+  CloudQueue as IPFSIcon,
+  Adb as BotsIcon,
+  Apps as AppsIcon
 } from '@mui/icons-material';
 
 import {
+  AppsPanel,
+  BotsPanel,
   ConfigPanel,
+  IPFSPanel,
   LogsPanel,
   RecordPanel,
-  ServicesPanel
+  ServicesPanel,
+  SignalingPanel
 } from './containers';
 
 export interface IPanel {
@@ -37,6 +45,30 @@ export const panels: IPanel[] = [
     label: 'Records',
     component: RecordPanel,
     icon: RecordsIcon
+  },
+  {
+    path: '/apps',
+    label: 'Apps',
+    component: AppsPanel,
+    icon: AppsIcon
+  },
+  {
+    path: '/bots',
+    label: 'Bots',
+    component: BotsPanel,
+    icon: BotsIcon
+  },
+  {
+    path: '/signaling',
+    label: 'Signaling',
+    component: SignalingPanel,
+    icon: SignalingIcon
+  },
+  {
+    path: '/ipfs',
+    label: 'IPFS',
+    component: IPFSPanel,
+    icon: IPFSIcon
   },
   {
     path: '/logs',

@@ -60,8 +60,8 @@ export const ServicesPanel = () => {
       <Box
         sx={{
           display: 'flex',
-          flexDirection: 'column',
-          flex: 1
+          flex: 1,
+          padding: 1
         }}
       >
         <DataGrid

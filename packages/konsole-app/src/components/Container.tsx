@@ -11,12 +11,14 @@ import {
   Divider,
   Drawer,
   IconButton,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography
 } from '@mui/material';
 import {
-  AccountCircle as ProfileIcon,
   Menu as MenuIcon,
+  MoreVert as MoreVertIcon,
   ChevronLeft as ChevronLeftIcon
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
@@ -83,13 +85,52 @@ type ContainerProps = {
   sidebar?: JSX.Element
 };
 
+const ContainerMenu = () => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const menuOpen = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <IconButton
+        aria-label='more'
+        id='long-button'
+        aria-controls='long-menu'
+        aria-expanded={menuOpen ? 'true' : undefined}
+        aria-haspopup='true'
+        onClick={handleClick}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id='long-menu'
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={anchorEl}
+        open={menuOpen}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>Keyhole</MenuItem>
+      </Menu>
+    </>
+  );
+};
+
 /**
  * Root application component.
  * @constructor
  */
 export const Container = ({ children, sidebar }: ContainerProps) => {
   const config = useConfig();
-  const [open, setOpen] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(true);
 
   return (
     <Box
@@ -98,31 +139,33 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
         height: '100vh'
       }}
     >
-      <AppBar position='fixed' open={open}>
-        <Toolbar>
+      <AppBar position='fixed' open={drawerOpen}>
+        <Toolbar
+          sx={{
+            '*': {
+              color: theme => theme.palette.mode === 'dark' ? theme.palette.background.default: undefined
+            }
+          }}
+        >
           <Box>
             <IconButton
-              sx={{ mr: 2, ...(open && { display: 'none' }) }}
+              sx={{ mr: 2, ...(drawerOpen && { display: 'none' }) }}
               aria-label='open drawer'
               edge='start'
               size='small'
-              onClick={() => setOpen(!open)}
+              onClick={() => setDrawerOpen(!drawerOpen)}
             >
               <MenuIcon />
             </IconButton>
           </Box>
+
           <Typography variant='h6'>
             {config.app.title}
           </Typography>
+
           <Box sx={{ flex: 1 }} />
-          <IconButton
-            edge='end'
-            aria-label='account of current user'
-            aria-haspopup='true'
-            color='inherit'
-          >
-            <ProfileIcon />
-          </IconButton>
+
+          <ContainerMenu />
         </Toolbar>
       </AppBar>
 
@@ -137,7 +180,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
         }}
         variant='persistent'
         anchor='left'
-        open={open}
+        open={drawerOpen}
       >
         <Toolbar
           disableGutters
@@ -159,7 +202,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
             <DXOSIcon />
           </Box>
           <Box sx={{ flex: 1 }} />
-          <IconButton size='small' onClick={() => setOpen(false)}>
+          <IconButton size='small' onClick={() => setDrawerOpen(false)}>
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
@@ -167,7 +210,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
         {sidebar || null}
       </Drawer>
 
-      <Main open={open}>
+      <Main open={drawerOpen}>
         <DrawerHeader />
         <Box
           sx={{

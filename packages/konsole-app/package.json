@@ -19,7 +19,7 @@
     "build": "webpack",
     "clean": "rm -rf ./dist",
     "lint": "eslint --fix --format codeframe './src/**/*.ts'",
-    "start": "webpack serve",
+    "start": "webpack serve --mode development --host 0.0.0.0",
     "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
     "build-storybook": "build-storybook --quiet",
     "ci": "npm run build && npm run lint && npm run test",
