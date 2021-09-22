@@ -22,8 +22,7 @@ export const createCustomTheme = (config: IConfig) => createTheme({
 
   // TODO(burdon): Include font directly: https://mui.com/customization/typography
   typography: {
-    fontFamily: 'DM Sans, sans-serif',
-    // fontSize: 12
+    fontFamily: 'DM Sans, sans-serif'
   },
 
   // https://mui.com/customization/theme-components/#default-props
@@ -33,6 +32,9 @@ export const createCustomTheme = (config: IConfig) => createTheme({
       styleOverrides: {
         body: {
           overflow: 'hidden' // Prevent scroll bounce.
+        },
+        pre: {
+          fontFamily: 'DM Mono, monospace'
         }
       },
     },

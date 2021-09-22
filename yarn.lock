@@ -2284,6 +2284,18 @@
     random-access-memory "^3.1.1"
     random-access-web "^2.0.3"
 
+"@dxos/react-framework@^2.12.23":
+  version "2.12.23"
+  resolved "https://registry.yarnpkg.com/@dxos/react-framework/-/react-framework-2.12.23.tgz#0e1260f36dda2639c1f8eb6b12048159f1a56cb2"
+  integrity sha512-mCFKlXUCMmxsa2N/b1/9xBeFwk27+ARj1dCqvtuPeapQHwyiwtCoK7FubWDBt2alrFpRDHjpzimxxmoG2fEuYQ==
+  dependencies:
+    "@dxos/crypto" "2.12.23"
+    "@dxos/debug" "2.12.23"
+    clsx "^1.1.0"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.isplainobject "^4.0.6"
+    url-join "^4.0.1"
+
 "@dxos/react-json-tree@~0.12.0":
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/@dxos/react-json-tree/-/react-json-tree-0.12.0.tgz#34d1366e562ff1b0e9877c5d9eb9e9dfe5fa84f8"

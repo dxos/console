@@ -14,20 +14,18 @@ import {
   useParams
 } from 'react-router-dom';
 
-import { CssBaseline, Paper } from '@mui/material';
-import { ThemeProvider } from '@mui/styles';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import { IRegistryApi, ApiFactory } from '@dxos/registry-api';
 
 import { Container, Sidebar } from './components';
 import { loadConfig } from './config';
-import { ConfigContext, IConfig, RegistryContext } from './hooks';
+import { IConfig, ConfigContext, RegistryContext } from './hooks';
 import { panels } from './panels';
 import { createCustomTheme } from './theme';
 
 /**
  * Main app container.
- * @constructor
  */
 const Main = () => {
   const history = useHistory();
@@ -77,7 +75,6 @@ const App = ({ config, registryApi }: { config: IConfig, registryApi: IRegistryA
 
 /**
  * React app bootstrap (providers and top-level routes).
- * @param config
  */
 const start = async (config: IConfig) => {
   debug.enable(config.system.debug);

@@ -11,7 +11,6 @@ import {
   Divider,
   Drawer,
   IconButton,
-  Paper,
   Toolbar,
   Typography
 } from '@mui/material';
@@ -55,6 +54,8 @@ interface AppBarProps extends MuiAppBarProps {
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open'
 })<AppBarProps>(({ theme, open }) => ({
+  color: theme.palette.mode === 'dark' ? theme.palette.background.default: undefined,
+  backgroundColor: theme.palette.primary.main,
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -78,8 +79,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 type ContainerProps = {
-  children: JSX.Element
-  sidebar: JSX.Element
+  children?: JSX.Element
+  sidebar?: JSX.Element
 };
 
 /**
@@ -163,7 +164,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
           </IconButton>
         </Toolbar>
         <Divider />
-        {sidebar}
+        {sidebar || null}
       </Drawer>
 
       <Main open={open}>

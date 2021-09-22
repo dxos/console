@@ -2,69 +2,79 @@
 // Copyright 2021 DXOS.org
 //
 
+import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Box, Button, CssBaseline, Paper, Toolbar, AppBar } from '@mui/material';
+import { AppBar, Box, CssBaseline, Paper, Toolbar } from '@mui/material';
 import { styled, ThemeProvider } from '@mui/material/styles';
 
-import { IConfig } from './hooks';
 import { loadConfig } from './config';
-import { createCustomTheme } from './theme';
+import { IConfig } from './hooks';
 import { DXOS as DXOSIcon } from './icons';
+import { createCustomTheme } from './theme';
 
 const AppBarOffset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
-const App = ({ config }: { config: IConfig }) => (
-  <ThemeProvider theme={createCustomTheme(config)}>
-    <CssBaseline />
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100vh',
-        overflow: 'hidden'
-      }}
-    >
-      <AppBar position='fixed'>
-        <Toolbar>
-          <Box
-            sx={{
-              display: 'flex',
-              '& svg': {
-                width: 120,
-                height: 48
-              }
-            }}
-          >
-            <DXOSIcon />
-          </Box>
-          <Box sx={{ flex: 1 }} />
-          <Button
-            variant='contained'
-          >
-            Refresh
-          </Button>
-        </Toolbar>
-      </AppBar>
-      <AppBarOffset />
-      <Paper
+const App = ({ config }: { config: IConfig }) => {
+  return (
+    <ThemeProvider theme={createCustomTheme(config)}>
+      <CssBaseline />
+      <Box
         sx={{
-          padding: 2,
-          overflow: 'scroll'
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh',
+          overflow: 'hidden'
         }}
       >
+        <AppBar
+          position='fixed'
+          sx={{
+            color: theme => theme.palette.mode === 'dark' ? theme.palette.background.default: undefined,
+            backgroundColor: theme => theme.palette.primary.main
+          }}
+        >
+          <Toolbar>
+            <Box
+              sx={{
+                display: 'flex',
+                '& svg': {
+                  width: 120,
+                  height: 48
+                }
+              }}
+            >
+              <DXOSIcon />
+            </Box>
+            <Box sx={{ flex: 1 }} />
+          </Toolbar>
+        </AppBar>
+        <AppBarOffset />
+        <Paper
+          sx={{
+            padding: 2,
+            overflow: 'scroll'
+          }}
+        >
         <pre>
           {JSON.stringify(config, undefined, 2)}
         </pre>
-      </Paper>
-    </Box>
-  </ThemeProvider>
-);
+        </Paper>
+      </Box>
+    </ThemeProvider>
+  );
+}
 
-const start = (config: IConfig) => {
+const start = async (config: IConfig) => {
+  debug.enable(config.system.debug);
+  const log = debug('dxos:console:main');
+  log('Starting...', { config });
+
   ReactDOM.render((
-    <App config={config} />
+    <App
+      config={config}
+    />
   ), document.getElementById('root'));
 };
 

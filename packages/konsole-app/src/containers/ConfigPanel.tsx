@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-// import { JsonTreeView } from '@dxos/react-ux';
+import { Box } from '@mui/material';
 
 import { useConfig } from '../hooks';
 
@@ -14,10 +14,16 @@ import { useConfig } from '../hooks';
 export const ConfigPanel = () => {
   const config = useConfig();
 
+  // TODO(burdon): Re-implement JsonTreeView.
   return (
-    <pre>
-      {JSON.stringify(config)}
-    </pre>
+    <Box
+      sx={{
+        overflow: 'scroll'
+      }}
+    >
+      <pre>
+        {JSON.stringify(config, undefined, 2)}
+      </pre>
+    </Box>
   );
 };
-// <JsonTreeView data={config} />
