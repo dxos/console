@@ -2,10 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import React from 'react';
 import { Launch as LaunchIcon } from '@mui/icons-material';
 import { Box, IconButton, Link } from '@mui/material';
 import { DataGrid, GridColDef, GridCellParams } from '@mui/x-data-grid';
-import React from 'react';
 
 import { IRecord } from '../types';
 import { getRelativeTime, sortDateStrings } from '../util';

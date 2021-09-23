@@ -2,27 +2,27 @@
 // Copyright 2021 DXOS.org
 //
 
-import React from 'react';
-
 import { AppBar, Box, CssBaseline, Paper, Toolbar } from '@mui/material';
-import { styled, ThemeProvider } from '@mui/material/styles';
+import { styled, Theme, ThemeProvider } from '@mui/material/styles';
+import React from 'react';
 
 import { IConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';
-import { createCustomTheme } from '../theme';
 
 const AppBarOffset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 interface DebugProps {
   config: IConfig
+  theme: Theme
 }
 
 /**
  * Simple Debug app (mostly for sanity testing the console framework).
  */
-export const Debug = ({ config }: DebugProps) => {
+export const Debug = ({ config, theme }: DebugProps) => {
+  console.log(theme);
   return (
-    <ThemeProvider theme={createCustomTheme(config)}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
         sx={{
@@ -35,7 +35,7 @@ export const Debug = ({ config }: DebugProps) => {
         <AppBar
           position='fixed'
           sx={{
-            color: theme => theme.palette.mode === 'dark' ? theme.palette.background.default: undefined,
+            color: theme => theme.palette.mode === 'dark' ? theme.palette.background.default : undefined,
             backgroundColor: theme => theme.palette.primary.main
           }}
         >
@@ -69,4 +69,4 @@ export const Debug = ({ config }: DebugProps) => {
       </Box>
     </ThemeProvider>
   );
-}
+};

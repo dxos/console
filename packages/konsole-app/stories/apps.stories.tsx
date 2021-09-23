@@ -4,22 +4,23 @@
 
 import debug from 'debug';
 import React from 'react';
-import StoryRouter from 'storybook-react-router';
 
 import { MockRegistryApi } from '@dxos/registry-api';
 
 import { createCustomTheme, panels, App, Debug as DebugApp } from '../src';
-
 import { config } from './config';
 
 debug.enable('dxos:console:*');
 
-// TODO(burdon): Themes not working.
+// TODO(burdon): Seems to clash with Mui theme?
+// import StoryRouter from 'storybook-react-router';
+// "storybook-react-router": "^1.0.8"
+// "@types/storybook-react-router": "^1.0.1",
 
 export default {
-  title: 'App',
+  title: 'Apps',
   decorators: [
-    StoryRouter()
+    // StoryRouter()
   ]
 };
 
@@ -37,7 +38,12 @@ export const Primary = () => {
 };
 
 export const Debug = () => {
+  const theme = createCustomTheme(config);
+
   return (
-    <DebugApp config={config} />
+    <DebugApp
+      config={config}
+      theme={theme}
+    />
   );
 };
