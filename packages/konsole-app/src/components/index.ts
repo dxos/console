@@ -5,6 +5,7 @@
 export * from './Container';
 export * from './FlexTable';
 export * from './LogTable';
+export * from './Panel';
 export * from './RecordTable';
 export * from './RecordTypeSelector';
 export * from './ScrollContainer';

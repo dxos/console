@@ -2,18 +2,14 @@
 // Copyright 2021 DXOS.org
 //
 
+import { Sync as RefreshIcon } from '@mui/icons-material';
+import { Box, IconButton, Toolbar } from '@mui/material';
 import urlJoin from 'proper-url-join';
-import React, { useEffect, useMemo, useState } from 'react';
-
-import { Box, Divider, IconButton, TextField, Toolbar } from '@mui/material';
-import {
-  Clear as ClearIcon,
-  Sync as RefreshIcon
-} from '@mui/icons-material';
+import React, { useMemo, useState } from 'react';
 
 import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 
-import { RecordTable, RecordTypeSelector, SearchBar } from '../components';
+import { Panel, RecordTable, RecordTypeSelector, SearchBar } from '../components';
 import { IConfig, useConfig, useRecordTypes, useResources } from '../hooks';
 import { IRecord, IRecordType } from '../types';
 
@@ -82,55 +78,43 @@ export const RecordPanel = () => {
   };
 
   return (
-    <>
-      <Toolbar>
-        <Box>
-          <RecordTypeSelector
-            types={recordTypes}
-            type={recordType}
-            onChange={type => setRecordType(type)}
-          />
-        </Box>
-        <Box sx={{ flex: 1 }} />
-        {/* Search */}
-        <Box
-          sx={{
-            minWidth: 350
-          }}
-        >
-          <SearchBar
-            placeholder='Search records'
-            onSearch={handleSearch}
-            delay={500}
-          />
-        </Box>
-        <Divider
-          orientation="vertical"
-          sx={{
-            margin: 4
-          }}
-        />
-        <IconButton
-          sx={{
-            marginLeft: 1
-          }}
-          size='small'
-          aria-label='refresh'
-          onClick={handleRefresh}
-        >
-          <RefreshIcon />
-        </IconButton>
-      </Toolbar>
-
-      <Box
-        sx={{
-          display: 'flex',
-          flex: 1,
-          padding: 1
-        }}
-      >
-        <RecordTable records={records} />
-      </Box>
-    </>
+    <Panel
+      toolbar={(
+        <Toolbar>
+          <Box>
+            <RecordTypeSelector
+              types={recordTypes}
+              type={recordType}
+              onChange={type => setRecordType(type)}
+            />
+          </Box>
+          <Box sx={{ flex: 1 }} />
+          {/* Search */}
+          <Box
+            sx={{
+              minWidth: 350
+            }}
+          >
+            <SearchBar
+              placeholder='Search records'
+              onSearch={handleSearch}
+              delay={500}
+            />
+          </Box>
+          <IconButton
+            sx={{
+              marginLeft: 1
+            }}
+            size='small'
+            aria-label='refresh'
+            onClick={handleRefresh}
+          >
+            <RefreshIcon />
+          </IconButton>
+        </Toolbar>
+      )}
+    >
+      <RecordTable records={records} />
+    </Panel>
   );
 };

@@ -2,12 +2,11 @@
 // Copyright 2021 DXOS.org
 //
 
+import { Sync as RefreshIcon } from '@mui/icons-material';
+import { Box, FormControl, IconButton, MenuItem, Select, SelectChangeEvent, Toolbar } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
-import { Box, Divider, FormControl, IconButton, MenuItem, Select, SelectChangeEvent, Toolbar } from '@mui/material';
-import { Sync as RefreshIcon } from '@mui/icons-material';
-
-import { LogTable } from '../components';
+import { LogTable, Panel } from '../components';
 import { useRequest } from '../hooks';
 import { ILogMessage, ipfsLogParser, defaultLogParser } from '../logging';
 
@@ -59,46 +58,33 @@ export const LogsPanel = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column'
-      }}
-    >
-      <Toolbar>
-        <FormControl variant='standard'>
-          <Select
-            labelId='label-service'
-            value={service || ''}
-            onChange={handleServiceChange}
-            autoWidth
+    <Panel
+      toolbar={(
+        <Toolbar>
+          <FormControl variant='standard'>
+            <Select
+              labelId='label-service'
+              value={service || ''}
+              onChange={handleServiceChange}
+              autoWidth
+            >
+              {services.map(service => (
+                <MenuItem key={service} value={service}>{service}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Box sx={{ flex: 1 }} />
+          <IconButton
+            size='small'
+            aria-label='refresh'
+            onClick={refreshLogs}
           >
-            {services.map(service => (
-              <MenuItem key={service} value={service}>{service}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Box sx={{ flex: 1 }} />
-        <IconButton
-          size='small'
-          aria-label='refresh'
-          onClick={refreshLogs}
-        >
-          <RefreshIcon />
-        </IconButton>
-      </Toolbar>
-      <Divider />
-      <Box
-        sx={{
-          display: 'flex',
-          flex: 1,
-          overflow: 'scroll',
-          margin: 1
-        }}
-      >
-        <LogTable messages={logs} />
-      </Box>
-    </Box>
+            <RefreshIcon />
+          </IconButton>
+        </Toolbar>
+      )}
+    >
+      <LogTable messages={logs} />
+    </Panel>
   );
 };

@@ -4,17 +4,13 @@
 
 import React from 'react';
 
-import { Box } from '@mui/material';
-
-import { useConfig } from '../hooks';
+import { Panel } from '../components';
 
 /**
  * Displays the status of the IPFS servers.
  */
 export const IPFSPanel = () => {
-  const config = useConfig();
-
   return (
-    <Box />
+    <Panel />
   );
 };
