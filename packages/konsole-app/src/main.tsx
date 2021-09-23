@@ -5,86 +5,34 @@
 import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  HashRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-  useHistory,
-  useParams
-} from 'react-router-dom';
-
-import { CssBaseline } from '@material-ui/core';
-import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import { ApiFactory } from '@dxos/registry-api';
 
-import { loadSubstrateConfig } from './config';
-import { Container, Sidebar } from './containers';
-import { ConfigContext, IConfig, RegistryContext } from './hooks';
+import { App } from './apps';
+import { loadConfig } from './config';
+import { IConfig } from './hooks';
 import { panels } from './panels';
 import { createCustomTheme } from './theme';
 
 /**
- * Main app container.
- * @constructor
- */
-const Main = () => {
-  const history = useHistory();
-  const { panel }: { panel: string } = useParams();
-
-  return (
-    <Container
-      sidebar={
-        <Sidebar
-          panels={panels}
-          selected={`/${panel}`}
-          onSelect={path => history.push(path)}
-        />
-      }
-    >
-      <>
-        {panels.map(({ path, component }) => (
-          <Route
-            key={path}
-            path={path}
-            component={component}
-          />
-        ))}
-      </>
-    </Container>
-  );
-};
-
-/**
  * React app bootstrap (providers and top-level routes).
- * @param config
  */
 const start = async (config: IConfig) => {
-  const log = debug('dxos:console:main');
   debug.enable(config.system.debug);
-
+  const log = debug('dxos:console:main');
   log('Starting...', { config });
+
+  const theme = createCustomTheme(config);
   const registryApi = await ApiFactory.createRegistryApi(config.services.dxns.server);
 
-  // TODO(burdon): Cache panels so that they don't need to render each time.
   ReactDOM.render((
-    <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={registryApi}>
-        <MuiThemeProvider theme={createCustomTheme(config)}>
-          <CssBaseline />
-          <Router>
-            <Switch>
-              <Route path='/:panel'>
-                <Main />
-              </Route>
-              <Redirect to={panels[0].path} />
-            </Switch>
-          </Router>
-        </MuiThemeProvider>
-      </RegistryContext.Provider>
-    </ConfigContext.Provider>
+    <App
+      config={config}
+      registryApi={registryApi}
+      panels={panels}
+      theme={theme}
+    />
   ), document.getElementById('root'));
 };
 
-void loadSubstrateConfig().then(start);
+void loadConfig().then(start);

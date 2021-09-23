@@ -29,18 +29,22 @@ export const logLevels = [
   'DEBUG', 'INFO', 'WARN', 'ERROR'
 ];
 
+// TODO(burdon): Make use of LogParser as it's not used.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type LogParser = (line: string, previous?: Date) => ILogMessage;
 
 const createInvalidLogMessage = (line: string) => {
-  log(`Failed to parse: ${line}`)
+  log(`Failed to parse: ${line}`);
   return {
     id: uuid(),
     timestamp: 'N/A',
     level: 'N/A',
     message: line
   };
-}
+};
 
+// TODO(burdon): Make use of `previous` as it's not used now.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const createLogParser = (regex: RegExp) => (line: string, previous?: Date) => {
   const parts = line.match(regex);
   if (!parts) {
@@ -53,18 +57,24 @@ export const createLogParser = (regex: RegExp) => (line: string, previous?: Date
     delta: 0,
     level: parts[2],
     message: parts[3]
-  }
+  };
 };
 
+// TODO(burdon): Fix multi-line (see below).
+export const logPrinter = ({ timestamp, level, message }: ILogMessage) => `${timestamp} ${level} ${message.replace(/[\r\n]/g, '')}`;
+
+//
 // Test: https://regexr.com
+//
 
 // Example: "2021-09-14T20:53:46.632038879Z   dxos:cli-app:server:auth Not authenticated. +1s\r"
 // Skip +1ms at end.
+// TODO(burdon): Doesn't match multi-line (i.e., text with \n breaks).
 export const defaultLogParser = createLogParser(/^([^\s]+)\s+([^\s]+)\s(.+?)(\s\+.+|$)/);
 
 // Example: "2021-09-14 09:01:54.305: Initializing daemon..."
 export const ipfsLogParser = (line: string) => {
-  const regex = /^([^\s]+) ([^\s]+) (.*)$/
+  const regex = /^([^\s]+) ([^\s]+) (.*)$/;
   const parts = line.match(regex);
   if (!parts) {
     return createInvalidLogMessage(line);
@@ -76,7 +86,7 @@ export const ipfsLogParser = (line: string) => {
     timestamp: ts.toISOString(),
     level: 'INFO', // TODO(burdon): Optional.
     message: parts[3]
-  }
+  };
 };
 
 /**

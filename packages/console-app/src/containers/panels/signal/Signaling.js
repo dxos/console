@@ -49,7 +49,7 @@ const Signal = () => {
           <Tabs value={tab} onChange={(_, value) => setTab(value)}>
             <Tab value={TAB_NETWORK} label='Network' />
             <Tab value={TAB_CHANNELS} label='Channels' />
-            <Tab value={TAB_LOG} label='Log' />
+            <Tab value={TAB_LOG} label='LogTable' />
           </Tabs>
         </Toolbar>
       }

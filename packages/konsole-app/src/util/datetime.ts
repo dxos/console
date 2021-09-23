@@ -2,6 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
+// import assert from 'assert';
+
 const units = {
   year: 24 * 60 * 60 * 1000 * 365,
   month: 24 * 60 * 60 * 1000 * 365 / 12,
@@ -15,6 +17,10 @@ export const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
 export const getRelativeTime = (d1: Date, d2: Date = new Date()) => {
   const elapsed = d1.valueOf() - d2.valueOf();
+  // assert(!isNaN(elapsed)); // TODO(burdon): ???
+  if (isNaN(elapsed)) {
+    return undefined;
+  }
 
   let unit: keyof typeof units;
   for (unit in units) {

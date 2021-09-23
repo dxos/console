@@ -31,7 +31,7 @@ const Apps = () => {
         <Toolbar>
           <Tabs value={tab} onChange={(_, value) => setTab(value)}>
             <Tab value={TAB_RECORDS} label='Records' />
-            <Tab value={TAB_LOG} label='Log' />
+            <Tab value={TAB_LOG} label='LogTable' />
           </Tabs>
         </Toolbar>
       }

@@ -10,7 +10,7 @@ export default {
   title: 'Keyhole'
 };
 
-export const withApp = () => {
+export const Primary = () => {
   return (
     <App />
   );

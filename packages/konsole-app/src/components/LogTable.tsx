@@ -7,10 +7,22 @@ import hash from 'string-hash';
 import React, { useEffect, useRef, useState } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 
-import { colors, Divider, FormControl, FormHelperText, InputBase, MenuItem, Select, TableCell } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles'; // TODO(burdon): Deprecated.
 
-import { logLevels, IFilter, ILogMessage } from '../logging';
+import {
+  colors,
+  Box,
+  Divider,
+  FormControl,
+  FormHelperText,
+  InputBase,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TableCell
+} from '@mui/material';
+
+import { IFilter, ILogMessage } from '../logging';
 
 // Levels
 
@@ -31,7 +43,7 @@ const hashedColors = [
 
 const getLevelColor = (level: string): string => {
   // @ts-ignore
-  return levelColors[level] || colors[hashedColors[hash(level) % hashedColors.length]][500];
+  return level && (levelColors[level] || colors[hashedColors[hash(level) % hashedColors.length]][500]);
 };
 
 // Time
@@ -70,7 +82,7 @@ const columns = [
   {
     dataKey: 'level',
     label: 'Level',
-    width: 240,
+    width: 260,
     flexShrink: 0
   },
   {
@@ -82,10 +94,8 @@ const columns = [
   }
 ];
 
+// TODO(burdon): Change.
 const useStyles = makeStyles(() => ({
-  root: {},
-  grid: {},
-  table: {},
   headerCell: {
     flexDirection: 'column'
   },
@@ -102,7 +112,7 @@ const useStyles = makeStyles(() => ({
   },
   fixedWidth: {
     fontFamily: 'DM Mono, monospace',
-    fontSize: 15
+    fontSize: 16
   },
   flexContainer: {
     display: 'flex',
@@ -118,20 +128,21 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface LogProperties {
-  messages: ILogMessage[]
+interface IContext {
+  levels: string[]
 }
 
 /**
  * Table header.
  */
-const Header = ({ dataKey, label, headerHeight, filterKey, filterValue, onFilterChange, Component }: {
+const Header = ({ dataKey, label, headerHeight, filterKey, filterValue, onFilterChange, context, Component }: {
   dataKey: string,
   label: string | React.ReactNode,
   headerHeight?: number,
   filterKey?: string,
   filterValue?: any,
   onFilterChange: (filterKey: keyof ILogMessage, filterValue: any) => void,
+  context: IContext,
   Component: any
 }) => {
   const classes = useStyles();
@@ -148,6 +159,7 @@ const Header = ({ dataKey, label, headerHeight, filterKey, filterValue, onFilter
     >
       {(Component && (
         <Component
+          context={context}
           label={label}
           value={dataKey === filterKey ? filterValue : undefined}
           onChange={handleFilterChange}
@@ -162,31 +174,37 @@ const Header = ({ dataKey, label, headerHeight, filterKey, filterValue, onFilter
   );
 };
 
-const LevelFilter = ({ label, value = '', onChange }: {
+const LevelFilter = ({ context, label, value = '', onChange }: {
+  context: IContext,
   label: string,
   value: any,
   onChange: (value: string) => void
 }) => {
-  const classes = useStyles();
+  const { levels } = context;
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChange = (event: SelectChangeEvent) => {
     onChange(event.target.value as string);
   };
 
+  // TODO(burdon): Support multi-select.
   return (
-    <FormControl>
+    <FormControl variant='standard'>
       <Select
         displayEmpty
         value={value || ''}
         onChange={handleChange}
+        sx={{
+          fontFamily: 'DM Mono, monospace',
+          fontSize: 16
+        }}
       >
         <MenuItem value=''>ALL</MenuItem>
         <Divider />
-        {logLevels.map(level => (
+        {levels.map(level => (
           <MenuItem key={level} value={level}>{level}</MenuItem>
         ))}
       </Select>
-      <FormHelperText>Level</FormHelperText>
+      <FormHelperText>{ label }</FormHelperText>
     </FormControl>
   );
 };
@@ -204,6 +222,7 @@ const Cell = ({ dataKey, data, rowData, rowHeight }: {
 
   const Content = ({ data }: { data: string | number }) => {
     switch (dataKey) {
+      // TODO(burdon): Trim TS to 3 digit ms.
       case 'timestamp': {
         return (
           <div
@@ -234,11 +253,13 @@ const Cell = ({ dataKey, data, rowData, rowHeight }: {
 
       case 'level': {
         return (
-          <div
-            className={classes.fixedWidth}
-            style={{ color: getLevelColor(data as string) }}
-          >
-            {data}
+          <div>
+            <div
+              className={classes.fixedWidth}
+              style={{ color: getLevelColor(data as string) }}
+            >
+              {data}
+            </div>
           </div>
         );
       }
@@ -274,19 +295,32 @@ const headerHeight = 60;
 const rowHeight = 28;
 const lineHeight = 22;
 
+interface LogProps {
+  messages?: ILogMessage[]
+}
+
 /**
  * Log table.
  */
-export const Log = ({ messages }: LogProperties) => {
+export const LogTable = ({ messages = [] }: LogProps) => {
   const classes = useStyles();
   const tableRef = useRef<Table>(null);
   const [filteredMessages, setFilteredMessages] = useState(messages);
+  const [levels, setLevels] = useState<string[]>([]);
   const [expanded, setExpanded] = useState(new Set<string>());
   const [{ filterKey, filterValue }, setFilter] = useState<IFilter>({ filterKey: undefined, filterValue: undefined });
   const [tail, setTail] = useState(true);
 
   // Filter.
   useEffect(() => {
+    const levels = messages.reduce((values, message) => {
+      if (message.level) {
+        values.add(message.level);
+      }
+      return values;
+    }, new Set<string>());
+    setLevels(Array.from(levels));
+
     if (filterKey && filterValue) {
       setFilteredMessages(messages.filter(message => {
         return message[filterKey as keyof ILogMessage] === filterValue;
@@ -307,19 +341,17 @@ export const Log = ({ messages }: LogProperties) => {
     setFilter({ filterKey, filterValue });
   };
 
-  // https://material-ui.com/components/tables/#virtualized-table
+  // TODO(burdon): Replace with FlexTable.
+  // https://mui.com/components/tables/#virtualized-table
   // https://github.com/bvaughn/react-virtualized/blob/master/docs/Table.md
 
   return (
-    <div className={classes.root} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-      <div style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}>
         <AutoSizer>
           {({ width, height }) => (
             <Table
               ref={tableRef}
-              // disableHeader
-              className={classes.table}
-              gridClassName={classes.grid}
               width={width}
               height={height}
               headerHeight={headerHeight}
@@ -368,6 +400,7 @@ export const Log = ({ messages }: LogProperties) => {
                       filterValue={filterValue}
                       onFilterChange={handleFilterChange}
                       Component={dataKey === 'level' ? LevelFilter : undefined}
+                      context={{ levels }}
                       label={label}
                       {...other}
                     />
@@ -378,7 +411,7 @@ export const Log = ({ messages }: LogProperties) => {
             </Table>
           )}
         </AutoSizer>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

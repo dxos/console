@@ -5,98 +5,63 @@
 import urlJoin from 'proper-url-join';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { makeStyles, Divider, IconButton, TextField, Toolbar } from '@material-ui/core';
+import { Box, Divider, IconButton, TextField, Toolbar } from '@mui/material';
 import {
   Clear as ClearIcon,
   Sync as RefreshIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 
 import { RecordTable, RecordTypeSelector } from '../components';
 import { IConfig, useConfig, useRecordTypes, useResources } from '../hooks';
+import { IRecord, IRecordType } from '../types';
 
-const useStyles = makeStyles(theme => ({
-  input: {
-    flex: 1,
-    paddingLeft: theme.spacing(4),
-    maxWidth: 300
-  },
-  iconButton: {
-    marginLeft: theme.spacing(1)
-  },
-  panel: {
-    display: 'flex',
-    flex: 1
-  },
-  divider: {
-    height: 28,
-    margin: 4
-  },
-  expand: {
-    flex: 1
-  }
-}));
-
-export interface IRecordType {
-  type: CID
-  label: string
-}
-
-export interface IRecord {
-  cid: string
-  created?: string
-  name: string
-  type: string
-  title?: string
-  url?: string
-}
-
-function getRecordTypeString (types: IRecordType[], res: Resource): string {
+// TODO(burdon): Comment.
+const getRecordTypeString = (types: IRecordType[], res: Resource): string | undefined => {
   const record = res.record;
   if (RegistryRecord.isTypeRecord(record)) {
-    return 'type';
+    return 'type'; // TODO(burdon): Const from protobuf?
   } else if (RegistryRecord.isDataRecord(record)) {
     const matches = types.filter(({ type }) => type.equals(record.type));
     if (matches.length !== 1) {
-      throw new Error('Type not found');
+      return;
     }
 
     return matches[0].label;
-  } else {
-    return 'expected two types' as never;
   }
-}
+};
 
-export function mapRecords (types: IRecordType[], records: Resource[], config: IConfig): IRecord[] {
-  return records.map(apiRecord => ({
-    cid: apiRecord.record.cid.toB58String(),
+// TODO(burdon): Comment.
+export const mapRecords = (types: IRecordType[], records: Resource[], config: IConfig): IRecord[] => {
+  return records.map(record => ({
+    cid: record.record.cid.toB58String(),
     // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
-    created: apiRecord.record.meta.created,
-    name: apiRecord.id.toString(),
-    type: getRecordTypeString(types, apiRecord),
-    title: apiRecord.record.meta.name,
+    created: record.record.meta.created,
+    name: record.id.toString(),
+    type: getRecordTypeString(types, record) || '', // TODO(burdon): ???
+    title: record.record.meta.name,
     url: urlJoin(
       config.services.app.server,
       config.services.app.prefix,
-      apiRecord.id.toString()
+      record.id.toString()
     )
   }));
-}
+};
 
-export function mapTypes (records: RegistryTypeRecord[]): IRecordType[] {
+// TODO(burdon): Comment.
+export const mapTypes = (records: RegistryTypeRecord[]): IRecordType[] => {
   return records.map(apiRecord => ({
     type: apiRecord.cid,
     label: apiRecord.messageName
   }));
-}
+};
 
 /**
  * Display records panel
  * @constructor
  */
 export const RecordPanel = () => {
-  const classes = useStyles();
   const config = useConfig();
   const delay = 500;
 
@@ -132,10 +97,14 @@ export const RecordPanel = () => {
         <RecordTypeSelector
           types={recordTypes}
           type={recordType}
-          onTypeChange={type => setRecordType(type)}
+          onChange={type => setRecordType(type)}
         />
         <TextField
-          className={classes.input}
+          sx={{
+            flex: 1,
+            paddingLeft: theme => theme.spacing(4),
+            maxWidth: 300
+          }}
           placeholder='Search records'
           inputProps={{ 'aria-label': 'search' }}
           value={search}
@@ -143,7 +112,9 @@ export const RecordPanel = () => {
           onKeyDown={event => (event.key === 'Escape') && setSearch('')}
         />
         <IconButton
-          className={classes.iconButton}
+          sx={{
+            marginLeft: theme => theme.spacing(1)
+          }}
           size='small'
           aria-label='search'
           onClick={() => {
@@ -153,10 +124,18 @@ export const RecordPanel = () => {
         >
           <ClearIcon />
         </IconButton>
-        <div className={classes.expand} />
-        <Divider className={classes.divider} orientation="vertical" />
+        <Box sx={{ flex: 1 }} />
+        <Divider
+          orientation="vertical"
+          sx={{
+            height: 28,
+            margin: 4
+          }}
+        />
         <IconButton
-          className={classes.iconButton}
+          sx={{
+            marginLeft: theme => theme.spacing(1)
+          }}
           size='small'
           aria-label='refresh'
           onClick={refreshData}
@@ -164,9 +143,15 @@ export const RecordPanel = () => {
           <RefreshIcon />
         </IconButton>
       </Toolbar>
-      <div className={classes.panel}>
+      <Box
+        sx={{
+          display: 'flex',
+          flex: 1,
+          padding: 1
+        }}
+      >
         <RecordTable records={records} />
-      </div>
+      </Box>
     </>
   );
 };

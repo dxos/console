@@ -2,91 +2,42 @@
 // Copyright 2020 DXOS.org
 //
 
-import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import superagent from 'superagent';
 
-import { makeStyles } from '@material-ui/core';
+import { colors, Box, CssBaseline } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { Kube } from '@dxos/gem-experimental';
-import { Passcode } from '@dxos/react-ux';
 
 import { useContentScript } from '../hooks';
+import { Passcode } from './Passcode';
 
 const APP_AUTH_PATH = '/app/auth';
 const WALLET_AUTH_PATH = '/wallet/auth';
 
-// TODO(burdon): Change theme (dark) and use standard palette in react-ux.
-const useStyles = makeStyles(() => ({
-  '@global': {
-    body: {
-      margin: 0,
-      padding: 0,
-      overflow: 'hidden',
-      backgroundColor: '#000'
-    }
-  },
-  fullscreen: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0
-  },
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginTop: 80,
-    marginBottom: 80
-  },
-  main: {
-    position: 'relative',
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-    justifyContent: 'center',
-    '& > div': {
-      display: 'flex',
-      justifyContent: 'center',
-      color: '#CCC'
-    }
-  },
-  code: {
-    display: 'flex',
-    flexShrink: 0,
-    justifyContent: 'center',
-    // TODO(burdon): Update react-ux.
-    '& input': {
-      position: 'absolute',
-      left: -1000
-    },
-    '& div': {
-      borderRadius: 8
-    }
-  },
-  error: {
-    '& div': {
-      borderColor: 'IndianRed'
-    }
-  },
-  success: {
-    '& div': {
-      visibility: 'hidden'
+
+const theme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          margin: 0,
+          overflow: 'hidden', // Prevent scroll bounce.
+          background: '#000'
+        }
+      }
     }
   }
-}));
+});
 
-const App = () => {
-  const classes = useStyles();
-  const [className, setClassname] = useState('');
+export const App = () => {
   const [attempt, setAttempt] = useState(0);
   const { rpcClient: contentScript } = useContentScript();
   const rpcClient = contentScript?.rpc;
 
   const onLogin = () => {
-    setClassname(classes.success);
+    // setClassname(classes.success);
     const redirect = decodeURIComponent(window.location.hash?.replace('#', ''));
     if (redirect) {
       window.location.href = redirect;
@@ -120,8 +71,8 @@ const App = () => {
         .set('accept', 'json')
         .end((err: string, res: any = {}) => {
           if (err || !res.ok) {
-            setClassname(classes.error);
-            setTimeout(() => setClassname(''), 1000);
+            // setClassname(classes.error);
+            // setTimeout(() => setClassname(''), 1000);
             setAttempt(attempt + 1);
           } else {
             onLogin();
@@ -131,25 +82,58 @@ const App = () => {
   };
 
   return (
-    <div className={clsx(classes.fullscreen, classes.root)}>
-      <div className={classes.main}>
-        <Kube config={{
-          minDistance: 100,
-          particleCount: 400
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh'
         }}
-        />
-      </div>
-      <div className={clsx(classes.code, className)}>
-        <Passcode
-          editable={true}
-          length={6}
-          attempt={attempt}
-          onSubmit={handleSubmit}
-          onChange={() => {}}
-        />
-      </div>
-    </div>
+      >
+        <Box
+          sx={{
+            position: 'relative',
+            display: 'flex',
+            flex: 1,
+            overflow: 'hidden'
+          }}
+        >
+          <Kube
+            config={{
+              minDistance: 100,
+              particleCount: 400
+            }}
+          />
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexShrink: 0,
+            justifyContent: 'top',
+            alignItems: 'center',
+            height: 250
+          }}
+        >
+          <Passcode
+            editable={true}
+            length={6}
+            attempt={attempt}
+            onSubmit={handleSubmit}
+          />
+          <Box
+            sx={{
+              marginTop: 1,
+              fontSize: 24,
+              fontWeight: 100,
+              color: colors.grey[600]
+            }}
+          >
+            Enter Passcode
+          </Box>
+        </Box>
+      </Box>
+    </ThemeProvider>
   );
 };
-
-export default App;

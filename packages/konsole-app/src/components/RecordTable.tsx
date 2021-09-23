@@ -2,49 +2,26 @@
 // Copyright 2021 DXOS.org
 //
 
+import { Launch as LaunchIcon } from '@mui/icons-material';
+import { Box, IconButton, Link } from '@mui/material';
+import { DataGrid, GridColDef, GridCellParams } from '@mui/x-data-grid';
 import React from 'react';
 
-import { makeStyles, IconButton, Link } from '@material-ui/core';
-import { DataGrid, GridColDef, GridCellParams } from '@material-ui/data-grid';
-import { Launch as LaunchIcon } from '@material-ui/icons';
-
-import { IRecord } from '../panels';
+import { IRecord } from '../types';
 import { getRelativeTime, sortDateStrings } from '../util';
-
-interface RecordsTableProperties {
-  records: IRecord[]
-}
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flex: 1
-  },
-  grid: {
-    '& *': {
-      color: theme.palette.text.secondary
-    },
-    '& .title': {
-      color: theme.palette.text.primary
-    },
-    '& .mono': {
-      fontFamily: 'DM Mono, monospace',
-      fontSize: 15
-    }
-  }
-}));
 
 // TODO(burdon): Common fields for all records.
 // TODO(burdon): Different record type views may have different column sets.
 // TODO(burdon): Upgrade to XGrid to have resizable columns.
-//   https://material-ui.com/components/data-grid/#mit-vs-commercial
-// https://material-ui.com/components/data-grid/columns
+//   https://mui.com/components/data-grid/#mit-vs-commercial
+// https://mui.com/components/data-grid/columns
 const columns: GridColDef[] = [
   {
     field: 'cid',
     headerName: 'CID',
     width: 130,
     sortable: false,
-    cellClassName: (params: GridCellParams) => 'mono',
+    cellClassName: () => 'monospace',
     valueFormatter: (params) => {
       return (params.value as string).slice(0, 8) + '...';
     }
@@ -56,33 +33,33 @@ const columns: GridColDef[] = [
     valueFormatter: (params) => {
       return params.value && getRelativeTime(new Date(params.value as number));
     },
-    // https://material-ui.com/components/data-grid/sorting
+    // https://mui.com/components/data-grid/sorting
     sortComparator: (v1, v2) => sortDateStrings(v1 as string, v2 as string)
   },
   {
     field: 'type',
     headerName: 'Type',
     width: 120,
-    cellClassName: (params: GridCellParams) => 'mono'
+    cellClassName: () => 'monospace'
   },
   {
     field: 'name',
     headerName: 'Resource Name',
     minWidth: 300,
-    cellClassName: (params: GridCellParams) => 'mono'
+    cellClassName: () => 'monospace'
   },
   {
     field: 'title',
     headerName: 'Display Name',
     minWidth: 300,
-    cellClassName: (params: GridCellParams) => 'title'
+    cellClassName: () => 'title'
   },
   {
     field: 'url',
     headerName: 'Link',
-    width: 80,
+    width: 120,
     sortable: false,
-    // https://material-ui.com/components/data-grid/style/#styling-cells
+    // https://mui.com/components/data-grid/style/#styling-cells
     renderCell: (params: GridCellParams) => {
       if (params.value) {
         return (
@@ -97,22 +74,28 @@ const columns: GridColDef[] = [
   }
 ];
 
+interface RecordsTableProps {
+  records?: IRecord[]
+}
+
 /**
  * Table that displays all registry records.
- * @constructor
  */
-export const RecordTable = ({ records }: RecordsTableProperties) => {
-  const classes = useStyles();
-
-  // https://material-ui.com/components/data-grid/#mit-version
+export const RecordTable = ({ records = [] }: RecordsTableProps) => {
+  // TODO(burdon): Convert to FlexTable.
+  // https://mui.com/api/data-grid/data-grid
+  // https://mui.com/components/data-grid/#mit-version
   return (
-    <div className={classes.root}>
+    <Box
+      sx={{
+        flex: 1
+      }}
+    >
       <DataGrid
-        className={classes.grid}
         rows={records}
         columns={columns}
         getRowId={({ cid }) => cid}
       />
-    </div>
+    </Box>
   );
 };
