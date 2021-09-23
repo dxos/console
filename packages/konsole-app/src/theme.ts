@@ -36,7 +36,7 @@ export const createCustomTheme = (config: IConfig) => createTheme({
         pre: {
           fontFamily: 'DM Mono, monospace'
         }
-      },
+      }
     },
     MuiAppBar: {
       defaultProps: {
