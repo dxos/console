@@ -33,7 +33,10 @@ export const Panel = ({ children, toolbar }: PanelProps) => {
             flexDirection: 'column',
             flex: 1,
             overflow: 'hidden',
-            margin: 1 // TODO(burdon): Remove padding and inner border on tables.
+            margin: 1, // TODO(burdon): Remove padding and inner border on tables.
+            '& .monospace': {
+              fontFamily: 'DM Mono, monospace'
+            }
           }}
         >
           {children}

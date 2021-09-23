@@ -11,6 +11,8 @@ import { Panel } from '../components';
 import { useRequest } from '../hooks';
 import { IService } from '../types';
 
+const format = new Intl.NumberFormat('en', { maximumSignificantDigits: 3 });
+
 const columns: GridColDef[] = [
   {
     field: 'name',
@@ -26,6 +28,22 @@ const columns: GridColDef[] = [
     field: 'status',
     headerName: 'Status',
     width: 140
+  },
+  {
+    field: 'cpu',
+    headerName: 'CPU',
+    width: 140,
+    align: 'right',
+    cellClassName: 'monospace',
+    valueFormatter: ({ value }) => (value as number).toFixed(2)
+  },
+  {
+    field: 'memory',
+    headerName: 'Memory',
+    width: 160,
+    align: 'right',
+    cellClassName: 'monospace',
+    valueFormatter: ({ value }) => format.format(value as number / 1000) + 'K'
   }
 ];
 
@@ -38,6 +56,8 @@ const KUBE_SERVICES = 'https://logs.kube.dxos.network/kube/services';
  */
 export const ServicesPanel = () => {
   const [services, refreshServices] = useRequest<IService[]>({ url: KUBE_SERVICES, method: 'GET' });
+
+  console.log(services);
 
   return (
     <Panel
