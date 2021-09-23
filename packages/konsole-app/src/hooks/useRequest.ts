@@ -49,7 +49,9 @@ export const useRequest = <T>({ url, params, method = 'POST' }: IRequest): [T | 
       }
     });
 
-    return () => { active = false };
+    return () => {
+      active = false;
+    };
   }, [time, url, JSON.stringify(params), method]);
 
   return [data, () => setTime(Date.now())];

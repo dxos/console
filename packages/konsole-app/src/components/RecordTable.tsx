@@ -3,10 +3,8 @@
 //
 
 import React from 'react';
-
-import { Box, IconButton, Link } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { Launch as LaunchIcon } from '@mui/icons-material';
+import { Box, IconButton, Link } from '@mui/material';
 import { DataGrid, GridColDef, GridCellParams } from '@mui/x-data-grid';
 
 import { IRecord } from '../types';
@@ -23,7 +21,7 @@ const columns: GridColDef[] = [
     headerName: 'CID',
     width: 130,
     sortable: false,
-    cellClassName: (params: GridCellParams) => 'monospace',
+    cellClassName: () => 'monospace',
     valueFormatter: (params) => {
       return (params.value as string).slice(0, 8) + '...';
     }
@@ -42,19 +40,19 @@ const columns: GridColDef[] = [
     field: 'type',
     headerName: 'Type',
     width: 120,
-    cellClassName: (params: GridCellParams) => 'monospace'
+    cellClassName: () => 'monospace'
   },
   {
     field: 'name',
     headerName: 'Resource Name',
     minWidth: 300,
-    cellClassName: (params: GridCellParams) => 'monospace'
+    cellClassName: () => 'monospace'
   },
   {
     field: 'title',
     headerName: 'Display Name',
     minWidth: 300,
-    cellClassName: (params: GridCellParams) => 'title'
+    cellClassName: () => 'title'
   },
   {
     field: 'url',
@@ -76,19 +74,6 @@ const columns: GridColDef[] = [
   }
 ];
 
-const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-  '& *': {
-    color: theme.palette.text.secondary
-  },
-  '& .title': {
-    color: theme.palette.text.primary
-  },
-  '& .monospace': {
-    fontFamily: 'DM Mono, monospace',
-    fontSize: 15
-  }
-}));
-
 interface RecordsTableProps {
   records?: IRecord[]
 }
@@ -106,7 +91,7 @@ export const RecordTable = ({ records = [] }: RecordsTableProps) => {
         flex: 1
       }}
     >
-      <StyledDataGrid
+      <DataGrid
         rows={records}
         columns={columns}
         getRowId={({ cid }) => cid}

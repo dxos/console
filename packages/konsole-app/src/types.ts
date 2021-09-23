@@ -2,7 +2,6 @@
 // Copyright 2021 DXOS.org
 //
 
-
 import { ComponentType } from 'react';
 
 import { CID } from '@dxos/registry-api';
