@@ -9,20 +9,21 @@ import { styled, ThemeProvider } from '@mui/material/styles';
 
 import { IConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';
-import { createCustomTheme } from '../theme';
+import { Theme } from '@mui/system';
 
 const AppBarOffset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 interface DebugProps {
   config: IConfig
+  theme: Theme
 }
 
 /**
  * Simple Debug app (mostly for sanity testing the console framework).
  */
-export const Debug = ({ config }: DebugProps) => {
+export const Debug = ({ config, theme }: DebugProps) => {
   return (
-    <ThemeProvider theme={createCustomTheme(config)}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
         sx={{

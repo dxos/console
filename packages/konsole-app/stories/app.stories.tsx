@@ -4,7 +4,10 @@
 
 import debug from 'debug';
 import React from 'react';
-import StoryRouter from 'storybook-react-router';
+// import StoryRouter from 'storybook-react-router';
+
+// "storybook-react-router": "^1.0.8",
+// "@types/string-hash": "^1.1.1",
 
 import { MockRegistryApi } from '@dxos/registry-api';
 
@@ -19,7 +22,7 @@ debug.enable('dxos:console:*');
 export default {
   title: 'App',
   decorators: [
-    StoryRouter()
+    // StoryRouter()
   ]
 };
 
@@ -37,7 +40,12 @@ export const Primary = () => {
 };
 
 export const Debug = () => {
+  const theme = createCustomTheme(config);
+
   return (
-    <DebugApp config={config} />
+    <DebugApp
+      config={config}
+      theme={theme}
+    />
   );
 };

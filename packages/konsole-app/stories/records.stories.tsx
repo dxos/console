@@ -57,14 +57,14 @@ export const Records = () => {
       cid: 'QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR',
       created: new Date().toISOString(),
       name: 'dxos/record-1',
-      type: '', // TODO(burdon): ???
+      type: '.dxos.App',
       title: 'Record 1'
     },
     {
       cid: 'QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu',
       created: new Date().toISOString(),
       name: 'dxos/record-2',
-      type: '', // TODO(burdon): ???
+      type: '.dxos.App',
       title: 'Record 2'
     },
   ];
