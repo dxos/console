@@ -13,7 +13,7 @@ import {
 
 import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 
-import { RecordTable, RecordTypeSelector } from '../components';
+import { RecordTable, RecordTypeSelector, SearchBar } from '../components';
 import { IConfig, useConfig, useRecordTypes, useResources } from '../hooks';
 import { IRecord, IRecordType } from '../types';
 
@@ -63,86 +63,65 @@ export const mapTypes = (records: RegistryTypeRecord[]): IRecordType[] => {
  */
 export const RecordPanel = () => {
   const config = useConfig();
-  const delay = 500;
 
   const registryRecordTypes = useRecordTypes(undefined) ?? [];
   const [recordType, setRecordType] = useState<CID | undefined>(undefined);
-  const [search, setSearch] = useState('');
-  const [delayedSearch, setDelayedSearch] = useState(search);
-  const query = useMemo<IQuery>(() => ({ type: recordType, text: delayedSearch }), [recordType, delayedSearch]);
+  const [search, setSearch] = useState<string | undefined>();
+  const query = useMemo<IQuery>(() => ({ type: recordType, text: search }), [recordType, search]);
 
   const resources = useResources(query) ?? [];
   const recordTypes = mapTypes(registryRecordTypes);
   const records = mapRecords(recordTypes, resources, config);
 
-  useEffect(() => {
-    const t = setTimeout(() => {
-      clearTimeout(t);
-      setDelayedSearch(search);
-    }, delay);
+  const handleSearch = (text: string | undefined) => {
+    setSearch(text);
+  };
 
-    return () => {
-      clearTimeout(t);
-    };
-  }, [search]);
-
-  function refreshData () {
+  const handleRefresh = () => {
     setRecordType(undefined);
-    setSearch('');
-  }
+  };
 
   return (
     <>
       <Toolbar>
-        <RecordTypeSelector
-          types={recordTypes}
-          type={recordType}
-          onChange={type => setRecordType(type)}
-        />
-        <TextField
+        <Box>
+          <RecordTypeSelector
+            types={recordTypes}
+            type={recordType}
+            onChange={type => setRecordType(type)}
+          />
+        </Box>
+        <Box sx={{ flex: 1 }} />
+        {/* Search */}
+        <Box
           sx={{
-            flex: 1,
-            paddingLeft: theme => theme.spacing(4),
-            maxWidth: 300
-          }}
-          placeholder='Search records'
-          inputProps={{ 'aria-label': 'search' }}
-          value={search}
-          onChange={event => setSearch(event.target.value)}
-          onKeyDown={event => (event.key === 'Escape') && setSearch('')}
-        />
-        <IconButton
-          sx={{
-            marginLeft: theme => theme.spacing(1)
-          }}
-          size='small'
-          aria-label='search'
-          onClick={() => {
-            setSearch('');
-            setDelayedSearch('');
+            minWidth: 350
           }}
         >
-          <ClearIcon />
-        </IconButton>
-        <Box sx={{ flex: 1 }} />
+          <SearchBar
+            placeholder='Search records'
+            onSearch={handleSearch}
+            delay={500}
+          />
+        </Box>
         <Divider
           orientation="vertical"
           sx={{
-            height: 28,
             margin: 4
           }}
         />
         <IconButton
           sx={{
-            marginLeft: theme => theme.spacing(1)
+            marginLeft: 1
           }}
           size='small'
           aria-label='refresh'
-          onClick={refreshData}
+          onClick={handleRefresh}
         >
           <RefreshIcon />
         </IconButton>
       </Toolbar>
+
       <Box
         sx={{
           display: 'flex',

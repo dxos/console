@@ -94,7 +94,7 @@ export const LogsPanel = () => {
           display: 'flex',
           flex: 1,
           overflow: 'scroll',
-          margin: theme => theme.spacing(1)
+          margin: 1
         }}
       >
         <LogTable messages={logs} />

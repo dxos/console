@@ -12,8 +12,11 @@ export function useRecordTypes (query?: IQuery): RegistryTypeRecord[] | undefine
   const [resources, setRegistryTypeRecords] = useState<RegistryTypeRecord[] | undefined>(undefined);
   const registryClient = useRegistryClient();
 
-  useEffect(function () {
-    void registryClient.getTypes(query).then(setRegistryTypeRecords);
+  useEffect(() => {
+    setImmediate(async () => {
+      const recordTypes = await registryClient.getTypes(query);
+      setRegistryTypeRecords(recordTypes);
+    })
   }, [query]);
 
   return resources;
