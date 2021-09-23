@@ -32,7 +32,7 @@ export const TypeSelector = () => {
     },
     {
       type: CID.fromB58String('QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu'),
-      label: 'B'
+      label: 'B (Long Name)'
     }
   ];
 

@@ -45,12 +45,12 @@ export const Test = () => {
       <Box
         sx={{
           height: '100vh',
-          padding: theme => theme.spacing(2)
+          padding: 2
         }}
       >
         <Paper
           sx={{
-            padding: theme => theme.spacing(2)
+            padding: 2
           }}
         >
           {/* https://mui.com/customization/how-to-customize/#overriding-nested-component-styles */}

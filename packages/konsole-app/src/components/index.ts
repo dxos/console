@@ -8,4 +8,5 @@ export * from './LogTable';
 export * from './RecordTable';
 export * from './RecordTypeSelector';
 export * from './ScrollContainer';
+export * from './SearchBar';
 export * from './Sidebar';
