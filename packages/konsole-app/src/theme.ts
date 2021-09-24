@@ -17,7 +17,7 @@ export const createCustomTheme = (config: IConfig) => createTheme({
   palette: {
     mode: config.app.theme,
     primary: colors.cyan,
-    secondary: colors.green
+    secondary: colors.blue
   },
 
   // TODO(burdon): Include font directly: https://mui.com/customization/typography
@@ -34,6 +34,8 @@ export const createCustomTheme = (config: IConfig) => createTheme({
           overflow: 'hidden' // Prevent scroll bounce.
         },
         pre: {
+          margin: 0,
+          padding: 8,
           fontFamily: 'DM Mono, monospace'
         }
       }
@@ -46,6 +48,12 @@ export const createCustomTheme = (config: IConfig) => createTheme({
     MuiButtonBase: {
       defaultProps: {
         disableRipple: true
+      }
+    },
+    MuiPaper: {
+      defaultProps: {
+        elevation: 1
+        // variant: 'outlined'
       }
     }
   }

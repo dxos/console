@@ -2,15 +2,11 @@
 // Copyright 2021 DXOS.org
 //
 
+import { Box } from '@mui/material';
 import debug from 'debug';
 import React, { useState } from 'react';
 
-import { Box } from '@mui/material';
-
-import {
-  SearchBar,
-} from '../src';
-
+import { SearchBar } from '../src';
 import { config, RootContainer } from './config';
 
 debug.enable('dxos:console:*');

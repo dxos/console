@@ -3,7 +3,7 @@
 //
 
 import { Sync as RefreshIcon } from '@mui/icons-material';
-import { Box, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Box, FormControl, IconButton, MenuItem, Paper, Select, SelectChangeEvent } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
 import { LogTable, Panel, Toolbar } from '../components';
@@ -84,7 +84,9 @@ export const LogsPanel = () => {
         </Toolbar>
       )}
     >
-      <LogTable messages={logs} />
+      <Paper>
+        <LogTable messages={logs} />
+      </Paper>
     </Panel>
   );
 };

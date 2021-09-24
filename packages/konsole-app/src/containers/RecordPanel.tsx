@@ -3,15 +3,17 @@
 //
 
 import { Sync as RefreshIcon } from '@mui/icons-material';
-import { Box, IconButton } from '@mui/material';
+import { Box, Collapse, IconButton, Paper } from '@mui/material';
 import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 
 import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 
-import { Panel, RecordTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
+import { JsonView, Panel, RecordTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
 import { IConfig, useConfig, useRecordTypes, useResources } from '../hooks';
 import { IRecord, IRecordType } from '../types';
+
+// TODO(burdon): Factor out handlers.
 
 // TODO(burdon): Comment.
 const getRecordTypeString = (types: IRecordType[], res: Resource): string | undefined => {
@@ -30,19 +32,23 @@ const getRecordTypeString = (types: IRecordType[], res: Resource): string | unde
 
 // TODO(burdon): Comment.
 export const mapRecords = (types: IRecordType[], records: Resource[], config: IConfig): IRecord[] => {
-  return records.map(record => ({
-    cid: record.record.cid.toB58String(),
-    // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
-    created: record.record.meta.created,
-    name: record.id.toString(),
-    type: getRecordTypeString(types, record) || '', // TODO(burdon): ???
-    title: record.record.meta.name,
-    url: urlJoin(
-      config.services.app.server,
-      config.services.app.prefix,
-      record.id.toString()
-    )
-  }));
+  return records.map(record => {
+    const type = getRecordTypeString(types, record);
+    // TODO(burdon): App type const?
+    const url = (type === '.dxos.App')
+      ? urlJoin(config.services.app.server, config.services.app.prefix, record.id.toString())
+      : undefined;
+
+    return {
+      cid: record.record.cid.toB58String(),
+      // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
+      created: record.record.meta.created,
+      name: record.id.toString(),
+      type: type || '', // TODO(burdon): ???
+      title: record.record.meta.name,
+      url
+    };
+  });
 };
 
 // TODO(burdon): Comment.
@@ -59,7 +65,7 @@ export const mapTypes = (records: RegistryTypeRecord[]): IRecordType[] => {
  */
 export const RecordPanel = () => {
   const config = useConfig();
-
+  const [selected, setSelected] = useState<string | undefined>();
   const registryRecordTypes = useRecordTypes(undefined) ?? [];
   const [recordType, setRecordType] = useState<CID | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>();
@@ -114,7 +120,22 @@ export const RecordPanel = () => {
         </Toolbar>
       )}
     >
-      <RecordTable records={records} />
+      <RecordTable
+        records={records}
+        onSelect={setSelected}
+      />
+
+      <Collapse in={selected !== undefined} timeout='auto' unmountOnExit>
+        <Paper
+          sx={{
+            marginTop: 1,
+            height: 244,
+            overflow: 'scroll'
+          }}
+        >
+          <JsonView data={records.find(record => record.cid === selected)} />
+        </Paper>
+      </Collapse>
     </Panel>
   );
 };

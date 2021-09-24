@@ -2,13 +2,14 @@
 // Copyright 2021 DXOS.org
 //
 
-import React from 'react';
 import { Launch as LaunchIcon } from '@mui/icons-material';
 import { Box, IconButton, Link } from '@mui/material';
-import { DataGrid, GridColDef, GridCellParams } from '@mui/x-data-grid';
+import { GridColDef, GridCellParams, GridRowId } from '@mui/x-data-grid';
+import React, { useState } from 'react';
 
 import { IRecord } from '../types';
 import { getRelativeTime, sortDateStrings } from '../util';
+import { DataGrid } from './DataGrid';
 
 // TODO(burdon): Common fields for all records.
 // TODO(burdon): Different record type views may have different column sets.
@@ -76,12 +77,23 @@ const columns: GridColDef[] = [
 
 interface RecordsTableProps {
   records?: IRecord[]
+  onSelect?: (id: string | undefined) => void
 }
 
 /**
  * Table that displays all registry records.
  */
-export const RecordTable = ({ records = [] }: RecordsTableProps) => {
+export const RecordTable = ({ records = [], onSelect }: RecordsTableProps) => {
+  const [selected, setSelected] = useState<GridRowId | undefined>();
+
+  const handleSelect = (id: GridRowId) => {
+    const next = (id === selected) ? undefined : id;
+    setSelected(next);
+    if (onSelect) {
+      onSelect(next as string);
+    }
+  };
+
   // TODO(burdon): Convert to FlexTable.
   // https://mui.com/api/data-grid/data-grid
   // https://mui.com/components/data-grid/#mit-version
@@ -95,6 +107,10 @@ export const RecordTable = ({ records = [] }: RecordsTableProps) => {
         rows={records}
         columns={columns}
         getRowId={({ cid }) => cid}
+        selectionModel={selected ? [selected] : []}
+        onRowClick={({ id }) => handleSelect(id)}
+        hideFooterSelectedRowCount
+        disableSelectionOnClick
       />
     </Box>
   );

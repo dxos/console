@@ -6,6 +6,7 @@ import { AppBar, Box, CssBaseline, Paper, Toolbar } from '@mui/material';
 import { styled, Theme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 
+import { JsonView } from '../components';
 import { IConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';
 
@@ -58,13 +59,10 @@ export const Debug = ({ config, theme }: DebugProps) => {
 
         <Paper
           sx={{
-            padding: 2,
             overflow: 'scroll'
           }}
         >
-        <pre>
-          {JSON.stringify(config, undefined, 2)}
-        </pre>
+          <JsonView data={config} />
         </Paper>
       </Box>
     </ThemeProvider>

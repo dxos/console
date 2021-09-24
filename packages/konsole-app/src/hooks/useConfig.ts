@@ -11,6 +11,9 @@ export interface IConfig {
     title: string
     theme?: 'light' | 'dark' | undefined
   },
+  build: {
+    version: string
+  },
   registry: {
     endpoint: string
   },

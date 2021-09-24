@@ -2,8 +2,11 @@
 // Copyright 2021 DXOS.org
 //
 
-import React, { useState } from 'react';
-
+import {
+  Menu as MenuIcon,
+  MoreVert as MoreVertIcon,
+  ChevronLeft as ChevronLeftIcon
+} from '@mui/icons-material';
 import {
   AppBar as MuiAppBar,
   AppBarProps as MuiAppBarProps,
@@ -16,12 +19,8 @@ import {
   Toolbar,
   Typography
 } from '@mui/material';
-import {
-  Menu as MenuIcon,
-  MoreVert as MoreVertIcon,
-  ChevronLeft as ChevronLeftIcon
-} from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
+import React, { useState } from 'react';
 
 import { useConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';
@@ -139,7 +138,6 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
     <Box
       sx={{
         display: 'flex',
-        // flexDirection: 'column',
         height: '100vh'
       }}
     >
@@ -179,8 +177,10 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
-            boxSizing: 'border-box',
-          },
+            boxSizing: 'content-box',
+            border: 'none',
+            borderRight: theme => `1px solid ${theme.palette.divider}`
+          }
         }}
         variant='persistent'
         anchor='left'
@@ -212,6 +212,16 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
         </Toolbar>
         <Divider />
         {sidebar || null}
+        <Box sx={{ flex: 1 }} />
+
+        <Toolbar
+          variant='dense'
+          sx={{
+            justifyContent: 'center'
+          }}
+        >
+          <Box sx={{ color: theme => theme.palette.secondary.main }}>{ config.build.version }</Box>
+        </Toolbar>
       </Drawer>
 
       <Main open={drawerOpen}>

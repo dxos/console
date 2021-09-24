@@ -2,10 +2,9 @@
 // Copyright 2021 DXOS.org
 //
 
-import React from 'react';
-
 import { Box, CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
+import React from 'react';
 
 import { createCustomTheme, IConfig } from '../src';
 
@@ -13,6 +12,9 @@ export const config: IConfig = {
   app: {
     title: 'Test',
     theme: 'dark'
+  },
+  build: {
+    version: '1.0.0'
   },
   registry: {
     endpoint: ''

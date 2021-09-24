@@ -2,10 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box } from '@mui/material';
+import { Paper } from '@mui/material';
 import React from 'react';
 
-import { Panel } from '../components';
+import { JsonView, Panel } from '../components';
 import { useConfig } from '../hooks';
 
 /**
@@ -17,21 +17,15 @@ export const ConfigPanel = () => {
   // TODO(burdon): Re-implement JsonTreeView.
   return (
     <Panel>
-      <Box
+      <Paper
         sx={{
           display: 'flex',
           flex: 1,
-          overflow: 'scroll',
-          margin: 1,
-          '& pre': {
-            margin: 0
-          }
+          overflow: 'scroll'
         }}
       >
-        <pre>
-          {JSON.stringify(config, undefined, 2)}
-        </pre>
-      </Box>
+        <JsonView data={config} />
+      </Paper>
     </Panel>
   );
 };

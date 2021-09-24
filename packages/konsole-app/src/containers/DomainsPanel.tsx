@@ -4,12 +4,12 @@
 
 import { Sync as RefreshIcon } from '@mui/icons-material';
 import { Box, IconButton } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
 import { DomainKey } from '@dxos/registry-api';
 
-import { Panel, Toolbar } from '../components';
+import { DataGrid, Panel, Toolbar } from '../components';
 import { useDomains } from '../hooks';
 
 const columns: GridColDef[] = [
@@ -25,7 +25,7 @@ const columns: GridColDef[] = [
   {
     field: 'name',
     headerName: 'Domain',
-    width: 200
+    width: 300
   }
 ];
 
