@@ -25,6 +25,7 @@ import { styled } from '@mui/material/styles';
 
 import { useConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';
+// import { Statusbar } from './Statusbar';
 
 const drawerWidth = 220;
 
@@ -85,6 +86,9 @@ type ContainerProps = {
   sidebar?: JSX.Element
 };
 
+/**
+ * Menu.
+ */
 const ContainerMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
@@ -126,7 +130,6 @@ const ContainerMenu = () => {
 
 /**
  * Root application component.
- * @constructor
  */
 export const Container = ({ children, sidebar }: ContainerProps) => {
   const config = useConfig();
@@ -136,6 +139,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
     <Box
       sx={{
         display: 'flex',
+        // flexDirection: 'column',
         height: '100vh'
       }}
     >

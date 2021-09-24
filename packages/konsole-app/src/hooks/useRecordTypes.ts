@@ -8,8 +8,8 @@ import { IQuery, RegistryTypeRecord } from '@dxos/registry-api';
 
 import { useRegistryClient } from './useRegistry';
 
-export function useRecordTypes (query?: IQuery): RegistryTypeRecord[] | undefined {
-  const [resources, setRegistryTypeRecords] = useState<RegistryTypeRecord[] | undefined>(undefined);
+export const useRecordTypes = (query?: IQuery): RegistryTypeRecord[] => {
+  const [resources, setRegistryTypeRecords] = useState<RegistryTypeRecord[]>([]);
   const registryClient = useRegistryClient();
 
   useEffect(() => {
@@ -20,4 +20,4 @@ export function useRecordTypes (query?: IQuery): RegistryTypeRecord[] | undefine
   }, [query]);
 
   return resources;
-}
+};

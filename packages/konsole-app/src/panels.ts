@@ -10,13 +10,15 @@ import {
   Share as SignalingIcon,
   CloudQueue as IPFSIcon,
   Adb as BotsIcon,
-  Apps as AppsIcon
+  Apps as AppsIcon,
+  Layers as DomainsIcon
 } from '@mui/icons-material';
 
 import {
   AppsPanel,
   BotsPanel,
   ConfigPanel,
+  DomainsPanel,
   IPFSPanel,
   LogsPanel,
   RecordPanel,
@@ -31,6 +33,12 @@ export const panels: IPanel[] = [
     label: 'Services',
     component: ServicesPanel,
     icon: ServicesIcon
+  },
+  {
+    path: '/domains',
+    label: 'Domains',
+    component: DomainsPanel,
+    icon: DomainsIcon
   },
   {
     path: '/records',

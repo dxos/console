@@ -8,12 +8,15 @@ import { IQuery, Resource } from '@dxos/registry-api';
 
 import { useRegistryClient } from './useRegistry';
 
-export const useResources = (query?: IQuery): Resource[] | undefined => {
-  const [resources, setResources] = useState<Resource[] | undefined>(undefined);
+export const useResources = (query?: IQuery): Resource[] => {
+  const [resources, setResources] = useState<Resource[]>([]);
   const registryClient = useRegistryClient();
 
-  useEffect(function () {
-    void registryClient.getResources(query).then(setResources);
+  useEffect(() => {
+    setImmediate(async () => {
+      const resources = await registryClient.getResources(query);
+      setResources(resources);
+    });
   }, [query]);
 
   return resources;

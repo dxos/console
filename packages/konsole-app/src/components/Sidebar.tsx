@@ -39,7 +39,7 @@ export const Sidebar = ({ panels = [], selected, onSelect }: SidebarProps) => {
             <ListItemIcon
               sx={{
                 minWidth: 38,
-                color: theme => theme.palette.primary.main
+                color: theme => (path === selected) ? theme.palette.primary.main : undefined
               }}
             >
               <Icon />
