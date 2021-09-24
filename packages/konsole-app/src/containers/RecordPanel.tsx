@@ -3,13 +3,13 @@
 //
 
 import { Sync as RefreshIcon } from '@mui/icons-material';
-import { Box, IconButton, Toolbar } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 
 import { Resource, CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-api';
 
-import { Panel, RecordTable, RecordTypeSelector, SearchBar } from '../components';
+import { Panel, RecordTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
 import { IConfig, useConfig, useRecordTypes, useResources } from '../hooks';
 import { IRecord, IRecordType } from '../types';
 

@@ -3,10 +3,10 @@
 //
 
 import { Sync as RefreshIcon } from '@mui/icons-material';
-import { Box, FormControl, IconButton, MenuItem, Select, SelectChangeEvent, Toolbar } from '@mui/material';
+import { Box, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
-import { LogTable, Panel } from '../components';
+import { LogTable, Panel, Toolbar } from '../components';
 import { useRequest } from '../hooks';
 import { ILogMessage, ipfsLogParser, defaultLogParser } from '../logging';
 

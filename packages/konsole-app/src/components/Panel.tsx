@@ -2,13 +2,16 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box, Divider, Paper } from '@mui/material';
+import { Box, Divider, Paper, Toolbar as MuiToolbar } from '@mui/material';
 import React from 'react';
 
 interface PanelProps {
   children?: JSX.Element
   toolbar?: JSX.Element
 }
+
+// TODO(burdon): Custom toolbar.
+export const Toolbar = MuiToolbar;
 
 export const Panel = ({ children, toolbar }: PanelProps) => {
   return (
