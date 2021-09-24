@@ -13,7 +13,7 @@ export interface IRecordType {
 
 export interface IRecord {
   cid: string
-  created?: string
+  created?: Date
   name: string
   type: string // TODO(burdon): ???
   title?: string

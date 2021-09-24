@@ -31,7 +31,7 @@ const columns: GridColDef[] = [
     headerName: 'Created',
     width: 140,
     valueFormatter: (params) => {
-      return params.value && getRelativeTime(new Date(params.value as number));
+      return params.value && getRelativeTime(params.value as Date);
     },
     // https://mui.com/components/data-grid/sorting
     sortComparator: (v1, v2) => sortDateStrings(v1 as string, v2 as string)

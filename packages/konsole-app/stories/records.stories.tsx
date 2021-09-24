@@ -55,14 +55,14 @@ export const Records = () => {
   const records: IRecord[] = [
     {
       cid: 'QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR',
-      created: new Date().toISOString(),
+      created: new Date(),
       name: 'dxos/record-1',
       type: '.dxos.App',
       title: 'Record 1'
     },
     {
       cid: 'QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu',
-      created: new Date().toISOString(),
+      created: new Date(),
       name: 'dxos/record-2',
       type: '.dxos.App',
       title: 'Record 2'

@@ -36,7 +36,6 @@ const getRecordTypeString = (types: IRecordType[], res: Resource): string | unde
 export const mapRecords = (types: IRecordType[], records: Resource[], config: IConfig): IRecord[] => {
   return records.map(record => ({
     cid: record.record.cid.toB58String(),
-    // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
     created: record.record.meta.created,
     name: record.id.toString(),
     type: getRecordTypeString(types, record) || '', // TODO(burdon): ???
