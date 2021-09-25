@@ -108,8 +108,8 @@ export const RecordTable = ({ records = [], onSelect }: RecordsTableProps) => {
         getRowId={({ cid }) => cid}
         selectionModel={selected ? [selected] : []}
         onRowClick={({ id }) => handleSelect(id)}
-        hideFooterSelectedRowCount
         disableSelectionOnClick
+        hideFooterSelectedRowCount
       />
     </Box>
   );
