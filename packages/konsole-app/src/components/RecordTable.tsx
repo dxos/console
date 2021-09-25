@@ -11,10 +11,7 @@ import { IRecord } from '../types';
 import { getRelativeTime, sortDateStrings } from '../util';
 import { truncate, DataGrid } from './DataGrid';
 
-// TODO(burdon): Common fields for all records.
-// TODO(burdon): Different record type views may have different column sets.
-// TODO(burdon): Upgrade to XGrid to have resizable columns.
-//   https://mui.com/components/data-grid/#mit-vs-commercial
+// NOTE: Test dimensions on iPad Pro.
 // https://mui.com/components/data-grid/columns
 const columns: GridColDef[] = [
   {
@@ -28,7 +25,7 @@ const columns: GridColDef[] = [
   {
     field: 'created',
     headerName: 'Created',
-    width: 140,
+    width: 120,
     valueFormatter: (params) => {
       return params.value && getRelativeTime(new Date(params.value as number));
     },
@@ -44,13 +41,13 @@ const columns: GridColDef[] = [
   {
     field: 'name',
     headerName: 'Resource Name',
-    width: 400,
+    width: 280,
     cellClassName: () => 'monospace'
   },
   {
     field: 'title',
     headerName: 'Display Name',
-    minWidth: 400,
+    minWidth: 280,
     cellClassName: () => 'primary',
     flex: 1
   },

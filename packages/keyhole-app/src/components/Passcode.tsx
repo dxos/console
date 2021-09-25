@@ -2,9 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { createRef, useEffect, useState } from 'react';
-
 import { colors, Box } from '@mui/material';
+import React, { createRef, useEffect, useState } from 'react';
 
 // TODO(burdon): Forked from @dxos/react-ux; factor out into new lib.
 
@@ -103,9 +102,7 @@ export const Passcode = (
           autoFocus
           style={{
             position: 'absolute',
-            top: -100,
-            width: 1,
-            height: 1,
+            top: -5000, // Offscreen
             outline: 'none',
             border: 'none'
           }}
@@ -135,8 +132,8 @@ export const Passcode = (
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: '8px',
-                border: () => `2px solid ${focused ? colors.grey[500] : colors.grey[700]}`,
-                backgroundColor: () => focused ? '#222' : '#000',
+                border: () => `1px solid ${focused ? colors.grey[200] : colors.grey[400]}`,
+                backgroundColor: () => focused ? '#121212' : '#000',
                 color: colors.grey[50],
                 cursor: 'pointer'
               }}
