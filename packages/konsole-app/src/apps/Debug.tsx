@@ -59,7 +59,8 @@ export const Debug = ({ config, theme }: DebugProps) => {
 
         <Paper
           sx={{
-            overflow: 'scroll'
+            overflow: 'scroll',
+            padding: 1
           }}
         >
           <JsonView data={config} />

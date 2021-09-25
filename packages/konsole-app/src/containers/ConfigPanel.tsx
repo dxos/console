@@ -21,7 +21,8 @@ export const ConfigPanel = () => {
         sx={{
           display: 'flex',
           flex: 1,
-          overflow: 'scroll'
+          overflow: 'scroll',
+          padding: 1
         }}
       >
         <JsonView data={config} />

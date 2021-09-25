@@ -138,8 +138,9 @@ export const RecordPanel = () => {
         <Paper
           sx={{
             marginTop: 1,
-            height: 244,
-            overflow: 'scroll'
+            height: 304,
+            overflow: 'scroll',
+            padding: 1
           }}
         >
           <JsonView data={records.find(record => record.cid === selected)} />
