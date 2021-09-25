@@ -31,23 +31,32 @@ const getRecordTypeString = (types: IRecordType[], res: Resource): string | unde
 };
 
 // TODO(burdon): Comment.
-export const mapRecords = (types: IRecordType[], records: Resource[], config: IConfig): IRecord[] => {
-  return records.map(record => {
-    const type = getRecordTypeString(types, record);
+export const mapRecords = (types: IRecordType[], resources: Resource[], config: IConfig): IRecord[] => {
+  return resources.map(resource => {
+    const type = getRecordTypeString(types, resource);
     // TODO(burdon): App type const?
     const url = (type === '.dxos.App')
-      ? urlJoin(config.services.app.server, config.services.app.prefix, record.id.toString())
+      ? urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
       : undefined;
 
-    return {
-      cid: record.record.cid.toB58String(),
+    const result: IRecord = {
+      cid: resource.record.cid.toB58String(),
       // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
-      created: record.record.meta.created,
-      name: record.id.toString(),
+      created: resource.record.meta.created,
+      name: resource.id.toString(),
       type: type || '', // TODO(burdon): ???
-      title: record.record.meta.name,
-      url
+      title: resource.record.meta.name
     };
+
+    if (url) {
+      result.url = url;
+    }
+
+    if (RegistryRecord.isDataRecord(resource.record)) {
+      result.data = resource.record.data;
+    }
+
+    return result;
   });
 };
 
@@ -71,8 +80,8 @@ export const RecordPanel = () => {
   const [search, setSearch] = useState<string | undefined>();
   const query = useMemo<IQuery>(() => ({ type: recordType, text: search }), [recordType, search]);
 
-  const resources = useResources(query) ?? [];
   const recordTypes = mapTypes(registryRecordTypes);
+  const resources = useResources(query) ?? [];
   const records = mapRecords(recordTypes, resources, config);
 
   const handleSearch = (text: string | undefined) => {
