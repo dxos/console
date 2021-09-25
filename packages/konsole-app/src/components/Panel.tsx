@@ -30,10 +30,7 @@ export const Panel = ({ children, toolbar }: PanelProps) => {
             flexDirection: 'column',
             flex: 1,
             overflow: 'hidden',
-            padding: 1,
-            '& .monospace': {
-              fontFamily: 'DM Mono, monospace'
-            }
+            padding: 1
           }}
         >
           {children}

@@ -17,7 +17,8 @@ const columns: GridColDef[] = [
   {
     field: 'name',
     headerName: 'Service',
-    width: 200
+    width: 200,
+    cellClassName: 'primary'
   },
   {
     field: 'type',
@@ -25,6 +26,7 @@ const columns: GridColDef[] = [
     width: 200
   },
   {
+    // TODO(burdon): Color based on status.
     field: 'status',
     headerName: 'Status',
     width: 140

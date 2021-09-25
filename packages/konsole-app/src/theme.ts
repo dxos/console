@@ -17,7 +17,7 @@ export const createCustomTheme = (config: IConfig) => createTheme({
   palette: {
     mode: config.app.theme,
     primary: colors.cyan,
-    secondary: colors.blue
+    secondary: colors.orange
   },
 
   // TODO(burdon): Include font directly: https://mui.com/customization/typography

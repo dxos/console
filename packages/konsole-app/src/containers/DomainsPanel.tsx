@@ -9,18 +9,16 @@ import React from 'react';
 
 import { DomainKey } from '@dxos/registry-api';
 
-import { DataGrid, Panel, Toolbar } from '../components';
+import { truncate, DataGrid, Panel, Toolbar } from '../components';
 import { useDomains } from '../hooks';
 
 const columns: GridColDef[] = [
   {
     field: 'domainKey',
     headerName: 'Key',
-    width: 200,
-    cellClassName: 'monospace',
-    valueFormatter: ({ value: domainKey }) => {
-      return (domainKey as DomainKey).toHex();
-    }
+    width: 180,
+    cellClassName: 'monospace secondary',
+    valueFormatter: ({ value: domainKey }) => truncate((domainKey as DomainKey).toHex())
   },
   {
     field: 'name',

@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 
 import { IRecord } from '../types';
 import { getRelativeTime, sortDateStrings } from '../util';
-import { DataGrid } from './DataGrid';
+import { truncate, DataGrid } from './DataGrid';
 
 // TODO(burdon): Common fields for all records.
 // TODO(burdon): Different record type views may have different column sets.
@@ -20,12 +20,10 @@ const columns: GridColDef[] = [
   {
     field: 'cid',
     headerName: 'CID',
-    width: 130,
+    width: 180,
     sortable: false,
-    cellClassName: () => 'monospace',
-    valueFormatter: (params) => {
-      return (params.value as string).slice(0, 8) + '...';
-    }
+    cellClassName: () => 'monospace secondary',
+    valueFormatter: (params) => truncate(params.value as string)
   },
   {
     field: 'created',
@@ -40,20 +38,21 @@ const columns: GridColDef[] = [
   {
     field: 'type',
     headerName: 'Type',
-    width: 120,
+    width: 150,
     cellClassName: () => 'monospace'
   },
   {
     field: 'name',
     headerName: 'Resource Name',
-    minWidth: 300,
+    width: 400,
     cellClassName: () => 'monospace'
   },
   {
     field: 'title',
     headerName: 'Display Name',
-    minWidth: 300,
-    cellClassName: () => 'title'
+    minWidth: 400,
+    cellClassName: () => 'primary',
+    flex: 1
   },
   {
     field: 'url',
@@ -65,7 +64,7 @@ const columns: GridColDef[] = [
       if (params.value) {
         return (
           <Link target='link' href={params.value as string}>
-            <IconButton size='small'>
+            <IconButton size='small' color='primary'>
               <LaunchIcon />
             </IconButton>
           </Link>
