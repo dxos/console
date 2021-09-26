@@ -24,7 +24,7 @@ const services = [
 ];
 
 const parsers: {[index: string]: any} = {
-  'ipfs': ipfsLogParser,
+  'ipfs': ipfsLogParser, // TODO(burdon): Update lint settings to allow this.
   'ipfs-swarm-connect': ipfsLogParser
 };
 

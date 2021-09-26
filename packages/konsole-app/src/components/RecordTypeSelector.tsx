@@ -2,9 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
-import React from 'react';
-
 import { Divider, FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import React from 'react';
 
 import { CID } from '@dxos/registry-api';
 
@@ -45,33 +44,4 @@ export const RecordTypeSelector = ({ types = [], type: selected, onChange }: Rec
       </Select>
     </FormControl>
   );
-
-  /*
-  return (
-    <ButtonGroup
-      disableRipple
-      disableFocusRipple
-      variant='outlined'
-      size='small'
-      aria-label='text primary button group'
-    >
-      <Button
-        variant={undefined === selected ? 'contained' : 'outlined'}
-        onClick={() => onChange(undefined)}
-      >
-        ANY
-      </Button>
-      {types.map(({ type, label }: IRecordType) => (
-        <Button
-          key={type.toString()}
-          variant={selected && type.equals(selected) ? 'contained' : 'outlined'}
-          onClick={() => onChange(type)}
-        >
-          {label}
-        </Button>
-      )
-      )}
-    </ButtonGroup>
-  );
-  */
 };

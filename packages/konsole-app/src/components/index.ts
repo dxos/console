@@ -9,6 +9,7 @@ export * from './Fullscreen';
 export * from './JsonView';
 export * from './LogTable';
 export * from './Panel';
+export * from './RecordGraph';
 export * from './RecordTable';
 export * from './RecordTypeSelector';
 export * from './ScrollContainer';
