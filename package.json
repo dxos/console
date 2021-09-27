@@ -23,7 +23,7 @@
     ]
   },
   "devDependencies": {
-    "@dxos/cli": "2.4.7",
+    "@dxos/cli": "2.4.15",
     "@dxos/cli-app": "2.4.7",
     "@dxos/cli-bot": "2.4.7",
     "@dxos/cli-data": "2.4.7",
