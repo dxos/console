@@ -13,7 +13,7 @@ import React, { useMemo, useState } from 'react';
 import { CID, IQuery } from '@dxos/registry-api';
 
 import { JsonView, Panel, RecordGraph, RecordTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
-import { useConfig, useRecordTypes, useResources, mapRecordTypes, mapRecords } from '../hooks';
+import { useConfig, useDomains, useRecordTypes, useResources, mapRecordTypes, mapRecords } from '../hooks';
 
 const views = [
   { key: 'table', Icon: TableIcon },
@@ -67,6 +67,7 @@ export const RecordPanel = () => {
   const [search, setSearch] = useState<string | undefined>();
   const query = useMemo<IQuery>(() => ({ type: recordType, text: search }), [recordType, search]);
 
+  const domains = useDomains();
   const recordTypes = mapRecordTypes(useRecordTypes());
   const resources = useResources(query) ?? [];
   const records = mapRecords(resources, recordTypes, config);
@@ -137,6 +138,7 @@ export const RecordPanel = () => {
       </ViewPanel>
       <ViewPanel visible={view === 'graph'}>
         <RecordGraph
+          domains={domains}
           records={records}
         />
       </ViewPanel>

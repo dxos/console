@@ -4,6 +4,7 @@
 
 import { useEffect, useState } from 'react';
 
+// TODO(burdon): Rename Domain?
 import { DomainInfo } from '@dxos/registry-api';
 
 import { useRegistryClient } from './useRegistry';
