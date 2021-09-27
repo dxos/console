@@ -19,9 +19,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Build and publish
         run: |
-          git config --global user.email "npm@dxos.org"
-          git config --global user.name "DXOS"
-
           yarn install
           yarn build
 
