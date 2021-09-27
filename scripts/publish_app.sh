@@ -20,6 +20,8 @@ EOF
   # TODO(burdon): Rename /app (consistently). Set ENV.
   echo "wrn://${WNS_ORG}/application/${PKG_NAME}${PKG_CHANNEL}"
 
+  dx app deploy --dxns --name "konsole-app-v" --domain "vitalikm-org"
+
   yarn clean
   yarn -s wire app build
 
