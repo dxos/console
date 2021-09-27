@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # TODO(burdon): Use array [console-app, keyhole-app]
-for appdir in `find ./packages -name '*-app' -type d | grep -v node_modules`; do
+for appdir in `find ./packages -name 'konsole-app' -type d | grep -v node_modules`; do
   pushd $appdir
 
   WNS_ORG="${WNS_ORG:-dxos}"
