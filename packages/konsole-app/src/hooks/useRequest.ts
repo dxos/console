@@ -22,37 +22,58 @@ export const httpRequester = async ({ url, params, method }: IRequest) => {
     .set('accept', 'json')
     .send(params);
 
-  return result.body;
+  const { status, body } = result;
+  return { status, data: body };
 };
 
-export const RequestContext = createContext<ReqeustHandler>(httpRequester);
+export const RequestContext = createContext<[ReqeustHandler, Map<any, any>?]>([httpRequester, new Map()]);
 
 /**
- * HTTP request.
+ * HTTP request with optional caching.
  */
-export const useRequest = <T>({ url, params, method = 'POST' }: IRequest): [T | undefined, () => void] => {
-  const requester = useContext(RequestContext);
+export const useRequest = <T>(request: IRequest, cached?: boolean):
+  [T | undefined, () => void] => {
+  const [requester, cache] = useContext(RequestContext);
   const [time, setTime] = useState(Date.now());
   const [data, setData] = useState<T>();
+  const { url, params, method = 'POST' } = request;
+  const cacheKey = JSON.stringify(request);
 
   useEffect(() => {
     let active = true;
 
-    setData(undefined);
     setImmediate(async () => {
-      log(`Requesting: ${JSON.stringify({ url, params, method })}`);
-      const data = await requester({ url, params, method });
+      if (cache && cached) {
+        const data = cache.get(cacheKey);
+        if (data) {
+          log(`Cached: ${JSON.stringify(request)}`);
+          setData(data);
+        }
+      }
+
+      log(`Requesting: ${JSON.stringify(request)}`);
+      const { status, data } = await requester({ url, params, method });
 
       // Don't update if unmounted.
       if (active) {
+        log('Response:', status);
         setData(data);
+        if (cache && cached) {
+          cache.set(cacheKey, data);
+        }
       }
     });
 
     return () => {
       active = false;
     };
-  }, [time, url, JSON.stringify(params), method]);
+  }, [time, cacheKey]);
 
-  return [data, () => setTime(Date.now())];
+  return [data, () => {
+    if (cache && cached) {
+      cache.delete(cacheKey);
+    }
+
+    setTime(Date.now());
+  }];
 };

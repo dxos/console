@@ -8,3 +8,4 @@ export * from './useRecordTypes';
 export * from './useRegistry';
 export * from './useRequest';
 export * from './useResources';
+export * from './useServices';

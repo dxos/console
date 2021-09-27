@@ -8,8 +8,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
 import { DataGrid, Panel, Toolbar } from '../components';
-import { useRequest } from '../hooks';
-import { IService } from '../types';
+import { useServices } from '../hooks';
 
 const format = new Intl.NumberFormat('en', { maximumSignificantDigits: 3 });
 
@@ -49,17 +48,11 @@ const columns: GridColDef[] = [
   }
 ];
 
-// TODO(burdon): Config.
-// curl -s https://discovery.kube.dxos.network/kube/services | jq
-const KUBE_SERVICES = 'https://logs.kube.dxos.network/kube/services';
-
 /**
  * Displays the config panel
  */
 export const ServicesPanel = () => {
-  const [services, refreshServices] = useRequest<IService[]>({ url: KUBE_SERVICES, method: 'GET' });
-
-  console.log(services);
+  const [services, refreshServices] = useServices(true);
 
   return (
     <Panel

@@ -9,7 +9,8 @@ import { createContext, useContext } from 'react';
 export interface IConfig {
   app: {
     title: string
-    theme?: 'light' | 'dark' | undefined
+    theme?: 'light' | 'dark' | undefined,
+    pollingPeriod?: 5000
   },
   build: {
     version: string
