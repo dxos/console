@@ -31,32 +31,32 @@ export const RequestContext = createContext<[ReqeustHandler, Map<any, any>?]>([h
 /**
  * HTTP request with optional caching.
  */
-export const useRequest = <T>(request: IRequest, cached?: boolean):
-  [T | undefined, () => void] => {
+export const useRequest = <T>(request: IRequest, cached?: boolean): [T | undefined, () => void] => {
   const [requester, cache] = useContext(RequestContext);
   const [time, setTime] = useState(Date.now());
   const [data, setData] = useState<T>();
+
   const { url, params, method = 'POST' } = request;
   const cacheKey = JSON.stringify(request);
 
   useEffect(() => {
     let active = true;
-
     setImmediate(async () => {
       if (cache && cached) {
         const data = cache.get(cacheKey);
         if (data) {
-          log(`Cached: ${JSON.stringify(request)}`);
+          log(`Cached: ${cacheKey}`);
           setData(data);
+          return;
         }
       }
 
-      log(`Requesting: ${JSON.stringify(request)}`);
+      log(`Requesting: ${cacheKey}`);
       const { status, data } = await requester({ url, params, method });
 
       // Don't update if unmounted.
       if (active) {
-        log('Response:', status);
+        log(`Response: ${status}`);
         setData(data);
         if (cache && cached) {
           cache.set(cacheKey, data);
