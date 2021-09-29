@@ -5,6 +5,7 @@
 import debug from 'debug';
 import faker from 'faker';
 import { useEffect, useRef, useState } from 'react';
+import hash from 'string-hash';
 import { v4 as uuid } from 'uuid';
 
 const log = debug('dxos:console:warn');
@@ -52,7 +53,7 @@ export const createLogParser = (regex: RegExp) => (line: string, previous?: Date
   }
 
   return {
-    id: uuid(),
+    id: hash(line),
     timestamp: parts[1],
     delta: 0,
     level: parts[2],

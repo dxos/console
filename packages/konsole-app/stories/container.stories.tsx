@@ -24,16 +24,19 @@ export default {
 
 const panels: IPanel[] = [
   {
+    id: 'a',
     path: '/a',
     label: 'A',
     component: Box
   },
   {
+    id: 'b',
     path: '/b',
     label: 'B',
     component: Box
   },
   {
+    id: 'c',
     path: '/c',
     label: 'C',
     component: Box
@@ -41,7 +44,7 @@ const panels: IPanel[] = [
 ];
 
 export const Primary = () => {
-  const [panel, setPanel] = useState(panels[0].path);
+  const [panel, setPanel] = useState(panels[0].id);
 
   return (
     <ConfigContext.Provider value={config}>

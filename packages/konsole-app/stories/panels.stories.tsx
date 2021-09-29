@@ -13,7 +13,7 @@ import {
   RegistryContext,
   RequestContext,
   ConfigPanel,
-  RecordPanel,
+  RecordsPanel,
   ServicesPanel,
   LogsPanel,
   generateHistoricalMessages,
@@ -46,12 +46,12 @@ export const Logs = () => {
       setTimeout(async () => {
         resolve(messages);
       }, 100);
-    })
+    });
   };
 
   return (
     <ConfigContext.Provider value={config}>
-      <RequestContext.Provider value={requester}>
+      <RequestContext.Provider value={[requester]}>
         <RootContainer config={config}>
           <LogsPanel />
         </RootContainer>
@@ -66,7 +66,7 @@ export const Records = () => {
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={MockRegistryApi}>
         <RootContainer config={config}>
-          <RecordPanel />
+          <RecordsPanel />
         </RootContainer>
       </RegistryContext.Provider>
     </ConfigContext.Provider>
@@ -79,19 +79,19 @@ export const Services = () => {
       name: 'service-1',
       type: 'dxos:service/app-server',
       exec: 'dx signal start',
-      status: 'OK',
+      status: 'OK'
     },
     {
       name: 'service-2',
       type: 'dxos:service/app-server',
       exec: 'dx app-server start',
-      status: 'OK',
+      status: 'OK'
     },
     {
       name: 'service-3',
       type: 'dxos:service/ipfs',
       exec: 'ipfs start',
-      status: 'OK',
+      status: 'OK'
     }
   ];
 
@@ -100,12 +100,12 @@ export const Services = () => {
       setTimeout(async () => {
         resolve(services);
       }, 100);
-    })
+    });
   };
 
   return (
     <ConfigContext.Provider value={config}>
-      <RequestContext.Provider value={requester}>
+      <RequestContext.Provider value={[requester]}>
         <RootContainer config={config}>
           <ServicesPanel />
         </RootContainer>

@@ -21,19 +21,10 @@
     "test": "jest --rootDir ./src --passWithNoTests --no-cache"
   },
   "eslintConfig": {
-    "parser": "babel-eslint",
-    "plugins": [
-      "babel"
-    ],
-    "extends": [
-      "plugin:jest/recommended",
-      "semistandard"
-    ],
-    "rules": {
-      "babel/semi": 1
-    }
+    "extends": "plugin:@dxos/react"
   },
   "jest": {
+    "preset": "ts-jest/presets/default",
     "testEnvironment": "node"
   },
   "dependencies": {
@@ -64,42 +55,23 @@
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/node": "^7.8.7",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-export-default-from": "^7.5.2",
-    "@babel/plugin-transform-runtime": "^7.10.1",
-    "@babel/preset-env": "^7.4.5",
-    "babel-eslint": "^10.0.3",
-    "babel-jest": "^24.8.0",
+    "@dxos/eslint-plugin": "^1.0.14",
     "babel-loader": "^8.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-import-graphql": "^2.7.0",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-inline-json-import": "^0.3.2",
-    "eslint": "^6.7.2",
-    "eslint-config-semistandard": "^15.0.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-loader": "^3.0.3",
-    "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^23.13.1",
-    "eslint-plugin-jsdoc": "^21.0.0",
+    "eslint": "^7.10.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-react": "^7.22.0",
     "jest": "^24.8.0",
     "nodemon": "^2.0.4",
     "semistandard": "^14.2.0"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "semistandard": {
-    "parser": "babel-eslint",
-    "env": [
-      "jest",
-      "node"
-    ]
   }
 }

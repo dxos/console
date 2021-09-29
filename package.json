@@ -19,7 +19,8 @@
   "workspaces": {
     "packages": [
       "packages/keyhole-app",
-      "packages/konsole-app"
+      "packages/konsole-app",
+      "packages/kube-server"
     ]
   },
   "devDependencies": {

@@ -2,8 +2,11 @@
 // Copyright 2021 DXOS.org
 //
 
-import React, { useState } from 'react';
-
+import {
+  Menu as MenuIcon,
+  MoreVert as MoreVertIcon,
+  ChevronLeft as ChevronLeftIcon
+} from '@mui/icons-material';
 import {
   AppBar as MuiAppBar,
   AppBarProps as MuiAppBarProps,
@@ -16,15 +19,13 @@ import {
   Toolbar,
   Typography
 } from '@mui/material';
-import {
-  Menu as MenuIcon,
-  MoreVert as MoreVertIcon,
-  ChevronLeft as ChevronLeftIcon
-} from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
+import React, { useState } from 'react';
 
 import { useConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';
+import { Fullscreen } from './Fullscreen';
+// import { Statusbar } from './Statusbar';
 
 const drawerWidth = 220;
 
@@ -80,11 +81,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end'
 }));
 
-type ContainerProps = {
-  children?: JSX.Element
-  sidebar?: JSX.Element
-};
-
+/**
+ * Menu.
+ */
 const ContainerMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
@@ -124,21 +123,20 @@ const ContainerMenu = () => {
   );
 };
 
+type ContainerProps = {
+  children?: JSX.Element
+  sidebar?: JSX.Element
+};
+
 /**
  * Root application component.
- * @constructor
  */
 export const Container = ({ children, sidebar }: ContainerProps) => {
   const config = useConfig();
   const [drawerOpen, setDrawerOpen] = useState(true);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        height: '100vh'
-      }}
-    >
+    <Fullscreen>
       <AppBar position='fixed' open={drawerOpen}>
         <Toolbar
           sx={{
@@ -175,8 +173,10 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
-            boxSizing: 'border-box',
-          },
+            boxSizing: 'content-box',
+            border: 'none',
+            borderRight: theme => `1px solid ${theme.palette.divider}`
+          }
         }}
         variant='persistent'
         anchor='left'
@@ -208,6 +208,16 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
         </Toolbar>
         <Divider />
         {sidebar || null}
+        <Box sx={{ flex: 1 }} />
+
+        <Toolbar
+          variant='dense'
+          sx={{
+            justifyContent: 'center'
+          }}
+        >
+          <Box sx={{ color: theme => theme.palette.secondary.main }}>{ config.build.version }</Box>
+        </Toolbar>
       </Drawer>
 
       <Main open={drawerOpen}>
@@ -223,6 +233,6 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
           {children}
         </Box>
       </Main>
-    </Box>
+    </Fullscreen>
   );
 };

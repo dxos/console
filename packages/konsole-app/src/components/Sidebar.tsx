@@ -29,17 +29,17 @@ export const Sidebar = ({ panels = [], selected, onSelect }: SidebarProps) => {
           padding: 0
         }}
       >
-        {panels.map(({ path, label, icon: Icon = DefaultIcon }, i) => (
+        {panels.map(({ id, path, label, icon: Icon = DefaultIcon }, i) => (
           <ListItem
             key={i}
             button
-            selected={path === selected}
-            onClick={() => onSelect && onSelect(path)}
+            selected={id === selected}
+            onClick={() => onSelect && onSelect(id)}
           >
             <ListItemIcon
               sx={{
                 minWidth: 38,
-                color: theme => theme.palette.primary.main
+                color: theme => (path === selected) ? theme.palette.primary.main : theme.palette.action.disabled
               }}
             >
               <Icon />
