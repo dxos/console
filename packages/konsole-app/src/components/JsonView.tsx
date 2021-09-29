@@ -12,6 +12,7 @@ import ReactJsonView from 'react-json-view';
 export const JsonView = ({ data }: { data: any }) => {
   const theme = useTheme();
 
+  // TODO(burdon): Replace with class that allows custom rendering (e.g., CID, links, etc.)
   // https://www.npmjs.com/package/react-json-view
   return (
     <ReactJsonView

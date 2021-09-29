@@ -16,6 +16,7 @@ export const useRecordTypes = (query?: IQuery): IRecordType[] => {
   useEffect(() => {
     setImmediate(async () => {
       const recordTypes = await registryClient.getTypes(query);
+
       // TODO(burdon): Reconsile types (use registry type).
       setRecordTypes(recordTypes.map(record => ({
         // TODO(burdon): Normalize with other fields that return strings.

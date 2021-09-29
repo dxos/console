@@ -88,7 +88,8 @@ export const RecordTable = ({ records = [], onSelect }: RecordsTableProps) => {
     const next = (id === selected) ? undefined : id;
     setSelected(next);
     if (onSelect) {
-      onSelect(next as unknown as CID);
+      const cid = next ? CID.fromB58String(next as string) : undefined;
+      onSelect(cid);
     }
   };
 
@@ -104,7 +105,7 @@ export const RecordTable = ({ records = [], onSelect }: RecordsTableProps) => {
       <DataGrid
         rows={records}
         columns={columns}
-        getRowId={({ cid }) => cid}
+        getRowId={({ cid }) => cid.toB58String()}
         selectionModel={selected ? [selected] : []}
         onRowClick={({ id }) => handleSelect(id)}
         disableSelectionOnClick

@@ -34,8 +34,9 @@ export interface IService {
 }
 
 export interface IPanel {
+  id: string
   path: string
   label: string
-  component: ComponentType
+  component: ComponentType<any>
   icon?: ComponentType
 }

@@ -9,11 +9,13 @@ import {
 } from '@mui/icons-material';
 import { Box, Collapse, IconButton, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import React, { useMemo, useState } from 'react';
+import { generatePath, useHistory, useParams } from 'react-router';
 
 import { CID, IQuery } from '@dxos/registry-api';
 
 import { JsonView, Panel, RecordGraph, RecordTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
 import { useConfig, useDomains, useRecordTypes, useResources, joinRecords } from '../hooks';
+import { safe } from '../util';
 
 const views = [
   { key: 'table', Icon: TableIcon },
@@ -58,19 +60,27 @@ const ViewPanel = ({ children, visible }: { children: React.ReactNode, visible: 
 /**
  * Display records panel
  */
-export const RecordsPanel = () => {
+export const RecordsPanel = ({ match }: { match?: any }) => { // TODO(burdon): Type?
   const config = useConfig();
+  const history = useHistory();
+  const { cid }: { cid: string } = useParams();
+  const selected = safe<CID>(() => CID.fromB58String(cid));
 
   const [view, setView] = useState(views[0].key);
-  const [selected, setSelected] = useState<CID | undefined>();
   const [recordType, setRecordType] = useState<CID | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>();
   const query = useMemo<IQuery>(() => ({ type: recordType, text: search }), [recordType, search]);
 
   const domains = useDomains();
   const recordTypes = useRecordTypes();
+
+  // TODO(burdon): This should only show records; separate view for resources => record.
   const resources = useResources(query) ?? [];
   const records = joinRecords(resources, recordTypes, config);
+
+  const handleSelect = (cid: CID | undefined) => {
+    history.push(generatePath(match.path, { cid: cid ? cid.toB58String() : undefined }));
+  };
 
   const handleSearch = (text: string | undefined) => {
     setSearch(text);
@@ -121,7 +131,7 @@ export const RecordsPanel = () => {
       <ViewPanel visible={view === 'table'}>
         <RecordTable
           records={records}
-          onSelect={setSelected}
+          onSelect={handleSelect}
         />
         <Collapse in={selected !== undefined} timeout='auto' unmountOnExit>
           <Paper
@@ -132,7 +142,7 @@ export const RecordsPanel = () => {
               padding: 1
             }}
           >
-            <JsonView data={records.find(record => record.cid === selected)} />
+            <JsonView data={selected && records.find(record => record.cid.equals(selected))} />
           </Paper>
         </Collapse>
       </ViewPanel>

@@ -11,12 +11,10 @@ import { IRecord, IRecordType } from '../types';
 import { IConfig } from './useConfig';
 import { useRegistryClient } from './useRegistry';
 
-// TODO(burdon): ???
+// TODO(burdon): Hack.
 export const getRecordTypeString = (resource: Resource, types: IRecordType[]): string | undefined => {
   const record = resource.record;
-  if (RegistryRecord.isTypeRecord(record)) {
-    return 'type'; // TODO(burdon): Const from protobuf?
-  } else if (RegistryRecord.isDataRecord(record)) {
+  if (RegistryRecord.isDataRecord(record)) {
     const matches = types.filter(({ type }) => type.equals(record.type));
     if (matches.length !== 1) {
       return;

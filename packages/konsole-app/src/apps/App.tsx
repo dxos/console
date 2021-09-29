@@ -2,17 +2,17 @@
 // Copyright 2021 DXOS.org
 //
 
+import { CssBaseline, Theme, ThemeProvider } from '@mui/material';
 import React from 'react';
 import {
   HashRouter as Router,
   Redirect,
   Route,
   Switch,
+  generatePath,
   useHistory,
   useParams
 } from 'react-router-dom';
-
-import { CssBaseline, Theme, ThemeProvider } from '@mui/material';
 
 import { IRegistryApi } from '@dxos/registry-api';
 
@@ -31,13 +31,18 @@ export const Main = ({ panels }: MainProps) => {
   const history = useHistory();
   const { panel }: { panel: string } = useParams();
 
+  const handleNavigate = (id: string) => {
+    const { path } = panels.find(panel => panel.id === id)!;
+    history.push(generatePath(path, {}));
+  };
+
   return (
     <Container
       sidebar={
         <Sidebar
           panels={panels}
-          selected={`/${panel}`}
-          onSelect={path => history.push(path)}
+          selected={panel}
+          onSelect={handleNavigate}
         />
       }
     >
