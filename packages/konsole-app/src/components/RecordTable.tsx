@@ -2,10 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import React, { useState } from 'react';
 import { Launch as LaunchIcon } from '@mui/icons-material';
 import { Box, IconButton, Link } from '@mui/material';
 import { GridColDef, GridCellParams, GridRowId } from '@mui/x-data-grid';
-import React, { useState } from 'react';
 
 import { CID } from '@dxos/registry-api';
 

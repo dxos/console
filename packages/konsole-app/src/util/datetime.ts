@@ -17,7 +17,6 @@ export const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
 export const getRelativeTime = (d1: Date, d2: Date = new Date()) => {
   const elapsed = d1.valueOf() - d2.valueOf();
-  // assert(!isNaN(elapsed)); // TODO(burdon): ???
   if (isNaN(elapsed)) {
     return undefined;
   }
