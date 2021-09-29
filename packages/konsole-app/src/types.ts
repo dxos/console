@@ -6,7 +6,7 @@ import { ComponentType } from 'react';
 
 import { CID } from '@dxos/registry-api';
 
-// TODO(burdon): Replace with registry-api type.
+// TODO(burdon): Replace with registry-api RegistryRecord type.
 export interface IRecordType {
   type: CID
   label: string

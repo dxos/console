@@ -10,7 +10,7 @@ export * from './JsonView';
 export * from './LogTable';
 export * from './Panel';
 export * from './RecordGraph';
-export * from './RecordTable';
+export * from './RecordsTable';
 export * from './RecordTypeSelector';
 export * from './ScrollContainer';
 export * from './SearchBar';

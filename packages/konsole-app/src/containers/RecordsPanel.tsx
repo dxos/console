@@ -13,7 +13,7 @@ import { generatePath, useHistory, useParams } from 'react-router';
 
 import { CID, IQuery } from '@dxos/registry-api';
 
-import { JsonView, Panel, RecordGraph, RecordTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
+import { JsonView, Panel, RecordGraph, RecordsTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
 import { useConfig, useDomains, useRecordTypes, useResources, joinRecords } from '../hooks';
 import { safe } from '../util';
 
@@ -129,8 +129,9 @@ export const RecordsPanel = ({ match }: { match?: any }) => { // TODO(burdon): T
       )}
     >
       <ViewPanel visible={view === 'table'}>
-        <RecordTable
+        <RecordsTable
           records={records}
+          selected={selected}
           onSelect={handleSelect}
         />
         <Collapse in={selected !== undefined} timeout='auto' unmountOnExit>

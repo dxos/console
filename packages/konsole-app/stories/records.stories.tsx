@@ -11,7 +11,7 @@ import { CID } from '@dxos/registry-api';
 import {
   IRecord,
   IRecordType,
-  RecordTable,
+  RecordsTable,
   RecordTypeSelector
 } from '../src';
 import { config, RootContainer } from './config';
@@ -64,12 +64,12 @@ export const Records = () => {
       name: 'dxos/record-2',
       type: '.dxos.App',
       title: 'Record 2'
-    },
+    }
   ];
 
   return (
     <RootContainer config={config}>
-      <RecordTable
+      <RecordsTable
         records={records}
       />
     </RootContainer>
