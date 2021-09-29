@@ -3,6 +3,7 @@
 //
 
 import {
+  Bolt as TypeIcon,
   Reorder as LoggingIcon,
   Settings as SettingsIcon,
   Storage as ServicesIcon,
@@ -21,9 +22,10 @@ import {
   DomainsPanel,
   IPFSPanel,
   LogsPanel,
-  RecordPanel,
+  RecordsPanel,
   ServicesPanel,
-  SignalingPanel
+  SignalingPanel,
+  TypesPanel
 } from './containers';
 import { IPanel } from './types';
 
@@ -41,9 +43,15 @@ export const panels: IPanel[] = [
     icon: DomainsIcon
   },
   {
+    path: '/types',
+    label: 'Types',
+    component: TypesPanel,
+    icon: TypeIcon
+  },
+  {
     path: '/records',
     label: 'Records',
-    component: RecordPanel,
+    component: RecordsPanel,
     icon: RecordsIcon
   },
   {

@@ -7,6 +7,8 @@ import { Box, IconButton, Link } from '@mui/material';
 import { GridColDef, GridCellParams, GridRowId } from '@mui/x-data-grid';
 import React, { useState } from 'react';
 
+import { CID } from '@dxos/registry-api';
+
 import { IRecord } from '../types';
 import { getRelativeTime, sortDateStrings } from '../util';
 import { truncate, DataGrid } from './DataGrid';
@@ -15,22 +17,18 @@ import { truncate, DataGrid } from './DataGrid';
 // https://mui.com/components/data-grid/columns
 const columns: GridColDef[] = [
   {
+    field: 'name',
+    headerName: 'Resource Name',
+    minWidth: 280,
+    cellClassName: () => 'monospace primary'
+  },
+  {
     field: 'cid',
-    headerName: 'CID',
+    headerName: 'Record CID',
     width: 180,
     sortable: false,
     cellClassName: () => 'monospace secondary',
-    valueFormatter: (params) => truncate(params.value as string)
-  },
-  {
-    field: 'created',
-    headerName: 'Created',
-    width: 120,
-    valueFormatter: (params) => {
-      return params.value && getRelativeTime(new Date(params.value as number));
-    },
-    // https://mui.com/components/data-grid/sorting
-    sortComparator: (v1, v2) => sortDateStrings(v1 as string, v2 as string)
+    valueFormatter: (params) => truncate(params.value?.toString() as string)
   },
   {
     field: 'type',
@@ -39,10 +37,14 @@ const columns: GridColDef[] = [
     cellClassName: () => 'monospace'
   },
   {
-    field: 'name',
-    headerName: 'Resource Name',
-    width: 280,
-    cellClassName: () => 'monospace'
+    field: 'created',
+    headerName: 'Created',
+    minWidth: 120,
+    valueFormatter: (params) => {
+      return params.value && getRelativeTime(new Date(params.value as number));
+    },
+    // https://mui.com/components/data-grid/sorting
+    sortComparator: (v1, v2) => sortDateStrings(v1 as string, v2 as string)
   },
   {
     field: 'title',
@@ -73,7 +75,7 @@ const columns: GridColDef[] = [
 
 interface RecordsTableProps {
   records?: IRecord[]
-  onSelect?: (id: string | undefined) => void
+  onSelect?: (cid: CID | undefined) => void
 }
 
 /**
@@ -86,7 +88,7 @@ export const RecordTable = ({ records = [], onSelect }: RecordsTableProps) => {
     const next = (id === selected) ? undefined : id;
     setSelected(next);
     if (onSelect) {
-      onSelect(next as string);
+      onSelect(next as unknown as CID);
     }
   };
 

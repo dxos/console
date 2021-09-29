@@ -11,9 +11,7 @@ import { IRecord, IRecordType } from '../types';
 import { IConfig } from './useConfig';
 import { useRegistryClient } from './useRegistry';
 
-/**
- *
- */
+// TODO(burdon): ???
 export const getRecordTypeString = (resource: Resource, types: IRecordType[]): string | undefined => {
   const record = resource.record;
   if (RegistryRecord.isTypeRecord(record)) {
@@ -28,8 +26,13 @@ export const getRecordTypeString = (resource: Resource, types: IRecordType[]): s
   }
 };
 
-// TODO(burdon): Comment.
-export const mapRecords = (resources: Resource[], recordTypes: IRecordType[], config: IConfig): IRecord[] => {
+/**
+ * Joins resources with records.
+ * @param resources
+ * @param recordTypes
+ * @param config
+ */
+export const joinRecords = (resources: Resource[], recordTypes: IRecordType[], config: IConfig): IRecord[] => {
   return resources.map(resource => {
     const type = getRecordTypeString(resource, recordTypes);
 
@@ -39,7 +42,7 @@ export const mapRecords = (resources: Resource[], recordTypes: IRecordType[], co
       : undefined;
 
     const result: IRecord = {
-      cid: resource.record.cid.toB58String(),
+      cid: resource.record.cid,
       // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
       created: resource.record.meta.created,
       name: resource.id.toString(),

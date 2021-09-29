@@ -13,7 +13,7 @@ import {
   RegistryContext,
   RequestContext,
   ConfigPanel,
-  RecordPanel,
+  RecordsPanel,
   ServicesPanel,
   LogsPanel,
   generateHistoricalMessages,
@@ -66,7 +66,7 @@ export const Records = () => {
     <ConfigContext.Provider value={config}>
       <RegistryContext.Provider value={MockRegistryApi}>
         <RootContainer config={config}>
-          <RecordPanel />
+          <RecordsPanel />
         </RootContainer>
       </RegistryContext.Provider>
     </ConfigContext.Provider>

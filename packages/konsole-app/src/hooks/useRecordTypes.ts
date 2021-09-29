@@ -4,29 +4,26 @@
 
 import { useEffect, useState } from 'react';
 
-import { IQuery, RegistryTypeRecord } from '@dxos/registry-api';
+import { IQuery } from '@dxos/registry-api';
 
 import { IRecordType } from '../types';
 import { useRegistryClient } from './useRegistry';
 
-// TODO(burdon): Remove and reconcile RegistryTypeRecord, IRecordType.
-export const mapRecordTypes = (records: RegistryTypeRecord[]): IRecordType[] => {
-  return records.map(apiRecord => ({
-    type: apiRecord.cid,
-    label: apiRecord.messageName
-  }));
-};
-
-export const useRecordTypes = (query?: IQuery): RegistryTypeRecord[] => {
-  const [resources, setRegistryTypeRecords] = useState<RegistryTypeRecord[]>([]);
+export const useRecordTypes = (query?: IQuery): IRecordType[] => {
+  const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
   const registryClient = useRegistryClient();
 
   useEffect(() => {
     setImmediate(async () => {
       const recordTypes = await registryClient.getTypes(query);
-      setRegistryTypeRecords(recordTypes);
+      // TODO(burdon): Reconsile types (use registry type).
+      setRecordTypes(recordTypes.map(record => ({
+        // TODO(burdon): Normalize with other fields that return strings.
+        type: record.cid,
+        label: record.messageName
+      })));
     });
   }, [query]);
 
-  return resources;
+  return recordTypes;
 };

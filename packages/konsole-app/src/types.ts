@@ -14,7 +14,7 @@ export interface IRecordType {
 
 // TODO(burdon): Replace with registry-api type.
 export interface IRecord {
-  cid: string
+  cid: CID
   created?: string
   name: string
   type: string // TODO(burdon): ???

@@ -13,7 +13,7 @@ import React, { useMemo, useState } from 'react';
 import { CID, IQuery } from '@dxos/registry-api';
 
 import { JsonView, Panel, RecordGraph, RecordTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
-import { useConfig, useDomains, useRecordTypes, useResources, mapRecordTypes, mapRecords } from '../hooks';
+import { useConfig, useDomains, useRecordTypes, useResources, joinRecords } from '../hooks';
 
 const views = [
   { key: 'table', Icon: TableIcon },
@@ -58,19 +58,19 @@ const ViewPanel = ({ children, visible }: { children: React.ReactNode, visible: 
 /**
  * Display records panel
  */
-export const RecordPanel = () => {
+export const RecordsPanel = () => {
   const config = useConfig();
 
   const [view, setView] = useState(views[0].key);
-  const [selected, setSelected] = useState<string | undefined>();
+  const [selected, setSelected] = useState<CID | undefined>();
   const [recordType, setRecordType] = useState<CID | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>();
   const query = useMemo<IQuery>(() => ({ type: recordType, text: search }), [recordType, search]);
 
   const domains = useDomains();
-  const recordTypes = mapRecordTypes(useRecordTypes());
+  const recordTypes = useRecordTypes();
   const resources = useResources(query) ?? [];
-  const records = mapRecords(resources, recordTypes, config);
+  const records = joinRecords(resources, recordTypes, config);
 
   const handleSearch = (text: string | undefined) => {
     setSearch(text);

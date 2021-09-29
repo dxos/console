@@ -7,32 +7,30 @@ import { Box, IconButton } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
-import { DomainKey } from '@dxos/registry-api';
-
-import { truncate, DataGrid, Panel, Toolbar } from '../components';
-import { useDomains } from '../hooks';
+import { DataGrid, Panel, Toolbar, truncate } from '../components';
+import { useRecordTypes } from '../hooks';
 
 const columns: GridColDef[] = [
   {
-    field: 'domainKey',
-    headerName: 'Key',
+    field: 'type',
+    headerName: 'Record CID',
     width: 180,
     cellClassName: 'monospace secondary',
-    valueFormatter: ({ value: domainKey }) => truncate((domainKey as DomainKey).toHex())
+    valueFormatter: (params) => truncate(params.value?.toString() as string)
   },
   {
-    field: 'name',
-    headerName: 'Domain',
+    field: 'label',
+    headerName: 'Message',
     width: 300,
-    cellClassName: 'monospace primary'
+    cellClassName: 'primary'
   }
 ];
 
 /**
- * Displays the config panel
+ * Displays all defined tyeps.
  */
-export const DomainsPanel = () => {
-  const domains = useDomains();
+export const TypesPanel = () => {
+  const types = useRecordTypes();
 
   return (
     <Panel
@@ -50,9 +48,9 @@ export const DomainsPanel = () => {
       )}
     >
       <DataGrid
-        rows={domains || []}
+        rows={types || []}
         columns={columns}
-        getRowId={({ name }) => name}
+        getRowId={({ type }) => type}
       />
     </Panel>
   );
