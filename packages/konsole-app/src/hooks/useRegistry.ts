@@ -5,28 +5,20 @@
 import assert from 'assert';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-// TODO(burdon): Consistent prefixes (e.g., IQuery vs Query)?
-// TODO(burdon): Rename IRegistryApi => IRegistryClient
-// TODO(burdon): Rename RegistryRecord => Record
-// TODO(burdon): Rename DomainInfo => Domain
+// TODO(burdon): Rename IRegistryApi => IRegistryClient (AuctionClient, etc.)
+// TODO(burdon): Rename RegistryRecord => Record, DomainInfo => Domain, etc.
 // TODO(burdon): Same Query interface for resources and records?
 // TODO(burdon): Resource type has a field called "id" which is a DXN. Consistent field properties (types and protobufs).
 // TODO(burdon): registryClient.getTypes? getRecordTypes?
-// TODO(burdon): registry-api has lint errors, functions, and nested imports.
-// TODO(burdon): registry-api has RegistryRecordBase (why?) with a cid field and in RegistryDataRecord a different CID field called type.
-// TODO(burdon): regitsry-api WHY do we have TS type definitions when we have protobuf schema for all of these types? AND IRecord here?
-// TODO(burdon): registry-pai WHY is RecordKind necessary.
-// TODO(burdon): registry-api remove MockRegistryApi singleton.
+// TODO(burdon): registry-api lint errors, functions, and nested imports.
+// TODO(burdon): registry-api Remove inheritance: i.e., RegistryRecordBase to more closely follow protobuf defs; normalize fields.
+// TODO(burdon): regitsry-api why both TS type definitions AND protobuf schema for all of these types? AND IRecord here?
+// TODO(burdon): registry-pai remove RecordKind?
+// TODO(burdon): registry-api remove MockRegistryApi singleton and expose mock client.
 
-import {
-  DomainInfo, IQuery, IRegistryApi, RegistryTypeRecord, RegistryRecord, Resource
-} from '@dxos/registry-api';
+import { DomainInfo, IQuery, IRegistryApi, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-api';
 
 export const RegistryContext = createContext<IRegistryApi | undefined>(undefined);
-
-// UX types.
-// TODO(burdon): RecordsPanel should just show Records (no name, etc.)
-// TODO(burdon): ResourcesPanel should show a join of ALL versioned records for a particular name (with links to above).
 
 /**
  * Returns the configured client object.
