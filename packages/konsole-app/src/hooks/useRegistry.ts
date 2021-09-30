@@ -6,7 +6,7 @@ import assert from 'assert';
 import urlJoin from 'proper-url-join';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-// TODO(burdon): Consistent prefixes (e.g., Ixxx)?
+// TODO(burdon): Consistent prefixes (e.g., IQuery vs Query)?
 // TODO(burdon): Rename IRegistryApi => IRegistryClient
 // TODO(burdon): Rename RegistryRecord => Record
 // TODO(burdon): Rename DomainInfo => Domain
@@ -16,14 +16,16 @@ import { createContext, useContext, useEffect, useState } from 'react';
 // TODO(burdon): registry-api has lint errors, functions, and nested imports.
 // TODO(burdon): registry-api has RegistryRecordBase (why?) with a cid field and in RegistryDataRecord a different CID field called type.
 // TODO(burdon): regitsry-api WHY do we have TS type definitions when we have protobuf schema for all of these types? AND IRecord here?
+// TODO(burdon): registry-pai WHY is RecordKind necessary.
+// TODO(burdon): registry-api remove MockRegistryApi singleton.
 
-import { CID, DomainInfo, IQuery, IRegistryApi, RegistryRecord, RegistryTypeRecord, Resource } from '@dxos/registry-api';
+import { CID, DomainInfo, IQuery, IRegistryApi, RegistryRecord, Resource } from '@dxos/registry-api';
 
 import { IConfig } from './useConfig';
 
 export const RegistryContext = createContext<IRegistryApi | undefined>(undefined);
 
-// TODO(burdon): Replace with registry-api IRecordType type.
+// TODO(burdon): Replace with registry-api RegistryTypeRecord type.
 export interface IRecordType {
   cid: CID
   messageName: string
@@ -79,12 +81,7 @@ export const useRecordTypes = (query?: IQuery): IRecordType[] => {
   useEffect(() => {
     setImmediate(async () => {
       const recordTypes = await registryClient.getTypes(query);
-      console.log('::::::', recordTypes);
-      setRecordTypes(recordTypes.map(record => ({
-        // TODO(burdon): Normalize with other fields that return strings.
-        cid: record.cid,
-        messageName: record.messageName
-      })));
+      setRecordTypes(recordTypes);
     });
   }, [query]);
 

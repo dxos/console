@@ -60,7 +60,7 @@ const ViewPanel = ({ children, visible }: { children: React.ReactNode, visible: 
 /**
  * Display records panel
  */
-export const RecordsPanel = ({ match }: { match?: any }) => { // TODO(burdon): Type?
+export const RecordsPanel = ({ match }: { match?: any }) => {
   const config = useConfig();
   const history = useHistory();
   const { cid }: { cid: string } = useParams();
