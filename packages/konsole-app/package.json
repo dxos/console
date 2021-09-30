@@ -17,15 +17,15 @@
   ],
   "scripts": {
     "build": "webpack",
+    "build-storybook": "build-storybook --quiet",
+    "chromatic": "npx chromatic --exit-zero-on-changes --auto-accept-changes",
+    "ci": "npm run build && npm run lint && npm run test",
     "clean": "rm -rf ./dist",
-    "lint": "eslint --fix --format codeframe './src/**/*.ts'",
     "debug": "webpack serve --mode development --host 0.0.0.0 --config webpack-debug.config.js",
+    "deploy": "npm run chromatic",
+    "lint": "eslint --fix --format codeframe './src/**/*.ts'",
     "start": "webpack serve --mode development --host 0.0.0.0",
     "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
-    "build-storybook": "build-storybook --quiet",
-    "ci": "npm run build && npm run lint && npm run test",
-    "chromatic": "npx chromatic --exit-zero-on-changes --auto-accept-changes",
-    "deploy": "npm run chromatic",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "browserslist": [

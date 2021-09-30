@@ -73,9 +73,7 @@ export const RecordsPanel = ({ match }: { match?: any }) => { // TODO(burdon): T
 
   const domains = useDomains();
   const recordTypes = useRecordTypes();
-
-  // TODO(burdon): This should only show records; separate view for resources => record.
-  const resources = useResources(query) ?? [];
+  const resources = useResources(query);
   const records = joinRecords(resources, recordTypes, config);
 
   const handleSelect = (cid: CID | undefined) => {

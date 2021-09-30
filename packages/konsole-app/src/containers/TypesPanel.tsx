@@ -14,13 +14,13 @@ import { useRecordTypes } from '../hooks';
 
 const columns: GridColDef[] = [
   {
-    field: 'label', // TODO(burdon): Incorrect field. Should be key.
-    headerName: 'Message',
+    field: 'messageName',
+    headerName: 'Protobuf Message',
     width: 300,
     cellClassName: 'primary'
   },
   {
-    field: 'type',
+    field: 'cid',
     headerName: 'Record CID',
     width: 180,
     cellClassName: 'monospace secondary',
@@ -54,7 +54,7 @@ export const TypesPanel = () => {
       <DataGrid
         rows={types || []}
         columns={columns}
-        getRowId={({ type }) => type}
+        getRowId={({ cid }) => cid}
       />
     </Panel>
   );

@@ -25,16 +25,16 @@ export default {
 export const TypeSelector = () => {
   const types: IRecordType[] = [
     {
-      type: CID.fromB58String('QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR'),
-      label: 'A'
+      cid: CID.fromB58String('QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR'),
+      messageName: 'A'
     },
     {
-      type: CID.fromB58String('QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu'),
-      label: 'B (Long Name)'
+      cid: CID.fromB58String('QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu'),
+      messageName: 'B (Long Name)'
     }
   ];
 
-  const [type, setType] = useState<CID | undefined>(types[0].type);
+  const [type, setType] = useState<CID | undefined>(types[0].cid);
 
   return (
     <RootContainer config={config}>
