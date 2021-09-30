@@ -2,8 +2,6 @@
 // Copyright 2021 DXOS.org
 //
 
-import React, { useEffect, useState } from 'react';
-
 import {
   Box,
   Table,
@@ -17,6 +15,7 @@ import {
   TableSortLabel
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
 
 interface FlexTableColumn {
   id: string
@@ -45,6 +44,10 @@ interface FlexTableProps {
   paging?: boolean
 }
 
+const TableCell = styled(MuiTableCell)<TableCellProps>(() => ({
+  verticalAlign: 'top'
+}));
+
 export const defaultRowRenderer = ({ key, columns, row, cellRenderer }: FlexTableRowRenderer) => {
   return (
     <TableRow key={key}>
@@ -61,15 +64,11 @@ export const defaultRowRenderer = ({ key, columns, row, cellRenderer }: FlexTabl
           <TableCell key={id}>
             {element}
           </TableCell>
-        )
+        );
       })}
     </TableRow>
-  )
-}
-
-const TableCell = styled(MuiTableCell)<TableCellProps>(() => ({
-  verticalAlign: 'top'
-}));
+  );
+};
 
 export const FlexTable = ({ columns, rows: allRows, rowRenderer, cellRenderer, paging }: FlexTableProps) => {
   const pageSizes = [25, 100];
@@ -89,15 +88,15 @@ export const FlexTable = ({ columns, rows: allRows, rowRenderer, cellRenderer, p
   // Paging.
   //
 
-  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPage(0);
-    setPageSize(parseInt(event.target.value));
-  };
-
   // TODO(burdon): Paging (pass page to external handler to query).
   const [page, setPage] = useState<number>(0);
   const handlePageChange = (_: any, page: number) => {
     setPage(page);
+  };
+
+  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPage(0);
+    setPageSize(parseInt(event.target.value));
   };
 
   const [rows, setRows] = useState<any[]>([]);
@@ -125,13 +124,13 @@ export const FlexTable = ({ columns, rows: allRows, rowRenderer, cellRenderer, p
               {columns.map(({ id, label, width, sort }) => {
                 return (
                   <TableCell key={id} width={width}>
-                    {sort && (
+                    {(sort && (
                       <TableSortLabel
                         onClick={handleSort}
                       >
                         {label || id}
                       </TableSortLabel>
-                    ) || (label || id)}
+                    )) || (label || id)}
                   </TableCell>
                 );
               })}
@@ -168,5 +167,5 @@ export const FlexTable = ({ columns, rows: allRows, rowRenderer, cellRenderer, p
         />
       )}
     </Box>
-  )
+  );
 };

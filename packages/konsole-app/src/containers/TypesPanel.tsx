@@ -14,12 +14,6 @@ import { useRecordTypes } from '../hooks';
 
 const columns: GridColDef[] = [
   {
-    field: 'messageName',
-    headerName: 'Protobuf Message',
-    width: 300,
-    cellClassName: 'primary'
-  },
-  {
     field: 'cid',
     headerName: 'Record CID',
     width: 180,
@@ -27,6 +21,12 @@ const columns: GridColDef[] = [
     renderCell: ({ value: cid }) => {
       return <RecordLink cid={cid as CID} />;
     }
+  },
+  {
+    field: 'messageName',
+    headerName: 'Protobuf Message',
+    width: 300,
+    cellClassName: 'primary'
   }
 ];
 

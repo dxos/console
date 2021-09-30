@@ -10,7 +10,7 @@ import { SVG, convertTreeToGraph, createTree, useGrid } from '@dxos/gem-core';
 import { ForceLayout, Graph } from '@dxos/gem-spore';
 import { DomainInfo } from '@dxos/registry-api';
 
-import { IRecord } from '../hooks';
+import { IRecord } from './RecordsTable';
 
 interface RecordsGraphProps {
   domains?: DomainInfo[]
@@ -18,7 +18,7 @@ interface RecordsGraphProps {
 }
 
 // https://github.com/dxos/gem/blob/main/packages/gem-spore/stories/graph.stories.tsx
-export const RecordGraph = ({ domains = [], records = [] }: RecordsGraphProps) => {
+export const RecordsGraph = ({ domains = [], records = [] }: RecordsGraphProps) => {
   const [resizeListener, size] = useResizeAware();
   const grid = useGrid(size);
   const [data] = useState(convertTreeToGraph(createTree({ minDepth: 1, maxDepth: 3 })));

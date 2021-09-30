@@ -6,11 +6,10 @@ import { Toolbar } from '@mui/material';
 import debug from 'debug';
 import React, { useState } from 'react';
 
-import { CID } from '@dxos/registry-api';
+import { CID, RegistryTypeRecord } from '@dxos/registry-api';
 
 import {
-  IRecord,
-  IRecordType,
+  IResource,
   RecordsTable,
   RecordTypeSelector
 } from '../src';
@@ -23,15 +22,15 @@ export default {
 };
 
 export const TypeSelector = () => {
-  const types: IRecordType[] = [
+  const types: RegistryTypeRecord[] = [
     {
       cid: CID.fromB58String('QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR'),
       messageName: 'A'
-    },
+    } as RegistryTypeRecord,
     {
       cid: CID.fromB58String('QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu'),
       messageName: 'B (Long Name)'
-    }
+    } as RegistryTypeRecord
   ];
 
   const [type, setType] = useState<CID | undefined>(types[0].cid);
@@ -50,18 +49,18 @@ export const TypeSelector = () => {
 };
 
 export const Records = () => {
-  const records: IRecord[] = [
+  const records: IResource[] = [
     {
+      name: 'dxos/record-1',
       cid: CID.fromB58String('QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR'),
       created: new Date().toISOString(),
-      name: 'dxos/record-1',
       type: '.dxos.App',
       title: 'Record 1'
     },
     {
+      name: 'dxos/record-2',
       cid: CID.fromB58String('QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu'),
       created: new Date().toISOString(),
-      name: 'dxos/record-2',
       type: '.dxos.App',
       title: 'Record 2'
     }
