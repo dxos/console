@@ -5,12 +5,10 @@
 import { Divider, FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import React from 'react';
 
-import { CID } from '@dxos/registry-api';
-
-import { IRecordType } from '../hooks';
+import { CID, RegistryTypeRecord } from '@dxos/registry-api';
 
 interface RecordTypeSelectorProps {
-  types?: IRecordType[]
+  types?: RegistryTypeRecord[]
   type?: CID
   onChange: (type: CID | undefined) => void
 }
@@ -33,7 +31,7 @@ export const RecordTypeSelector = ({ types = [], type: selected, onChange }: Rec
       >
         <MenuItem value=''>ALL</MenuItem>
         <Divider />
-        {types.map(({ cid, messageName }: IRecordType) => (
+        {types.map(({ cid, messageName }: RegistryTypeRecord) => (
           <MenuItem
             key={cid.toString()}
             value={cid.toString()}

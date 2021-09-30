@@ -19,27 +19,29 @@ import { createContext, useContext, useEffect, useState } from 'react';
 // TODO(burdon): registry-pai WHY is RecordKind necessary.
 // TODO(burdon): registry-api remove MockRegistryApi singleton.
 
-import { CID, DomainInfo, IQuery, IRegistryApi, RegistryRecord, Resource } from '@dxos/registry-api';
+import {
+  CID, DomainInfo, IQuery, IRegistryApi, RegistryTypeRecord, RegistryRecord, Resource
+} from '@dxos/registry-api';
 
 import { IConfig } from './useConfig';
 
 export const RegistryContext = createContext<IRegistryApi | undefined>(undefined);
 
-// TODO(burdon): Replace with registry-api RegistryTypeRecord type.
-export interface IRecordType {
-  cid: CID
-  messageName: string
-}
+// UX types.
+// TODO(burdon): RecordsPanel should just show Records (no name, etc.)
+// TODO(burdon): ResourcesPanel should show a join of ALL versioned records for a particular name (with links to above).
 
-// TODO(burdon): Replace with registry-api RegistryRecord type.
 export interface IRecord {
+  name: string // TODO(burdon): This isn't part of the record.
+
   cid: CID
-  created?: string
-  name: string
-  type: string // TODO(burdon): ???
+  version?: string // TODO(burdon): Add.
+  created?: string // TODO(burdon): Is this working?
   title?: string
-  url?: string
   data?: any
+
+  type?: string // TODO(burdon): What is this?
+  url?: string
 }
 
 /**
@@ -56,6 +58,7 @@ export const useRegistryClient = (): IRegistryApi => {
 /**
  * Returns the set of domains.
  */
+// TODO(burdon): Query.
 export const useDomains = (): DomainInfo[] => {
   const registryClient = useRegistryClient();
   const [domains, setDomains] = useState<DomainInfo[]>([]);
@@ -74,9 +77,9 @@ export const useDomains = (): DomainInfo[] => {
  * Returns matching record types.
  * @param query
  */
-export const useRecordTypes = (query?: IQuery): IRecordType[] => {
+export const useRecordTypes = (query?: IQuery): RegistryTypeRecord[] => {
   const registryClient = useRegistryClient();
-  const [recordTypes, setRecordTypes] = useState<IRecordType[]>([]);
+  const [recordTypes, setRecordTypes] = useState<RegistryTypeRecord[]>([]);
 
   useEffect(() => {
     setImmediate(async () => {
@@ -130,9 +133,9 @@ export const useResources = (query?: IQuery): Resource[] => {
  * @param recordTypes
  * @param config
  */
-export const joinRecords = (resources: Resource[], recordTypes: IRecordType[], config: IConfig): IRecord[] => {
+export const joinRecords = (resources: Resource[], recordTypes: RegistryTypeRecord[], config: IConfig): IRecord[] => {
   // TODO(burdon): Hack.
-  const getRecordTypeString = (record: RegistryRecord, types: IRecordType[]): string | undefined => {
+  const getRecordTypeString = (record: RegistryRecord, types: RegistryTypeRecord[]): string | undefined => {
     if (RegistryRecord.isDataRecord(record)) {
       const matches = types.filter(({ cid }) => cid.equals(record.type));
       if (matches.length !== 1) {
@@ -144,30 +147,31 @@ export const joinRecords = (resources: Resource[], recordTypes: IRecordType[], c
   };
 
   return resources.map(resource => {
-    const type = getRecordTypeString(resource.record, recordTypes);
-
-    // TODO(burdon): App type const?
-    const url = (type === '.dxos.App')
-      ? urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
-      : undefined;
-
-    const result: IRecord = {
+    const record: IRecord = {
+      name: resource.id.toString(),
       cid: resource.record.cid,
       // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
       created: resource.record.meta.created,
-      name: resource.id.toString(),
-      type: type || '', // TODO(burdon): ???
       title: resource.record.meta.name
     };
 
+    const type = getRecordTypeString(resource.record, recordTypes);
+    if (type) {
+      record.type = type;
+    }
+
+    // TODO(burdon): Move to Resrouce.
+    const url = (type === '.dxos.App')
+      ? urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
+      : undefined;
     if (url) {
-      result.url = url;
+      record.url = url;
     }
 
     if (RegistryRecord.isDataRecord(resource.record)) {
-      result.data = resource.record.data;
+      record.data = resource.record.data;
     }
 
-    return result;
+    return record;
   });
 };
