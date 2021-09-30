@@ -10,8 +10,8 @@ import { createCustomTheme, IConfig } from '../src';
 
 export const config: IConfig = {
   app: {
-    title: 'Test',
-    theme: 'dark'
+    title: 'Test'
+    // theme: 'dark'
   },
   build: {
     version: '1.0.0'

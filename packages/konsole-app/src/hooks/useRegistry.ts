@@ -3,7 +3,6 @@
 //
 
 import assert from 'assert';
-import urlJoin from 'proper-url-join';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 // TODO(burdon): Consistent prefixes (e.g., IQuery vs Query)?
@@ -20,29 +19,14 @@ import { createContext, useContext, useEffect, useState } from 'react';
 // TODO(burdon): registry-api remove MockRegistryApi singleton.
 
 import {
-  CID, DomainInfo, IQuery, IRegistryApi, RegistryTypeRecord, RegistryRecord, Resource
+  DomainInfo, IQuery, IRegistryApi, RegistryTypeRecord, RegistryRecord, Resource
 } from '@dxos/registry-api';
-
-import { IConfig } from './useConfig';
 
 export const RegistryContext = createContext<IRegistryApi | undefined>(undefined);
 
 // UX types.
 // TODO(burdon): RecordsPanel should just show Records (no name, etc.)
 // TODO(burdon): ResourcesPanel should show a join of ALL versioned records for a particular name (with links to above).
-
-export interface IRecord {
-  name: string // TODO(burdon): This isn't part of the record.
-
-  cid: CID
-  version?: string // TODO(burdon): Add.
-  created?: string // TODO(burdon): Is this working?
-  title?: string
-  data?: any
-
-  type?: string // TODO(burdon): What is this?
-  url?: string
-}
 
 /**
  * Returns the configured client object.
@@ -125,53 +109,4 @@ export const useResources = (query?: IQuery): Resource[] => {
   }, [query]);
 
   return resources;
-};
-
-/**
- * Joins resources with record types.
- * @param resources
- * @param recordTypes
- * @param config
- */
-export const joinRecords = (resources: Resource[], recordTypes: RegistryTypeRecord[], config: IConfig): IRecord[] => {
-  // TODO(burdon): Hack.
-  const getRecordTypeString = (record: RegistryRecord, types: RegistryTypeRecord[]): string | undefined => {
-    if (RegistryRecord.isDataRecord(record)) {
-      const matches = types.filter(({ cid }) => cid.equals(record.type));
-      if (matches.length !== 1) {
-        return;
-      }
-
-      return matches[0].messageName;
-    }
-  };
-
-  return resources.map(resource => {
-    const record: IRecord = {
-      name: resource.id.toString(),
-      cid: resource.record.cid,
-      // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
-      created: resource.record.meta.created,
-      title: resource.record.meta.name
-    };
-
-    const type = getRecordTypeString(resource.record, recordTypes);
-    if (type) {
-      record.type = type;
-    }
-
-    // TODO(burdon): Move to Resrouce.
-    const url = (type === '.dxos.App')
-      ? urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
-      : undefined;
-    if (url) {
-      record.url = url;
-    }
-
-    if (RegistryRecord.isDataRecord(resource.record)) {
-      record.data = resource.record.data;
-    }
-
-    return record;
-  });
 };

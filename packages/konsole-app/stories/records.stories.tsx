@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 import { CID, RegistryTypeRecord } from '@dxos/registry-api';
 
 import {
-  IRecord,
+  IResource,
   RecordsTable,
   RecordTypeSelector
 } from '../src';
@@ -49,7 +49,7 @@ export const TypeSelector = () => {
 };
 
 export const Records = () => {
-  const records: IRecord[] = [
+  const records: IResource[] = [
     {
       name: 'dxos/record-1',
       cid: CID.fromB58String('QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR'),

@@ -23,15 +23,19 @@ interface SidebarProps {
  */
 export const Sidebar = ({ panels = [], selected, onSelect }: SidebarProps) => {
   return (
-    <Box>
+    <Box
+      sx={{
+        overflow: 'scroll'
+      }}
+    >
       <List
         sx={{
           padding: 0
         }}
       >
-        {panels.map(({ id, path, label, icon: Icon = DefaultIcon }, i) => (
+        {panels.map(({ id, label, icon: Icon = DefaultIcon }) => (
           <ListItem
-            key={i}
+            key={id}
             button
             selected={id === selected}
             onClick={() => onSelect && onSelect(id)}
@@ -39,7 +43,7 @@ export const Sidebar = ({ panels = [], selected, onSelect }: SidebarProps) => {
             <ListItemIcon
               sx={{
                 minWidth: 38,
-                color: theme => (path === selected) ? theme.palette.primary.main : theme.palette.action.disabled
+                color: theme => (id === selected) ? theme.palette.primary.main : theme.palette.action.disabled
               }}
             >
               <Icon />

@@ -8,14 +8,73 @@ import {
   BubbleChart as GraphIcon
 } from '@mui/icons-material';
 import { Box, Collapse, IconButton, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
-import { CID, IQuery } from '@dxos/registry-api';
+import { CID, IQuery, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-api';
 
-import { JsonView, Panel, RecordGraph, RecordsTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
-import { useConfig, useDomains, useRecordTypes, useResources, joinRecords } from '../hooks';
+import {
+  IResource,
+  JsonView,
+  Panel,
+  RecordsGraph,
+  RecordsTable,
+  RecordTypeSelector,
+  SearchBar,
+  Toolbar
+} from '../components';
+import { useConfig, useDomains, useRecordTypes, useResources, IConfig } from '../hooks';
 import { safe } from '../util';
+
+/**
+ * Joins resources with record types.
+ * @param resources
+ * @param recordTypes
+ * @param config
+ */
+export const joinRecords = (resources: Resource[], recordTypes: RegistryTypeRecord[], config: IConfig): IResource[] => {
+  // TODO(burdon): Hack.
+  const getRecordTypeString = (record: RegistryRecord, types: RegistryTypeRecord[]): string | undefined => {
+    if (RegistryRecord.isDataRecord(record)) {
+      const matches = types.filter(({ cid }) => cid.equals(record.type));
+      if (matches.length !== 1) {
+        return;
+      }
+
+      return matches[0].messageName;
+    }
+  };
+
+  return resources.map(resource => {
+    const record: IResource = {
+      name: resource.id.toString(),
+      cid: resource.record.cid,
+      // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
+      created: resource.record.meta.created,
+      title: resource.record.meta.name
+    };
+
+    const type = getRecordTypeString(resource.record, recordTypes);
+    if (type) {
+      record.type = type;
+    }
+
+    // TODO(burdon): Move to Resrouce.
+    const url = (type === '.dxos.App')
+      ? urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
+      : undefined;
+    if (url) {
+      record.url = url;
+    }
+
+    if (RegistryRecord.isDataRecord(resource.record)) {
+      record.data = resource.record.data;
+    }
+
+    return record;
+  });
+};
 
 const views = [
   { key: 'table', Icon: TableIcon },
@@ -146,7 +205,7 @@ export const RecordsPanel = ({ match }: { match?: any }) => {
         </Collapse>
       </ViewPanel>
       <ViewPanel visible={view === 'graph'}>
-        <RecordGraph
+        <RecordsGraph
           domains={domains}
           records={records}
         />

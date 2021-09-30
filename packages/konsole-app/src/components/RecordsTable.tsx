@@ -9,9 +9,22 @@ import React from 'react';
 
 import { CID } from '@dxos/registry-api';
 
-import { IRecord } from '../hooks';
 import { getRelativeTime, sortDateStrings } from '../util';
 import { truncate, DataGrid } from './DataGrid';
+
+export interface IRecord {
+  cid: CID
+  version?: string // TODO(burdon): Add.
+  created?: string // TODO(burdon): Is this working?
+  title?: string
+  data?: any
+}
+
+export interface IResource extends IRecord {
+  name: string // TODO(burdon): This isn't part of the record.
+  type?: string // TODO(burdon): What is this?
+  url?: string
+}
 
 // NOTE: Test dimensions on iPad Pro.
 // https://mui.com/components/data-grid/columns
@@ -83,7 +96,6 @@ interface RecordsTableProps {
  * Table that displays all registry records.
  */
 export const RecordsTable = ({ records = [], selected, onSelect }: RecordsTableProps) => {
-  // const [selected, setSelected] = useState<GridRowId | undefined>();
   const s: GridRowId | undefined = selected?.toB58String() as GridRowId;
 
   const handleSelect = (id: GridRowId) => {
