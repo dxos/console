@@ -2,22 +2,22 @@
   "name": "@dxos/kube-server",
   "version": "1.2.9-alpha.29",
   "description": "KUBE Server",
+  "license": "AGPL-3.0",
   "main": "dist/es/index.js",
   "bin": {
-    "kube-server": "bin/kube-server.js",
-    "dxos-console": "bin/kube-server.js"
+    "dxos-console": "bin/kube-server.js",
+    "kube-server": "bin/kube-server.js"
   },
   "files": [
     "bin/",
     "dist/es"
   ],
-  "license": "AGPL-3.0",
   "scripts": {
     "build": "npm run clean && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\" --copy-files",
+    "ci": "npm run build && npm run lint && npm run test",
     "clean": "rm -rf ./dist",
     "lint": "semistandard 'src/**/*.js'",
     "start": "CONFIG_FILE=${CONFIG_FILE=~/.wire/profile/default} BABEL_DISABLE_CACHE=1 nodemon --exec babel-node src/server.js -- --verbose",
-    "ci": "npm run build && npm run lint && npm run test",
     "test": "jest --rootDir ./src --passWithNoTests --no-cache"
   },
   "eslintConfig": {

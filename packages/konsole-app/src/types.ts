@@ -4,25 +4,6 @@
 
 import { ComponentType } from 'react';
 
-import { CID } from '@dxos/registry-api';
-
-// TODO(burdon): Replace with registry-api type.
-export interface IRecordType {
-  type: CID
-  label: string
-}
-
-// TODO(burdon): Replace with registry-api type.
-export interface IRecord {
-  cid: CID
-  created?: string
-  name: string
-  type: string // TODO(burdon): ???
-  title?: string
-  url?: string
-  data?: any
-}
-
 export interface IService {
   name: string
   type: string

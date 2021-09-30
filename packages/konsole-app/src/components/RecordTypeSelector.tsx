@@ -7,7 +7,7 @@ import React from 'react';
 
 import { CID } from '@dxos/registry-api';
 
-import { IRecordType } from '../types';
+import { IRecordType } from '../hooks';
 
 interface RecordTypeSelectorProps {
   types?: IRecordType[]
@@ -18,8 +18,8 @@ interface RecordTypeSelectorProps {
 export const RecordTypeSelector = ({ types = [], type: selected, onChange }: RecordTypeSelectorProps) => {
   const handleChange = (event: SelectChangeEvent) => {
     const value = event.target.value as string;
-    const recordType = value ? types.find(({ type }) => type.equals(value)) : undefined;
-    onChange(recordType?.type);
+    const recordType = value ? types.find(({ cid }) => cid.equals(value)) : undefined;
+    onChange(recordType?.cid);
   };
 
   return (
@@ -33,12 +33,12 @@ export const RecordTypeSelector = ({ types = [], type: selected, onChange }: Rec
       >
         <MenuItem value=''>ALL</MenuItem>
         <Divider />
-        {types.map(({ type, label }: IRecordType) => (
+        {types.map(({ cid, messageName }: IRecordType) => (
           <MenuItem
-            key={type.toString()}
-            value={type.toString()}
+            key={cid.toString()}
+            value={cid.toString()}
           >
-            {label}
+            {messageName}
           </MenuItem>
         ))}
       </Select>

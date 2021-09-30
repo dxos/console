@@ -8,6 +8,7 @@ export * from './containers';
 export * from './hooks';
 export * from './icons';
 export * from './logging';
+export * from './paths';
 export * from './panels';
 export * from './theme';
 export * from './types';

@@ -2,14 +2,14 @@
 // Copyright 2021 DXOS.org
 //
 
-import React, { useState } from 'react';
 import { Launch as LaunchIcon } from '@mui/icons-material';
 import { Box, IconButton, Link } from '@mui/material';
 import { GridColDef, GridCellParams, GridRowId } from '@mui/x-data-grid';
+import React from 'react';
 
 import { CID } from '@dxos/registry-api';
 
-import { IRecord } from '../types';
+import { IRecord } from '../hooks';
 import { getRelativeTime, sortDateStrings } from '../util';
 import { truncate, DataGrid } from './DataGrid';
 
@@ -75,18 +75,20 @@ const columns: GridColDef[] = [
 
 interface RecordsTableProps {
   records?: IRecord[]
+  selected?: CID
   onSelect?: (cid: CID | undefined) => void
 }
 
 /**
  * Table that displays all registry records.
  */
-export const RecordTable = ({ records = [], onSelect }: RecordsTableProps) => {
-  const [selected, setSelected] = useState<GridRowId | undefined>();
+export const RecordsTable = ({ records = [], selected, onSelect }: RecordsTableProps) => {
+  // const [selected, setSelected] = useState<GridRowId | undefined>();
+  const s: GridRowId | undefined = selected?.toB58String() as GridRowId;
 
   const handleSelect = (id: GridRowId) => {
-    const next = (id === selected) ? undefined : id;
-    setSelected(next);
+    const next = (id === s) ? undefined : id;
+    // setSelected(next);
     if (onSelect) {
       const cid = next ? CID.fromB58String(next as string) : undefined;
       onSelect(cid);
@@ -106,7 +108,7 @@ export const RecordTable = ({ records = [], onSelect }: RecordsTableProps) => {
         rows={records}
         columns={columns}
         getRowId={({ cid }) => cid.toB58String()}
-        selectionModel={selected ? [selected] : []}
+        selectionModel={selected ? [s] : []}
         onRowClick={({ id }) => handleSelect(id)}
         disableSelectionOnClick
         hideFooterSelectedRowCount

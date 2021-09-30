@@ -11,7 +11,7 @@ import { CID } from '@dxos/registry-api';
 import {
   IRecord,
   IRecordType,
-  RecordTable,
+  RecordsTable,
   RecordTypeSelector
 } from '../src';
 import { config, RootContainer } from './config';
@@ -25,16 +25,16 @@ export default {
 export const TypeSelector = () => {
   const types: IRecordType[] = [
     {
-      type: CID.fromB58String('QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR'),
-      label: 'A'
+      cid: CID.fromB58String('QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR'),
+      messageName: 'A'
     },
     {
-      type: CID.fromB58String('QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu'),
-      label: 'B (Long Name)'
+      cid: CID.fromB58String('QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu'),
+      messageName: 'B (Long Name)'
     }
   ];
 
-  const [type, setType] = useState<CID | undefined>(types[0].type);
+  const [type, setType] = useState<CID | undefined>(types[0].cid);
 
   return (
     <RootContainer config={config}>
@@ -64,12 +64,12 @@ export const Records = () => {
       name: 'dxos/record-2',
       type: '.dxos.App',
       title: 'Record 2'
-    },
+    }
   ];
 
   return (
     <RootContainer config={config}>
-      <RecordTable
+      <RecordsTable
         records={records}
       />
     </RootContainer>

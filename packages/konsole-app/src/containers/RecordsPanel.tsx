@@ -13,7 +13,7 @@ import { generatePath, useHistory, useParams } from 'react-router';
 
 import { CID, IQuery } from '@dxos/registry-api';
 
-import { JsonView, Panel, RecordGraph, RecordTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
+import { JsonView, Panel, RecordGraph, RecordsTable, RecordTypeSelector, SearchBar, Toolbar } from '../components';
 import { useConfig, useDomains, useRecordTypes, useResources, joinRecords } from '../hooks';
 import { safe } from '../util';
 
@@ -60,7 +60,7 @@ const ViewPanel = ({ children, visible }: { children: React.ReactNode, visible: 
 /**
  * Display records panel
  */
-export const RecordsPanel = ({ match }: { match?: any }) => { // TODO(burdon): Type?
+export const RecordsPanel = ({ match }: { match?: any }) => {
   const config = useConfig();
   const history = useHistory();
   const { cid }: { cid: string } = useParams();
@@ -73,9 +73,7 @@ export const RecordsPanel = ({ match }: { match?: any }) => { // TODO(burdon): T
 
   const domains = useDomains();
   const recordTypes = useRecordTypes();
-
-  // TODO(burdon): This should only show records; separate view for resources => record.
-  const resources = useResources(query) ?? [];
+  const resources = useResources(query);
   const records = joinRecords(resources, recordTypes, config);
 
   const handleSelect = (cid: CID | undefined) => {
@@ -129,8 +127,9 @@ export const RecordsPanel = ({ match }: { match?: any }) => { // TODO(burdon): T
       )}
     >
       <ViewPanel visible={view === 'table'}>
-        <RecordTable
+        <RecordsTable
           records={records}
+          selected={selected}
           onSelect={handleSelect}
         />
         <Collapse in={selected !== undefined} timeout='auto' unmountOnExit>

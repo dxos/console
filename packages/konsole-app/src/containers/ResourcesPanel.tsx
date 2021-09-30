@@ -5,36 +5,38 @@
 import { Sync as RefreshIcon } from '@mui/icons-material';
 import { Box, IconButton } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { CID } from '@dxos/registry-api';
+import { RegistryRecord, IQuery } from '@dxos/registry-api';
 
 import { DataGrid, Panel, RecordLink, Toolbar } from '../components';
-import { useRecordTypes } from '../hooks';
+import { useResources } from '../hooks';
 
 const columns: GridColDef[] = [
   {
-    field: 'messageName',
-    headerName: 'Protobuf Message',
+    field: 'id', // TODO(burdon): Rename?
+    headerName: 'DXN',
     width: 300,
-    cellClassName: 'primary'
+    cellClassName: 'monospace primary'
   },
   {
-    field: 'cid',
+    field: 'record',
     headerName: 'Record CID',
-    width: 180,
+    width: 300,
     cellClassName: 'monospace secondary',
-    renderCell: ({ value: cid }) => {
-      return <RecordLink cid={cid as CID} />;
+    renderCell: ({ value }) => {
+      const { cid } = value as RegistryRecord;
+      return <RecordLink cid={cid} />;
     }
   }
 ];
 
 /**
- * Displays all defined tyeps.
+ * Displays the resources.
  */
-export const TypesPanel = () => {
-  const types = useRecordTypes();
+export const ResourcesPanel = () => {
+  const query = useMemo<IQuery>(() => ({}), []);
+  const resources = useResources(query) ?? [];
 
   return (
     <Panel
@@ -52,9 +54,9 @@ export const TypesPanel = () => {
       )}
     >
       <DataGrid
-        rows={types || []}
+        rows={resources || []}
         columns={columns}
-        getRowId={({ cid }) => cid}
+        getRowId={({ id }) => id}
       />
     </Panel>
   );

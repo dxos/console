@@ -4,9 +4,30 @@
 
 import { styled } from '@mui/material/styles';
 import { DataGrid as MuiDataGrid } from '@mui/x-data-grid';
+import React from 'react';
+import { generatePath, useHistory } from 'react-router';
+
+import { CID } from '@dxos/registry-api';
+import { paths } from '../paths';
 
 export const truncate = (key: string, head = 8, tail = 8) => {
   return key.slice(0, head) + '...' + key.slice(-tail);
+};
+
+export const RecordLink = ({ cid }: { cid: CID }) => {
+  const history = useHistory();
+  const handleNavigate = (cid: CID) => {
+    history.push(generatePath(paths.records, { cid: cid ? cid.toB58String() : undefined }));
+  };
+
+  return (
+    <div
+      className='monospace secondary'
+      onClick={() => handleNavigate(cid)}
+    >
+      {truncate(cid.toB58String())}
+    </div>
+  );
 };
 
 export const DataGrid = styled(MuiDataGrid)(({ theme }) => ({

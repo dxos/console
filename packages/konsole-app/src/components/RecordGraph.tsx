@@ -10,7 +10,7 @@ import { SVG, convertTreeToGraph, createTree, useGrid } from '@dxos/gem-core';
 import { ForceLayout, Graph } from '@dxos/gem-spore';
 import { DomainInfo } from '@dxos/registry-api';
 
-import { IRecord } from '../types';
+import { IRecord } from '../hooks';
 
 interface RecordsGraphProps {
   domains?: DomainInfo[]
