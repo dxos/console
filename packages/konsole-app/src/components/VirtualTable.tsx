@@ -2,7 +2,13 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box, Table, TableCell, TableContainer, TableBody, TableHead, TableRow } from '@mui/material';
+import {
+  ArrowUpward as UpIcon,
+  ArrowDownward as Downicon
+} from '@mui/icons-material';
+import {
+  Box, IconButton, Table, TableCell, TableContainer, TableBody, TableHead, TableRow
+} from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface ScrollState {
@@ -43,6 +49,7 @@ interface Column {
   key: string
   title?: string
   width?: number
+  sort?: boolean
 }
 
 interface Row {
@@ -50,6 +57,55 @@ interface Row {
   top: number
   height: number
 }
+
+type SortDirection = 'up' | 'down' | undefined
+
+interface HeaderCellProps {
+  column: Column
+  sortDirection?: SortDirection,
+  onSort: (sort: SortDirection) => void
+}
+
+const HeaderCell = ({ column: { key, title, width, sort }, sortDirection, onSort }: HeaderCellProps) => {
+  const handleSort = () => {
+    onSort((sortDirection === 'up') ? 'down' : (sortDirection === 'down') ? undefined : 'up');
+  };
+
+  return (
+    <TableCell
+      sx={{
+        width,
+        maxWidth: width,
+        flex: width === undefined ? 1 : 0,
+        flexShrink: 0,
+        padding: 0,
+        cursor: 'pointer'
+      }}
+    >
+      <Box sx={{ display: 'flex' }} onClick={sort ? handleSort : undefined}>
+        <Box
+          sx={{
+            flex: 1,
+            padding: 1,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            WebkitUserSelect: 'none'
+          }}>
+          {title || key}
+        </Box>
+        {sort && sortDirection && (
+          <IconButton size='small'>
+            {(sortDirection === 'up' && (
+              <UpIcon />
+            )) || (
+              <Downicon />
+            )}
+          </IconButton>
+        )}
+      </Box>
+    </TableCell>
+  );
+};
 
 const rowHeight = 42;
 const defaultRowKey = ({ i }: { i: number }) => String(i);
@@ -67,11 +123,9 @@ interface VirtualTableProps<T> {
   renderRow?: ({ key, row }: { key: string, row: any }) => React.ReactNode
 }
 
-// TODO(burdon): Column sort
-// TODO(burdon): Expand row
-// TODO(burdon): Custom rendering
-// TODO(burdon): Column filter
+// TODO(burdon): Expand row/custom render
 // TODO(burdon): Side/bottom master/detail
+// TODO(burdon): Column filter
 // TODO(burdon): Request more data callback
 // TODO(burdon): Paging (vs. virtual scroll).
 export const VirtualTable = <T extends RowData> (
@@ -86,19 +140,36 @@ export const VirtualTable = <T extends RowData> (
   }: VirtualTableProps<T>
 ) => {
   //
+  // Sorting.
+  //
+  const [{ sortKey, sortDirection }, setSort] = useState<{ sortKey?: string, sortDirection?: SortDirection }>({});
+  const handleSort = (sortKey: string, sortDirection: SortDirection) => setSort({ sortKey, sortDirection });
+
+  //
   // Cache posiions (from height) when data updated.
   //
-  const [{ height, layout }, setProps] = useState<{ height: number, layout: Row[] }>({ height: 0, layout: [] });
+  const [{ height, sortedRows }, setProps] = useState<{ height: number, sortedRows: Row[] }>({ height: 0, sortedRows: [] });
   useEffect(() => {
-    const layout: Row[] = [];
-    const height = dataRows.reduce((h, row, i) => {
+    // Sort.
+    const rows = [...dataRows];
+    if (sortKey && sortDirection) {
+      rows.sort((v1: RowData, v2: RowData) => {
+        const d1 = getValue(v1, sortKey);
+        const d2 = getValue(v2, sortKey);
+        return (d1 < d2 ? -1 : d1 > d2 ? 1 : 0) * (sortDirection === 'up' ? 1 : -1);
+      });
+    }
+
+    // Do layout.
+    const sortedRows: Row[] = [];
+    const height = rows.reduce((h, row, i) => {
       const rowHeight = getRowHeight({ i, row });
-      layout.push({ data: row, top: h, height: rowHeight });
+      sortedRows.push({ data: row, top: h, height: rowHeight });
       return h + rowHeight;
     }, 0);
 
-    setProps({ height, layout });
-  }, [dataRows]);
+    setProps({ height, sortedRows });
+  }, [dataRows, sortKey, sortDirection]);
 
   //
   // Set visible range.
@@ -111,7 +182,7 @@ export const VirtualTable = <T extends RowData> (
 
     let start = 0;
     let end = 0;
-    layout.forEach(({ top }, i) => {
+    sortedRows.forEach(({ top }, i) => {
       if (scrollTop > top) {
         start = i;
       } else if ((scrollTop + clientHeight) > top) {
@@ -120,8 +191,8 @@ export const VirtualTable = <T extends RowData> (
     });
 
     // TODO(burdon): Configure num rows before/after that are rendered.
-    setRange({ start, end, rows: layout.slice(start, end + 1) });
-  }, [layout, scrollState]);
+    setRange({ start, end, rows: sortedRows.slice(start, end + 1) });
+  }, [sortedRows, scrollState]);
 
   //
   // Selection
@@ -169,18 +240,13 @@ export const VirtualTable = <T extends RowData> (
         >
           <TableHead>
             <TableRow>
-              {columns.map(({ key, title, width }) => (
-                <TableCell
-                  key={key}
-                  sx={{
-                    width,
-                    flex: width === undefined ? 1 : 0,
-                    flexShrink: 0,
-                    padding: 1
-                  }}
-                >
-                  {title || key}
-                </TableCell>
+              {columns.map((column) => (
+                <HeaderCell
+                  key={column.key}
+                  column={column}
+                  sortDirection={sortKey === column.key ? sortDirection : undefined}
+                  onSort={sortDirection => handleSort(column.key, sortDirection)}
+                />
               ))}
             </TableRow>
           </TableHead>

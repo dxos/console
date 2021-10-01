@@ -3,6 +3,7 @@
 //
 
 import debug from 'debug';
+import faker from 'faker';
 import React, { useState } from 'react';
 
 import { VirtualTable } from '../src';
@@ -17,36 +18,45 @@ export default {
 const columns = [
   {
     key: 'id',
+    title: 'ID',
     width: 100
   },
   {
     key: 'title',
-    title: 'Title'
+    title: 'Title',
+    sort: true
   },
   {
     key: 'toggle',
-    width: 100
+    width: 100,
+    sort: true
   }
 ];
 
-export const Primary = () => {
+const Table = ({ rows }: { rows: any[] }) => {
   const [selected, setSelected] = useState<string[]>([]);
 
+  return (
+    <VirtualTable
+      rows={rows}
+      columns={columns}
+      getRowKey={({ row }) => row.id}
+      selected={selected}
+      onSelect={setSelected}
+    />
+  );
+};
+
+export const Primary = () => {
   const rows = [...new Array(100)].map((_, i) => ({
     id: `item-${i}`,
-    title: `Item ${i}`,
+    title: faker.lorem.sentence(),
     toggle: i % 3 === 0
   }));
 
   return (
     <RootContainer config={config}>
-      <VirtualTable
-        rows={rows}
-        columns={columns}
-        getRowKey={({ row }) => row.id}
-        selected={selected}
-        onSelect={setSelected}
-      />
+      <Table rows={rows} />
     </RootContainer>
   );
 };
