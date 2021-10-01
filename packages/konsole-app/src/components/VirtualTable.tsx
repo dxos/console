@@ -2,7 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box, Table, TableCell, TableContainer, TableBody, TableHead, TablePagination, TableRow } from '@mui/material';
+import { Box, Table, TableCell, TableContainer, TableBody, TableHead, TableRow } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface ScrollState {
@@ -37,36 +37,53 @@ const useScrollHandler = (scrollContainerRef: React.RefObject<HTMLDivElement>): 
   return [scrollState, handleUpdate];
 };
 
-interface Row {
-  data: any
-  top: number
-  height: number
+export type RowData = { [index: string]: any }
+
+interface Column {
+  key: string
+  title?: string
+  width?: number
 }
 
-interface VirtualTableProps {
-  rows?: any[]
-  getRowKey: ({ row, i }: { row: any, i: number }) => string
-  getRowHeight?: ({ row, i }: { row: any, i: number }) => number
-  renderRow?: ({ key, row }: { key: string, row: any }) => React.ReactNode
+interface Row {
+  data: RowData
+  top: number
+  height: number
 }
 
 const rowHeight = 42;
 const defaultRowKey = ({ i }: { i: number }) => String(i);
 const defaultRowHeight = () => rowHeight;
+const defaultValue = (data: RowData, key: string) => String(data[key]);
 
-// TODO(burdon): Paging (vs. virtual scroll).
-// TODO(burdon): Column defs
-// TODO(burdon): Custom rendering
+interface VirtualTableProps<T> {
+  rows?: T[]
+  selected?: string[]
+  onSelect?: (selected: string[]) => void
+  columns: Column[]
+  getRowKey: ({ row, i }: { row: any, i: number }) => string
+  getRowHeight?: ({ row, i }: { row: any, i: number }) => number
+  getValue?: (data: RowData, key: string) => any
+  renderRow?: ({ key, row }: { key: string, row: any }) => React.ReactNode
+}
+
 // TODO(burdon): Column sort
-// TODO(burdon): Column filter
 // TODO(burdon): Expand row
+// TODO(burdon): Custom rendering
+// TODO(burdon): Column filter
 // TODO(burdon): Side/bottom master/detail
-export const VirtualTable = (
+// TODO(burdon): Request more data callback
+// TODO(burdon): Paging (vs. virtual scroll).
+export const VirtualTable = <T extends RowData> (
   {
     rows: dataRows = [],
+    selected: controlledSelected = [],
+    onSelect,
+    columns = [],
     getRowKey = defaultRowKey,
-    getRowHeight = defaultRowHeight
-  }: VirtualTableProps
+    getRowHeight = defaultRowHeight,
+    getValue = defaultValue
+  }: VirtualTableProps<T>
 ) => {
   //
   // Cache posiions (from height) when data updated.
@@ -106,6 +123,32 @@ export const VirtualTable = (
     setRange({ start, end, rows: layout.slice(start, end + 1) });
   }, [layout, scrollState]);
 
+  //
+  // Selection
+  // TODO(burdon): Options for single select and toggle select.
+  //
+  const [selectedController, setSelectedControlled] = useState<string[]>([]);
+  useEffect(() => setSelectedControlled(controlledSelected), [controlledSelected]);
+  const handleSelect = (selected: string) => {
+    if (onSelect) {
+      onSelect([selected]);
+    } else {
+      setSelectedControlled([selected]);
+    }
+  };
+
+  const TableFooter = () => (
+    <Box
+      sx={{
+        display: 'flex',
+        flexShrink: 0,
+        justifyContent: 'center'
+      }}
+    >
+      {`${dataRows.length} rows`}
+    </Box>
+  );
+
   return (
     <Box
       sx={{
@@ -126,7 +169,19 @@ export const VirtualTable = (
         >
           <TableHead>
             <TableRow>
-              <TableCell>Title</TableCell>
+              {columns.map(({ key, title, width }) => (
+                <TableCell
+                  key={key}
+                  sx={{
+                    width,
+                    flex: width === undefined ? 1 : 0,
+                    flexShrink: 0,
+                    padding: 1
+                  }}
+                >
+                  {title || key}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody
@@ -135,39 +190,45 @@ export const VirtualTable = (
               height: height
             }}
           >
-            {range.rows.map(({ data, top, height }, i) => (
-              <TableRow
-                key={getRowKey({ i, row: data })}
-                sx={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  top
-                }}
-              >
-                <TableCell
+            {range.rows.map(({ data, top, height }, i) => {
+              const key = getRowKey({ i, row: data });
+              return (
+                <TableRow
+                  key={key}
                   sx={{
-                    height: height,
-                    padding: 0,
-                    border: 'none',
-                    borderBottom: 'none'
+                    display: 'flex',
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    top,
+                    backgroundColor: selectedController.find(s => s === key) ? 'salmon' : undefined
                   }}
+                  onClick={() => handleSelect(key)}
                 >
-                  {`[${i}]: ${JSON.stringify(data)}`}
-                </TableCell>
-              </TableRow>
-            ))}
+                  {columns.map(({ key, width }) => (
+                    <TableCell
+                      key={key}
+                      sx={{
+                        minWidth: width,
+                        flex: width === undefined ? 1 : 0,
+                        flexShrink: 0,
+                        height: height,
+                        padding: 1,
+                        border: 'none',
+                        borderBottom: 'none'
+                      }}
+                    >
+                      {getValue(data, key)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
 
-      <Box
-        sx={{
-          flexShrink: 0
-        }}
-      >
-        Bottom
-      </Box>
+      <TableFooter />
     </Box>
   );
 };
