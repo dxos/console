@@ -5,7 +5,7 @@
 import debug from 'debug';
 import React from 'react';
 
-import { FlexTable, ScrollContainer, useTestMessages } from '../src';
+import { FlexTable, useTestMessages } from '../src';
 import { config, RootContainer } from './config';
 
 debug.enable('dxos:console:*');
@@ -45,19 +45,6 @@ export const Primary = () => {
             );
           }
         }}
-      />
-    </RootContainer>
-  );
-};
-
-export const Virtual = () => {
-  const rows = [...new Array(100)].map((_, i) => ({ id: String(i), title: `Item-${i}` }));
-
-  return (
-    <RootContainer config={config}>
-      <ScrollContainer
-        rows={rows}
-        getRowKey={({ row }) => row.id}
       />
     </RootContainer>
   );
