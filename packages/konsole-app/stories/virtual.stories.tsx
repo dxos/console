@@ -50,7 +50,7 @@ const Table = ({ rows }: { rows: any[] }) => {
 export const Primary = () => {
   const rows = [...new Array(100)].map((_, i) => ({
     id: `item-${i}`,
-    title: faker.lorem.sentence(),
+    title: faker.lorem.sentences(1 + faker.random.number(3)).split('.').join('.\n'),
     toggle: i % 3 === 0
   }));
 

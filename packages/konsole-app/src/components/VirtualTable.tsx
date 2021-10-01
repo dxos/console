@@ -11,6 +11,119 @@ import {
 } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 
+//
+// Data
+//
+
+export type RowData = { [index: string]: any }
+
+interface Column {
+  key: string
+  title?: string
+  width?: number
+  sort?: boolean
+}
+
+interface Row {
+  data: RowData
+  top: number
+  height: number
+}
+
+type SortDirection = 'up' | 'down' | undefined
+
+//
+// Header
+//
+
+interface HeaderCellProps {
+  column: Column
+  sortDirection?: SortDirection,
+  onSort: (sort: SortDirection) => void
+}
+
+const HeaderCell = ({ column: { key, title, width, sort }, sortDirection, onSort }: HeaderCellProps) => {
+  const handleSort = () => {
+    onSort((sortDirection === 'up') ? 'down' : (sortDirection === 'down') ? undefined : 'up');
+  };
+
+  return (
+    <TableCell
+      sx={{
+        width,
+        maxWidth: width,
+        flex: width === undefined ? 1 : 0,
+        flexShrink: 0,
+        padding: 0,
+        cursor: 'pointer'
+      }}
+    >
+      <Box sx={{ display: 'flex' }} onClick={sort ? handleSort : undefined}>
+        <Box
+          sx={{
+            flex: 1,
+            padding: 1,
+            paddingLeft: 2,
+            paddingRight: 2,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            WebkitUserSelect: 'none'
+          }}>
+          {title || key}
+        </Box>
+        {sort && sortDirection && (
+          <IconButton size='small'>
+            {(sortDirection === 'up' && (
+              <UpIcon />
+            )) || (
+              <Downicon />
+            )}
+          </IconButton>
+        )}
+      </Box>
+    </TableCell>
+  );
+};
+
+//
+// Cell
+//
+
+interface DataCellProps {
+  column: Column
+  row: RowData
+  height: number
+  getValue: (data: RowData, key: string) => any
+}
+
+const DataCell = ({ column: { key, width }, row, height, getValue }: DataCellProps) => {
+  return (
+    <TableCell
+      key={key}
+      sx={{
+        minWidth: width,
+        flex: width === undefined ? 1 : 0,
+        flexShrink: 0,
+        height: height,
+        padding: 1,
+        paddingLeft: 2,
+        paddingRight: 2,
+        border: 'none',
+        borderBottom: 'none',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
+      }}
+    >
+      {getValue(row, key)}
+    </TableCell>
+  );
+};
+
+//
+// Scroll handler
+//
+
 interface ScrollState {
   clientHeight: number
   scrollHeight: number
@@ -43,69 +156,9 @@ const useScrollHandler = (scrollContainerRef: React.RefObject<HTMLDivElement>): 
   return [scrollState, handleUpdate];
 };
 
-export type RowData = { [index: string]: any }
-
-interface Column {
-  key: string
-  title?: string
-  width?: number
-  sort?: boolean
-}
-
-interface Row {
-  data: RowData
-  top: number
-  height: number
-}
-
-type SortDirection = 'up' | 'down' | undefined
-
-interface HeaderCellProps {
-  column: Column
-  sortDirection?: SortDirection,
-  onSort: (sort: SortDirection) => void
-}
-
-const HeaderCell = ({ column: { key, title, width, sort }, sortDirection, onSort }: HeaderCellProps) => {
-  const handleSort = () => {
-    onSort((sortDirection === 'up') ? 'down' : (sortDirection === 'down') ? undefined : 'up');
-  };
-
-  return (
-    <TableCell
-      sx={{
-        width,
-        maxWidth: width,
-        flex: width === undefined ? 1 : 0,
-        flexShrink: 0,
-        padding: 0,
-        cursor: 'pointer'
-      }}
-    >
-      <Box sx={{ display: 'flex' }} onClick={sort ? handleSort : undefined}>
-        <Box
-          sx={{
-            flex: 1,
-            padding: 1,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            WebkitUserSelect: 'none'
-          }}>
-          {title || key}
-        </Box>
-        {sort && sortDirection && (
-          <IconButton size='small'>
-            {(sortDirection === 'up' && (
-              <UpIcon />
-            )) || (
-              <Downicon />
-            )}
-          </IconButton>
-        )}
-      </Box>
-    </TableCell>
-  );
-};
+//
+// Table
+//
 
 const rowHeight = 42;
 const defaultRowKey = ({ i }: { i: number }) => String(i);
@@ -258,6 +311,7 @@ export const VirtualTable = <T extends RowData> (
           >
             {range.rows.map(({ data, top, height }, i) => {
               const key = getRowKey({ i, row: data });
+
               return (
                 <TableRow
                   key={key}
@@ -267,25 +321,20 @@ export const VirtualTable = <T extends RowData> (
                     left: 0,
                     right: 0,
                     top,
+                    height,
+                    overflow: 'hidden',
                     backgroundColor: selectedController.find(s => s === key) ? 'salmon' : undefined
                   }}
                   onClick={() => handleSelect(key)}
                 >
-                  {columns.map(({ key, width }) => (
-                    <TableCell
-                      key={key}
-                      sx={{
-                        minWidth: width,
-                        flex: width === undefined ? 1 : 0,
-                        flexShrink: 0,
-                        height: height,
-                        padding: 1,
-                        border: 'none',
-                        borderBottom: 'none'
-                      }}
-                    >
-                      {getValue(data, key)}
-                    </TableCell>
+                  {columns.map((column) => (
+                    <DataCell
+                      key={column.key}
+                      column={column}
+                      row={data}
+                      height={height}
+                      getValue={getValue}
+                    />
                   ))}
                 </TableRow>
               );
