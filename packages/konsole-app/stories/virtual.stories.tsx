@@ -11,7 +11,7 @@ import debug from 'debug';
 import faker from 'faker';
 import React, { useState } from 'react';
 
-import { GetRowHeightProps, RenderCellProps, VirtualTable } from '../src';
+import { GetRowHeightProps, DataCellProps, VirtualTable } from '../src';
 import { config, RootContainer } from './config';
 
 debug.enable('dxos:console:*');
@@ -44,6 +44,53 @@ const columns = [
   }
 ];
 
+const CustomDataCell = ({ key, row, value, rowSelected }: DataCellProps): JSX.Element | undefined => {
+  switch (key) {
+    case 'checked': {
+      return (
+        <div>
+          <Checkbox
+            checked={value}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              row[key] = event.target.checked;
+            }}
+          />
+        </div>
+      );
+    }
+
+    case 'status': {
+      return (
+        <IconButton>
+          {value ? <TrueIcon /> : <Falseicon />}
+        </IconButton>
+      );
+    }
+
+    case 'title': {
+      const lines = value.split('.').filter(Boolean);
+      return (
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              flexShrink: 0,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              height: 42
+            }}
+          >
+            {lines[0]}
+          </Box>
+          {rowSelected && lines.slice(1).map((line: string, i: number) => (
+            <div key={i}>{line}</div>
+          ))}
+        </>
+      );
+    }
+  }
+};
+
 const Table = ({ rows }: { rows: any[] }) => {
   const [selected, setSelected] = useState<string[]>([]);
   const handleSelect = (next: string[]) => {
@@ -54,52 +101,13 @@ const Table = ({ rows }: { rows: any[] }) => {
     }
   };
 
-  const renderCell = ({ key, value, rowSelected }: RenderCellProps) => {
-    switch (key) {
-      case 'checked': {
-        return (
-          <div>
-            <Checkbox checked />
-          </div>
-        );
-      }
-
-      case 'status': {
-        return (
-          <IconButton>
-            {value ? <TrueIcon /> : <Falseicon />}
-          </IconButton>
-        );
-      }
-
-      case 'title': {
-        const lines = value.split('.').filter(Boolean);
-        return (
-          <>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                height: 42
-              }}
-            >
-              {lines[0]}
-            </Box>
-            {rowSelected && lines.slice(1).map((line: string, i: number) => (
-              <div key={i}>{line}</div>
-            ))}
-          </>
-        );
-      }
-    }
-  };
-
   const getRowHeight = ({ row, rowSelected }: GetRowHeightProps) => {
     let h = 42;
     if (rowSelected) {
       const lines = row.title.split('.').filter(Boolean);
-      h += (lines.length - 1) * 21 + 10;
+      if (lines.length > 1) {
+        h += (lines.length - 1) * 21 + 10;
+      }
     }
 
     return h;
@@ -113,7 +121,7 @@ const Table = ({ rows }: { rows: any[] }) => {
       getRowHeight={getRowHeight}
       selected={selected}
       onSelect={handleSelect}
-      renderCell={renderCell}
+      renderCell={CustomDataCell}
     />
   );
 };
@@ -130,5 +138,81 @@ export const Primary = () => {
     <RootContainer config={config}>
       <Table rows={rows} />
     </RootContainer>
+  );
+};
+
+/**
+ * Test DOM expansion.
+ */
+export const Test = () => {
+  const [lines, setLines] = useState<string[]>([faker.lorem.sentences(1)]);
+
+  const handleToggle = () => {
+    if (lines.length === 1) {
+      setLines([...lines, ...faker.lorem.sentences(10).split('.').filter(Boolean)]);
+    } else {
+      setLines(lines.slice(0, 1));
+    }
+  };
+
+  return (
+    <Box
+      sx={{
+        margin: 2,
+        border: '1px solid grey',
+        width: 360
+      }}
+    >
+      {/* Row */}
+      <Box
+        onClick={handleToggle}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          overflowX: 'hidden',
+          overflowY: 'scroll',
+          height: 42 + (lines.length > 1 ? 8 + (18 * 4) : 0),
+          cursor: 'pointer'
+        }}
+      >
+        {/* Main Cell */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            flexShrink: 0,
+            height: 42,
+            backgroundColor: 'gainsboro',
+            paddingLeft: 1,
+            paddingRight: 1
+          }}
+        >
+          {/* Content should be in a div -- Box only for flex */}
+          <div
+            style={{
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden'
+            }}
+          >
+            {lines[0]}
+          </div>
+        </Box>
+        {/* Expanded Cell */}
+        {lines.length > 1 && (
+          <Box
+            sx={{
+              padding: 1,
+              overflowY: 'scroll'
+            }}
+          >
+            {lines.slice(1).map((line, i) => (
+              <div key={i}>{line}</div>
+            ))}
+          </Box>
+        )}
+      </Box>
+    </Box>
   );
 };

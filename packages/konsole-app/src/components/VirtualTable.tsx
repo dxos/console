@@ -9,7 +9,11 @@ import {
 import {
   Box, IconButton, Table, TableCell, TableContainer, TableBody, TableHead, TableRow
 } from '@mui/material';
+import debug from 'debug';
+// import isEqualWith from 'lodash.isequalwith';
 import React, { useEffect, useRef, useState } from 'react';
+
+const log = debug('dxos:console:virtual-table');
 
 //
 // Data
@@ -25,6 +29,7 @@ interface Column {
 }
 
 interface Row {
+  key: string
   data: RowData
   top: number
   height: number
@@ -86,21 +91,21 @@ const HeaderCell = ({ column: { key, title, width, sortable }, sortDirection, on
 };
 
 //
-// Cell
+// Table Cell
 //
 
 const rowHeight = 42;
 
-export interface RenderCellProps {
+export interface DataCellProps {
   column: Column
-  row: any
   key: string
-  value: any
+  row: RowData
   rowSelected: boolean
   getValue: (data: RowData, key: string) => any
+  value: any
 }
 
-const defaultRenderCell = ({ getValue, row, key }: RenderCellProps) => (
+export const DefaultTableCell = ({ value }: DataCellProps): JSX.Element => (
   <Box
     sx={{
       display: 'flex',
@@ -109,25 +114,29 @@ const defaultRenderCell = ({ getValue, row, key }: RenderCellProps) => (
       height: rowHeight
     }}
   >
-    {getValue(row, key)}
+    {value}
   </Box>
 );
 
-interface DataCellProps {
+interface VirtualTableCellProps {
   column: Column
+  key: string
   row: RowData
-  height: number
   rowSelected: boolean
   getValue: (data: RowData, key: string) => any
-  renderCell: (props: RenderCellProps) => any
+  renderCell?: (props: DataCellProps) => JSX.Element | undefined
+  height: number
 }
 
-const DataCell = ({ column, row, height, renderCell, rowSelected, getValue }: DataCellProps) => {
+const VirtualTableCell = ({ column, row, height, renderCell, rowSelected, getValue }: VirtualTableCellProps) => {
   const { key, width } = column;
   const value = getValue(row, key);
+  const props: DataCellProps = { column, key, row, rowSelected, getValue, value };
 
-  const component = renderCell({ column, key, row, value, rowSelected, getValue }) ||
-    defaultRenderCell({ column, key, row, value, rowSelected, getValue });
+  let component = renderCell!(props);
+  if (!component) {
+    component = <DefaultTableCell {...props} />;
+  }
 
   return (
     <TableCell
@@ -193,6 +202,79 @@ const useScrollHandler = (scrollContainerRef: React.RefObject<HTMLDivElement>): 
 };
 
 //
+// Table Row
+//
+
+interface VirtualTableRowProps {
+  row: Row
+  columns: Column[]
+  getValue: (data: RowData, key: string) => any
+  selected: boolean
+  handleSelect: (key: string) => void
+  renderCell?: (props: DataCellProps) => JSX.Element | undefined
+}
+
+const VirtualTableRow = ({ row, columns, selected, handleSelect, getValue, renderCell }: VirtualTableRowProps) => {
+  const { key, data, top, height } = row;
+
+  log('Render', row.key);
+
+  return (
+    <TableRow
+      hover
+      selected={selected}
+      sx={{
+        display: 'flex',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top,
+        height,
+        overflow: 'hidden'
+      }}
+      onClick={() => handleSelect(key)}
+    >
+      {columns.map((column) => (
+        <VirtualTableCell
+          key={column.key}
+          column={column}
+          row={data}
+          height={height}
+          getValue={getValue}
+          renderCell={renderCell}
+          rowSelected={selected}
+        />
+      ))}
+    </TableRow>
+  );
+};
+
+// Memoize row so that it is not updated on each scroll event.
+// https://reactjs.org/docs/hooks-faq.html#how-do-i-implement-shouldcomponentupdate
+const MemoVirtualTableRow = React.memo(VirtualTableRow, (oldProps, newProps) => {
+  // Layout changed.
+  if (oldProps.row.top !== newProps.row.top || oldProps.row.height !== newProps.row.height) {
+    log('Changed layoutL', oldProps.row.key);
+    return false;
+  }
+
+  // Selection changed.
+  if (oldProps.selected !== newProps.selected) {
+    log('Changed selection', oldProps.row.key, oldProps.selected, newProps.selected);
+    return false;
+  }
+
+  // Shallow compare data.
+  // https://lodash.com/docs/4.17.15#isEqualWith
+  // if (isEqualWith(oldProps.row.data, newProps.row.data, (/* oldValue, newValue */) => {})) {
+  //   log('Changed data', oldProps.row.key);
+  //   return false;
+  // }
+
+  return true; // Skip render.
+});
+
+//
 // Table
 //
 
@@ -215,7 +297,7 @@ interface VirtualTableProps<T> {
   getRowKey: (row: RowData) => string
   getRowHeight?: (props: GetRowHeightProps) => number
   getValue?: (data: RowData, key: string) => any
-  renderCell?: (props: RenderCellProps) => React.ReactNode
+  renderCell?: (props: DataCellProps) => JSX.Element | undefined
 }
 
 // TODO(burdon): Expand row/custom render
@@ -232,7 +314,7 @@ export const VirtualTable = <T extends RowData> (
     getRowKey,
     getRowHeight = defaultRowHeight,
     getValue = defaultValue,
-    renderCell = defaultRenderCell
+    renderCell
   }: VirtualTableProps<T>
 ) => {
   //
@@ -278,7 +360,7 @@ export const VirtualTable = <T extends RowData> (
       const key = getRowKey(row);
       const rowSelected = !!selectedController.find(s => s === key);
       const rowHeight = getRowHeight({ i, row, rowSelected });
-      sortedRows.push({ data: row, top: h, height: rowHeight });
+      sortedRows.push({ key, data: row, top: h, height: rowHeight });
       return h + rowHeight;
     }, 0);
 
@@ -359,38 +441,19 @@ export const VirtualTable = <T extends RowData> (
               height: height
             }}
           >
-            {range.rows.map(({ data, top, height }) => {
-              const key = getRowKey(data);
-              const rowSelected = !!selectedController.find(s => s === key);
+            {range.rows.map(row => {
+              const rowSelected = !!selectedController.find(s => s === row.key);
 
               return (
-                <TableRow
-                  key={key}
-                  hover
+                <MemoVirtualTableRow
+                  key={row.key}
+                  row={row}
+                  columns={columns}
+                  getValue={getValue}
                   selected={rowSelected}
-                  sx={{
-                    display: 'flex',
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    top,
-                    height,
-                    overflow: 'hidden'
-                  }}
-                  onClick={() => handleSelect(key)}
-                >
-                  {columns.map((column) => (
-                    <DataCell
-                      key={column.key}
-                      column={column}
-                      row={data}
-                      height={height}
-                      getValue={getValue}
-                      renderCell={renderCell}
-                      rowSelected={rowSelected}
-                    />
-                  ))}
-                </TableRow>
+                  handleSelect={handleSelect}
+                  renderCell={renderCell}
+                />
               );
             })}
           </TableBody>

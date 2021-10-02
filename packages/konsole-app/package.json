@@ -55,6 +55,7 @@
     "@mui/x-data-grid": "^5.0.0-beta.1",
     "clsx": "^1.1.0",
     "debug": "^4.1.1",
+    "lodash.isequalwith": "^4.4.0",
     "proper-url-join": "^2.1.1",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
