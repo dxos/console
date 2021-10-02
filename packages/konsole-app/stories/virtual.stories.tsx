@@ -6,6 +6,7 @@ import {
   Check as TrueIcon,
   Clear as Falseicon
 } from '@mui/icons-material';
+import { Box, Checkbox, IconButton } from '@mui/material';
 import debug from 'debug';
 import faker from 'faker';
 import React, { useState } from 'react';
@@ -23,19 +24,23 @@ export default {
 
 const columns = [
   {
+    key: 'checked',
+    width: 120
+  },
+  {
     key: 'id',
     title: 'ID',
-    width: 100
+    width: 120
   },
   {
     key: 'title',
     title: 'Title',
-    sort: true
+    sortable: true
   },
   {
-    key: 'toggle',
-    width: 100,
-    sort: true
+    key: 'status',
+    width: 120,
+    sortable: true
   }
 ];
 
@@ -49,31 +54,55 @@ const Table = ({ rows }: { rows: any[] }) => {
     }
   };
 
-  // TODO(burdon): Render multi-line.
   const renderCell = ({ key, value, rowSelected }: RenderCellProps) => {
     switch (key) {
-      case 'toggle': {
-        return value ? <TrueIcon /> : <Falseicon />;
+      case 'checked': {
+        return (
+          <div>
+            <Checkbox checked />
+          </div>
+        );
+      }
+
+      case 'status': {
+        return (
+          <IconButton>
+            {value ? <TrueIcon /> : <Falseicon />}
+          </IconButton>
+        );
       }
 
       case 'title': {
         const lines = value.split('.').filter(Boolean);
-        if (rowSelected) {
-          return lines.map((line: string, i: number) => <div key={i}>{line}</div>);
-        } else {
-          return <div>{lines[0]}</div>;
-        }
+        return (
+          <>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                height: 42
+              }}
+            >
+              {lines[0]}
+            </Box>
+            {rowSelected && lines.slice(1).map((line: string, i: number) => (
+              <div key={i}>{line}</div>
+            ))}
+          </>
+        );
       }
     }
   };
 
   const getRowHeight = ({ row, rowSelected }: GetRowHeightProps) => {
+    let h = 42;
     if (rowSelected) {
       const lines = row.title.split('.').filter(Boolean);
-      return 42 + (lines.length - 1) * 21;
+      h += (lines.length - 1) * 21 + 10;
     }
 
-    return 42;
+    return h;
   };
 
   return (
@@ -92,8 +121,9 @@ const Table = ({ rows }: { rows: any[] }) => {
 export const Primary = () => {
   const rows = [...new Array(100)].map((_, i) => ({
     id: `item-${i}`,
+    checked: i % 5 === 0,
     title: faker.lorem.sentences(1 + faker.random.number(3)),
-    toggle: i % 3 === 0
+    status: i % 3 === 0
   }));
 
   return (

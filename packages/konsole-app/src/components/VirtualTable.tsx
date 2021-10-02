@@ -21,7 +21,7 @@ interface Column {
   key: string
   title?: string
   width?: number
-  sort?: boolean
+  sortable?: boolean
 }
 
 interface Row {
@@ -42,7 +42,7 @@ interface HeaderCellProps {
   onSort: (sort: SortDirection) => void
 }
 
-const HeaderCell = ({ column: { key, title, width, sort }, sortDirection, onSort }: HeaderCellProps) => {
+const HeaderCell = ({ column: { key, title, width, sortable }, sortDirection, onSort }: HeaderCellProps) => {
   const handleSort = () => {
     onSort((sortDirection === 'up') ? 'down' : (sortDirection === 'down') ? undefined : 'up');
   };
@@ -58,7 +58,7 @@ const HeaderCell = ({ column: { key, title, width, sort }, sortDirection, onSort
         cursor: 'pointer'
       }}
     >
-      <Box sx={{ display: 'flex' }} onClick={sort ? handleSort : undefined}>
+      <Box sx={{ display: 'flex' }} onClick={sortable ? handleSort : undefined}>
         <Box
           sx={{
             flex: 1,
@@ -71,7 +71,7 @@ const HeaderCell = ({ column: { key, title, width, sort }, sortDirection, onSort
           }}>
           {title || key}
         </Box>
-        {sort && sortDirection && (
+        {sortable && sortDirection && (
           <IconButton size='small'>
             {(sortDirection === 'up' && (
               <UpIcon />
@@ -89,6 +89,8 @@ const HeaderCell = ({ column: { key, title, width, sort }, sortDirection, onSort
 // Cell
 //
 
+const rowHeight = 42;
+
 export interface RenderCellProps {
   column: Column
   row: any
@@ -99,9 +101,16 @@ export interface RenderCellProps {
 }
 
 const defaultRenderCell = ({ getValue, row, key }: RenderCellProps) => (
-  <div>
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      height: rowHeight
+    }}
+  >
     {getValue(row, key)}
-  </div>
+  </Box>
 );
 
 interface DataCellProps {
@@ -116,6 +125,7 @@ interface DataCellProps {
 const DataCell = ({ column, row, height, renderCell, rowSelected, getValue }: DataCellProps) => {
   const { key, width } = column;
   const value = getValue(row, key);
+
   const component = renderCell({ column, key, row, value, rowSelected, getValue }) ||
     defaultRenderCell({ column, key, row, value, rowSelected, getValue });
 
@@ -125,12 +135,11 @@ const DataCell = ({ column, row, height, renderCell, rowSelected, getValue }: Da
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'top',
         minWidth: width,
         flex: width === undefined ? 1 : 0,
         flexShrink: 0,
         height: height,
-        padding: 1,
+        padding: 0,
         paddingLeft: 2,
         paddingRight: 2,
         border: 'none',
@@ -195,8 +204,6 @@ export interface GetRowHeightProps {
   rowSelected: boolean
 }
 
-const rowHeight = 42;
-
 const defaultRowHeight = () => rowHeight;
 const defaultValue = (data: RowData, key: string) => data[key];
 
@@ -236,7 +243,8 @@ export const VirtualTable = <T extends RowData> (
 
   //
   // Selection.
-  // TODO(burdon): Scroll to same position.
+  // https://mui.com/components/tables/#sorting-amp-selecting
+  // TODO(burdon): Scroll to same position (if selection above collapses).
   // TODO(burdon): Options for single select and toggle select.
   //
   const [selectedController, setSelectedControlled] = useState<SelectionModel>([]);
@@ -300,7 +308,7 @@ export const VirtualTable = <T extends RowData> (
     setRange({ start, end, rows: sortedRows.slice(start, end + 1) });
   }, [sortedRows, scrollState]);
 
-  const TableFooter = () => (
+  const TableFooter = ({ rows }: { rows: T[] }) => (
     <Box
       sx={{
         display: 'flex',
@@ -308,7 +316,7 @@ export const VirtualTable = <T extends RowData> (
         justifyContent: 'center'
       }}
     >
-      {`${dataRows.length} rows`}
+      {`${rows.length} rows`}
     </Box>
   );
 
@@ -330,6 +338,7 @@ export const VirtualTable = <T extends RowData> (
         <Table
           stickyHeader
         >
+          {/* Columns */}
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -342,9 +351,11 @@ export const VirtualTable = <T extends RowData> (
               ))}
             </TableRow>
           </TableHead>
+
+          {/* Data rows */}
           <TableBody
             sx={{
-              position: 'relative',
+              position: 'relative', // Anchor for layout.
               height: height
             }}
           >
@@ -355,6 +366,7 @@ export const VirtualTable = <T extends RowData> (
               return (
                 <TableRow
                   key={key}
+                  hover
                   selected={rowSelected}
                   sx={{
                     display: 'flex',
@@ -385,7 +397,10 @@ export const VirtualTable = <T extends RowData> (
         </Table>
       </TableContainer>
 
-      <TableFooter />
+      {/* Footer */}
+      <TableFooter
+        rows={dataRows}
+      />
     </Box>
   );
 };
