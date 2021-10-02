@@ -38,7 +38,7 @@ interface Row {
 type SortDirection = 'up' | 'down' | undefined
 
 //
-// Header
+// Table Header
 //
 
 interface HeaderCellProps {
@@ -166,42 +166,6 @@ const VirtualTableCell = ({ column, row, height, renderCell, rowSelected, getVal
 };
 
 //
-// Scroll handler
-//
-
-interface ScrollState {
-  clientHeight: number
-  scrollHeight: number
-  scrollTop: number
-}
-
-const useScrollHandler = (scrollContainerRef: React.RefObject<HTMLDivElement>): [ScrollState, () => void] => {
-  const [scrollState, setScrollState] = useState<ScrollState>({
-    clientHeight: 0, scrollHeight: 0, scrollTop: 0
-  });
-
-  const handleUpdate = () => {
-    const { clientHeight = 0, scrollHeight = 0, scrollTop = 0 } = scrollContainerRef.current || {};
-    setScrollState({ clientHeight, scrollHeight, scrollTop });
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleUpdate);
-    scrollContainerRef.current!.addEventListener('scroll', handleUpdate);
-
-    return () => {
-      window.removeEventListener('resize', handleUpdate);
-      scrollContainerRef.current?.removeEventListener('scroll', handleUpdate);
-    };
-  }, [scrollContainerRef]);
-
-  // Update.
-  useEffect(handleUpdate, []);
-
-  return [scrollState, handleUpdate];
-};
-
-//
 // Table Row
 //
 
@@ -254,7 +218,7 @@ const VirtualTableRow = ({ row, columns, selected, handleSelect, getValue, rende
 const MemoVirtualTableRow = React.memo(VirtualTableRow, (oldProps, newProps) => {
   // Layout changed.
   if (oldProps.row.top !== newProps.row.top || oldProps.row.height !== newProps.row.height) {
-    log('Changed layoutL', oldProps.row.key);
+    log('Changed layout', oldProps.row.key);
     return false;
   }
 
@@ -273,6 +237,43 @@ const MemoVirtualTableRow = React.memo(VirtualTableRow, (oldProps, newProps) => 
 
   return true; // Skip render.
 });
+
+
+//
+// Scroll handler
+//
+
+interface ScrollState {
+  clientHeight: number
+  scrollHeight: number
+  scrollTop: number
+}
+
+const useScrollHandler = (scrollContainerRef: React.RefObject<HTMLDivElement>): [ScrollState, () => void] => {
+  const [scrollState, setScrollState] = useState<ScrollState>({
+    clientHeight: 0, scrollHeight: 0, scrollTop: 0
+  });
+
+  const handleUpdate = () => {
+    const { clientHeight = 0, scrollHeight = 0, scrollTop = 0 } = scrollContainerRef.current || {};
+    setScrollState({ clientHeight, scrollHeight, scrollTop });
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleUpdate);
+    scrollContainerRef.current!.addEventListener('scroll', handleUpdate);
+
+    return () => {
+      window.removeEventListener('resize', handleUpdate);
+      scrollContainerRef.current?.removeEventListener('scroll', handleUpdate);
+    };
+  }, [scrollContainerRef]);
+
+  // Update on first render.
+  useEffect(handleUpdate, []);
+
+  return [scrollState, handleUpdate];
+};
 
 //
 // Table
@@ -300,7 +301,6 @@ interface VirtualTableProps<T> {
   renderCell?: (props: DataCellProps) => JSX.Element | undefined
 }
 
-// TODO(burdon): Expand row/custom render
 // TODO(burdon): Side/bottom master/detail
 // TODO(burdon): Column filter
 // TODO(burdon): Request more data callback
@@ -329,13 +329,13 @@ export const VirtualTable = <T extends RowData> (
   // TODO(burdon): Scroll to same position (if selection above collapses).
   // TODO(burdon): Options for single select and toggle select.
   //
-  const [selectedController, setSelectedControlled] = useState<SelectionModel>([]);
-  useEffect(() => setSelectedControlled(controlledSelected), [controlledSelected]);
+  const [controlledSelection, setControlledSelection] = useState<SelectionModel>([]);
+  useEffect(() => setControlledSelection(controlledSelected), [controlledSelected]);
   const handleSelect = (selected: string) => {
     if (onSelect) {
       onSelect([selected]);
     } else {
-      setSelectedControlled([selected]);
+      setControlledSelection([selected]);
     }
   };
 
@@ -344,7 +344,12 @@ export const VirtualTable = <T extends RowData> (
   //
   const [{ height, sortedRows }, setProps] = useState<{ height: number, sortedRows: Row[] }>({ height: 0, sortedRows: [] });
   useEffect(() => {
+    const ts = Date.now();
+
+    //
     // Sort.
+    // TODO(burdon): Skip if data didn't change.
+    //
     const rows = [...dataRows];
     if (sortKey && sortDirection) {
       rows.sort((v1: RowData, v2: RowData) => {
@@ -354,18 +359,21 @@ export const VirtualTable = <T extends RowData> (
       });
     }
 
+    //
     // Do layout.
+    //
     const sortedRows: Row[] = [];
     const height = rows.reduce((h, row, i) => {
       const key = getRowKey(row);
-      const rowSelected = !!selectedController.find(s => s === key);
+      const rowSelected = !!controlledSelection.find(s => s === key);
       const rowHeight = getRowHeight({ i, row, rowSelected });
       sortedRows.push({ key, data: row, top: h, height: rowHeight });
       return h + rowHeight;
     }, 0);
 
+    log('Layout', Date.now() - ts);
     setProps({ height, sortedRows });
-  }, [dataRows, sortKey, sortDirection, selectedController]);
+  }, [dataRows, sortKey, sortDirection, controlledSelection]);
 
   //
   // Set visible range.
@@ -376,17 +384,20 @@ export const VirtualTable = <T extends RowData> (
   useEffect(() => {
     const { clientHeight, scrollTop } = scrollState;
 
-    let start = 0;
-    let end = 0;
+    let first = 0;
+    let last = 0;
     sortedRows.forEach(({ top }, i) => {
       if (scrollTop > top) {
-        start = i;
+        first = i;
       } else if ((scrollTop + clientHeight) > top) {
-        end = i;
+        last = i;
       }
     });
 
-    // TODO(burdon): Configure num rows before/after that are rendered.
+    // Configure num rows before/after that are rendered.
+    const overscan = 10;
+    const start = Math.max(0, first - overscan);
+    const end = Math.min(sortedRows.length - 1, last + overscan);
     setRange({ start, end, rows: sortedRows.slice(start, end + 1) });
   }, [sortedRows, scrollState]);
 
@@ -442,7 +453,7 @@ export const VirtualTable = <T extends RowData> (
             }}
           >
             {range.rows.map(row => {
-              const rowSelected = !!selectedController.find(s => s === row.key);
+              const rowSelected = !!controlledSelection.find(s => s === row.key);
 
               return (
                 <MemoVirtualTableRow
