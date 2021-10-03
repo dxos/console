@@ -2,11 +2,11 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box, CssBaseline } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 
-import { createCustomTheme, IConfig } from '../src';
+import { createCustomTheme, Fullscreen, IConfig } from '../src';
 
 export const config: IConfig = {
   app: {
@@ -37,16 +37,9 @@ export const RootContainer = ({ config, children }: { config: IConfig, children:
   return (
     <ThemeProvider theme={createCustomTheme(config)}>
       <CssBaseline />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100vh',
-          overflow: 'hidden'
-        }}
-      >
+      <Fullscreen>
         {children}
-      </Box>
+      </Fullscreen>
     </ThemeProvider>
   );
-}
+};

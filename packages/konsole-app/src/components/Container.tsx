@@ -24,51 +24,52 @@ import React, { useState } from 'react';
 
 import { useConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';
-import { Fullscreen } from './Fullscreen';
-// import { Statusbar } from './Statusbar';
 
 const drawerWidth = 220;
 
-const Main = styled('main', {
-  shouldForwardProp: (prop) => prop !== 'open'
-})<{ open?: boolean; }>(({ theme, open }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
-  flexGrow: 1,
-  transition: theme.transitions.create('margin', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginLeft: `-${drawerWidth}px`,
-  ...(open && {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0
-  }),
-}));
+// TODO(burdon): Factor out drawer.
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
+// NOTE: AppBar is separate from the main panel to enable flexible mobile layout.
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open'
 })<AppBarProps>(({ theme, open }) => ({
-  color: theme.palette.mode === 'dark' ? theme.palette.background.default: undefined,
+  color: theme.palette.mode === 'dark' ? theme.palette.background.default : undefined,
   backgroundColor: theme.palette.primary.main,
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.leavingScreen
   }),
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  })
+}));
+
+const Main = styled('main', {
+  shouldForwardProp: (prop) => prop !== 'open'
+})<{ open?: boolean; }>(({ theme, open }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 1,
+  overflow: 'hidden',
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
+  marginLeft: `-${drawerWidth}px`,
+  ...(open && {
+    marginLeft: 0,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
     })
   })
 }));
@@ -136,7 +137,12 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
   const [drawerOpen, setDrawerOpen] = useState(true);
 
   return (
-    <Fullscreen>
+    <Box
+      sx={{
+        display: 'flex',
+        flex: 1
+      }}
+    >
       <AppBar position='fixed' open={drawerOpen}>
         <Toolbar
           sx={{
@@ -156,13 +162,10 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
               <MenuIcon />
             </IconButton>
           </Box>
-
           <Typography variant='h6'>
             {config.app.title}
           </Typography>
-
           <Box sx={{ flex: 1 }} />
-
           <ContainerMenu />
         </Toolbar>
       </AppBar>
@@ -233,6 +236,6 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
           {children}
         </Box>
       </Main>
-    </Fullscreen>
+    </Box>
   );
 };

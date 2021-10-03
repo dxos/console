@@ -100,12 +100,13 @@ export interface DataCellProps {
   column: Column
   key: string
   row: RowData
+  height: number
   rowSelected: boolean
   getValue: (data: RowData, key: string) => any
   value: any
 }
 
-export const DefaultTableCell = ({ value }: DataCellProps): JSX.Element => (
+export const DefaultTableCell = ({ children }: { children: React.ReactNode }): JSX.Element => (
   <Box
     sx={{
       display: 'flex',
@@ -114,7 +115,7 @@ export const DefaultTableCell = ({ value }: DataCellProps): JSX.Element => (
       height: rowHeight
     }}
   >
-    {value}
+    {children}
   </Box>
 );
 
@@ -131,11 +132,15 @@ interface VirtualTableCellProps {
 const VirtualTableCell = ({ column, row, height, renderCell, rowSelected, getValue }: VirtualTableCellProps) => {
   const { key, width } = column;
   const value = getValue(row, key);
-  const props: DataCellProps = { column, key, row, rowSelected, getValue, value };
+  const props: DataCellProps = { column, key, row, height, rowSelected, getValue, value };
 
   let component = renderCell!(props);
   if (!component) {
-    component = <DefaultTableCell {...props} />;
+    component = (
+      <DefaultTableCell>
+        <span>{value}</span>
+      </DefaultTableCell>
+    );
   }
 
   return (
@@ -151,8 +156,6 @@ const VirtualTableCell = ({ column, row, height, renderCell, rowSelected, getVal
         padding: 0,
         paddingLeft: 2,
         paddingRight: 2,
-        border: 'none',
-        borderBottom: 'none',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
@@ -237,7 +240,6 @@ const MemoVirtualTableRow = React.memo(VirtualTableRow, (oldProps, newProps) => 
 
   return true; // Skip render.
 });
-
 
 //
 // Scroll handler
@@ -413,6 +415,8 @@ export const VirtualTable = <T extends RowData> (
     </Box>
   );
 
+  // TODO(burdon): Not working on mobile.
+
   return (
     <Box
       sx={{
@@ -425,7 +429,9 @@ export const VirtualTable = <T extends RowData> (
       <TableContainer
         ref={scrollContainerRef}
         sx={{
-          height: '100%'
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1
         }}
       >
         <Table
