@@ -14,7 +14,7 @@ import {
   useParams
 } from 'react-router-dom';
 
-import { IRegistryApi } from '@dxos/registry-api';
+import { IRegistryClient } from '@dxos/registry-client';
 
 import { Container, Sidebar } from '../components';
 import { IConfig, ConfigContext, RegistryContext } from '../hooks';
@@ -62,7 +62,7 @@ export const Main = ({ panels }: MainProps) => {
 
 interface AppProps {
   config: IConfig
-  registryApi: IRegistryApi
+  registryApi: IRegistryClient
   panels: IPanel[]
   theme: Theme
 }

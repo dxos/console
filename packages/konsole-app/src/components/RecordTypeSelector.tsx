@@ -5,7 +5,7 @@
 import { Divider, FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import React from 'react';
 
-import { CID, RegistryTypeRecord } from '@dxos/registry-api';
+import { CID, RegistryTypeRecord } from '@dxos/registry-client';
 
 interface RecordTypeSelectorProps {
   types?: RegistryTypeRecord[]

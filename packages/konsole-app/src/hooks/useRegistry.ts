@@ -5,7 +5,6 @@
 import assert from 'assert';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-// TODO(burdon): Rename IRegistryApi => IRegistryClient (AuctionClient, etc.)
 // TODO(burdon): Rename RegistryRecord => Record, DomainInfo => Domain, etc.
 // TODO(burdon): Same Query interface for resources and records?
 // TODO(burdon): Resource type has a field called "id" which is a DXN. Consistent field properties (types and protobufs).
@@ -16,14 +15,14 @@ import { createContext, useContext, useEffect, useState } from 'react';
 // TODO(burdon): registry-pai remove RecordKind?
 // TODO(burdon): registry-api remove MockRegistryApi singleton and expose mock client.
 
-import { DomainInfo, IQuery, IRegistryApi, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-api';
+import { DomainInfo, IQuery, IRegistryClient, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-client';
 
-export const RegistryContext = createContext<IRegistryApi | undefined>(undefined);
+export const RegistryContext = createContext<IRegistryClient | undefined>(undefined);
 
 /**
  * Returns the configured client object.
  */
-export const useRegistryClient = (): IRegistryApi => {
+export const useRegistryClient = (): IRegistryClient => {
   const api = useContext(RegistryContext);
   assert(api);
   return api;

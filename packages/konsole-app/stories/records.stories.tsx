@@ -6,7 +6,7 @@ import { Toolbar } from '@mui/material';
 import debug from 'debug';
 import React, { useState } from 'react';
 
-import { CID, RegistryTypeRecord } from '@dxos/registry-api';
+import { CID, RegistryTypeRecord } from '@dxos/registry-client';
 
 import {
   IResource,

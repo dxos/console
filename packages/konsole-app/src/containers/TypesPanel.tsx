@@ -7,7 +7,7 @@ import { Box, IconButton } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
-import { CID } from '@dxos/registry-api';
+import { CID } from '@dxos/registry-client';
 
 import { DataGrid, Panel, RecordLink, Toolbar } from '../components';
 import { useRecordTypes } from '../hooks';

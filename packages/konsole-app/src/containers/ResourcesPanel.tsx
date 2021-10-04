@@ -7,7 +7,7 @@ import { Box, IconButton } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import React, { useMemo } from 'react';
 
-import { RegistryRecord, IQuery } from '@dxos/registry-api';
+import { RegistryRecord, IQuery } from '@dxos/registry-client';
 
 import { DataGrid, Panel, RecordLink, Toolbar } from '../components';
 import { useResources } from '../hooks';

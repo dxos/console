@@ -6,7 +6,7 @@ import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ApiFactory } from '@dxos/registry-api';
+import { ApiFactory } from '@dxos/registry-client';
 
 import { App } from './apps';
 import { loadConfig } from './config';

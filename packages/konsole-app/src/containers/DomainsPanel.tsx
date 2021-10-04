@@ -7,7 +7,7 @@ import { Box, IconButton } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
-import { DomainKey } from '@dxos/registry-api';
+import { DomainKey } from '@dxos/registry-client';
 
 import { truncate, DataGrid, Panel, Toolbar } from '../components';
 import { useDomains } from '../hooks';

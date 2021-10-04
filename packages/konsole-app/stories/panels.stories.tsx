@@ -5,7 +5,7 @@
 import debug from 'debug';
 import React from 'react';
 
-import { MockRegistryApi } from '@dxos/registry-api';
+import { MockRegistryApi } from '@dxos/registry-client';
 
 import {
   IService,

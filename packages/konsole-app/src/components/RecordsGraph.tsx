@@ -8,7 +8,7 @@ import useResizeAware from 'react-resize-aware';
 
 import { SVG, convertTreeToGraph, createTree, useGrid } from '@dxos/gem-core';
 import { ForceLayout, Graph } from '@dxos/gem-spore';
-import { DomainInfo } from '@dxos/registry-api';
+import { DomainInfo } from '@dxos/registry-client';
 
 import { IRecord } from './RecordsTable';
 

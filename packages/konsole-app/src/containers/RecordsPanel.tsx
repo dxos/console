@@ -12,7 +12,7 @@ import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
-import { CID, IQuery, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-api';
+import { CID, IQuery, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-client';
 
 import {
   IResource,
