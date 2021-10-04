@@ -5,7 +5,7 @@
 import debug from 'debug';
 import React from 'react';
 
-import { MockRegistryApi } from '@dxos/registry-client';
+import { MemoryRegistryClient } from '@dxos/registry-client';
 
 import { createCustomTheme, panels, App, Debug as DebugApp } from '../src';
 import { config } from './config';
@@ -30,7 +30,7 @@ export const Primary = () => {
   return (
     <App
       config={config}
-      registryApi={MockRegistryApi}
+      registryApi={MemoryRegistryClient}
       panels={panels}
       theme={theme}
     />

@@ -5,7 +5,7 @@
 import debug from 'debug';
 import React from 'react';
 
-import { MockRegistryApi } from '@dxos/registry-client';
+import { MemoryRegistryClient } from '@dxos/registry-client';
 
 import {
   IService,
@@ -61,11 +61,11 @@ export const Logs = () => {
 };
 
 // TODO(burdon): Requires router for useParams, match props, etc.
-// TODO(burdon): MockRegistryApi should be configurable to generate data. Not passed in by class or global.
+// TODO(burdon): MemoryRegistryClient should be configurable to generate data. Not passed in by class or global.
 export const Records = () => {
   return (
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={MockRegistryApi}>
+      <RegistryContext.Provider value={MemoryRegistryClient}>
         <RootContainer config={config}>
           <RecordsPanel />
         </RootContainer>
