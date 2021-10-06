@@ -8,13 +8,14 @@ import {
   Reorder as LoggingIcon,
   Settings as SettingsIcon,
   Storage as ServicesIcon,
+  Coronavirus as DXNSIcon,
   DynamicFeed as RecordsIcon,
   Label as ResourcesIcon,
   Share as SignalingIcon,
   CloudQueue as IPFSIcon,
   Adb as BotsIcon,
   Apps as AppsIcon,
-  Layers as DomainsIcon,
+  Layers as DomainsIcon
 } from '@mui/icons-material';
 
 import {
@@ -22,6 +23,7 @@ import {
   BotsPanel,
   ConfigPanel,
   DomainsPanel,
+  DXNSPanel,
   IPFSPanel,
   LogsPanel,
   RecordsPanel,
@@ -82,6 +84,13 @@ export const panels: IPanel[] = [
     label: 'Bots',
     component: BotsPanel,
     icon: BotsIcon
+  },
+  {
+    id: 'dxns',
+    path: paths.dxns,
+    label: 'DXNS',
+    component: DXNSPanel,
+    icon: DXNSIcon
   },
   {
     id: 'signaling',
