@@ -7,10 +7,10 @@ import { Box, IconButton } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import React, { useMemo } from 'react';
 
+import { useResources } from '@dxos/react-registry-client';
 import { RegistryRecord, IQuery } from '@dxos/registry-client';
 
 import { DataGrid, Panel, RecordLink, Toolbar } from '../components';
-import { useResources } from '../hooks';
 
 const columns: GridColDef[] = [
   {
@@ -36,7 +36,7 @@ const columns: GridColDef[] = [
  */
 export const ResourcesPanel = () => {
   const query = useMemo<IQuery>(() => ({}), []);
-  const resources = useResources(query) ?? [];
+  const { resources } = useResources(query);
 
   return (
     <Panel

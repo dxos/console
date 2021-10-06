@@ -7,10 +7,10 @@ import { Box, IconButton } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
+import { useRecordTypes } from '@dxos/react-registry-client';
 import { CID } from '@dxos/registry-client';
 
 import { DataGrid, Panel, RecordLink, Toolbar } from '../components';
-import { useRecordTypes } from '../hooks';
 
 const columns: GridColDef[] = [
   {
@@ -34,7 +34,7 @@ const columns: GridColDef[] = [
  * Displays all defined tyeps.
  */
 export const TypesPanel = () => {
-  const types = useRecordTypes();
+  const { recordTypes } = useRecordTypes();
 
   return (
     <Panel
@@ -52,7 +52,7 @@ export const TypesPanel = () => {
       )}
     >
       <DataGrid
-        rows={types || []}
+        rows={recordTypes || []}
         columns={columns}
         getRowId={({ cid }) => cid}
       />

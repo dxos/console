@@ -6,7 +6,7 @@ import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ApiFactory } from '@dxos/registry-client';
+import { RegistryInitializer } from '@dxos/react-registry-client';
 
 import { App } from './apps';
 import { loadConfig } from './config';
@@ -23,15 +23,15 @@ const start = async (config: IConfig) => {
   log('Starting...', { config });
 
   const theme = createCustomTheme(config);
-  const registryApi = await ApiFactory.createRegistryApi(config.services.dxns.server);
 
   ReactDOM.render((
-    <App
-      config={config}
-      registryApi={registryApi}
-      panels={panels}
-      theme={theme}
-    />
+    <RegistryInitializer config={config}>
+      <App
+        config={config}
+        panels={panels}
+        theme={theme}
+      />
+    </RegistryInitializer>
   ), document.getElementById('root'));
 };
 

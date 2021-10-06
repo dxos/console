@@ -3,8 +3,9 @@
 //
 
 import debug from 'debug';
-import React from 'react';
+import React, { useState } from 'react';
 
+import { RegistryProvider } from '@dxos/react-registry-client';
 import { MemoryRegistryClient } from '@dxos/registry-client';
 
 import { createCustomTheme, panels, App, Debug as DebugApp } from '../src';
@@ -26,14 +27,16 @@ export default {
 
 export const Primary = () => {
   const theme = createCustomTheme(config);
+  const [memoryRegistryClient] = useState(new MemoryRegistryClient());
 
   return (
-    <App
-      config={config}
-      registryApi={MemoryRegistryClient}
-      panels={panels}
-      theme={theme}
-    />
+    <RegistryProvider registry={memoryRegistryClient}>
+      <App
+        config={config}
+        panels={panels}
+        theme={theme}
+      />
+    </RegistryProvider>
   );
 };
 
