@@ -7,7 +7,7 @@ import { Box, IconButton, Link } from '@mui/material';
 import { GridColDef, GridCellParams, GridRowId } from '@mui/x-data-grid';
 import React from 'react';
 
-import { CID } from '@dxos/registry-api';
+import { CID } from '@dxos/registry-client';
 
 import { getRelativeTime, sortDateStrings } from '../util';
 import { truncate, DataGrid } from './DataGrid';

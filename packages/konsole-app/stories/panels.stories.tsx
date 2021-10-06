@@ -5,12 +5,12 @@
 import debug from 'debug';
 import React from 'react';
 
-import { MockRegistryApi } from '@dxos/registry-api';
+import { RegistryProvider } from '@dxos/react-registry-client';
+import { MemoryRegistryClient } from '@dxos/registry-client';
 
 import {
   IService,
   ConfigContext,
-  RegistryContext,
   RequestContext,
   ConfigPanel,
   RecordsPanel,
@@ -19,10 +19,11 @@ import {
   generateHistoricalMessages,
   logPrinter
 } from '../src';
-
 import { config, RootContainer } from './config';
 
 debug.enable('dxos:console:*');
+
+const memoryRegistryClient = new MemoryRegistryClient();
 
 export default {
   title: 'Panels'
@@ -61,15 +62,15 @@ export const Logs = () => {
 };
 
 // TODO(burdon): Requires router for useParams, match props, etc.
-// TODO(burdon): MockRegistryApi should be configurable to generate data. Not passed in by class or global.
+// TODO(burdon): MemoryRegistryClient should be configurable to generate data. Not passed in by class or global.
 export const Records = () => {
   return (
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={MockRegistryApi}>
+      <RegistryProvider registry={memoryRegistryClient}>
         <RootContainer config={config}>
           <RecordsPanel />
         </RootContainer>
-      </RegistryContext.Provider>
+      </RegistryProvider>
     </ConfigContext.Provider>
   );
 };

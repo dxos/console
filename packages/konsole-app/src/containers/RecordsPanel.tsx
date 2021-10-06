@@ -12,7 +12,8 @@ import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
-import { CID, IQuery, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-api';
+import { useDomains, useResources, useRecordTypes } from '@dxos/react-registry-client';
+import { CID, IQuery, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-client';
 
 import {
   IResource,
@@ -24,7 +25,7 @@ import {
   SearchBar,
   Toolbar
 } from '../components';
-import { useConfig, useDomains, useRecordTypes, useResources, IConfig } from '../hooks';
+import { useConfig, IConfig } from '../hooks';
 import { safe } from '../util';
 
 /**
@@ -51,8 +52,7 @@ export const joinRecords = (resources: Resource[], recordTypes: RegistryTypeReco
       name: resource.id.toString(),
       cid: resource.record.cid,
       // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
-      created: resource.record.meta.created,
-      title: resource.record.meta.name
+      created: resource.record.meta.created?.toDateString()
     };
 
     const type = getRecordTypeString(resource.record, recordTypes);
@@ -130,9 +130,9 @@ export const RecordsPanel = ({ match }: { match?: any }) => {
   const [search, setSearch] = useState<string | undefined>();
   const query = useMemo<IQuery>(() => ({ type: recordType, text: search }), [recordType, search]);
 
-  const domains = useDomains();
-  const recordTypes = useRecordTypes();
-  const resources = useResources(query);
+  const { domains } = useDomains();
+  const { recordTypes } = useRecordTypes();
+  const { resources } = useResources(query);
   const records = joinRecords(resources, recordTypes, config);
 
   const handleSelect = (cid: CID | undefined) => {

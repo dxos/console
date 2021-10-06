@@ -1733,10 +1733,10 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/codec-protobuf@^2.12.14":
-  version "2.12.23"
-  resolved "https://registry.yarnpkg.com/@dxos/codec-protobuf/-/codec-protobuf-2.12.23.tgz#574423b0ba023a06b28fb0cac48f9b3c266500c3"
-  integrity sha512-JZeqTy5X4Ws7TNxQtbaXRFmUb50iMCIdOVIRZ4kAK+4+ndQrCqoRpzH+7PNN1MX4o/KvqwgFZgPM3zqjGiiObA==
+"@dxos/codec-protobuf@2.14.5":
+  version "2.14.5"
+  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.14.5.tgz#e4026086af934a656a9fee6e14752fbf8c59cd85"
+  integrity sha512-70twv9ghA8Pz5EsrAirW7sOBYuoIM5kzXEOm8SCFtwv7uzrEpvyXH/Cm1vgiSUNntITwz2ITEuUHZdjOCZybuw==
   dependencies:
     assert "^2.0.0"
     lodash.merge "^4.6.2"
@@ -1756,12 +1756,27 @@
     lodash.set "^4.3.2"
     node-fetch "^2.6.0"
 
-"@dxos/config@~2.12.22", "@dxos/config@~2.12.23":
+"@dxos/config@~2.12.22":
   version "2.12.23"
   resolved "https://registry.yarnpkg.com/@dxos/config/-/config-2.12.23.tgz#e256c19b845903b94d10eb29e2f8a2ab8c83c72f"
   integrity sha512-BdKVa4ADn9pOr/bfuC7U7nelnj/Q3oxIyDJhmaRitwvVStunb91Ba1Nv4of4Ozk4URX9mvUYph5yyh0L8uGCyA==
   dependencies:
     "@dxos/debug" "2.12.23"
+    ajv "~8.6.2"
+    boolean "^3.0.1"
+    debug "^4.1.1"
+    js-yaml "^3.13.1"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+    lodash.set "^4.3.2"
+    node-fetch "^2.6.0"
+
+"@dxos/config@~2.14.5":
+  version "2.14.5"
+  resolved "https://registry.npmjs.org/@dxos/config/-/config-2.14.5.tgz#d14e0e36f64b50531e2a9dfe873a5e81745c5585"
+  integrity sha512-O5hPDSsagCKgGKFXB0zS1wbi1p6lWhOwESbX8eweoxrUlAR3ldeq76YxbE/HTGTtSMLCedFZatUV6JZzJSBA/Q==
+  dependencies:
+    "@dxos/debug" "2.14.5"
     ajv "~8.6.2"
     boolean "^3.0.1"
     debug "^4.1.1"
@@ -1883,6 +1898,16 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
+"@dxos/crypto@2.14.5":
+  version "2.14.5"
+  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.14.5.tgz#b643210b03b1a46a6bb1585620032f9e6a3d2297"
+  integrity sha512-Lmko980j+0LtJRQxZxcNUIlCV+m999wCujXX8j84rvyXfEe73h3Qsw6vXEqE4BmpMgjQ45r1/1PLnINptDkO3w==
+  dependencies:
+    bip39 "^3.0.2"
+    crypto-js "^3.1.9-1"
+    humanhash "^1.0.4"
+    hypercore-crypto "^2.3.0"
+
 "@dxos/debug@2.10.12":
   version "2.10.12"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.10.12.tgz#389921561c0c023e270ed51b5aab0542cdf23f86"
@@ -1903,6 +1928,14 @@
   version "2.12.23"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.12.23.tgz#d24c00bb2fa79d18a4c58a2d5c985f4479b2943b"
   integrity sha512-cosLjQm3u+6Bdv2Mt5DHPOvUN5M7J9u/kiOA+Td8+BrVH5CR+WOz2iJhSyn2aRAAJc0dcsRPOavW3H1RuoFufw==
+  dependencies:
+    "@types/node" "^14.0.9"
+    debug "^4.1.1"
+
+"@dxos/debug@2.14.5":
+  version "2.14.5"
+  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.14.5.tgz#4cf2f841761c72aab05c7afa51a76793cd871e81"
+  integrity sha512-tBcKpaEEgkFK9ec3xlnNosTbieCO24yzLeweFbZt+GKtRLdhowLKCAl1qggRk1pam+SfWi9SXejaRLpF/7cGew==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -2454,6 +2487,16 @@
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
+"@dxos/react-registry-client@~2.14.5":
+  version "2.14.5"
+  resolved "https://registry.npmjs.org/@dxos/react-registry-client/-/react-registry-client-2.14.5.tgz#242e27b50880e05d8ca3752082be91f5156fda2e"
+  integrity sha512-LaKI0vL/TPq5LkUhuBDMMRH1VX89cti390J4trMqUgeBI4E/DXn719xRV5DFXt6BMop0tH2dHokuNSDbfu2q/A==
+  dependencies:
+    "@dxos/registry-client" "2.14.5"
+    "@dxos/util" "2.14.5"
+    assert "^2.0.0"
+    debug "^4.1.1"
+
 "@dxos/registry-api@~0.1.1-alpha.2":
   version "0.1.1-alpha.2"
   resolved "https://registry.yarnpkg.com/@dxos/registry-api/-/registry-api-0.1.1-alpha.2.tgz#14f550c3381eb04bf8f0e05c3d8d924261ef0505"
@@ -2466,19 +2509,26 @@
     multihashes "^4.0.2"
     protobufjs "^6.10.2"
 
-"@dxos/registry-api@~0.3.1":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@dxos/registry-api/-/registry-api-0.3.2.tgz#8eb82a635439c14635bad704cee95c670a58346d"
-  integrity sha512-aFTsX2A84VRej8zWDdrl6LrasrBZnS3K/HCxChKHzbamcnJY0XXMJVBwco4+frtWQ0Oaq9HMxv2HzgtNRWYTSg==
+"@dxos/registry-client@2.14.5", "@dxos/registry-client@~2.14.5":
+  version "2.14.5"
+  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.14.5.tgz#2f7d32ccb35a868a49f3480b280d0774a8cf9478"
+  integrity sha512-daxqeb9KLaXapAST/W0IKhqZge+Qhf97Uzaco/a10iTcuVCxlcNl1W1BpvFa9y1nv2y7pWakabNtK3FIonyphg==
   dependencies:
-    "@dxos/codec-protobuf" "^2.12.14"
-    "@dxos/util" "^2.4.0"
+    "@dxos/codec-protobuf" "2.14.5"
+    "@dxos/util" "2.14.5"
     "@polkadot/api" "4.17.1"
+    "@polkadot/keyring" "6.11.1"
+    "@polkadot/metadata" "4.17.1"
+    "@polkadot/rpc-core" "4.17.1"
+    "@polkadot/types" "4.17.1"
+    "@polkadot/util" "6.11.1"
+    "@polkadot/util-crypto" "6.11.1"
+    bn.js "4.12.0"
     crypto "^1.0.1"
-    faker "^5.5.3"
-    fs-extra "^9.1.0"
+    faker "^5.1.0"
+    fs-extra "^8.1.0"
     multihashes "^4.0.2"
-    protobufjs "^6.10.2"
+    protobufjs "^6.9.0"
 
 "@dxos/registry-client@~1.1.1":
   version "1.1.2"
@@ -2554,6 +2604,15 @@
     js-data-structs "^1.1.2"
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
+
+"@dxos/util@2.14.5":
+  version "2.14.5"
+  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.14.5.tgz#c7bced01181b8de6bbdc883ab08437bcf0ac81c0"
+  integrity sha512-b0gXWcBsmaf7gbCzimssJKT9lu+c8SWENLjTbaNq/+w2iyav5b9iU1c4wxjcqD2CZ0r+P8fQkyJMlg+H9K86+A==
+  dependencies:
+    "@dxos/crypto" "2.14.5"
+    "@dxos/debug" "2.14.5"
+    "@types/node" "^14.0.9"
 
 "@dxos/util@^2.4.0":
   version "2.12.23"
@@ -4874,7 +4933,7 @@
     "@polkadot/x-rxjs" "^6.11.1"
     eventemitter3 "^4.0.7"
 
-"@polkadot/keyring@^6.11.1":
+"@polkadot/keyring@6.11.1", "@polkadot/keyring@^6.11.1":
   version "6.11.1"
   resolved "https://registry.yarnpkg.com/@polkadot/keyring/-/keyring-6.11.1.tgz#2510c349c965c74cc2f108f114f1048856940604"
   integrity sha512-rW8INl7pO6Dmaffd6Df1yAYCRWa2RmWQ0LGfJeA/M6seVIkI6J3opZqAd4q2Op+h9a7z4TESQGk8yggOEL+Csg==
@@ -8596,7 +8655,7 @@ bluebird@^3.3.5, bluebird@^3.5.1, bluebird@^3.5.3, bluebird@^3.5.5:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
-bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.8, bn.js@^4.11.9:
+bn.js@4.12.0, bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.8, bn.js@^4.11.9:
   version "4.12.0"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.12.0.tgz#775b3f278efbb9718eec7361f483fb36fbbfea88"
   integrity sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==
@@ -12766,9 +12825,9 @@ faker@^4.1.0:
   resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
   integrity sha1-HkW7vsxndLPBlfrSg1EJxtdIzD8=
 
-faker@^5.5.3:
+faker@^5.1.0:
   version "5.5.3"
-  resolved "https://registry.yarnpkg.com/faker/-/faker-5.5.3.tgz#c57974ee484431b25205c2c8dc09fda861e51e0e"
+  resolved "https://registry.npmjs.org/faker/-/faker-5.5.3.tgz#c57974ee484431b25205c2c8dc09fda861e51e0e"
   integrity sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==
 
 fast-bitfield@^1.2.2:

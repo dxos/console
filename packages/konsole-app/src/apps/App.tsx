@@ -14,10 +14,8 @@ import {
   useParams
 } from 'react-router-dom';
 
-import { IRegistryApi } from '@dxos/registry-api';
-
 import { Container, Sidebar } from '../components';
-import { IConfig, ConfigContext, RegistryContext } from '../hooks';
+import { IConfig, ConfigContext } from '../hooks';
 import { IPanel } from '../types';
 
 interface MainProps {
@@ -62,25 +60,22 @@ export const Main = ({ panels }: MainProps) => {
 
 interface AppProps {
   config: IConfig
-  registryApi: IRegistryApi
   panels: IPanel[]
   theme: Theme
 }
 
-export const App = ({ config, registryApi, panels, theme }: AppProps) => (
+export const App = ({ config, panels, theme }: AppProps) => (
   <ConfigContext.Provider value={config}>
-    <RegistryContext.Provider value={registryApi}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <Switch>
-            <Route path='/:panel'>
-              <Main panels={panels} />
-            </Route>
-            <Redirect to={panels[0].path} />
-          </Switch>
-        </Router>
-      </ThemeProvider>
-    </RegistryContext.Provider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Switch>
+          <Route path='/:panel'>
+            <Main panels={panels} />
+          </Route>
+          <Redirect to={panels[0].path} />
+        </Switch>
+      </Router>
+    </ThemeProvider>
   </ConfigContext.Provider>
 );

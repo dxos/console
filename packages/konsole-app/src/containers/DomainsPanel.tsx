@@ -7,14 +7,14 @@ import { Box, IconButton } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
-import { DomainKey } from '@dxos/registry-api';
+import { useDomains } from '@dxos/react-registry-client';
+import { DomainKey } from '@dxos/registry-client';
 
 import { truncate, DataGrid, Panel, Toolbar } from '../components';
-import { useDomains } from '../hooks';
 
 const columns: GridColDef[] = [
   {
-    field: 'domainKey',
+    field: 'key',
     headerName: 'Key',
     width: 180,
     cellClassName: 'monospace secondary',
@@ -32,7 +32,7 @@ const columns: GridColDef[] = [
  * Displays the config panel
  */
 export const DomainsPanel = () => {
-  const domains = useDomains();
+  const { domains } = useDomains();
 
   return (
     <Panel

@@ -5,12 +5,15 @@
 import debug from 'debug';
 import React from 'react';
 
-import { MockRegistryApi } from '@dxos/registry-api';
+import { RegistryProvider } from '@dxos/react-registry-client';
+import { MemoryRegistryClient } from '@dxos/registry-client';
 
 import { createCustomTheme, panels, App, Debug as DebugApp } from '../src';
 import { config } from './config';
 
 debug.enable('dxos:console:*');
+
+const memoryRegistryClient = new MemoryRegistryClient();
 
 // TODO(burdon): Seems to clash with Mui theme?
 // import StoryRouter from 'storybook-react-router';
@@ -28,12 +31,13 @@ export const Primary = () => {
   const theme = createCustomTheme(config);
 
   return (
-    <App
-      config={config}
-      registryApi={MockRegistryApi}
-      panels={panels}
-      theme={theme}
-    />
+    <RegistryProvider registry={memoryRegistryClient}>
+      <App
+        config={config}
+        panels={panels}
+        theme={theme}
+      />
+    </RegistryProvider>
   );
 };
 
