@@ -3,7 +3,7 @@
 //
 
 import debug from 'debug';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { RegistryProvider } from '@dxos/react-registry-client';
 import { MemoryRegistryClient } from '@dxos/registry-client';
@@ -22,6 +22,8 @@ import {
 import { config, RootContainer } from './config';
 
 debug.enable('dxos:console:*');
+
+const memoryRegistryClient = new MemoryRegistryClient();
 
 export default {
   title: 'Panels'
@@ -62,8 +64,6 @@ export const Logs = () => {
 // TODO(burdon): Requires router for useParams, match props, etc.
 // TODO(burdon): MemoryRegistryClient should be configurable to generate data. Not passed in by class or global.
 export const Records = () => {
-  const [memoryRegistryClient] = useState(new MemoryRegistryClient());
-
   return (
     <ConfigContext.Provider value={config}>
       <RegistryProvider registry={memoryRegistryClient}>
