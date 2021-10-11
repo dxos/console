@@ -14,12 +14,12 @@ if (existsSync(KUBE_SERVICES_INFO_FILE)) {
 
 const mergeByProperty = (target, source, prop) => {
   source.forEach(sourceElement => {
-    let targetElement = target.find(targetElement => {
+    const targetElement = target.find(targetElement => {
       return sourceElement[prop] === targetElement[prop];
-    })
+    });
     targetElement ? Object.assign(targetElement, sourceElement) : target.push(sourceElement);
-  })
-}
+  });
+};
 
 export const getServiceInfo = async () => {
   const command = 'dx';
