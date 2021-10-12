@@ -4,6 +4,12 @@
 
 import debug from 'debug';
 import React from 'react';
+import {
+  MemoryRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom';
 
 import { RegistryProvider } from '@dxos/react-registry-client';
 import { MemoryRegistryClient } from '@dxos/registry-client';
@@ -17,7 +23,8 @@ import {
   ServicesPanel,
   LogsPanel,
   generateHistoricalMessages,
-  logPrinter
+  logPrinter,
+  paths
 } from '../src';
 import { config, RootContainer } from './config';
 
@@ -68,7 +75,14 @@ export const Records = () => {
     <ConfigContext.Provider value={config}>
       <RegistryProvider registry={memoryRegistryClient}>
         <RootContainer config={config}>
-          <RecordsPanel />
+          <Router>
+            <Switch>
+              <Route path={paths.records}>
+                <RecordsPanel />
+              </Route>
+              <Redirect to={paths.records} />
+            </Switch>
+          </Router>
         </RootContainer>
       </RegistryProvider>
     </ConfigContext.Provider>
