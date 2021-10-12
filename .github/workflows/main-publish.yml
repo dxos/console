@@ -43,7 +43,7 @@ jobs:
           WIRE_WNS_BOND_ID: ${{secrets.wns_bond_id}}
           WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
           DX_DXNS_USER_URI: ${{secrets.dx_dxns_user_uri}}
-          DX_DXNS_ENDPOINT: ${{secrets.dx_dxns_endpoint}}
+          # DX_DXNS_ENDPOINT: ${{secrets.dx_dxns_endpoint}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           WIRE_PROFILE: ci
