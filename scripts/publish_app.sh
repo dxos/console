@@ -4,8 +4,7 @@ set -euo pipefail
 
 DXOS_DOMAIN="${DXOS_DOMAIN:-dxos}"
 
-# TODO(burdon): Use array [konsole-app, keyhole-app]
-for appdir in `find ./packages -name '*-app' -type d | grep -v node_modules`; do
+for appdir in 'konsole-app' 'keyhole-app'; do
   pushd $appdir
 
   PKG_CHANNEL="${PKG_CHANNEL:-}"
