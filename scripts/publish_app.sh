@@ -5,7 +5,7 @@ set -euo pipefail
 DXOS_DOMAIN="${DXOS_DOMAIN:-dxos}"
 
 for appdir in 'konsole-app' 'keyhole-app'; do
-  pushd $appdir
+  pushd "packages/$appdir"
 
   PKG_CHANNEL="${PKG_CHANNEL:-}"
   PKG_NAME=`cat package.json | jq -r '.name' | cut -d'/' -f2- | sed 's/-app$//'`
