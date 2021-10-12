@@ -5,7 +5,7 @@ name: alpha - Build and Publish
 
 on:
   push:
-    branches: [ main ]
+    branches-ignore: [ main ]
 
 jobs:
   publish:
@@ -27,7 +27,7 @@ jobs:
           yarn install
           yarn ci
           # TODO(egorgripasov): Fix chromatic.
-          # yarn deploy
+          yarn deploy
 
           # Uncomment for NPM publishing.
           npm whoami
