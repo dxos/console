@@ -10,14 +10,15 @@ import { RegistryInitializer } from '@dxos/react-registry-client';
 
 import { App } from './apps';
 import { loadConfig } from './config';
-import { IConfig } from './hooks';
 import { panels } from './panels';
 import { createCustomTheme } from './theme';
 
 /**
  * React app bootstrap (providers and top-level routes).
  */
-const start = async (config: IConfig) => {
+(async () => {
+  const config = await loadConfig();
+
   debug.enable(config.system.debug);
   const log = debug('dxos:console:main');
   log('Starting...', { config });
@@ -33,6 +34,4 @@ const start = async (config: IConfig) => {
       />
     </RegistryInitializer>
   ), document.getElementById('root'));
-};
-
-void loadConfig().then(start);
+})();

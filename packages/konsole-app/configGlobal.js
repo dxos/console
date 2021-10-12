@@ -1,0 +1,1 @@
+require('dxos-config-globals')
