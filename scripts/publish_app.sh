@@ -4,9 +4,8 @@ set -euo pipefail
 
 DXOS_DOMAIN="${DXOS_DOMAIN:-dxos}"
 
-# TODO(burdon): Use array [konsole-app, keyhole-app]
-for appdir in `find ./packages -name '*-app' -type d | grep -v node_modules`; do
-  pushd $appdir
+for appdir in 'konsole-app' 'keyhole-app'; do
+  pushd "packages/$appdir"
 
   PKG_CHANNEL="${PKG_CHANNEL:-}"
   PKG_NAME=`cat package.json | jq -r '.name' | cut -d'/' -f2- | sed 's/-app$//'`
