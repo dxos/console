@@ -14,7 +14,7 @@ import {
   CloudQueue as IPFSIcon,
   Adb as BotsIcon,
   Apps as AppsIcon,
-  Layers as DomainsIcon,
+  Layers as DomainsIcon
 } from '@mui/icons-material';
 
 import {

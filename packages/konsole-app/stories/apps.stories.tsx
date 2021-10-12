@@ -13,6 +13,8 @@ import { config } from './config';
 
 debug.enable('dxos:console:*');
 
+const memoryRegistryClient = new MemoryRegistryClient();
+
 // TODO(burdon): Seems to clash with Mui theme?
 // import StoryRouter from 'storybook-react-router';
 // "storybook-react-router": "^1.0.8"

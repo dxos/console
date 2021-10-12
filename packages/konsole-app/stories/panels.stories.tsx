@@ -23,6 +23,8 @@ import { config, RootContainer } from './config';
 
 debug.enable('dxos:console:*');
 
+const memoryRegistryClient = new MemoryRegistryClient();
+
 export default {
   title: 'Panels'
 };
