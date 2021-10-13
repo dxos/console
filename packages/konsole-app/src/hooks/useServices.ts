@@ -11,7 +11,7 @@ import { useRequest } from './useRequest';
 export const useServices = (cached = true) => {
   const config = useConfig();
   return useRequest<IService[]>({
-    url: urlJoin(config.services.app.server, config.services.endpoint),
+    url: urlJoin(config.services.app.server, config.services.kube.endpoints.services),
     method: 'GET'
   }, cached);
 };

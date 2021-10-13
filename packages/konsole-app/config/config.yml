@@ -26,7 +26,10 @@ system:
   debug: 'dxos:console:*'
 
 services:
-  endpoint: '/kube/services'
+  kube:
+    endpoints:
+      logs: '/kube/logs'
+      services: '/kube/services'
 
   app:
     prefix: '/app'

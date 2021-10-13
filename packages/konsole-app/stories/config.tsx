@@ -16,14 +16,16 @@ export const config: IConfig = {
   build: {
     version: '1.0.0'
   },
-  logs: {
-    endpoint: ''
-  },
   registry: {
     endpoint: ''
   },
   services: {
-    endpoint: '',
+    kube: {
+      endpoints: {
+        logs: '',
+        services: ''
+      }
+    },
     dxns: {
       server: 'test-dxns-server'
     },
