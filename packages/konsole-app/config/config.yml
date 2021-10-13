@@ -9,6 +9,10 @@ app:
   theme: 'dark'
   website: 'https://dxos.org'
   publicUrl: '/console'
+
+logs:
+  endpoint: '/kube/logs'
+
 registry:
   endpoint: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
 
@@ -22,6 +26,8 @@ system:
   debug: 'dxos:console:*'
 
 services:
+  endpoint: '/kube/services'
+
   app:
     prefix: '/app'
     server: 'https://enterprise.kube.dxos.network'

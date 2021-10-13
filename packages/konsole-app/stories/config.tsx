@@ -16,10 +16,14 @@ export const config: IConfig = {
   build: {
     version: '1.0.0'
   },
+  logs: {
+    endpoint: ''
+  },
   registry: {
     endpoint: ''
   },
   services: {
+    endpoint: '',
     dxns: {
       server: 'test-dxns-server'
     },
@@ -49,4 +53,4 @@ export const RootContainer = ({ config, children }: { config: IConfig, children:
       </Box>
     </ThemeProvider>
   );
-}
+};

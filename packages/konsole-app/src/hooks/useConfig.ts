@@ -12,6 +12,9 @@ export interface IConfig {
     theme?: 'light' | 'dark' | undefined,
     pollingPeriod?: 5000
   },
+  logs: {
+    endpoint: string
+  },
   build: {
     version: string
   },
@@ -19,6 +22,7 @@ export interface IConfig {
     endpoint: string
   },
   services: {
+    endpoint: string,
     dxns: {
       server: string
     },
