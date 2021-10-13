@@ -24,6 +24,7 @@ export interface IResource extends IRecord {
   name: string // TODO(burdon): This isn't part of the record.
   type?: string // TODO(burdon): What is this?
   url?: string
+  description?: string
 }
 
 // NOTE: Test dimensions on iPad Pro.
@@ -60,8 +61,8 @@ const columns: GridColDef[] = [
     sortComparator: (v1, v2) => sortDateStrings(v1 as string, v2 as string)
   },
   {
-    field: 'title',
-    headerName: 'Display Name',
+    field: 'description',
+    headerName: 'Description',
     minWidth: 280,
     cellClassName: () => 'primary',
     flex: 1
