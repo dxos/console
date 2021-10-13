@@ -8,7 +8,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import React, { useMemo } from 'react';
 
 import { useResources } from '@dxos/react-registry-client';
-import { RegistryRecord, IQuery } from '@dxos/registry-client';
+import { RegistryRecord, IQuery, Resource } from '@dxos/registry-client';
 
 import { DataGrid, Panel, RecordLink, Toolbar } from '../components';
 
@@ -20,13 +20,23 @@ const columns: GridColDef[] = [
     cellClassName: 'monospace primary'
   },
   {
-    field: 'record',
-    headerName: 'Record CID',
+    field: 'versions',
+    headerName: 'Versions',
     width: 300,
     cellClassName: 'monospace secondary',
     renderCell: ({ value }) => {
-      const { cid } = value as RegistryRecord;
-      return <RecordLink cid={cid} />;
+      const versions = value as Resource['versions'];
+      return Object.keys(versions)
+    }
+  },
+  {
+    field: 'tags',
+    headerName: 'Tags',
+    width: 300,
+    cellClassName: 'monospace secondary',
+    renderCell: ({ value }) => {
+      const tags = value as Resource['tags'];
+      return Object.keys(tags)
     }
   }
 ];
@@ -37,6 +47,7 @@ const columns: GridColDef[] = [
 export const ResourcesPanel = () => {
   const query = useMemo<IQuery>(() => ({}), []);
   const { resources } = useResources(query);
+  console.log({resources})
 
   return (
     <Panel
