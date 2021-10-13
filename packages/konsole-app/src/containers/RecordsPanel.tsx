@@ -27,7 +27,7 @@ import {
   Toolbar
 } from '../components';
 import { useConfig, IConfig } from '../hooks';
-import { safe } from '../util';
+import { safe, getRelativeTime } from '../util';
 
 /**
  * Joins records with record types.
@@ -51,6 +51,9 @@ export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryType
   return records.map(registryRecord => {
     const record: IRecord = {
       cid: registryRecord.cid,
+      created: registryRecord.meta.created ? getRelativeTime(registryRecord.meta.created) : undefined,
+      description: registryRecord.meta.description,
+      type: registryRecord.kind
     };
 
     const type = getRecordTypeString(registryRecord, recordTypes);
