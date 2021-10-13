@@ -12,11 +12,12 @@ import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
-import { useDomains, useResources, useRecordTypes } from '@dxos/react-registry-client';
+import { useDomains, useResources, useRecordTypes, useRecords } from '@dxos/react-registry-client';
 import { CID, IQuery, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-client';
 
 import {
   IResource,
+  IRecord,
   JsonView,
   Panel,
   RecordsGraph,
@@ -29,12 +30,12 @@ import { useConfig, IConfig } from '../hooks';
 import { safe } from '../util';
 
 /**
- * Joins resources with record types.
+ * Joins records with record types.
  * @param resources
  * @param recordTypes
  * @param config
  */
-export const joinRecords = (resources: Resource[], recordTypes: RegistryTypeRecord[], config: IConfig): IResource[] => {
+export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryTypeRecord[], config: IConfig): IRecord[] => {
   // TODO(burdon): Hack.
   const getRecordTypeString = (record: RegistryRecord, types: RegistryTypeRecord[]): string | undefined => {
     if (RegistryRecord.isDataRecord(record)) {
@@ -47,31 +48,26 @@ export const joinRecords = (resources: Resource[], recordTypes: RegistryTypeReco
     }
   };
 
-  return resources.map(resource => {
-    console.log({ resource });
-    const record: IResource = {
-      name: resource.id.toString(),
-      cid: resource.record.cid,
-      // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
-      created: resource.record.meta.created?.toDateString(),
-      description: resource.record.meta.description
+  return records.map(registryRecord => {
+    const record: IRecord = {
+      cid: registryRecord.cid,
     };
 
-    const type = getRecordTypeString(resource.record, recordTypes);
+    const type = getRecordTypeString(registryRecord, recordTypes);
     if (type) {
       record.type = type;
     }
 
     // TODO(burdon): Move to Resrouce.
     const url = (type === '.dxos.type.App')
-      ? urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
+      ? urlJoin(config.services.app.server, config.services.app.prefix, registryRecord.cid.toString())
       : undefined;
     if (url) {
       record.url = url;
     }
 
-    if (RegistryRecord.isDataRecord(resource.record)) {
-      record.data = resource.record.data;
+    if (RegistryRecord.isDataRecord(registryRecord)) {
+      record.data = registryRecord.data;
     }
 
     return record;
@@ -134,8 +130,8 @@ export const RecordsPanel = ({ match }: { match?: any }) => {
 
   const { domains } = useDomains();
   const { recordTypes } = useRecordTypes();
-  const { resources } = useResources(query);
-  const records = joinRecords(resources, recordTypes, config);
+  const {records: registryRecords} = useRecords(query);
+  const records = joinRecords(registryRecords, recordTypes, config);
 
   const handleSelect = (cid: CID | undefined) => {
     history.push(generatePath(match.path, { cid: cid ? cid.toB58String() : undefined }));

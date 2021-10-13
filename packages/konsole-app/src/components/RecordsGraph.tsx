@@ -8,12 +8,12 @@ import useResizeAware from 'react-resize-aware';
 
 import { SVG, convertTreeToGraph, createTree, useGrid } from '@dxos/gem-core';
 import { ForceLayout, Graph } from '@dxos/gem-spore';
-import { DomainInfo } from '@dxos/registry-client';
+import { Domain } from '@dxos/registry-client';
 
 import { IRecord } from './RecordsTable';
 
 interface RecordsGraphProps {
-  domains?: DomainInfo[]
+  domains?: Domain[]
   records?: IRecord[]
 }
 
