@@ -48,11 +48,13 @@ export const joinRecords = (resources: Resource[], recordTypes: RegistryTypeReco
   };
 
   return resources.map(resource => {
+    console.log({ resource });
     const record: IResource = {
       name: resource.id.toString(),
       cid: resource.record.cid,
       // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
-      created: resource.record.meta.created?.toDateString()
+      created: resource.record.meta.created?.toDateString(),
+      description: resource.record.meta.description
     };
 
     const type = getRecordTypeString(resource.record, recordTypes);
@@ -61,7 +63,7 @@ export const joinRecords = (resources: Resource[], recordTypes: RegistryTypeReco
     }
 
     // TODO(burdon): Move to Resrouce.
-    const url = (type === '.dxos.App')
+    const url = (type === '.dxos.type.App')
       ? urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
       : undefined;
     if (url) {
