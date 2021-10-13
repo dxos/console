@@ -20,6 +20,12 @@ export const config: IConfig = {
     endpoint: ''
   },
   services: {
+    kube: {
+      endpoints: {
+        logs: '',
+        services: ''
+      }
+    },
     dxns: {
       server: 'test-dxns-server'
     },
@@ -49,4 +55,4 @@ export const RootContainer = ({ config, children }: { config: IConfig, children:
       </Box>
     </ThemeProvider>
   );
-}
+};
