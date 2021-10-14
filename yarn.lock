@@ -1720,12 +1720,12 @@
     lodash.set "^4.3.2"
     node-fetch "^2.6.0"
 
-"@dxos/config@~2.15.5":
-  version "2.15.5"
-  resolved "https://registry.npmjs.org/@dxos/config/-/config-2.15.5.tgz#67ca57776caac746902b662505a8d26669f7517e"
-  integrity sha512-BPEA+jr3TUYOF8Gp29swkclUeNGWqV+mPygXj89LotiMBrTiLHEgdRUHQRPOAuzhH7QtEevSp4FFQxEghgvEJg==
+"@dxos/config@~2.15.6":
+  version "2.15.6"
+  resolved "https://registry.npmjs.org/@dxos/config/-/config-2.15.6.tgz#e115b586b286684b130240739c3bcc67a5708bd1"
+  integrity sha512-cDaZxEAd2MErai1qhB4rKa55CGIqNsRYDYt0ET5l0TH/eQSw1q7qXwFA5nC4Wb00EfpqsUji/XCuLwI0rKoU7A==
   dependencies:
-    "@dxos/debug" "2.15.5"
+    "@dxos/debug" "2.15.6"
     ajv "~8.6.2"
     boolean "^3.0.1"
     debug "^4.1.1"
@@ -1843,10 +1843,10 @@
     "@types/node" "^14.0.9"
     debug "^4.1.1"
 
-"@dxos/debug@2.15.5":
-  version "2.15.5"
-  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.15.5.tgz#863fc073e26c71ab0e74ba38a80059e9a48f4599"
-  integrity sha512-XzjQonP5DTT0QVXsNEgZX8NfBEQvMEMOSYaR+B9libiC/nVa3bStnjfrGdsIl3QkjtZxxzycEnMaMVaKUzPopg==
+"@dxos/debug@2.15.6":
+  version "2.15.6"
+  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.15.6.tgz#72cfc970fff16a8da386d047eaf5789dc6a4905c"
+  integrity sha512-Ntdd/wmLLfbUgpwoQ3C/DCEj+tGmBIMJ/0onWRHGFtSAVJQZYNzZ755UydxuwclBOJC6S0vBU6+1mGQev0s3Ag==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
