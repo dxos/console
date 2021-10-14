@@ -19,6 +19,12 @@ export interface IConfig {
     endpoint: string
   },
   services: {
+    kube: {
+      endpoints: {
+        logs: string,
+        services: string
+      }
+    }
     dxns: {
       server: string
     },
