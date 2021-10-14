@@ -93,7 +93,7 @@
     "babel-plugin-inline-import": "^3.0.0",
     "chromatic": "^5.8.0",
     "copy-webpack-plugin": "^6.4.1",
-    "esapp": "^0.1.4",
+    "esapp": "^0.1.5",
     "eslint": "^7.10.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
