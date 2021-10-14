@@ -3,21 +3,28 @@
 //
 
 import { Sync as RefreshIcon } from '@mui/icons-material';
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Link } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import React, { useMemo } from 'react';
 
 import { useResources } from '@dxos/react-registry-client';
-import { RegistryRecord, IQuery, Resource } from '@dxos/registry-client';
+import { RegistryRecord, IQuery, Resource, DXN } from '@dxos/registry-client';
 
 import { DataGrid, Panel, RecordLink, Toolbar } from '../components';
+import { useHistory } from 'react-router';
 
-const columns: GridColDef[] = [
+const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
   {
     field: 'id', // TODO(burdon): Rename?
     headerName: 'DXN',
     width: 300,
-    cellClassName: 'monospace primary'
+    cellClassName: 'monospace primary',
+    renderCell: ({value}) => {
+      const dxn = value as Resource['id']
+      return (
+        <div onClick={() => onSelected(dxn)}>{dxn.toString()}</div>
+      );
+    }
   },
   {
     field: 'versions',
@@ -26,7 +33,7 @@ const columns: GridColDef[] = [
     cellClassName: 'monospace secondary',
     renderCell: ({ value }) => {
       const versions = value as Resource['versions'];
-      return Object.keys(versions)
+      return Object.keys(versions).join(', ')
     }
   },
   {
@@ -36,10 +43,10 @@ const columns: GridColDef[] = [
     cellClassName: 'monospace secondary',
     renderCell: ({ value }) => {
       const tags = value as Resource['tags'];
-      return Object.keys(tags)
+      return Object.keys(tags).join(', ')
     }
   }
-];
+]);
 
 /**
  * Displays the resources.
@@ -47,7 +54,12 @@ const columns: GridColDef[] = [
 export const ResourcesPanel = () => {
   const query = useMemo<IQuery>(() => ({}), []);
   const { resources } = useResources(query);
+  const history = useHistory();
   console.log({resources})
+
+  const onSelected = (dxn: DXN) => {
+    history.push(history.location.pathname, {resource: dxn.toString()})
+  }
 
   return (
     <Panel
@@ -66,7 +78,7 @@ export const ResourcesPanel = () => {
     >
       <DataGrid
         rows={resources || []}
-        columns={columns}
+        columns={columns(onSelected)}
         getRowId={({ id }) => id}
       />
     </Panel>
