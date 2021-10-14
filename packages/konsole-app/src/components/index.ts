@@ -12,6 +12,7 @@ export * from './Panel';
 export * from './RecordsGraph';
 export * from './RecordsTable';
 export * from './RecordTypeSelector';
+export * from './ResourceRecordsTable';
 export * from './ScrollContainer';
 export * from './SearchBar';
 export * from './Sidebar';

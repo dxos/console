@@ -29,7 +29,7 @@ export interface IResource {
 
 // NOTE: Test dimensions on iPad Pro.
 // https://mui.com/components/data-grid/columns
-const columns: GridColDef[] = [
+export const recordsColumns: GridColDef[] = [
   {
     field: 'cid',
     headerName: 'Record CID',
@@ -114,7 +114,7 @@ export const RecordsTable = ({ records = [], selected, onSelect }: RecordsTableP
     >
       <DataGrid
         rows={records}
-        columns={columns}
+        columns={recordsColumns}
         getRowId={({ cid }) => cid.toB58String()}
         selectionModel={selected ? [s] : []}
         onRowClick={({ id }) => handleSelect(id)}

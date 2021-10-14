@@ -11,10 +11,10 @@ import React, { useMemo } from 'react';
 import { useRecords, useRecordTypes, useResources } from '@dxos/react-registry-client';
 import { RegistryRecord, IQuery, Resource, DXN } from '@dxos/registry-client';
 
-import { DataGrid, Panel, RecordLink, Toolbar, JsonView, RecordsTable } from '../components';
+import { DataGrid, Panel, RecordLink, Toolbar, JsonView, RecordsTable, ResourceRecordsTable } from '../components';
 import { generatePath, useHistory, useParams } from 'react-router';
-import { paths, useConfig } from '..';
-import { joinRecords } from '.';
+import { useConfig } from '../hooks';
+import { joinRecords } from './RecordsPanel';
 
 const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
   {
@@ -104,7 +104,7 @@ const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
               padding: 1
             }}
           >
-            <RecordsTable
+            <ResourceRecordsTable
               records={records}
               // selected={selected}
               // onSelect={handleSelect}
