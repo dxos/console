@@ -30,7 +30,7 @@ import urlJoin from 'proper-url-join';
       ...record,
       [field]: versionOrTag,
       url: record.type === '.dxos.type.App' ? 
-      urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString(), '@', versionOrTag)
+      urlJoin(config.services.app.server, config.services.app.prefix, `${resource.id.toString()}@${versionOrTag}`)
       : undefined
     }
     return resourceRecord
