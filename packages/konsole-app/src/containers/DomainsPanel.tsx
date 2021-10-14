@@ -52,7 +52,7 @@ export const DomainsPanel = () => {
       <DataGrid
         rows={domains || []}
         columns={columns}
-        getRowId={({ name }) => name}
+        getRowId={({ key }) => key.toString()}
       />
     </Panel>
   );
