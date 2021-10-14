@@ -29,8 +29,11 @@ import urlJoin from 'proper-url-join';
     const resourceRecord: IResourceRecord = {
       ...record,
       [field]: versionOrTag,
-      url: record.type === '.dxos.type.App' ? 
-      urlJoin(config.services.app.server, config.services.app.prefix, `${resource.id.toString()}@${versionOrTag}`)
+
+      // TODO(rzadp): Reenable for all when https://github.com/dxos/cli/issues/300 is done.
+      url: (record.type === '.dxos.type.App' && versionOrTag === 'latest') ? 
+      // urlJoin(config.services.app.server, config.services.app.prefix, `${resource.id.toString()}@${versionOrTag}`)
+      urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
       : undefined
     }
     return resourceRecord
@@ -71,7 +74,8 @@ const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
       const tags = value as Resource['tags'];
       return Object.keys(tags).join(', ')
     }
-  }
+  },
+
 ]);
 
 /**
