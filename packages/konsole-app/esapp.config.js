@@ -6,6 +6,7 @@ const path = require('path');
 module.exports = {
   entryPoints: ['src/main.tsx'],
   staticDir: 'public',
+  outdir: 'dist',
   plugins: [
     NodeGlobalsPolyfillPlugin(),
     FixMemdownPlugin(),

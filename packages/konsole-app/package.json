@@ -16,7 +16,7 @@
     "src"
   ],
   "scripts": {
-    "build": "webpack",
+    "build": "esapp build",
     "build-storybook": "build-storybook --quiet",
     "chromatic": "npx chromatic --exit-zero-on-changes --auto-accept-changes",
     "ci": "npm run build && npm run lint && npm run test",
