@@ -61,7 +61,7 @@ export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryType
       record.type = type;
     }
 
-    // TODO(burdon): Move to Resrouce.
+    // TODO(burdon): Move to Resource.
     const url = (type === '.dxos.type.App')
       ? urlJoin(config.services.app.server, config.services.app.prefix, registryRecord.cid.toString())
       : undefined;
