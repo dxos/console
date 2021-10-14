@@ -49,7 +49,7 @@ const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
   {
     field: 'id', // TODO(burdon): Rename?
     headerName: 'DXN',
-    width: 300,
+    width: 700,
     cellClassName: 'monospace primary',
   },
   {
