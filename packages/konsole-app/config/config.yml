@@ -33,7 +33,16 @@ services:
     server: 'https://enterprise.kube.dxos.network'
 
   dxns:
-    server: 'ws://127.0.0.1:9945'
+    server: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
+    schema:
+      cid:
+      fqn:
+        app: '.dxos.App'
+        bot: '.dxos.Bot'
+        botFactory: '.dxos.BotFactory'
+        KUBE: '.dxos.KUBE'
+        service: '.dxos.Service'
+        file: '.dxos.File'
   signal:
     server: 'wss://enterprise.kube.dxos.network/dxos/signal'
     api: 'https://enterprise.kube.dxos.network/dxos/signal/api'
