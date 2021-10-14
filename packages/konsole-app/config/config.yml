@@ -53,3 +53,6 @@ services:
 
   wellknown:
     endpoint: 'https://enterprise.kube.dxos.network/.well-known/dxos'
+
+build:
+  version: ''
