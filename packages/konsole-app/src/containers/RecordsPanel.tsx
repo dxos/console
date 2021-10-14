@@ -123,8 +123,8 @@ const ViewPanel = ({ children, visible }: { children: React.ReactNode, visible: 
 export const RecordsPanel = ({ match }: { match?: any }) => {
   const config = useConfig();
   const history = useHistory();
-  const { cid }: { cid: string } = useParams();
-  const selected = safe<CID>(() => CID.fromB58String(cid));
+  const { cid }: { cid?: string } = useParams();
+  const selected = safe<CID | undefined>(() => cid ? CID.fromB58String(cid) : undefined);
 
   const [view, setView] = useState(views[0].key);
   const [recordType, setRecordType] = useState<CID | undefined>(undefined);
@@ -201,7 +201,7 @@ export const RecordsPanel = ({ match }: { match?: any }) => {
               padding: 1
             }}
           >
-            <JsonView data={selected && records.find(record => record.cid.equals(selected))} />
+            <JsonView data={selected && records.find(record => record.cid.equals(selected.toB58String()))} />
           </Paper>
         </Collapse>
       </ViewPanel>
