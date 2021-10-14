@@ -4,14 +4,17 @@
 
 import { Sync as RefreshIcon } from '@mui/icons-material';
 import { Box, IconButton, Link } from '@mui/material';
+import { Collapse, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import React, { useMemo } from 'react';
 
-import { useResources } from '@dxos/react-registry-client';
+import { useRecords, useRecordTypes, useResources } from '@dxos/react-registry-client';
 import { RegistryRecord, IQuery, Resource, DXN } from '@dxos/registry-client';
 
-import { DataGrid, Panel, RecordLink, Toolbar } from '../components';
-import { useHistory } from 'react-router';
+import { DataGrid, Panel, RecordLink, Toolbar, JsonView, RecordsTable } from '../components';
+import { generatePath, useHistory, useParams } from 'react-router';
+import { paths, useConfig } from '..';
+import { joinRecords } from '.';
 
 const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
   {
@@ -21,9 +24,10 @@ const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
     cellClassName: 'monospace primary',
     renderCell: ({value}) => {
       const dxn = value as Resource['id']
-      return (
-        <div onClick={() => onSelected(dxn)}>{dxn.toString()}</div>
-      );
+      return dxn.toString()
+      // return (
+      //   <div onClick={() => onSelected(dxn)}>{dxn.toString()}</div>
+      // );
     }
   },
   {
@@ -51,14 +55,20 @@ const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
 /**
  * Displays the resources.
  */
-export const ResourcesPanel = () => {
+ export const ResourcesPanel = ({ match }: { match?: any }) => {
+  const config = useConfig();
   const query = useMemo<IQuery>(() => ({}), []);
   const { resources } = useResources(query);
+  const { dxn }: { dxn?: string } = useParams();
   const history = useHistory();
-  console.log({resources})
+  const selectedResource = resources.find(resource => resource.id.toString() === dxn?.toString())
+  const { recordTypes } = useRecordTypes();
+  const {records: registryRecords} = useRecords();
+  const records = joinRecords(selectedResource ? registryRecords : [], recordTypes, config);
 
   const onSelected = (dxn: DXN) => {
-    history.push(history.location.pathname, {resource: dxn.toString()})
+    const next = (dxn.toString() === selectedResource?.id.toString()) ? undefined : dxn;
+    history.push(generatePath(match.path, { dxn: next?.toString() }))
   }
 
   return (
@@ -79,8 +89,28 @@ export const ResourcesPanel = () => {
       <DataGrid
         rows={resources || []}
         columns={columns(onSelected)}
-        getRowId={({ id }) => id}
+        getRowId={({ id }) => id.toString()}
+        selectionModel={selectedResource ? [selectedResource?.id.toString()] : []}
+        onRowClick={({ id }) => onSelected(id as unknown as DXN)}
+        disableSelectionOnClick
+        hideFooterSelectedRowCount
       />
+      <Collapse in={selectedResource !== undefined} timeout='auto' unmountOnExit>
+          <Paper
+            sx={{
+              marginTop: 1,
+              height: 304,
+              overflow: 'hidden',
+              padding: 1
+            }}
+          >
+            <RecordsTable
+              records={records}
+              // selected={selected}
+              // onSelect={handleSelect}
+            />
+          </Paper>
+        </Collapse>
     </Panel>
   );
 };

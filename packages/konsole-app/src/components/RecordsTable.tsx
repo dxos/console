@@ -108,7 +108,8 @@ export const RecordsTable = ({ records = [], selected, onSelect }: RecordsTableP
   return (
     <Box
       sx={{
-        flex: 1
+        flex: 1,
+        height: '100%'
       }}
     >
       <DataGrid
