@@ -3,20 +3,18 @@
 //
 
 import {
-  Sync as RefreshIcon,
-  TableRows as TableIcon,
-  BubbleChart as GraphIcon
+  BubbleChart as GraphIcon, Sync as RefreshIcon,
+  TableRows as TableIcon
 } from '@mui/icons-material';
 import { Box, Collapse, IconButton, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
-import { useDomains, useResources, useRecordTypes, useRecords } from '@dxos/react-registry-client';
-import { CID, IQuery, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-client';
+import { useDomains, useRecords, useRecordTypes } from '@dxos/react-registry-client';
+import { CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-client';
 
 import {
-  IResource,
   IRecord,
   JsonView,
   Panel,
@@ -26,8 +24,8 @@ import {
   SearchBar,
   Toolbar
 } from '../components';
-import { useConfig, IConfig } from '../hooks';
-import { safe, getRelativeTime } from '../util';
+import { IConfig, useConfig } from '../hooks';
+import { getRelativeTime, safe } from '../util';
 
 /**
  * Joins records with record types.
@@ -133,7 +131,7 @@ export const RecordsPanel = ({ match }: { match?: any }) => {
 
   const { domains } = useDomains();
   const { recordTypes } = useRecordTypes();
-  const {records: registryRecords} = useRecords(query);
+  const { records: registryRecords } = useRecords(query);
   const records = joinRecords(registryRecords, recordTypes, config);
 
   const handleSelect = (cid: CID | undefined) => {

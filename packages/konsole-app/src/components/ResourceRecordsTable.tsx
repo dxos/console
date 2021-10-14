@@ -2,15 +2,11 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Launch as LaunchIcon } from '@mui/icons-material';
-import { Box, IconButton, Link } from '@mui/material';
-import { GridColDef, GridCellParams, GridRowId } from '@mui/x-data-grid';
+import { Box } from '@mui/material';
+import { GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
-import { CID } from '@dxos/registry-client';
-
-import { getRelativeTime, sortDateStrings } from '../util';
-import { truncate, DataGrid } from './DataGrid';
+import { DataGrid } from './DataGrid';
 import { IRecord, recordsColumns } from './RecordsTable';
 
 export interface IResourceRecord extends IRecord {
@@ -33,7 +29,7 @@ const columns: GridColDef[] = [
     headerName: 'Version',
     width: 150,
     cellClassName: () => 'monospace'
-  },
+  }
 ];
 
 interface ResourceRecordsTableProps {

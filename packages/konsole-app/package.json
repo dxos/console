@@ -23,7 +23,7 @@
     "clean": "rm -rf ./dist",
     "debug": "webpack serve --mode development --host 0.0.0.0 --config webpack-debug.config.js",
     "deploy": "npm run chromatic",
-    "lint": "eslint --fix --format codeframe './src/**/*.ts'",
+    "lint": "eslint --fix --format codeframe './src/**/*.{ts,tsx}'",
     "start": "esapp dev",
     "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
