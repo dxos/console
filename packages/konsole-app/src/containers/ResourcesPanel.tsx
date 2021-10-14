@@ -48,7 +48,7 @@ import urlJoin from 'proper-url-join';
   ] as IResourceRecord[]
 };
 
-const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
+const columns: GridColDef[] = [
   {
     field: 'id', // TODO(burdon): Rename?
     headerName: 'DXN',
@@ -76,7 +76,7 @@ const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
     }
   },
 
-]);
+];
 
 /**
  * Displays the resources.
@@ -115,7 +115,7 @@ const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
     >
       <DataGrid
         rows={resources || []}
-        columns={columns(onSelected)}
+        columns={columns}
         getRowId={({ id }) => id.toString()}
         selectionModel={selectedResource ? [selectedResource?.id.toString()] : []}
         onRowClick={({ id }) => onSelected(id as unknown as DXN)}
