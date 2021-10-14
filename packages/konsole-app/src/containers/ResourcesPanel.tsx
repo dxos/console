@@ -9,12 +9,41 @@ import { GridColDef } from '@mui/x-data-grid';
 import React, { useMemo } from 'react';
 
 import { useRecords, useRecordTypes, useResources } from '@dxos/react-registry-client';
-import { RegistryRecord, IQuery, Resource, DXN } from '@dxos/registry-client';
+import { RegistryRecord, IQuery, Resource, DXN, ResourceRecord, CID } from '@dxos/registry-client';
 
-import { DataGrid, Panel, RecordLink, Toolbar, JsonView, RecordsTable, ResourceRecordsTable } from '../components';
+import { DataGrid, Panel, RecordLink, Toolbar, JsonView, RecordsTable, ResourceRecordsTable, IRecord, IResourceRecord } from '../components';
 import { generatePath, useHistory, useParams } from 'react-router';
-import { useConfig } from '../hooks';
+import { useConfig, IConfig } from '../hooks';
 import { joinRecords } from './RecordsPanel';
+import urlJoin from 'proper-url-join';
+
+/**
+ * Joins records with resources.
+ */
+ export const joinResourceRecords = (records: IRecord[], resource: Resource | undefined, config: IConfig): IResourceRecord[] => {
+  if (!resource) return []
+
+  const mapRecords = (field: 'version' | 'tag') => ([versionOrTag, cid]: [string, CID | undefined]) => {
+    const record = records.find(record => cid && record.cid.equals(cid))
+    if (!record) return undefined
+    const resourceRecord: IResourceRecord = {
+      ...record,
+      [field]: versionOrTag,
+      url: record.type === '.dxos.type.App' ? 
+      urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString(), '@', versionOrTag)
+      : undefined
+    }
+    return resourceRecord
+  }
+
+  const taggedRecords = Object.entries(resource.tags).map(mapRecords('tag'))
+  const versionedRecords = Object.entries(resource.versions).map(mapRecords('version'))
+
+  return [
+    ...taggedRecords.filter(record => record !== undefined),
+    ...versionedRecords.filter(record => record !== undefined)
+  ] as IResourceRecord[]
+};
 
 const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
   {
@@ -22,13 +51,6 @@ const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
     headerName: 'DXN',
     width: 300,
     cellClassName: 'monospace primary',
-    renderCell: ({value}) => {
-      const dxn = value as Resource['id']
-      return dxn.toString()
-      // return (
-      //   <div onClick={() => onSelected(dxn)}>{dxn.toString()}</div>
-      // );
-    }
   },
   {
     field: 'versions',
@@ -65,6 +87,7 @@ const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
   const { recordTypes } = useRecordTypes();
   const {records: registryRecords} = useRecords();
   const records = joinRecords(selectedResource ? registryRecords : [], recordTypes, config);
+  const resourceRecords = joinResourceRecords(records, selectedResource, config)
 
   const onSelected = (dxn: DXN) => {
     const next = (dxn.toString() === selectedResource?.id.toString()) ? undefined : dxn;
@@ -105,9 +128,7 @@ const columns = (onSelected: (dxn: DXN) => void): GridColDef[] => ([
             }}
           >
             <ResourceRecordsTable
-              records={records}
-              // selected={selected}
-              // onSelect={handleSelect}
+              resourceRecords={resourceRecords}
             />
           </Paper>
         </Collapse>

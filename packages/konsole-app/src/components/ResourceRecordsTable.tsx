@@ -54,6 +54,7 @@ export const ResourceRecordsTable = ({ resourceRecords = [] }: ResourceRecordsTa
       <DataGrid
         rows={resourceRecords}
         columns={columns}
+        getRowId={({ cid, tag, version }) => `${cid.toB58String()}@${tag ?? version ?? ''}`}
         disableSelectionOnClick
         hideFooterSelectedRowCount
       />
