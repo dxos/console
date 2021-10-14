@@ -1691,7 +1691,7 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/config@2.14.5", "@dxos/config@~2.14.1", "@dxos/config@~2.14.5":
+"@dxos/config@2.14.5", "@dxos/config@~2.14.1":
   version "2.14.5"
   resolved "https://registry.npmjs.org/@dxos/config/-/config-2.14.5.tgz#d14e0e36f64b50531e2a9dfe873a5e81745c5585"
   integrity sha512-O5hPDSsagCKgGKFXB0zS1wbi1p6lWhOwESbX8eweoxrUlAR3ldeq76YxbE/HTGTtSMLCedFZatUV6JZzJSBA/Q==
@@ -1712,6 +1712,21 @@
   integrity sha512-isMRyrSRDWjm3sOXA72u9VNwG18IURucVbiADVy4zZNp3DPhDSfSf1q0whhXOnn3e3b2F16O7sLU2bsLlX0IyA==
   dependencies:
     "@babel/runtime" "^7.10.4"
+    boolean "^3.0.1"
+    debug "^4.1.1"
+    js-yaml "^3.13.1"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+    lodash.set "^4.3.2"
+    node-fetch "^2.6.0"
+
+"@dxos/config@~2.15.5":
+  version "2.15.5"
+  resolved "https://registry.npmjs.org/@dxos/config/-/config-2.15.5.tgz#67ca57776caac746902b662505a8d26669f7517e"
+  integrity sha512-BPEA+jr3TUYOF8Gp29swkclUeNGWqV+mPygXj89LotiMBrTiLHEgdRUHQRPOAuzhH7QtEevSp4FFQxEghgvEJg==
+  dependencies:
+    "@dxos/debug" "2.15.5"
+    ajv "~8.6.2"
     boolean "^3.0.1"
     debug "^4.1.1"
     js-yaml "^3.13.1"
@@ -1824,6 +1839,14 @@
   version "2.14.5"
   resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.14.5.tgz#4cf2f841761c72aab05c7afa51a76793cd871e81"
   integrity sha512-tBcKpaEEgkFK9ec3xlnNosTbieCO24yzLeweFbZt+GKtRLdhowLKCAl1qggRk1pam+SfWi9SXejaRLpF/7cGew==
+  dependencies:
+    "@types/node" "^14.0.9"
+    debug "^4.1.1"
+
+"@dxos/debug@2.15.5":
+  version "2.15.5"
+  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.15.5.tgz#863fc073e26c71ab0e74ba38a80059e9a48f4599"
+  integrity sha512-XzjQonP5DTT0QVXsNEgZX8NfBEQvMEMOSYaR+B9libiC/nVa3bStnjfrGdsIl3QkjtZxxzycEnMaMVaKUzPopg==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -11897,14 +11920,15 @@ es6-symbol@^3.1.1, es6-symbol@~3.1.3:
     d "^1.0.1"
     ext "^1.1.2"
 
-esapp@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.npmjs.org/esapp/-/esapp-0.1.4.tgz#5d083b599c99032da5ce38c9216981883c962d8d"
-  integrity sha512-PiKw7zAUkvwVKBH6H5JodgzGW6RSM8N/zd/0kWF3WPam5Qk89L63aKdNlwffbjTujjaBiHTixoRjh8szwRAsVQ==
+esapp@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.npmjs.org/esapp/-/esapp-0.1.5.tgz#3f8f7e11b15a1ae9bf3c1a6ebae1e14388d63452"
+  integrity sha512-pXlFLTuXxIKK/jUQLuNUaYYxhS3PkqtRXDndZab+SaEl+8fqpPJVY1dNE/7YnS4suKR56/GZFnoPkJkDjySmyw==
   dependencies:
     chalk "^4.1.2"
     esbuild "^0.12.15"
     glob "^7.2.0"
+    ncp "^2.0.0"
     pkg-up "^3.1.0"
     react "^17.0.2"
     react-dom "^17.0.2"
@@ -18966,6 +18990,11 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
+
+ncp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/ncp/-/ncp-2.0.0.tgz#195a21d6c46e361d2fb1281ba38b91e9df7bdbb3"
+  integrity sha1-GVoh1sRuNh0vsSgbo4uR6d9727M=
 
 ndjson-parse@^1.0.4:
   version "1.0.4"
