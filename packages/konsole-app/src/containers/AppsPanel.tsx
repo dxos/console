@@ -7,11 +7,13 @@ import { IconButton, Link } from '@mui/material';
 import { Box } from '@mui/system';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import assert from 'assert';
+import urlJoin from 'proper-url-join';
 import React, { useEffect, useState } from 'react';
 
 import { useRegistry } from '@dxos/react-registry-client';
 import { DXN, RegistryRecord } from '@dxos/registry-client';
 
+import { useConfig } from '..';
 import { DataGrid, Panel, Toolbar } from '../components';
 import { getRelativeTime } from '../util';
 
@@ -64,6 +66,7 @@ const columns: GridColDef[] = [
  */
 export const AppsPanel = () => {
   const registry = useRegistry();
+  const config = useConfig();
 
   const [data, setData] = useState<TableEntry[]>([]);
 
@@ -81,7 +84,7 @@ export const AppsPanel = () => {
         id: resource.id.toString(),
         created: record?.meta.created?.getTime(),
         description: record?.meta.description,
-        url: `/app/${resource.id.toString()}`
+        url: urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
       };
     }));
 
