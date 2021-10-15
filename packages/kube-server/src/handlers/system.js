@@ -7,11 +7,6 @@ import { existsSync, readFileSync } from 'fs';
 
 const KUBE_SERVICES_INFO_FILE = '/opt/kube/services.json';
 
-let servicesInfo = [];
-if (existsSync(KUBE_SERVICES_INFO_FILE)) {
-  servicesInfo = JSON.parse(readFileSync(KUBE_SERVICES_INFO_FILE, 'utf8'));
-}
-
 const mergeByProperty = (target, source, prop) => {
   source.forEach(sourceElement => {
     const targetElement = target.find(targetElement => {
@@ -27,6 +22,11 @@ export const getServiceInfo = async () => {
 
   const child = spawnSync(command, args, { encoding: 'utf8' });
   const runningServices = JSON.parse(child.stdout);
+
+  let servicesInfo = [];
+  if (existsSync(KUBE_SERVICES_INFO_FILE)) {
+    servicesInfo = JSON.parse(readFileSync(KUBE_SERVICES_INFO_FILE, 'utf8'));
+  }
 
   mergeByProperty(runningServices, servicesInfo, 'name');
 
