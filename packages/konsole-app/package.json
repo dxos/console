@@ -16,14 +16,14 @@
     "src"
   ],
   "scripts": {
-    "build": "esapp build",
+    "build": "tsc --noEmit && esapp build",
     "build-storybook": "build-storybook --quiet",
     "chromatic": "npx chromatic --exit-zero-on-changes --auto-accept-changes",
     "ci": "npm run build && npm run lint && npm run test",
     "clean": "rm -rf ./dist",
     "debug": "webpack serve --mode development --host 0.0.0.0 --config webpack-debug.config.js",
     "deploy": "npm run chromatic",
-    "lint": "eslint --fix --format codeframe './src/**/*.ts'",
+    "lint": "eslint --fix --format codeframe './src/**/*.{ts,tsx}'",
     "start": "esapp dev",
     "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
@@ -44,8 +44,8 @@
     "@dxos/gem-core": "^1.0.0-beta.35",
     "@dxos/gem-spore": "^1.0.0-beta.35",
     "@dxos/react-json-tree": "~0.12.0",
-    "@dxos/react-registry-client": "~2.14.5",
-    "@dxos/registry-client": "~2.14.5",
+    "@dxos/registry-client": "~2.15.6",
+    "@dxos/react-registry-client": "~2.15.6",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",

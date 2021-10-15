@@ -11,5 +11,5 @@ import { IConfig } from './hooks';
 export const loadConfig = async () => new Config(
   await Dynamics(),
   await Envs(),
-  Defaults(),
+  Defaults()
 ).values as IConfig; // TODO(burdon): Replace IConfig with ConfigSchema?

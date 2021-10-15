@@ -16,7 +16,7 @@ import { createCustomTheme } from './theme';
 /**
  * React app bootstrap (providers and top-level routes).
  */
-(async () => {
+void (async () => {
   const config = await loadConfig();
 
   debug.enable(config.system.debug);

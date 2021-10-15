@@ -2,13 +2,6 @@
 // Copyright 2021 DXOS.org
 //
 
-import clsx from 'clsx';
-import hash from 'string-hash';
-import React, { useEffect, useRef, useState } from 'react';
-import { AutoSizer, Column, Table } from 'react-virtualized';
-
-import { makeStyles } from '@mui/styles'; // TODO(burdon): Deprecated.
-
 import {
   colors,
   Box,
@@ -21,6 +14,11 @@ import {
   SelectChangeEvent,
   TableCell
 } from '@mui/material';
+import { makeStyles } from '@mui/styles'; // TODO(burdon): Deprecated.
+import clsx from 'clsx';
+import React, { useEffect, useRef, useState } from 'react';
+import { AutoSizer, Column, Table } from 'react-virtualized';
+import hash from 'string-hash';
 
 import { IFilter, ILogMessage } from '../logging';
 
@@ -42,6 +40,7 @@ const hashedColors = [
 ];
 
 const getLevelColor = (level: string): string => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return level && (levelColors[level] || colors[hashedColors[hash(level) % hashedColors.length]][500]);
 };

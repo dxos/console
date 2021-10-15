@@ -38,16 +38,16 @@ const Main = styled('main', {
   flexGrow: 1,
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.leavingScreen
   }),
   marginLeft: `-${drawerWidth}px`,
   ...(open && {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
-  }),
+  })
 }));
 
 interface AppBarProps extends MuiAppBarProps {
@@ -57,18 +57,18 @@ interface AppBarProps extends MuiAppBarProps {
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open'
 })<AppBarProps>(({ theme, open }) => ({
-  color: theme.palette.mode === 'dark' ? theme.palette.background.default: undefined,
+  color: theme.palette.mode === 'dark' ? theme.palette.background.default : undefined,
   backgroundColor: theme.palette.primary.main,
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.leavingScreen
   }),
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.enteringScreen
     })
   })
 }));
@@ -111,7 +111,7 @@ const ContainerMenu = () => {
       <Menu
         id='long-menu'
         MenuListProps={{
-          'aria-labelledby': 'long-button',
+          'aria-labelledby': 'long-button'
         }}
         anchorEl={anchorEl}
         open={menuOpen}
@@ -141,7 +141,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
         <Toolbar
           sx={{
             '*': {
-              color: theme => theme.palette.mode === 'dark' ? theme.palette.background.default: undefined
+              color: theme => theme.palette.mode === 'dark' ? theme.palette.background.default : undefined
             }
           }}
         >

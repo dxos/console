@@ -3,20 +3,19 @@
 //
 
 import {
-  Sync as RefreshIcon,
-  TableRows as TableIcon,
-  BubbleChart as GraphIcon
+  BubbleChart as GraphIcon, Sync as RefreshIcon,
+  TableRows as TableIcon
 } from '@mui/icons-material';
 import { Box, Collapse, IconButton, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
-import { useDomains, useResources, useRecordTypes } from '@dxos/react-registry-client';
-import { CID, IQuery, RegistryTypeRecord, RegistryRecord, Resource } from '@dxos/registry-client';
+import { useDomains, useRecords, useRecordTypes } from '@dxos/react-registry-client';
+import { CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-client';
 
 import {
-  IResource,
+  IRecord,
   JsonView,
   Panel,
   RecordsGraph,
@@ -25,16 +24,16 @@ import {
   SearchBar,
   Toolbar
 } from '../components';
-import { useConfig, IConfig } from '../hooks';
-import { safe } from '../util';
+import { IConfig, useConfig } from '../hooks';
+import { getRelativeTime, safe } from '../util';
 
 /**
- * Joins resources with record types.
+ * Joins records with record types.
  * @param resources
  * @param recordTypes
  * @param config
  */
-export const joinRecords = (resources: Resource[], recordTypes: RegistryTypeRecord[], config: IConfig): IResource[] => {
+export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryTypeRecord[], config: IConfig): IRecord[] => {
   // TODO(burdon): Hack.
   const getRecordTypeString = (record: RegistryRecord, types: RegistryTypeRecord[]): string | undefined => {
     if (RegistryRecord.isDataRecord(record)) {
@@ -47,31 +46,29 @@ export const joinRecords = (resources: Resource[], recordTypes: RegistryTypeReco
     }
   };
 
-  return resources.map(resource => {
-    console.log({ resource });
-    const record: IResource = {
-      name: resource.id.toString(),
-      cid: resource.record.cid,
-      // TODO(marcin): Currently registry API does not expose that. Add that to the DTO.
-      created: resource.record.meta.created?.toDateString(),
-      description: resource.record.meta.description
+  return records.map(registryRecord => {
+    const record: IRecord = {
+      cid: registryRecord.cid,
+      created: registryRecord.meta.created ? getRelativeTime(registryRecord.meta.created) : undefined,
+      description: registryRecord.meta.description,
+      type: registryRecord.kind
     };
 
-    const type = getRecordTypeString(resource.record, recordTypes);
+    const type = getRecordTypeString(registryRecord, recordTypes);
     if (type) {
       record.type = type;
     }
 
-    // TODO(burdon): Move to Resrouce.
+    // TODO(burdon): Move to Resource.
     const url = (type === '.dxos.type.App')
-      ? urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
+      ? urlJoin(config.services.app.server, config.services.app.prefix, registryRecord.cid.toString())
       : undefined;
     if (url) {
       record.url = url;
     }
 
-    if (RegistryRecord.isDataRecord(resource.record)) {
-      record.data = resource.record.data;
+    if (RegistryRecord.isDataRecord(registryRecord)) {
+      record.data = registryRecord.data;
     }
 
     return record;
@@ -124,8 +121,8 @@ const ViewPanel = ({ children, visible }: { children: React.ReactNode, visible: 
 export const RecordsPanel = ({ match }: { match?: any }) => {
   const config = useConfig();
   const history = useHistory();
-  const { cid }: { cid: string } = useParams();
-  const selected = safe<CID>(() => CID.fromB58String(cid));
+  const { cid }: { cid?: string } = useParams();
+  const selected = safe<CID | undefined>(() => cid ? CID.fromB58String(cid) : undefined);
 
   const [view, setView] = useState(views[0].key);
   const [recordType, setRecordType] = useState<CID | undefined>(undefined);
@@ -134,8 +131,8 @@ export const RecordsPanel = ({ match }: { match?: any }) => {
 
   const { domains } = useDomains();
   const { recordTypes } = useRecordTypes();
-  const { resources } = useResources(query);
-  const records = joinRecords(resources, recordTypes, config);
+  const { records: registryRecords } = useRecords(query);
+  const records = joinRecords(registryRecords, recordTypes, config);
 
   const handleSelect = (cid: CID | undefined) => {
     history.push(generatePath(match.path, { cid: cid ? cid.toB58String() : undefined }));
@@ -202,7 +199,7 @@ export const RecordsPanel = ({ match }: { match?: any }) => {
               padding: 1
             }}
           >
-            <JsonView data={selected && records.find(record => record.cid.equals(selected))} />
+            <JsonView data={selected && records.find(record => record.cid.equals(selected.toB58String()))} />
           </Paper>
         </Collapse>
       </ViewPanel>

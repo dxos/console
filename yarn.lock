@@ -1691,6 +1691,15 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
+"@dxos/codec-protobuf@2.15.6":
+  version "2.15.6"
+  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.15.6.tgz#85cd8443704dd699115e2f182a27aa49e4023a05"
+  integrity sha512-l28wpb0fCqWUmSrH+TDy5B4RYp179xJ2NTpJRcdhSoJpmtfFUBSI4AKAIybXWR0c3mQo5A09gLv/0NB29GDaXQ==
+  dependencies:
+    assert "^2.0.0"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+
 "@dxos/config@2.14.5", "@dxos/config@~2.14.1":
   version "2.14.5"
   resolved "https://registry.npmjs.org/@dxos/config/-/config-2.14.5.tgz#d14e0e36f64b50531e2a9dfe873a5e81745c5585"
@@ -1821,6 +1830,16 @@
   version "2.14.5"
   resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.14.5.tgz#b643210b03b1a46a6bb1585620032f9e6a3d2297"
   integrity sha512-Lmko980j+0LtJRQxZxcNUIlCV+m999wCujXX8j84rvyXfEe73h3Qsw6vXEqE4BmpMgjQ45r1/1PLnINptDkO3w==
+  dependencies:
+    bip39 "^3.0.2"
+    crypto-js "^3.1.9-1"
+    humanhash "^1.0.4"
+    hypercore-crypto "^2.3.0"
+
+"@dxos/crypto@2.15.6":
+  version "2.15.6"
+  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.15.6.tgz#a75d0b97c2c7c5c77b46e92cf0517cb18b7c6dcb"
+  integrity sha512-xJbfOyVcnFJVeMrjgjcsCBHPqs+Y1YriWWiez6vXvY8seKFQFmr+U4vyocoItEvMaTmyG6E/9CFkmeJuIsrKkQ==
   dependencies:
     bip39 "^3.0.2"
     crypto-js "^3.1.9-1"
@@ -2370,23 +2389,44 @@
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
-"@dxos/react-registry-client@~2.14.5":
-  version "2.14.5"
-  resolved "https://registry.npmjs.org/@dxos/react-registry-client/-/react-registry-client-2.14.5.tgz#242e27b50880e05d8ca3752082be91f5156fda2e"
-  integrity sha512-LaKI0vL/TPq5LkUhuBDMMRH1VX89cti390J4trMqUgeBI4E/DXn719xRV5DFXt6BMop0tH2dHokuNSDbfu2q/A==
+"@dxos/react-registry-client@~2.15.6":
+  version "2.15.6"
+  resolved "https://registry.npmjs.org/@dxos/react-registry-client/-/react-registry-client-2.15.6.tgz#631cadc553586faaf35c83a949597f499f1e0ccc"
+  integrity sha512-DVBjPF65xNexgAHO8tqJhiUr1X9C+FAG93u81JnlGW7E1z13c9yNlQAa30waV3e8EUusRiJmMafoanS6iaD4Uw==
   dependencies:
-    "@dxos/registry-client" "2.14.5"
-    "@dxos/util" "2.14.5"
+    "@dxos/registry-client" "2.15.6"
+    "@dxos/util" "2.15.6"
     assert "^2.0.0"
     debug "^4.1.1"
 
-"@dxos/registry-client@2.14.5", "@dxos/registry-client@~2.14.1", "@dxos/registry-client@~2.14.5":
+"@dxos/registry-client@2.14.5", "@dxos/registry-client@~2.14.1":
   version "2.14.5"
   resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.14.5.tgz#2f7d32ccb35a868a49f3480b280d0774a8cf9478"
   integrity sha512-daxqeb9KLaXapAST/W0IKhqZge+Qhf97Uzaco/a10iTcuVCxlcNl1W1BpvFa9y1nv2y7pWakabNtK3FIonyphg==
   dependencies:
     "@dxos/codec-protobuf" "2.14.5"
     "@dxos/util" "2.14.5"
+    "@polkadot/api" "4.17.1"
+    "@polkadot/keyring" "6.11.1"
+    "@polkadot/metadata" "4.17.1"
+    "@polkadot/rpc-core" "4.17.1"
+    "@polkadot/types" "4.17.1"
+    "@polkadot/util" "6.11.1"
+    "@polkadot/util-crypto" "6.11.1"
+    bn.js "4.12.0"
+    crypto "^1.0.1"
+    faker "^5.1.0"
+    fs-extra "^8.1.0"
+    multihashes "^4.0.2"
+    protobufjs "^6.9.0"
+
+"@dxos/registry-client@2.15.6", "@dxos/registry-client@~2.15.6":
+  version "2.15.6"
+  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.15.6.tgz#da800ab89a37540d1bf6b59ce32b8e1c7bc59e1d"
+  integrity sha512-+zjM/peXU012KfPCRs/T5OrNsex8628hZRq9G5pkk+8cEa6Wp08EfTTvqRsa8lEypDTs7SNP8iJ/GBbkt0Fa9A==
+  dependencies:
+    "@dxos/codec-protobuf" "2.15.6"
+    "@dxos/util" "2.15.6"
     "@polkadot/api" "4.17.1"
     "@polkadot/keyring" "6.11.1"
     "@polkadot/metadata" "4.17.1"
@@ -2463,6 +2503,15 @@
   dependencies:
     "@dxos/crypto" "2.14.5"
     "@dxos/debug" "2.14.5"
+    "@types/node" "^14.0.9"
+
+"@dxos/util@2.15.6":
+  version "2.15.6"
+  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.15.6.tgz#67634e3b8f1432047bb40c914f83a132a609366a"
+  integrity sha512-ewiCfLpIAR6qP7pONDSCyOs6B5Wj21YDYdNZKT1MbQBHzPWE6HRkk1+mqXd7NuWtpSMkUqPEKqZk4zpSKLL9fA==
+  dependencies:
+    "@dxos/crypto" "2.15.6"
+    "@dxos/debug" "2.15.6"
     "@types/node" "^14.0.9"
 
 "@dxos/version-check@^0.1.16":
