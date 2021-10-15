@@ -33,10 +33,8 @@ export const joinResourceRecords = (records: IRecord[], resource: Resource | und
       ...record,
       [field]: versionOrTag,
 
-      // TODO(rzadp): Reenable for all when https://github.com/dxos/cli/issues/300 is done.
-      url: (record.type === '.dxos.type.App' && versionOrTag === 'latest')
-      // urlJoin(config.services.app.server, config.services.app.prefix, `${resource.id.toString()}@${versionOrTag}`)
-        ? urlJoin(config.services.app.server, config.services.app.prefix, resource.id.toString())
+      url: (record.type === '.dxos.type.App')
+        ? urlJoin(config.services.app.server, config.services.app.prefix, `${resource.id.toString()}@${versionOrTag}`)
         : undefined
     };
     return resourceRecord;
