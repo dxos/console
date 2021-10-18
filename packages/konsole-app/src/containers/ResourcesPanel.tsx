@@ -6,13 +6,13 @@ import { Sync as RefreshIcon } from '@mui/icons-material';
 import { Box, Collapse, IconButton, Paper } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import urlJoin from 'proper-url-join';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
 import { useRecords, useRecordTypes, useResources } from '@dxos/react-registry-client';
 import { CID, DXN, IQuery, Resource } from '@dxos/registry-client';
 
-import { DataGrid, IRecord, IResourceRecord, Panel, ResourceRecordsTable, Toolbar } from '../components';
+import { DataGrid, IRecord, IResourceRecord, Panel, ResourceRecordsTable, Toolbar, SearchBar } from '../components';
 import { IConfig, useConfig } from '../hooks';
 import { joinRecords } from './RecordsPanel';
 
@@ -84,7 +84,8 @@ const columns: GridColDef[] = [
  */
 export const ResourcesPanel = ({ match }: { match?: any }) => {
   const config = useConfig();
-  const query = useMemo<IQuery>(() => ({}), []);
+  const [search, setSearch] = useState<string | undefined>();
+  const query = useMemo<IQuery>(() => ({ text: search }), [search]);
   const { resources } = useResources(query);
   const { dxn }: { dxn?: string } = useParams();
   const history = useHistory();
@@ -99,11 +100,26 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
     history.push(generatePath(match.path, { dxn: next?.toString() }));
   };
 
+  const handleSearch = (text: string | undefined) => {
+    setSearch(text);
+  };
+
   return (
     <Panel
       toolbar={(
         <Toolbar>
           <Box sx={{ flex: 1 }} />
+          <Box
+            sx={{
+              minWidth: 350
+            }}
+          >
+            <SearchBar
+              placeholder='Search records'
+              onSearch={handleSearch}
+              delay={500}
+            />
+          </Box>
           <IconButton
             size='small'
             aria-label='refresh'
