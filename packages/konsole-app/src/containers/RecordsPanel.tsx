@@ -49,7 +49,7 @@ export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryType
   return records.map(registryRecord => {
     const record: IRecord = {
       cid: registryRecord.cid,
-      created: registryRecord.meta.created ? getRelativeTime(registryRecord.meta.created) : undefined,
+      created: registryRecord.meta.created,
       description: registryRecord.meta.description,
       type: registryRecord.kind
     };
@@ -59,7 +59,6 @@ export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryType
       record.type = type;
     }
 
-    // TODO(burdon): Move to Resource.
     const url = (type === '.dxos.type.App')
       ? urlJoin(config.services.app.server, config.services.app.prefix, registryRecord.cid.toString())
       : undefined;
