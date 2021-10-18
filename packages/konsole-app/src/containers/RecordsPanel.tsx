@@ -25,7 +25,7 @@ import {
   Toolbar
 } from '../components';
 import { IConfig, useConfig } from '../hooks';
-import { getRelativeTime, safe } from '../util';
+import { safe } from '../util';
 
 /**
  * Joins records with record types.
