@@ -3,18 +3,23 @@
 //
 
 import { Sync as RefreshIcon } from '@mui/icons-material';
-import { Box, Collapse, IconButton, Paper } from '@mui/material';
+import {
+  BubbleChart as GraphIcon,
+  TableRows as TableIcon
+} from '@mui/icons-material';
+import { Box, Collapse, IconButton, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
-import { useRecords, useRecordTypes, useResources } from '@dxos/react-registry-client';
+import { useDomains, useRecords, useRecordTypes, useResources } from '@dxos/react-registry-client';
 import { CID, DXN, IQuery, Resource } from '@dxos/registry-client';
 
 import { DataGrid, IRecord, IResourceRecord, Panel, ResourceRecordsTable, Toolbar, SearchBar } from '../components';
 import { IConfig, useConfig } from '../hooks';
 import { joinRecords } from './RecordsPanel';
+import { RegistryGraph } from '../components/RegistryGraph';
 
 /**
  * Joins records with resources.
@@ -76,17 +81,59 @@ const columns: GridColDef[] = [
       return Object.keys(tags).join(', ');
     }
   }
-
 ];
+
+type View = 'graph' | 'table'
+const views = [
+  { key: 'table', Icon: TableIcon },
+  { key: 'graph', Icon: GraphIcon }
+] as const;
+
+const ViewSelector = ({ view, onChange }: { view: string, onChange: (view: View) => void }) => {
+  const handleChange = (event: React.MouseEvent<HTMLElement>, view: View) => {
+    onChange(view);
+  };
+
+  return (
+    <ToggleButtonGroup
+      exclusive
+      value={view}
+      onChange={handleChange}
+      size='small'
+      sx={{
+        marginRight: 4
+      }}
+    >
+      {views.map(({ key, Icon }) => (
+        <ToggleButton
+          key={key}
+          value={key}
+          color='primary'
+        >
+          <Icon />
+        </ToggleButton>
+      ))}
+    </ToggleButtonGroup>
+  );
+};
+
+// TODO(burdon): Render is not visible (to maintain state).
+const ViewPanel = ({ children, visible }: { children: React.ReactNode, visible: boolean }) => (
+  <>
+    {visible && children}
+  </>
+);
 
 /**
  * Displays the resources.
  */
 export const ResourcesPanel = ({ match }: { match?: any }) => {
   const config = useConfig();
+  const { domains } = useDomains();
   const [search, setSearch] = useState<string | undefined>();
   const query = useMemo<IQuery>(() => ({ text: search }), [search]);
   const { resources } = useResources(query);
+  const [view, setView] = useState<View>(views[0].key);
   const { dxn }: { dxn?: string } = useParams();
   const history = useHistory();
   const selectedResource = resources.find(resource => resource.id.toString() === dxn?.toString());
@@ -108,6 +155,7 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
     <Panel
       toolbar={(
         <Toolbar>
+          <ViewSelector view={view} onChange={setView} />
           <Box sx={{ flex: 1 }} />
           <Box
             sx={{
@@ -130,29 +178,38 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
         </Toolbar>
       )}
     >
-      <DataGrid
-        rows={resources || []}
-        columns={columns}
-        getRowId={({ id }) => id.toString()}
-        selectionModel={selectedResource ? [selectedResource?.id.toString()] : []}
-        onRowClick={({ id }) => onSelected(id as unknown as DXN)}
-        disableSelectionOnClick
-        hideFooterSelectedRowCount
-      />
-      <Collapse in={selectedResource !== undefined} timeout='auto' unmountOnExit>
-          <Paper
-            sx={{
-              marginTop: 1,
-              height: 304,
-              overflow: 'hidden',
-              padding: 1
-            }}
-          >
-            <ResourceRecordsTable
-              resourceRecords={resourceRecords}
-            />
-          </Paper>
-        </Collapse>
+      <ViewPanel visible={view === 'table'}>
+        <DataGrid
+          rows={resources || []}
+          columns={columns}
+          getRowId={({ id }) => id.toString()}
+          selectionModel={selectedResource ? [selectedResource?.id.toString()] : []}
+          onRowClick={({ id }) => onSelected(id as unknown as DXN)}
+          disableSelectionOnClick
+          hideFooterSelectedRowCount
+        />
+        <Collapse in={selectedResource !== undefined} timeout='auto' unmountOnExit>
+            <Paper
+              sx={{
+                marginTop: 1,
+                height: 304,
+                overflow: 'hidden',
+                padding: 1
+              }}
+            >
+              <ResourceRecordsTable
+                resourceRecords={resourceRecords}
+              />
+            </Paper>
+          </Collapse>
+        </ViewPanel>
+        <ViewPanel visible={view === 'graph'}>
+          <RegistryGraph
+            domains={domains}
+            records={records}
+            resources={resources}
+          />
+      </ViewPanel>
     </Panel>
   );
 };
