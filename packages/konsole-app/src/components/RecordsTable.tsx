@@ -21,12 +21,6 @@ export interface IRecord {
   url?: string
 }
 
-export interface IResource {
-  name: string
-  tags?: string[],
-  versions?: string[]
-}
-
 // NOTE: Test dimensions on iPad Pro.
 // https://mui.com/components/data-grid/columns
 export const recordsColumns: GridColDef[] = [
