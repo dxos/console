@@ -29,8 +29,6 @@ export default {
 
 export const Primary = () => {
   const theme = createCustomTheme(config);
-  const registryClient = useMemo(() => new MemoryRegistryClient(), []);
-  console.log(registryClient);
 
   return (
     <RegistryProvider registry={memoryRegistryClient}>

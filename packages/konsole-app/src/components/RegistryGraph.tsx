@@ -45,7 +45,7 @@ const useStyles = makeStyles(() => ({
     map[`& g.node.${color} text`] = {
       fontFamily: 'sans-serif',
       fontSize: 12,
-      fill: colors.grey[200]
+      fill: colors.grey[700]
     };
 
     return map;
