@@ -7,14 +7,33 @@ import React, { useEffect, useState } from 'react';
 import useResizeAware from 'react-resize-aware';
 import { colors } from '@mui/material';
 
-import { SVG, convertTreeToGraph, createTree, useGrid, GraphType } from '@dxos/gem-core';
-import { ForceLayout, Graph, NodeProjector } from '@dxos/gem-spore';
+import { SVG, convertTreeToGraph, createTree, useGrid, GraphType, NodeType } from '@dxos/gem-core';
+import { ForceLayout, Graph, LinkProjector, NodeProjector } from '@dxos/gem-spore';
 import { Domain, Resource } from '@dxos/registry-client';
 
 import { IRecord } from './RecordsTable';
 import { makeStyles } from '@mui/styles';
 
 const nodeColors: (keyof typeof colors)[] = ['red', 'green', 'blue', 'yellow', 'orange', 'grey'];
+type NodeKind = 'record' | 'resource' | 'domain'
+type Node = NodeType & {kind: NodeKind}
+const typeMap: Record<NodeKind, keyof typeof colors> = {
+  record: 'blue',
+  resource: 'orange',
+  domain: 'green'
+};
+
+const nodeProjector = new NodeProjector({
+  node: {
+    showLabels: true,
+    propertyAdapter: (node: Node) => {
+      return {
+        class: typeMap[node.kind] ?? 'grey'
+      };
+    }
+  }
+})
+const linkProjector = new LinkProjector({ nodeRadius: 8, showArrows: true })
 
 const useStyles = makeStyles(() => ({
   nodes: nodeColors.reduce((map: any, color: string) => {
@@ -26,7 +45,7 @@ const useStyles = makeStyles(() => ({
     map[`& g.node.${color} text`] = {
       fontFamily: 'sans-serif',
       fontSize: 12,
-      fill: colors['grey'][700]
+      fill: colors['grey'][200]
     };
 
     return map;
@@ -49,24 +68,27 @@ export const RegistryGraph = ({ domains = [], records = [], resources = [] }: Re
 
   console.log({domains, records, resources, data})
 
-  const [{ nodeProjector }] = useState({
-    nodeProjector: new NodeProjector({
-      node: {
-        showLabels: true,
-        propertyAdapter: (node: any) => {
-          return {
-            class: 'grey'
-          };
-        }
-      }
-    })
-  });
-
   useEffect(() => {
-    const resourceNodes: GraphType['nodes'] = resources.map(resource => ({id: resource.id.toString(), title: resource.id.toString()}))
-    const recordNodes: GraphType['nodes'] = records.map(record => ({id: record.cid.toString(), title: record.description ?? record.cid.toString()}))
-    const nodes = [...resourceNodes, ...recordNodes]
-    const links: GraphType['links'] = []
+    const resourceNodes: Node[] = resources.map(resource => ({id: resource.id.toString(), title: resource.id.toString(), kind: 'resource'}))
+    const recordNodes: Node[] = records.map(record => ({id: record.cid.toString(), title: record.description ?? record.cid.toString(), kind: 'record'}))
+    const domainNodes: Node[] = domains.map(domain => ({id: domain.name ?? domain.key.toString(), title: domain.name ?? domain.key.toString(), kind: 'domain'}))
+    const nodes = [...resourceNodes, ...recordNodes, ...domainNodes]
+
+    const domainResourceLinks: GraphType['links'] = resources
+      .filter(resource => resource.id.domain !== undefined)
+      .map(resource => ({id: `${resource.id.toString()}-${resource.id.domain}`, source: resource.id.toString(), target: resource.id.domain!}))
+
+    const resourceVersionsLinks: GraphType['links'] = resources
+      .flatMap(resource => Object.entries(resource.versions).map(
+        entry => ({id: `${resource.id.toString()}-${entry[0]}-${entry[1]?.toString()!}`, source: resource.id.toString(), target: entry[1]?.toString()!})
+      ))
+
+    const resourceTagsLinks: GraphType['links'] = resources
+      .flatMap(resource => Object.entries(resource.tags).map(
+        entry => ({id: `${resource.id.toString()}-${entry[0]}-${entry[1]?.toString()!}`, source: resource.id.toString(), target: entry[1]?.toString()!})
+      ))
+
+    const links = [...domainResourceLinks, ...resourceVersionsLinks, ...resourceTagsLinks]
     setData({nodes, links})
   }, [domains, records, resources]);
 
@@ -85,6 +107,7 @@ export const RegistryGraph = ({ domains = [], records = [], resources = [] }: Re
           data={data}
           layout={layout}
           nodeProjector={nodeProjector}
+          linkProjector={linkProjector}
           classes={{
             nodes: classes.nodes
           }}

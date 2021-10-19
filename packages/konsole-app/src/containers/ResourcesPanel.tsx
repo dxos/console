@@ -139,7 +139,7 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
   const selectedResource = resources.find(resource => resource.id.toString() === dxn?.toString());
   const { recordTypes } = useRecordTypes();
   const { records: registryRecords } = useRecords();
-  const records = joinRecords(selectedResource ? registryRecords : [], recordTypes, config);
+  const records = joinRecords(registryRecords, recordTypes, config);
   const resourceRecords = joinResourceRecords(records, selectedResource, config);
 
   const onSelected = (dxn: DXN) => {
