@@ -2,8 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Sync as RefreshIcon } from '@mui/icons-material';
 import {
+  Sync as RefreshIcon,
   BubbleChart as GraphIcon,
   TableRows as TableIcon
 } from '@mui/icons-material';
@@ -17,9 +17,9 @@ import { useDomains, useRecords, useRecordTypes, useResources } from '@dxos/reac
 import { CID, DXN, IQuery, Resource } from '@dxos/registry-client';
 
 import { DataGrid, IRecord, IResourceRecord, Panel, ResourceRecordsTable, Toolbar, SearchBar } from '../components';
+import { RegistryGraph } from '../components/RegistryGraph';
 import { IConfig, useConfig } from '../hooks';
 import { joinRecords } from './RecordsPanel';
-import { RegistryGraph } from '../components/RegistryGraph';
 
 /**
  * Joins records with resources.

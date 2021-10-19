@@ -2,18 +2,17 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box } from '@mui/material';
+import { Box, colors } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import useResizeAware from 'react-resize-aware';
-import { colors } from '@mui/material';
 
-import { SVG, convertTreeToGraph, createTree, useGrid, GraphType, NodeType } from '@dxos/gem-core';
+import { GraphType, NodeType, SVG, useGrid } from '@dxos/gem-core';
 import { ForceLayout, Graph, LinkProjector, NodeProjector } from '@dxos/gem-spore';
 import { Domain, Resource } from '@dxos/registry-client';
 
-import { IRecord } from './RecordsTable';
-import { makeStyles } from '@mui/styles';
 import { IResourceRecord } from '.';
+import { IRecord } from './RecordsTable';
 
 const nodeColors: (keyof typeof colors)[] = ['red', 'green', 'blue', 'yellow', 'orange', 'grey'];
 type NodeKind = 'record' | 'resource' | 'domain'
@@ -33,8 +32,8 @@ const nodeProjector = new NodeProjector({
       };
     }
   }
-})
-const linkProjector = new LinkProjector({ nodeRadius: 8, showArrows: true })
+});
+const linkProjector = new LinkProjector({ nodeRadius: 8, showArrows: true });
 
 const useStyles = makeStyles(() => ({
   nodes: nodeColors.reduce((map: any, color: string) => {
@@ -46,7 +45,7 @@ const useStyles = makeStyles(() => ({
     map[`& g.node.${color} text`] = {
       fontFamily: 'sans-serif',
       fontSize: 12,
-      fill: colors['grey'][200]
+      fill: colors.grey[200]
     };
 
     return map;
@@ -63,35 +62,37 @@ interface RegistryGraphProps {
 export const RegistryGraph = ({ domains = [], records = [], resources = [] }: RegistryGraphProps) => {
   const [resizeListener, size] = useResizeAware();
   const grid = useGrid(size);
-  const [data, setData] = useState<GraphType>({links: [], nodes: []});
+  const [data, setData] = useState<GraphType>({ links: [], nodes: [] });
   const [layout] = useState(() => new ForceLayout({ force: { links: { distance: 80 } } }));
   const classes = useStyles();
 
   useEffect(() => {
-    const resourceNodes: Node[] = resources.map(resource => ({id: resource.id.toString(), title: resource.id.toString(), kind: 'resource'}))
+    const resourceNodes: Node[] = resources.map(resource => ({ id: resource.id.toString(), title: resource.id.toString(), kind: 'resource' }));
     const recordNodes: Node[] = records
-      .map(record => ({id: record.cid.toString(), title: record.description ?? record.cid.toString(), kind: 'record' as const}))
+      .map(record => ({ id: record.cid.toString(), title: record.description ?? record.cid.toString(), kind: 'record' as const }))
       .filter((record, index, array) => array.indexOf(record) === index); // Only unique. The duplications comes from same records by versions or by tags.
 
-    const domainNodes: Node[] = domains.map(domain => ({id: domain.name ?? domain.key.toString(), title: domain.name ?? domain.key.toString(), kind: 'domain'}))
-    const nodes = [...resourceNodes, ...recordNodes, ...domainNodes]
+    const domainNodes: Node[] = domains.map(domain => ({ id: domain.name ?? domain.key.toString(), title: domain.name ?? domain.key.toString(), kind: 'domain' }));
+    const nodes = [...resourceNodes, ...recordNodes, ...domainNodes];
 
     const domainResourceLinks: GraphType['links'] = resources
       .filter(resource => resource.id.domain !== undefined)
-      .map(resource => ({id: `${resource.id.toString()}-${resource.id.domain}`, source: resource.id.toString(), target: resource.id.domain!}))
+      .map(resource => ({ id: `${resource.id.toString()}-${resource.id.domain}`, source: resource.id.toString(), target: resource.id.domain! }));
 
     const resourceVersionsLinks: GraphType['links'] = resources
       .flatMap(resource => Object.entries(resource.versions).map(
-        entry => ({id: `${resource.id.toString()}-${entry[0]}-${entry[1]?.toString()!}`, source: resource.id.toString(), target: entry[1]?.toString()!})
-      ))
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        entry => ({ id: `${resource.id.toString()}-${entry[0]}-${entry[1]?.toString()!}`, source: resource.id.toString(), target: entry[1]?.toString()! })
+      ));
 
     const resourceTagsLinks: GraphType['links'] = resources
       .flatMap(resource => Object.entries(resource.tags).map(
-        entry => ({id: `${resource.id.toString()}-${entry[0]}-${entry[1]?.toString()!}`, source: resource.id.toString(), target: entry[1]?.toString()!})
-      ))
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        entry => ({ id: `${resource.id.toString()}-${entry[0]}-${entry[1]?.toString()!}`, source: resource.id.toString(), target: entry[1]?.toString()! })
+      ));
 
-    const links = [...domainResourceLinks, ...resourceVersionsLinks, ...resourceTagsLinks]
-    setData({nodes, links})
+    const links = [...domainResourceLinks, ...resourceVersionsLinks, ...resourceTagsLinks];
+    setData({ nodes, links });
   }, [domains, records, resources]);
 
   return (

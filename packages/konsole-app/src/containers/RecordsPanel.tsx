@@ -2,16 +2,13 @@
 // Copyright 2021 DXOS.org
 //
 
-import {
-  BubbleChart as GraphIcon, Sync as RefreshIcon,
-  TableRows as TableIcon
-} from '@mui/icons-material';
-import { Box, Collapse, IconButton, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Sync as RefreshIcon } from '@mui/icons-material';
+import { Box, Collapse, IconButton, Paper } from '@mui/material';
 import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
-import { useDomains, useRecords, useRecordTypes } from '@dxos/react-registry-client';
+import { useRecords, useRecordTypes } from '@dxos/react-registry-client';
 import { CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-client';
 
 import {
