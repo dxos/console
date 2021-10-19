@@ -7,34 +7,29 @@ import { Box, IconButton, Link } from '@mui/material';
 import { GridColDef, GridCellParams, GridRowId } from '@mui/x-data-grid';
 import React from 'react';
 
-import { CID } from '@dxos/registry-api';
+import { CID } from '@dxos/registry-client';
 
 import { getRelativeTime, sortDateStrings } from '../util';
 import { truncate, DataGrid } from './DataGrid';
 
 export interface IRecord {
   cid: CID
-  version?: string // TODO(burdon): Add.
-  created?: string // TODO(burdon): Is this working?
-  title?: string
-  data?: any
+  created?: Date | undefined
+  description?: string,
+  data?: any,
+  type?: string,
+  url?: string
 }
 
-export interface IResource extends IRecord {
-  name: string // TODO(burdon): This isn't part of the record.
-  type?: string // TODO(burdon): What is this?
-  url?: string
+export interface IResource {
+  name: string
+  tags?: string[],
+  versions?: string[]
 }
 
 // NOTE: Test dimensions on iPad Pro.
 // https://mui.com/components/data-grid/columns
-const columns: GridColDef[] = [
-  {
-    field: 'name',
-    headerName: 'Resource Name',
-    minWidth: 280,
-    cellClassName: () => 'monospace primary'
-  },
+export const recordsColumns: GridColDef[] = [
   {
     field: 'cid',
     headerName: 'Record CID',
@@ -60,8 +55,8 @@ const columns: GridColDef[] = [
     sortComparator: (v1, v2) => sortDateStrings(v1 as string, v2 as string)
   },
   {
-    field: 'title',
-    headerName: 'Display Name',
+    field: 'description',
+    headerName: 'Description',
     minWidth: 280,
     cellClassName: () => 'primary',
     flex: 1
@@ -113,12 +108,13 @@ export const RecordsTable = ({ records = [], selected, onSelect }: RecordsTableP
   return (
     <Box
       sx={{
-        flex: 1
+        flex: 1,
+        height: '100%'
       }}
     >
       <DataGrid
         rows={records}
-        columns={columns}
+        columns={recordsColumns}
         getRowId={({ cid }) => cid.toB58String()}
         selectionModel={selected ? [s] : []}
         onRowClick={({ id }) => handleSelect(id)}

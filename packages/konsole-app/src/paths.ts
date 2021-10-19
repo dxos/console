@@ -11,7 +11,7 @@ export const paths = {
   ipfs: '/ipfs',
   logs: '/logs',
   records: '/records/:cid?',
-  resources: '/resources',
+  resources: '/resources/:dxn?',
   services: '/services',
   types: '/types',
   signaling: '/signaling'

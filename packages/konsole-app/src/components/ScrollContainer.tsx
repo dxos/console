@@ -9,10 +9,10 @@ const pad = (num: number, places: number) => String(num).padStart(places, '0');
 
 // TODO(burdon): eslint ignore no-multiple-spaces
 interface IBounds {
-  top: number       // Pixels from top of container.
-  height: number    // Height of container.
-  visible: number   // TODO(burdon): Rename rendered.
-  index: number     // Index of row at the top of the view port.
+  top: number // Pixels from top of container.
+  height: number // Height of container.
+  visible: number // TODO(burdon): Rename rendered.
+  index: number // Index of row at the top of the view port.
 }
 
 interface IRange {

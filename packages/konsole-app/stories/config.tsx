@@ -20,6 +20,12 @@ export const config: IConfig = {
     endpoint: ''
   },
   services: {
+    kube: {
+      endpoints: {
+        logs: '',
+        services: ''
+      }
+    },
     dxns: {
       server: 'test-dxns-server'
     },

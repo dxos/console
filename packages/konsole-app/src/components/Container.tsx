@@ -112,7 +112,7 @@ const ContainerMenu = () => {
       <Menu
         id='long-menu'
         MenuListProps={{
-          'aria-labelledby': 'long-button',
+          'aria-labelledby': 'long-button'
         }}
         anchorEl={anchorEl}
         open={menuOpen}
@@ -147,7 +147,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
         <Toolbar
           sx={{
             '*': {
-              color: theme => theme.palette.mode === 'dark' ? theme.palette.background.default: undefined
+              color: theme => theme.palette.mode === 'dark' ? theme.palette.background.default : undefined
             }
           }}
         >

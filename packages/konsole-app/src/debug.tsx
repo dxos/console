@@ -16,7 +16,7 @@ const start = async (config: IConfig) => {
   const log = debug('dxos:console:main');
   log('Starting...', { config });
 
-  const theme = createCustomTheme(config)
+  const theme = createCustomTheme(config);
 
   ReactDOM.render((
     <Debug

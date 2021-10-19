@@ -49,6 +49,8 @@ if (argv.verbose) {
 
 const app = express();
 
+app.use(cors());
+
 app.set('views', `${__dirname}/views`);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());
@@ -68,10 +70,10 @@ app.get('/', (req, res) => {
 // import cors from 'cors'
 // https://expressjs.com/en/resources/middleware/cors.html
 // https://www.prisma.io/blog/enabling-cors-for-express-graphql-apollo-server-1ef999bfb38d
-app.use(cors({
-  origin: true,
-  credentials: true
-}));
+// app.use(cors({
+//   origin: true,
+//   credentials: true
+// }));
 
 //
 // Apollo Server and middleware

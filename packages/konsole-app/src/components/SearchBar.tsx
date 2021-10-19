@@ -34,7 +34,7 @@ export const SearchBar = ({ placeholder, onSearch, delay = 0 }: SearchBarProps) 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     switch (event.key) {
       case 'Enter': {
-        onSearch && onSearch(undefined);
+        onSearch && onSearch(text);
         break;
       }
       case 'Escape': {

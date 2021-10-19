@@ -14,6 +14,7 @@ import {
   SelectChangeEvent,
   Switch
 } from '@mui/material';
+import urlJoin from 'proper-url-join';
 import React, { useEffect, useState } from 'react';
 
 import { LogTable, Panel, Toolbar } from '../components';
@@ -21,19 +22,19 @@ import { useConfig, useRequest, useServices } from '../hooks';
 import { ILogMessage, ipfsLogParser, defaultLogParser } from '../logging';
 
 const parsers: {[index: string]: any} = {
-  'ipfs': ipfsLogParser, // TODO(burdon): Update lint settings to allow this.
+  ipfs: ipfsLogParser, // TODO(burdon): Update lint settings to allow this.
   'ipfs-swarm-connect': ipfsLogParser
 };
 
 const getParser = (service: string) => parsers[service] || defaultLogParser;
 
-// TODO(burdon): Config.
-// curl -s -H "Content-type: application/json" -X POST -d '{"name":"app-server", "incremental": true,"uniqueId":"<uniqueIdPerKonsoleAppInstance>"}' https://discovery.kube.dxos.network/kube/logs | jq
-const KUBE_LOGS = 'https://logs.kube.dxos.network/kube/logs';
-
 const useLogs = (service: string | undefined): [ILogMessage[], () => void] => {
+  const config = useConfig();
   // TODO(burdon): Don't trigger request if service is undefined.
-  const [data, refreshData] = useRequest<string[]>({ url: KUBE_LOGS, params: { name: service, lines: 100 } });
+  const [data, refreshData] = useRequest<string[]>({
+    url: urlJoin(config.services.app.server, config.services.kube.endpoints.logs),
+    params: { name: service, lines: 100 }
+  });
   const [logs, setLogs] = useState<ILogMessage[]>([]);
 
   useEffect(() => {

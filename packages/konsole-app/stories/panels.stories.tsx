@@ -3,26 +3,34 @@
 //
 
 import debug from 'debug';
-import React, { useMemo } from 'react';
+import React from 'react';
+import {
+  MemoryRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom';
 
+import { RegistryProvider } from '@dxos/react-registry-client';
 import { MemoryRegistryClient } from '@dxos/registry-client';
 
 import {
   IService,
   ConfigContext,
-  RegistryContext,
   RequestContext,
   ConfigPanel,
   RecordsPanel,
   ServicesPanel,
   LogsPanel,
   generateHistoricalMessages,
-  logPrinter
+  logPrinter,
+  paths
 } from '../src';
-
 import { config, RootContainer } from './config';
 
 debug.enable('dxos:console:*');
+
+const memoryRegistryClient = new MemoryRegistryClient();
 
 export default {
   title: 'Panels'
@@ -62,15 +70,20 @@ export const Logs = () => {
 
 // TODO(burdon): Requires router for useParams, match props, etc.
 export const Records = () => {
-  const registryClient = useMemo(() => new MemoryRegistryClient(), []);
-
   return (
     <ConfigContext.Provider value={config}>
-      <RegistryContext.Provider value={registryClient}>
+      <RegistryProvider registry={memoryRegistryClient}>
         <RootContainer config={config}>
-          <RecordsPanel />
+          <Router>
+            <Switch>
+              <Route path={paths.records}>
+                <RecordsPanel />
+              </Route>
+              <Redirect to={paths.records} />
+            </Switch>
+          </Router>
         </RootContainer>
-      </RegistryContext.Provider>
+      </RegistryProvider>
     </ConfigContext.Provider>
   );
 };

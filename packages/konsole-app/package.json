@@ -1,7 +1,7 @@
 {
   "name": "@dxos/konsole-app",
-  "version": "1.2.9-alpha.31",
-  "description": "KUBE Authenticator.",
+  "version": "1.2.9-alpha.48",
+  "description": "Konsole App.",
   "homepage": "https://github.com/dxos/console#readme",
   "bugs": {
     "url": "https://github.com/dxos/console/issues"
@@ -16,15 +16,15 @@
     "src"
   ],
   "scripts": {
-    "build": "webpack",
+    "build": "tsc --noEmit && esapp build",
     "build-storybook": "build-storybook --quiet",
     "chromatic": "npx chromatic --exit-zero-on-changes --auto-accept-changes",
     "ci": "npm run build && npm run lint && npm run test",
     "clean": "rm -rf ./dist",
     "debug": "webpack serve --mode development --host 0.0.0.0 --config webpack-debug.config.js",
     "deploy": "npm run chromatic",
-    "lint": "eslint --fix --format codeframe './src/**/*.ts'",
-    "start": "webpack serve --mode development --host 0.0.0.0",
+    "lint": "eslint --fix --format codeframe './src/**/*.{ts,tsx}'",
+    "start": "esapp dev",
     "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
@@ -40,12 +40,12 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.19",
-    "@dxos/config": "~2.12.23",
+    "@dxos/config": "~2.15.7",
     "@dxos/gem-core": "^1.0.0-beta.35",
     "@dxos/gem-spore": "^1.0.0-beta.35",
     "@dxos/react-json-tree": "~0.12.0",
-    "@dxos/registry-api": "^2.14.0",
-    "@dxos/registry-client": "^2.14.5",
+    "@dxos/react-registry-client": "~2.15.7",
+    "@dxos/registry-client": "~2.15.7",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
@@ -72,6 +72,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@dxos/esbuild-plugins": "^2.15.2",
     "@dxos/eslint-plugin": "^1.0.14",
     "@storybook/addon-actions": "^6.3.9",
     "@storybook/addon-knobs": "^6.3.1",
@@ -86,6 +87,7 @@
     "@types/react-virtualized": "^9.21.13",
     "@types/string-hash": "^1.1.1",
     "@types/superagent": "^4.1.10",
+    "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "babel-loader": "^8.1.0",
@@ -93,6 +95,7 @@
     "babel-plugin-inline-import": "^3.0.0",
     "chromatic": "^5.8.0",
     "copy-webpack-plugin": "^6.4.1",
+    "esapp": "^0.1.5",
     "eslint": "^7.10.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -102,6 +105,7 @@
     "faker": "^4.1.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^27.1.0",
+    "js-yaml": "^4.1.0",
     "ts-jest": "^27.0.5",
     "ts-loader": "~8.1.0",
     "typescript": "~4.2.4",
@@ -109,7 +113,8 @@
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.8.0",
-    "webpack-version-file-plugin": "^0.4.0"
+    "webpack-version-file-plugin": "^0.4.0",
+    "yaml": "^1.10.2"
   },
   "publishConfig": {
     "access": "public"

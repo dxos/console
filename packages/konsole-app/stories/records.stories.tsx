@@ -6,10 +6,10 @@ import { Toolbar } from '@mui/material';
 import debug from 'debug';
 import React, { useState } from 'react';
 
-import { CID, RegistryTypeRecord } from '@dxos/registry-api';
+import { CID, RegistryTypeRecord } from '@dxos/registry-client';
 
 import {
-  IResource,
+  IRecord,
   RecordsTable,
   RecordTypeSelector
 } from '../src';
@@ -49,20 +49,18 @@ export const TypeSelector = () => {
 };
 
 export const Records = () => {
-  const records: IResource[] = [
+  const records: IRecord[] = [
     {
-      name: 'dxos/record-1',
       cid: CID.fromB58String('QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR'),
-      created: new Date().toISOString(),
+      created: new Date(),
       type: '.dxos.App',
-      title: 'Record 1'
+      description: 'Teamwork'
     },
     {
-      name: 'dxos/record-2',
       cid: CID.fromB58String('QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu'),
-      created: new Date().toISOString(),
+      created: new Date(),
       type: '.dxos.App',
-      title: 'Record 2'
+      description: 'Braneframe'
     }
   ];
 

@@ -5,6 +5,7 @@
 import debug from 'debug';
 import React, { useMemo } from 'react';
 
+import { RegistryProvider } from '@dxos/react-registry-client';
 import { MemoryRegistryClient } from '@dxos/registry-client';
 
 import { createCustomTheme, panels, App, Debug as DebugApp } from '../src';
@@ -12,7 +13,9 @@ import { config } from './config';
 
 debug.enable('dxos:console:*');
 
-// TODO(burdon): Seems to clash with Mui theme? Wait for version 7?
+const memoryRegistryClient = new MemoryRegistryClient();
+
+// TODO(burdon): Seems to clash with Mui theme?
 // import StoryRouter from 'storybook-react-router';
 // "storybook-react-router": "^1.0.8"
 // "@types/storybook-react-router": "^1.0.1",
@@ -30,12 +33,13 @@ export const Primary = () => {
   console.log(registryClient);
 
   return (
-    <App
-      config={config}
-      registryApi={registryClient}
-      panels={panels}
-      theme={theme}
-    />
+    <RegistryProvider registry={memoryRegistryClient}>
+      <App
+        config={config}
+        panels={panels}
+        theme={theme}
+      />
+    </RegistryProvider>
   );
 };
 

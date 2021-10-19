@@ -7,7 +7,8 @@ import { DataGrid as MuiDataGrid } from '@mui/x-data-grid';
 import React from 'react';
 import { generatePath, useHistory } from 'react-router';
 
-import { CID } from '@dxos/registry-api';
+import { CID } from '@dxos/registry-client';
+
 import { paths } from '../paths';
 
 export const truncate = (key: string, head = 8, tail = 8) => {
