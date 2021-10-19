@@ -7,6 +7,7 @@ export const paths = {
   bots: '/bots',
   config: '/config',
   domains: '/domains',
+  dxns: '/dxns',
   ipfs: '/ipfs',
   logs: '/logs',
   records: '/records/:cid?',

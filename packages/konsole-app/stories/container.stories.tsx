@@ -2,10 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
-import debug from 'debug';
-import React, { useState } from 'react';
-
 import { Box, Paper } from '@mui/material';
+import debug from 'debug';
+import faker from 'faker';
+import React, { useState } from 'react';
 
 import {
   IPanel,
@@ -13,38 +13,29 @@ import {
   Container,
   Sidebar,
 } from '../src';
-
 import { config, RootContainer } from './config';
 
 debug.enable('dxos:console:*');
+
+faker.seed(123);
 
 export default {
   title: 'Container'
 };
 
-const panels: IPanel[] = [
-  {
-    id: 'a',
-    path: '/a',
-    label: 'A',
-    component: Box
-  },
-  {
-    id: 'b',
-    path: '/b',
-    label: 'B',
-    component: Box
-  },
-  {
-    id: 'c',
-    path: '/c',
-    label: 'C',
-    component: Box
-  },
-];
+const panels: IPanel[] = ['a', 'b', 'c'].map(name => {
+  const text = faker.lorem.sentences();
+  return {
+    id: name,
+    path: `/${name}`,
+    label: name,
+    component: () => <Box>{text}</Box>
+  };
+});
 
 export const Primary = () => {
-  const [panel, setPanel] = useState(panels[0].id);
+  const [panel, setPanel] = useState<string>(panels[0].id);
+  const { component: Component } = panels.find(({ id }) => id === panel)!;
 
   return (
     <ConfigContext.Provider value={config}>
@@ -58,18 +49,8 @@ export const Primary = () => {
             />
           }
         >
-          <Paper
-            sx={{
-              padding: 2
-            }}
-          >
-            <Box
-              sx={{
-                padding: 2
-              }}
-            >
-              Container: {panel}
-            </Box>
+          <Paper sx={{ padding: 2 }}>
+            <Component />
           </Paper>
         </Container>
       </RootContainer>
