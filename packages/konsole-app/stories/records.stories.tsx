@@ -10,7 +10,6 @@ import { CID, RegistryTypeRecord } from '@dxos/registry-client';
 
 import {
   IRecord,
-  IResource,
   RecordsTable,
   RecordTypeSelector
 } from '../src';
@@ -53,13 +52,13 @@ export const Records = () => {
   const records: IRecord[] = [
     {
       cid: CID.fromB58String('QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR'),
-      created: new Date().toISOString(),
+      created: new Date(),
       type: '.dxos.App',
       description: 'Teamwork'
     },
     {
       cid: CID.fromB58String('QmQgQUbBeMTnH1j3QWwNw9LkXjpWDJrjyGYfZpnPp8x5Lu'),
-      created: new Date().toISOString(),
+      created: new Date(),
       type: '.dxos.App',
       description: 'Braneframe'
     }

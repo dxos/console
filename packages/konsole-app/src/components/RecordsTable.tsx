@@ -14,7 +14,7 @@ import { truncate, DataGrid } from './DataGrid';
 
 export interface IRecord {
   cid: CID
-  created?: string
+  created?: Date | undefined
   description?: string,
   data?: any,
   type?: string,
