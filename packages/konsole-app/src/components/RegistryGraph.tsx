@@ -69,7 +69,7 @@ export const RegistryGraph = ({ domains = [], records = [], resources = [] }: Re
   useEffect(() => {
     const resourceNodes: Node[] = resources.map(resource => ({ id: resource.id.toString(), title: resource.id.toString(), kind: 'resource' }));
     const recordNodes: Node[] = records
-      .map(record => ({ id: record.cid.toString(), title: record.description ?? record.cid.toString(), kind: 'record' as const }))
+      .map((record: IResourceRecord | IRecord) => ({ id: record.cid.toString(), title: record.description ?? record.cid.toString(), kind: 'record' as const }))
       .filter((record, index, array) => array.indexOf(record) === index); // Only unique. The duplications comes from same records by versions or by tags.
 
     const domainNodes: Node[] = domains.map(domain => ({ id: domain.name ?? domain.key.toString(), title: domain.name ?? domain.key.toString(), kind: 'domain' }));
