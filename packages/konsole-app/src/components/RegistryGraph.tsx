@@ -13,6 +13,7 @@ import { Domain, Resource } from '@dxos/registry-client';
 
 import { IRecord } from './RecordsTable';
 import { makeStyles } from '@mui/styles';
+import { IResourceRecord } from '.';
 
 const nodeColors: (keyof typeof colors)[] = ['red', 'green', 'blue', 'yellow', 'orange', 'grey'];
 type NodeKind = 'record' | 'resource' | 'domain'
@@ -54,7 +55,7 @@ const useStyles = makeStyles(() => ({
 
 interface RegistryGraphProps {
   domains?: Domain[]
-  records?: IRecord[],
+  records?: IResourceRecord[] | IRecord[],
   resources?: Resource[]
 }
 
@@ -66,11 +67,12 @@ export const RegistryGraph = ({ domains = [], records = [], resources = [] }: Re
   const [layout] = useState(() => new ForceLayout({ force: { links: { distance: 80 } } }));
   const classes = useStyles();
 
-  console.log({domains, records, resources, data})
-
   useEffect(() => {
     const resourceNodes: Node[] = resources.map(resource => ({id: resource.id.toString(), title: resource.id.toString(), kind: 'resource'}))
-    const recordNodes: Node[] = records.map(record => ({id: record.cid.toString(), title: record.description ?? record.cid.toString(), kind: 'record'}))
+    const recordNodes: Node[] = records
+      .map(record => ({id: record.cid.toString(), title: record.description ?? record.cid.toString(), kind: 'record' as const}))
+      .filter((record, index, array) => array.indexOf(record) === index); // Only unique. The duplications comes from same records by versions or by tags.
+
     const domainNodes: Node[] = domains.map(domain => ({id: domain.name ?? domain.key.toString(), title: domain.name ?? domain.key.toString(), kind: 'domain'}))
     const nodes = [...resourceNodes, ...recordNodes, ...domainNodes]
 

@@ -206,8 +206,8 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
         <ViewPanel visible={view === 'graph'}>
           <RegistryGraph
             domains={domains}
-            records={records}
-            resources={resources}
+            records={selectedResource ? resourceRecords : records}
+            resources={selectedResource ? [selectedResource] : resources}
           />
       </ViewPanel>
     </Panel>
