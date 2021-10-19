@@ -3,7 +3,7 @@
 //
 
 import debug from 'debug';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { RegistryProvider } from '@dxos/react-registry-client';
 import { MemoryRegistryClient } from '@dxos/registry-client';
@@ -29,6 +29,8 @@ export default {
 
 export const Primary = () => {
   const theme = createCustomTheme(config);
+  const registryClient = useMemo(() => new MemoryRegistryClient(), []);
+  console.log(registryClient);
 
   return (
     <RegistryProvider registry={memoryRegistryClient}>

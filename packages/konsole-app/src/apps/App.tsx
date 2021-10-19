@@ -14,7 +14,7 @@ import {
   useParams
 } from 'react-router-dom';
 
-import { Container, Sidebar } from '../components';
+import { Container, Fullscreen, Sidebar } from '../components';
 import { IConfig, ConfigContext } from '../hooks';
 import { IPanel } from '../types';
 
@@ -35,26 +35,28 @@ export const Main = ({ panels }: MainProps) => {
   };
 
   return (
-    <Container
-      sidebar={
-        <Sidebar
-          panels={panels}
-          selected={panel}
-          onSelect={handleNavigate}
-        />
-      }
-    >
-      <>
-        {/* TODO(burdon): Cache panels so that they are not rendered each time. */}
-        {panels.map(({ path, component }) => (
-          <Route
-            key={path}
-            path={path}
-            component={component}
+    <Fullscreen>
+      <Container
+        sidebar={
+          <Sidebar
+            panels={panels}
+            selected={panel}
+            onSelect={handleNavigate}
           />
-        ))}
-      </>
-    </Container>
+        }
+      >
+        <>
+          {/* TODO(burdon): Cache panels so that they are not rendered each time. */}
+          {panels.map(({ path, component }) => (
+            <Route
+              key={path}
+              path={path}
+              component={component}
+            />
+          ))}
+        </>
+      </Container>
+    </Fullscreen>
   );
 };
 

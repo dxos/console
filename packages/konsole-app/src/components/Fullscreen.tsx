@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 
 export const Fullscreen = styled('div')(() => ({
   display: 'flex',
+  flexDirection: 'column',
   position: 'absolute',
   left: 0,
   right: 0,

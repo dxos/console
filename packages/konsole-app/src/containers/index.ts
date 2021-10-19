@@ -5,6 +5,7 @@
 export * from './AppsPanel';
 export * from './BotsPanel';
 export * from './ConfigPanel';
+export * from './DXNSPanel';
 export * from './DomainsPanel';
 export * from './IPFSPanel';
 export * from './LogsPanel';
