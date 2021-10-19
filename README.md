@@ -6,6 +6,8 @@ See its [storybook](https://609d2a9c8202250039083fbb-qzdizbgwmn.chromatic.com/?p
 
 Live demo is available [here](https://enterprise.kube.dxos.network/app/marcin:app.konsole).
 
+https://user-images.githubusercontent.com/12039224/137936413-70ad3887-8289-428f-adc6-901adb93f915.mp4
+
 # Legacy console
 
 There is [a legacy console](./packages/console-app) project kept here for reference.
