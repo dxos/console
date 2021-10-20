@@ -1691,10 +1691,10 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/codec-protobuf@2.15.8":
-  version "2.15.8"
-  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.15.8.tgz#117582c1c8c50f4ab446e8d97bdbe5da1eeadd1a"
-  integrity sha512-k0Xf9P/bPhoGFUkJ6Kvr0A8qv3bKQufZJkUFpEH+snpbYdtAPgPOqoz2Q+Ag2pXKyuF01Re9EDe6d+rIdgBsiw==
+"@dxos/codec-protobuf@2.16.0":
+  version "2.16.0"
+  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.16.0.tgz#00d0e3de91f74d7a0589e101b1437d75f3818073"
+  integrity sha512-UCflxITDjlhnZjAec4wqjBpmGR152hZf2B+1GITpN1+fvMApR5trHHVrQ2w84Ma/awwtx/UTAXEKC3n5bnp1Pg==
   dependencies:
     assert "^2.0.0"
     lodash.merge "^4.6.2"
@@ -1729,12 +1729,12 @@
     lodash.set "^4.3.2"
     node-fetch "^2.6.0"
 
-"@dxos/config@~2.15.8":
-  version "2.15.8"
-  resolved "https://registry.npmjs.org/@dxos/config/-/config-2.15.8.tgz#7173c60a887c20a6a682f0af1c7398b59c8cb7a8"
-  integrity sha512-9gGJ4cwpDV5Jl8xbYEpuaeYAJ893IezE9o1dhcc/fWw6RPg5IPRIRvkmYqHZ/X54Lc4KWKqIC0LrQtcn8ryyFA==
+"@dxos/config@~2.16.0":
+  version "2.16.0"
+  resolved "https://registry.npmjs.org/@dxos/config/-/config-2.16.0.tgz#ed8cf026aa7e2b2fd12f2b98b845aa023e0edef8"
+  integrity sha512-ont4aMaVWWW/rmjjiGGBgsYWqA+ZXu/Zi96fTG9dbGqSTZyifxP/HnbazfjN1STYY5dtGDKxSlejCpIQiKZ9KA==
   dependencies:
-    "@dxos/debug" "2.15.8"
+    "@dxos/debug" "2.16.0"
     ajv "~8.6.2"
     boolean "^3.0.1"
     debug "^4.1.1"
@@ -1836,10 +1836,10 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
-"@dxos/crypto@2.15.8":
-  version "2.15.8"
-  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.15.8.tgz#af91e2b289e0dcb46855122ad96d83482f5f8878"
-  integrity sha512-0YKSl+QURJfd45fqBZUVsD84DVPgsEwvOm+2SbFmrIoJG/Da2xf5p+JB4aW7YkrLVNgeDnXg14W3FKxauluKGQ==
+"@dxos/crypto@2.16.0":
+  version "2.16.0"
+  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.16.0.tgz#a068b0c8be17a2ca2d729b67e717e16a818f8e9f"
+  integrity sha512-d+2sbEIv156odNCr/DJU6S1FfNu+O02RunhO6zDFyp/yKXqFwPBV6Tkkcj7FZJn7opMe2vw+vzlMvTlUxREMjA==
   dependencies:
     bip39 "^3.0.2"
     crypto-js "^3.1.9-1"
@@ -1862,10 +1862,10 @@
     "@types/node" "^14.0.9"
     debug "^4.1.1"
 
-"@dxos/debug@2.15.8":
-  version "2.15.8"
-  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.15.8.tgz#cc8b6745db621b5793a496694f332791d3b4474f"
-  integrity sha512-Klzx2MXX5WkWNuUlrzJ5eqQZIT/68H1MvpT3f18ymgr2HLgNsA4hAuBtfdINMacfdUvsezoQcjOc2SOsUOjckQ==
+"@dxos/debug@2.16.0":
+  version "2.16.0"
+  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.16.0.tgz#379fe5cbd5dff529ea70d95ad8e95ff1eb8eadfe"
+  integrity sha512-hxZl/A2gar/E1Q03mg5Y1dDqRt7nsAhAO4Pqq6GvaCFPachScBaOzcjeaVPQUHHtGXz2NN7hxltrm94xXxPlEw==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -2381,6 +2381,19 @@
     random-access-memory "^3.1.1"
     random-access-web "^2.0.3"
 
+"@dxos/react-components@~2.16.0":
+  version "2.16.0"
+  resolved "https://registry.npmjs.org/@dxos/react-components/-/react-components-2.16.0.tgz#fb1a55d55f8dac37ce542fef8993322b9ba35c63"
+  integrity sha512-UTNtoZnEPsbwIyJ44sMD3gwPeFXpJwHCWj+wUhAIFFBJUubj7Tjkz4z/QmDx3g+k3XzL07QwbAG7rSFB61ayIA==
+  dependencies:
+    "@dxos/crypto" "2.16.0"
+    "@dxos/debug" "2.16.0"
+    debug "^4.1.1"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.isplainobject "^4.0.6"
+    react-copy-to-clipboard "~5.0.3"
+    url-join "^4.0.1"
+
 "@dxos/react-json-tree@~0.12.0":
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/@dxos/react-json-tree/-/react-json-tree-0.12.0.tgz#34d1366e562ff1b0e9877c5d9eb9e9dfe5fa84f8"
@@ -2389,13 +2402,14 @@
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
-"@dxos/react-registry-client@~2.15.8":
-  version "2.15.8"
-  resolved "https://registry.npmjs.org/@dxos/react-registry-client/-/react-registry-client-2.15.8.tgz#ae6fc3e43ea3226347a68ac09f2fd42494756822"
-  integrity sha512-iodzZAyCCakALsAzWDZnrKeH6feypjNP31CZWDPStmW1fc9YnN8F1izT+BkXEujJkdcbFhIr68FTJvrtvhjJ4w==
+"@dxos/react-registry-client@~2.16.0":
+  version "2.16.0"
+  resolved "https://registry.npmjs.org/@dxos/react-registry-client/-/react-registry-client-2.16.0.tgz#3d03290907d02c13494dd1193263e69f1e2cfcda"
+  integrity sha512-93eRDVay+1FcSPJATBr+DTbRS6ZVqNwis/SuS7ag1BHUDbTWE2orFBz2bz1BP+0vrtDl/Uddh9KJmd+NVOo6cw==
   dependencies:
-    "@dxos/registry-client" "2.15.8"
-    "@dxos/util" "2.15.8"
+    "@dxos/debug" "2.16.0"
+    "@dxos/registry-client" "2.16.0"
+    "@dxos/util" "2.16.0"
     assert "^2.0.0"
     debug "^4.1.1"
 
@@ -2420,13 +2434,14 @@
     multihashes "^4.0.2"
     protobufjs "^6.9.0"
 
-"@dxos/registry-client@2.15.8", "@dxos/registry-client@~2.15.8":
-  version "2.15.8"
-  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.15.8.tgz#87da9f3e9036d765fd86a90b3bc1479a86cafc70"
-  integrity sha512-1XAzXs9pptE/A+pdk99vsEGLVEMtKnUa5gosfhBENROErJdILYRBMHakrMMganEjS5QIj9HK6FbqP9NgEW7Ywg==
+"@dxos/registry-client@2.16.0", "@dxos/registry-client@~2.16.0":
+  version "2.16.0"
+  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.16.0.tgz#39be2911a7f8b436cab822e8049f04fac9864d84"
+  integrity sha512-2vgGrT4W0LJxGiSmECefmubX9OXU1jfvmRl+qPRaQQXc1+Z/nPtNaS5s7toJqTSpi2aMnivYF8CeRNbFmu1f3w==
   dependencies:
-    "@dxos/codec-protobuf" "2.15.8"
-    "@dxos/util" "2.15.8"
+    "@dxos/codec-protobuf" "2.16.0"
+    "@dxos/debug" "2.16.0"
+    "@dxos/util" "2.16.0"
     "@polkadot/api" "4.17.1"
     "@polkadot/keyring" "6.11.1"
     "@polkadot/metadata" "4.17.1"
@@ -2505,13 +2520,13 @@
     "@dxos/debug" "2.14.5"
     "@types/node" "^14.0.9"
 
-"@dxos/util@2.15.8":
-  version "2.15.8"
-  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.15.8.tgz#e18ed8e535230583b9d837b184df4f89313b20c4"
-  integrity sha512-zKuXj0DaMG5f+ukYG+G5nNtsD6Z9/ya6Ub/4O7yQ6u8Xi/8yYktWDJUs4Y+YQ0UjWoHLqkLVjMp/ahAEMXtIJw==
+"@dxos/util@2.16.0":
+  version "2.16.0"
+  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.16.0.tgz#a6e703fa6a2e20efcb6c2d7864bfe86e3483e51d"
+  integrity sha512-lY/CODFMnL+45Hn8rJs3qVl2o9rc/Xe16imr3XyPHAG2Uy7QUv4c9tYbyaZlnWhCU9d1Iw4XLm35lu0oitpInQ==
   dependencies:
-    "@dxos/crypto" "2.15.8"
-    "@dxos/debug" "2.15.8"
+    "@dxos/crypto" "2.16.0"
+    "@dxos/debug" "2.16.0"
     "@types/node" "^14.0.9"
 
 "@dxos/version-check@^0.1.16":
@@ -21982,7 +21997,7 @@ react-colorful@^5.1.2:
   resolved "https://registry.yarnpkg.com/react-colorful/-/react-colorful-5.5.0.tgz#8359f218984a927095477a190ab9927eaf865c0c"
   integrity sha512-BuzrlrM0ylg7coPkXOrRqlf2BgHLw5L44sybbr9Lg4xy7w9e5N7fGYbojOO0s8J0nvrM3PERN2rVFkvSa24lnQ==
 
-react-copy-to-clipboard@^5.0.4:
+react-copy-to-clipboard@^5.0.4, react-copy-to-clipboard@~5.0.3:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.4.tgz#42ec519b03eb9413b118af92d1780c403a5f19bf"
   integrity sha512-IeVAiNVKjSPeGax/Gmkqfa/+PuMTBhutEvFUaMQLwE2tS0EXrAdgOpWDX26bWTXF3HrioorR7lr08NqeYUWQCQ==
