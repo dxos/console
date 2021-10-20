@@ -15,4 +15,3 @@ export * from './ResourceRecordsTable';
 export * from './ScrollContainer';
 export * from './SearchBar';
 export * from './Sidebar';
-export * from './VirtualTable';
