@@ -20,9 +20,9 @@ EOF
   yarn clean
 
   # Canary deployment
-  yarn -s dx app deploy --dxns --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tags dev --version=false
+  yarn -s dx app deploy --dxns --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tag dev --version=false
 
   # Latest version deployment
-  yarn -s dx app deploy --dxns --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tags latest --skipExising
+  yarn -s dx app deploy --dxns --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tag latest --skipExisting
   popd
 done
