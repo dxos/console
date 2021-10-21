@@ -5,7 +5,7 @@ name: alpha - Build and Publish
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, rzadp/auto-deployment ]
 
 jobs:
   publish:

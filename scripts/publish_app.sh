@@ -18,17 +18,11 @@ EOF
   cat app.yml
 
   yarn clean
-  yarn -s dx app build
 
-  if [ -d "dist/production" ]; then
-    yarn -s dx app publish --path './dist/production'
-  elif [ -d "build" ]; then
-    yarn -s dx app publish --path './build'
-  else
-    yarn -s dx app publish
-  fi
+  # Canary deployment
+  yarn -s dx app deploy --dxns --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tags dev --version=false
 
-  # TODO(egorgripasov): different channels.
-  yarn -s dx app register --dxns --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN
+  # Latest version deployment
+  yarn -s dx app deploy --dxns --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tags latest --skipExising
   popd
 done
