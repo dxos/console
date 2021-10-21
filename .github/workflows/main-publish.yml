@@ -5,7 +5,7 @@ name: alpha - Build and Publish
 
 on:
   push:
-    branches: [ main, rzadp/auto-deployment ]
+    branches: [ main ]
 
 jobs:
   publish:
@@ -26,12 +26,11 @@ jobs:
 
           yarn install --frozen-lockfile
           yarn ci
-
-          yarn dx version
+          yarn deploy
 
           # Uncomment for NPM publishing.
-          #npm whoami
-          #yarn lerna publish -y prerelease --dist-tag="alpha" --force-publish
+          npm whoami
+          yarn lerna publish -y prerelease --dist-tag="alpha" --force-publish
 
           # Publish to registry
           DEBUG='dxos:cli' yarn wire profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
