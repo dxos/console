@@ -24,11 +24,11 @@
     ]
   },
   "devDependencies": {
-    "@dxos/cli": "~2.7.1-alpha.0",
-    "@dxos/cli-app": "~2.7.1-alpha.0",
-    "@dxos/cli-bot": "~2.7.1-alpha.0",
-    "@dxos/cli-data": "~2.7.1-alpha.0",
-    "@dxos/cli-dxns": "~2.7.1-alpha.0",
+    "@dxos/cli": "~2.8.0-alpha.0",
+    "@dxos/cli-app": "~2.8.0-alpha.0",
+    "@dxos/cli-bot": "~2.8.0-alpha.0",
+    "@dxos/cli-data": "~2.8.0-alpha.0",
+    "@dxos/cli-dxns": "~2.8.0-alpha.0",
     "@dxos/version-check": "^0.1.16",
     "eslint": "^7.7.0",
     "lerna": "^3.19.0",
