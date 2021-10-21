@@ -1,2 +1,8 @@
 build: yarn build
 name: konsole
+author: DXOS.org
+license: AGPL-3.0
+description: Konsole App.
+homepage: 'https://github.com/dxos/console#readme'
+repository: 'https://github.com/dxos/console'
+bugs: 'https://github.com/dxos/console/issues'
