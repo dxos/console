@@ -1423,12 +1423,12 @@
     debug "^4.1.1"
     tiny-lru "^7.0.6"
 
-"@dxos/cli-app@~2.8.0-alpha.0":
-  version "2.8.0-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli-app/-/cli-app-2.8.0-alpha.0.tgz#a3d24482c28cda06cc033fbf7d610e395c177f65"
-  integrity sha512-g26ipCG9VistVLICNimoj32yy3AcsLmJsoqXURXzqNIc/3hKqrFBpLY1R38PhA0H687LU52yAeApr6B4GS0U4Q==
+"@dxos/cli-app@~2.8.1-alpha.0":
+  version "2.8.1-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli-app/-/cli-app-2.8.1-alpha.0.tgz#cecbcc5154d055e08a4ef55237e7ba5ba4236f8a"
+  integrity sha512-RQnBtmx/uZjRgni+NfC8BzRlOHiolBT+Zks4Qrtk5ToFaJcPtgnq8Ffxj0+KZRlg4zLJagA+cr9Yb0DsMAxQFw==
   dependencies:
-    "@dxos/cli-core" "^2.8.0-alpha.0"
+    "@dxos/cli-core" "^2.8.1-alpha.0"
     "@dxos/debug" "~2.15.6"
     "@dxos/registry-client" "~2.15.6"
     "@dxos/util" "^2.15.6"
@@ -1464,14 +1464,14 @@
     url-join "^4.0.1"
     yargs "^16.2.0"
 
-"@dxos/cli-bot@~2.8.0-alpha.0":
-  version "2.8.0-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli-bot/-/cli-bot-2.8.0-alpha.0.tgz#446c0048d764499aa3030a362bac613b15298bba"
-  integrity sha512-lNUk4XaJykBx2g5qr8VazheGJ0kfQrjbfwPm9Ix5LEEIiR5qh6hF30yHM7/HGCngF5Vjev2mc3s0XyvUwL+pgg==
+"@dxos/cli-bot@~2.8.1-alpha.0":
+  version "2.8.1-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli-bot/-/cli-bot-2.8.1-alpha.0.tgz#80ef91f83b15f2e9b6a6a48f573e29ac276002cc"
+  integrity sha512-wmcbPsLTJy6RJ1tDLYBTw7iDSK6itWRoW04X8eieUyMMR2aBiUrRQVQSfllCbPsQ0wAziV/oBcqrMvuaXfbSmg==
   dependencies:
     "@dxos/botkit" "~2.15.6"
     "@dxos/botkit-client" "~2.15.6"
-    "@dxos/cli-core" "^2.8.0-alpha.0"
+    "@dxos/cli-core" "^2.8.1-alpha.0"
     "@dxos/config" "~2.15.6"
     "@dxos/crypto" "~2.15.6"
     "@dxos/debug" "~2.15.6"
@@ -1497,10 +1497,10 @@
     semver "^7.1.1"
     yargs "^16.2.0"
 
-"@dxos/cli-core@^2.8.0-alpha.0":
-  version "2.8.0-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli-core/-/cli-core-2.8.0-alpha.0.tgz#8bc29d2b0b09de9389a96dc936af3cb18855b7d8"
-  integrity sha512-gH60/bpvwV1o4n6DRBDuMuxFR0N3nb1+mIlCeTWtBwhN/Xy0G0TqaD1dH5nz+R3nwA6HbfipXPbkMc5ItDyYBw==
+"@dxos/cli-core@^2.8.1-alpha.0":
+  version "2.8.1-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli-core/-/cli-core-2.8.1-alpha.0.tgz#3acf15582a6814796400694204543ee0495e3a83"
+  integrity sha512-HzLJsUHkGTYwEvz1QDBVHhAMI98QBGLhwaQT9cjmjOOy3lyrl6zsfs9yqbwbuTlfxGnkR0uSDhFoYVj4k0ybHw==
   dependencies:
     "@dxos/config" "~2.15.6"
     "@dxos/crypto" "~2.15.6"
@@ -1533,12 +1533,12 @@
     yargs-parser "^19.0.4"
     yargs-unparser "^1.6.4"
 
-"@dxos/cli-data@~2.8.0-alpha.0":
-  version "2.8.0-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli-data/-/cli-data-2.8.0-alpha.0.tgz#2939cfb4ceef405f9b8767f19f4e86a19addc7a1"
-  integrity sha512-yYFHXPlKvq7r8L4Zd12xVWWoN39+QF+Qcj7SNAKRWtFnzvIpL27fMSRFm9owiawRTsbAPWJTaZLR1gl8e7UmSA==
+"@dxos/cli-data@~2.8.1-alpha.0":
+  version "2.8.1-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli-data/-/cli-data-2.8.1-alpha.0.tgz#5e19b80e8cd79980f91df9f6aa071edcb80dfbda"
+  integrity sha512-T4HK2Jf2Ojl+CcXIkqzULogA/gsyM235XmTEsEXlqHipjEWicIm/yCUDTgYALPMSUOJEGFaN7y0N+aFn36vlWw==
   dependencies:
-    "@dxos/cli-core" "^2.8.0-alpha.0"
+    "@dxos/cli-core" "^2.8.1-alpha.0"
     "@dxos/client" "~2.15.6"
     "@dxos/credentials" "~2.15.6"
     "@dxos/crypto" "~2.15.6"
@@ -1554,13 +1554,13 @@
     random-access-memory "^3.1.1"
     yargs "^16.2.0"
 
-"@dxos/cli-dxns@~2.8.0-alpha.0":
-  version "2.8.0-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli-dxns/-/cli-dxns-2.8.0-alpha.0.tgz#c443032cb7d583c2d956596a92c7063e6a2a1e49"
-  integrity sha512-44TRWCRdXYapF+bAJyGaIbnOIC1nsqfQFfQSTD81J5QLvOenZjIfpwB41qLC2hdA8gZy61CWFMwqwvai1fyslA==
+"@dxos/cli-dxns@~2.8.1-alpha.0":
+  version "2.8.1-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli-dxns/-/cli-dxns-2.8.1-alpha.0.tgz#fcc6247ac110508f1804537807e35385ae697b2a"
+  integrity sha512-jCV4TdFm39X0q3qGMACDyqMu/NBUEabhb4/dXsvimeZVpi7VHA+gOHJY3O4N2ry6Ra54g/LpfSUfkqi+g5G05A==
   dependencies:
     "@dxos/async" "~2.15.6"
-    "@dxos/cli-core" "^2.8.0-alpha.0"
+    "@dxos/cli-core" "^2.8.1-alpha.0"
     "@dxos/crypto" "~2.15.6"
     "@dxos/debug" "~2.15.6"
     "@dxos/registry-client" "~2.15.6"
@@ -1573,12 +1573,12 @@
     protobufjs "^6.10.2"
     yargs "^16.2.0"
 
-"@dxos/cli@~2.8.0-alpha.0":
-  version "2.8.0-alpha.0"
-  resolved "https://registry.npmjs.org/@dxos/cli/-/cli-2.8.0-alpha.0.tgz#1f3b5db3ffc69dfebcdb44d4003d770911258753"
-  integrity sha512-bfc/x9pk2yS7y1kcr+fGty0R7hgxB3PTVH4lg4m5JWm//xJfdKKdtWjlL1Gm0fsmUKXerKsmlum9C9elKaCzDg==
+"@dxos/cli@~2.8.1-alpha.0":
+  version "2.8.1-alpha.0"
+  resolved "https://registry.npmjs.org/@dxos/cli/-/cli-2.8.1-alpha.0.tgz#0eb729ec791aa129187b8c4ce0cb685b9a2d657f"
+  integrity sha512-HA4oNNTEqbTfQOL7I9D9G/lOEKwyNCDg8nWFuS2p8ptH4k/3jKBKPhofh4hMKVvmjpM4azJ4+xCdU68hvv6B2w==
   dependencies:
-    "@dxos/cli-core" "^2.8.0-alpha.0"
+    "@dxos/cli-core" "^2.8.1-alpha.0"
     "@dxos/debug" "~2.15.6"
     "@dxos/random-access-multi-storage" "~2.15.6"
     assert "^2.0.0"
