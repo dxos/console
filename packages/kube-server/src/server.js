@@ -55,7 +55,7 @@ app.set('views', `${__dirname}/views`);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());
 
-// Endpoints for konsole-app.
+// Endpoints for console-app.
 app.use(express.json());
 app.use(config.api.kubePath, router);
 

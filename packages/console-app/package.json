@@ -1,7 +1,7 @@
 {
-  "name": "@dxos/konsole-app",
+  "name": "@dxos/console-app",
   "version": "1.2.9-alpha.57",
-  "description": "Konsole App.",
+  "description": "Console App.",
   "homepage": "https://github.com/dxos/console#readme",
   "bugs": {
     "url": "https://github.com/dxos/console/issues"

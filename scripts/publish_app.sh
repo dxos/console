@@ -4,7 +4,7 @@ set -euo pipefail
 
 DXOS_DOMAIN="${DXOS_DOMAIN:-dxos}"
 
-for appdir in 'konsole-app' 'keyhole-app'; do
+for appdir in 'console-app' 'keyhole-app'; do
   pushd "packages/$appdir"
 
   PKG_CHANNEL="${PKG_CHANNEL:-}"

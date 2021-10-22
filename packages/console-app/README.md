@@ -1,6 +1,6 @@
-# Konsole App
+# Console App
 
-Konsole app displays overview of the following:
+Console app displays overview of the following:
 
 - Service: services available in DXOS.
 - Records: registered resources in DXOS.
