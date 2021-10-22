@@ -3,7 +3,8 @@
 //
 
 import { colors } from '@mui/material';
-import { createTheme } from '@material-ui/core/styles'
+
+import { createTheme } from '@material-ui/core/styles';
 
 import { IConfig } from './hooks';
 
@@ -29,7 +30,7 @@ export const createCustomTheme = (config: IConfig) => createTheme({
   overrides: {
     // https://mui.com/components/css-baseline
     MuiCssBaseline: {
-      "@global": {
+      '@global': {
         body: {
           overflow: 'hidden' // Prevent scroll bounce.
         },
@@ -56,5 +57,5 @@ export const createCustomTheme = (config: IConfig) => createTheme({
         // variant: 'outlined'
       }
     }
-  },
+  }
 });

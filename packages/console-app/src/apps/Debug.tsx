@@ -3,8 +3,9 @@
 //
 
 import { AppBar, Box, CssBaseline, Paper, Toolbar } from '@mui/material';
-import { ThemeProvider, ThemeProviderProps, styled, Theme} from '@material-ui/core/styles';
 import React from 'react';
+
+import { ThemeProvider, ThemeProviderProps, styled } from '@material-ui/core/styles';
 
 import { JsonView } from '../components';
 import { IConfig } from '../hooks';

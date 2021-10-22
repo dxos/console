@@ -2,8 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { CssBaseline, Theme } from '@mui/material';
-import { ThemeProvider, ThemeProviderProps } from '@material-ui/core/styles';
+import { CssBaseline } from '@mui/material';
 import React from 'react';
 import {
   HashRouter as Router,
@@ -14,6 +13,8 @@ import {
   useHistory,
   useParams
 } from 'react-router-dom';
+
+import { ThemeProvider, ThemeProviderProps } from '@material-ui/core/styles';
 
 import { Container, Fullscreen, Sidebar } from '../components';
 import { IConfig, ConfigContext } from '../hooks';
