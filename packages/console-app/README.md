@@ -1,65 +1,22 @@
-# Console
+# Console App
 
-Apollo GraphQL client.
+Console app displays overview of the following:
 
-## Usage
+- Service: services available in DXOS.
+- Records: registered resources in DXOS.
+- Logs: log entries from sources in DXOS.
+- Config: effective configuration applied for the current user profile.
 
-First start the server:
+## Development
 
-```bash
-  cd packages/console-server
-  yarn start
-```
-
-Then start the Webpack devserver.
+To run the webpack dev server:
 
 ```bash
-  cd packages/console-app
-  yarn start
+yarn start
 ```
 
-Then load the app: http://localhost:8080.
-
-## Using a KUBE
-
-To use your KUBE for testing, rather than running all the services locally, specify a different
-config file when starting: `config-kube.yml`, which connects to `kube.local` for all services.
-
-For example:
-
-```javascript
-  cd packages/console-app
-  CONFIG_FILE=config-kube.yml yarn start
-```
-
-## Deploy
+To see storybook of the visual components, run:
 
 ```bash
-  yarn build
+yarn storybook
 ```
-
-This creates the following folders:
-
-```
-/dist
-  /es               # Module imports.
-  /production       # Production build.
-```
-
-NOTE: GQL and Production files and exported and may be used by the server.
-
-```javascript
-import QUERY_STATUS from '@dxos/console-client/gql/system_status.graphql';
-import config from '@dxos/console-client/config.json';
-
-...
-
-const file = path.join(__dirname + '../../../../node_modules/@dxos/console-client/dist/production', 'index.html');
-res.sendFile(file);
-```
-
-## PWA
-
-- https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Add_to_home_screen#Manifest
-- https://webpack.js.org/guides/progressive-web-application/
-- https://medium.com/effective-developers/how-to-test-pwa-daa1a6eaf7bf

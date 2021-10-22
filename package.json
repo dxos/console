@@ -19,7 +19,7 @@
   "workspaces": {
     "packages": [
       "packages/keyhole-app",
-      "packages/konsole-app",
+      "packages/console-app",
       "packages/kube-server"
     ]
   },

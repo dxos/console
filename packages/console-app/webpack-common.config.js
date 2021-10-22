@@ -1,23 +1,30 @@
 //
-// Copyright 2019 DXOS.org
+// Copyright 2021 DXOS.org
 //
 
 const path = require('path');
+const CopyWebPackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const HtmlWebPackPlugin = require( 'html-webpack-plugin' );
 const VersionFile = require('webpack-version-file-plugin');
-const webpack = require('webpack');
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
+const distDir = path.join(__dirname, 'dist');
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
-const CONFIG_FILE = path.relative('./src', process.env.CONFIG_FILE || 'config-local.yml');
+const { ConfigPlugin } = require('@dxos/config/ConfigPlugin');
 
 module.exports = {
-  devtool: 'eval-source-map',
+  mode: isDevelopment ? 'development' : 'production',
+
+  devtool: isDevelopment ? 'eval-source-map' : false,
 
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: distDir,
     compress: true,
     disableHostCheck: true,
+    hotOnly: true,
     port: 8080,
     watchOptions: {
       ignored: /node_modules/,
@@ -25,81 +32,18 @@ module.exports = {
     }
   },
 
-  node: {
-    fs: 'empty'
-  },
-
   output: {
-    path: `${__dirname}/dist/production`,
+    path: distDir,
     filename: '[name].bundle.js',
     publicPath: PUBLIC_URL
   },
 
-  optimization: {
-    runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'all',
-      maxInitialRequests: Infinity,
-      minSize: 0,
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name (module) {
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-
-            if (packageName.startsWith('@dxos')) {
-              return 'dxos';
-            }
-
-            if (packageName.startsWith('@material-ui')) {
-              return 'material-ui';
-            }
-
-            return 'vendor';
-          }
-        }
-      }
-    }
-  },
-
-  plugins: [
-
-    // https://www.npmjs.com/package/dotenv-webpack#properties
-    new Dotenv({
-      path: process.env.DOT_ENV || '.env'
-    }),
-
-    // NOTE: Must be defined below Dotenv (otherwise will override).
-    // https://webpack.js.org/plugins/environment-plugin
-    // new webpack.EnvironmentPlugin({}),
-
-    // Define the build config file based on the target.
-    // https://webpack.js.org/plugins/normal-module-replacement-plugin
-    new webpack.NormalModuleReplacementPlugin(/(.*)__CONFIG_FILE__/, (resource) => {
-      resource.request = resource.request.replace(/__CONFIG_FILE__/, CONFIG_FILE);
-    }),
-
-    // https://www.npmjs.com/package/webpack-version-file-plugin
-    new VersionFile({
-      template: path.join(__dirname, 'version.ejs'),
-      packageFile: path.join(__dirname, 'package.json'),
-      outputFile: path.join(__dirname, 'src', 'version.json')
-    })
-  ],
-
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        exclude: /(node_modules)/,
-        use: [
-          {
-            loader: 'ts-loader'
-          },
-          {
-            loader: 'babel-loader'
-          }
-        ]
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
 
       // https://github.com/eemeli/yaml-loader
@@ -112,10 +56,40 @@ module.exports = {
   },
 
   resolve: {
-    alias: {
-      '@material-ui/styles': path.resolve(__dirname, '..', '..', 'node_modules/@material-ui/styles'),
-      'react': path.resolve(__dirname, '..', '..', 'node_modules/react'),
-      'react-dom': path.resolve(__dirname, '..', '..', 'node_modules/react-dom')
-    }
-  }
+    extensions: ['.tsx', '.ts', '.js']
+  },
+
+  plugins: [
+    new ConfigPlugin({
+      path: path.resolve(__dirname, 'config'),
+      dynamic: process.env.CONFIG_DYNAMIC
+    }),
+
+    new CopyWebPackPlugin({
+      patterns: [
+        {
+          from: '**',
+          context: './assets'
+        }
+      ]
+    }),
+
+    new HtmlWebPackPlugin({
+      template: path.resolve(__dirname, 'public/index.html'),
+      templateParameters: {
+        title: 'DXOS Console' // TODO(burdon): Use config.
+      }
+    }),
+
+    new VersionFile({
+      template: path.join(__dirname, 'version.ejs'),
+      packageFile: path.join(__dirname, 'package.json'),
+      outputFile: path.join(distDir, 'version.json')
+    }),
+
+    // https://www.npmjs.com/package/dotenv-webpack#properties
+    new Dotenv({
+      path: process.env.DOT_ENV || '.env'
+    }),
+  ]
 };
