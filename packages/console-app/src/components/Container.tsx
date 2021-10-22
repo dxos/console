@@ -17,9 +17,9 @@ import {
   Menu,
   MenuItem,
   Toolbar,
-  Typography
+  Typography,
+  styled
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 
 import { useConfig } from '../hooks';
@@ -140,7 +140,8 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
     <Box
       sx={{
         display: 'flex',
-        flex: 1
+        flex: 1,
+        overflow: 'hidden'
       }}
     >
       <AppBar position='fixed' open={drawerOpen}>
@@ -230,7 +231,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
             display: 'flex',
             flex: 1,
             flexDirection: 'column',
-            overflow: 'hidden'
+            overflow: 'hidden' // Scroll behavior should be defined inside the panel.
           }}
         >
           {children}

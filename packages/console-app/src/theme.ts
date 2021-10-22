@@ -2,9 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { colors } from '@mui/material';
-
-import { createTheme } from '@material-ui/core/styles';
+import { colors, createTheme } from '@mui/material';
 
 import { IConfig } from './hooks';
 
@@ -16,7 +14,7 @@ export const createCustomTheme = (config: IConfig) => createTheme({
 
   // https://mui.com/customization/palette
   palette: {
-    type: config.app.theme,
+    mode: config.app.theme,
     primary: colors.cyan,
     secondary: colors.orange
   },
@@ -27,10 +25,11 @@ export const createCustomTheme = (config: IConfig) => createTheme({
   },
 
   // https://mui.com/customization/theme-components/#default-props
-  overrides: {
+  components: {
+
     // https://mui.com/components/css-baseline
     MuiCssBaseline: {
-      '@global': {
+      styleOverrides: {
         body: {
           overflow: 'hidden' // Prevent scroll bounce.
         },
@@ -42,19 +41,25 @@ export const createCustomTheme = (config: IConfig) => createTheme({
       }
     },
     MuiAppBar: {
-      root: {
-        elevation: 0
+      styleOverrides: {
+        root: {
+          elevation: 0
+        }
       }
     },
     MuiButtonBase: {
-      root: {
-        disableRipple: true
+      styleOverrides: {
+        root: {
+          disableRipple: true
+        }
       }
     },
     MuiPaper: {
-      root: {
-        elevation: 1
-        // variant: 'outlined'
+      styleOverrides: {
+        root: {
+          elevation: 1
+          // variant: 'outlined'
+        }
       }
     }
   }

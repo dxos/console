@@ -2,7 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material';
 import React from 'react';
 import ReactJsonView from 'react-json-view';
 

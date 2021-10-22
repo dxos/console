@@ -2,8 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import React from 'react';
 
 import { createCustomTheme, Fullscreen, IConfig } from '../src';

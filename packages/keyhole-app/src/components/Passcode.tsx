@@ -91,22 +91,27 @@ export const Passcode = (
       }}
     >
       {editable && (
-        <input
-          ref={inputRef}
-          value={value}
-          data-testid="passcode-input"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onBlur={handleFocusChange}
-          onFocus={handleFocusChange}
-          autoFocus
+        <form
           style={{
             position: 'absolute',
             top: -5000, // Offscreen
             outline: 'none',
             border: 'none'
           }}
-        />
+        >
+          <label htmlFor='one-time-password'>One-time Password</label>
+          <input
+            ref={inputRef}
+            id='one-time-password'
+            value={value}
+            data-testid="passcode-input"
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onBlur={handleFocusChange}
+            onFocus={handleFocusChange}
+            autoFocus
+          />
+        </form>
       )}
 
       <Box

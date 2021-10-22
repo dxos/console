@@ -9,7 +9,6 @@ import {
   FormControlLabel,
   IconButton,
   MenuItem,
-  Paper,
   Select,
   SelectChangeEvent,
   Switch
@@ -106,14 +105,7 @@ export const LogsPanel = () => {
         </Toolbar>
       )}
     >
-      <Paper
-        sx={{
-          display: 'flex',
-          flex: 1
-        }}
-      >
-        <LogTable messages={logs} />
-      </Paper>
+      <LogTable messages={logs} />
     </Panel>
   );
 };

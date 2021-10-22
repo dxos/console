@@ -2,8 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box, colors } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Box, colors, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import useResizeAware from 'react-resize-aware';
 
@@ -15,8 +14,11 @@ import { IResourceRecord } from '.';
 import { IRecord } from './RecordsTable';
 
 const nodeColors: (keyof typeof colors)[] = ['red', 'green', 'blue', 'yellow', 'orange', 'grey'];
+
 type NodeKind = 'record' | 'resource' | 'domain'
+
 type Node = NodeType & {kind: NodeKind}
+
 const typeMap: Record<NodeKind, keyof typeof colors> = {
   record: 'blue',
   resource: 'orange',
@@ -35,8 +37,10 @@ const nodeProjector = new NodeProjector({
 });
 const linkProjector = new LinkProjector({ nodeRadius: 8, showArrows: true });
 
-const useStyles = makeStyles(() => ({
-  nodes: nodeColors.reduce((map: any, color: string) => {
+const useStyles = () => {
+  const theme = useTheme();
+
+  return nodeColors.reduce((map: any, color: string) => {
     map[`& g.node.${color} circle`] = {
       fill: (colors as any)[color][400],
       stroke: (colors as any)[color][700]
@@ -45,12 +49,16 @@ const useStyles = makeStyles(() => ({
     map[`& g.node.${color} text`] = {
       fontFamily: 'sans-serif',
       fontSize: 12,
-      fill: colors.grey[700]
+      fill: theme.palette.primary.main
     };
 
     return map;
-  }, {})
-}));
+  }, {
+    '& g > g > g > circle.guide': { // NOTE: g > g > g Required to override old-school gem styles.
+      stroke: theme.palette.divider
+    }
+  });
+};
 
 interface RegistryGraphProps {
   domains?: Domain[]
@@ -64,31 +72,59 @@ export const RegistryGraph = ({ domains = [], records = [], resources = [] }: Re
   const grid = useGrid(size);
   const [data, setData] = useState<GraphType>({ links: [], nodes: [] });
   const [layout] = useState(() => new ForceLayout({ force: { links: { distance: 80 } } }));
-  const classes = useStyles();
+  const styles = useStyles();
 
   useEffect(() => {
-    const resourceNodes: Node[] = resources.map(resource => ({ id: resource.id.toString(), title: resource.id.toString(), kind: 'resource' }));
+    const resourceNodes: Node[] = resources.map(resource => ({
+      id: resource.id.toString(),
+      title: resource.id.toString(),
+      kind: 'resource'
+    }));
     const recordNodes: Node[] = records
-      .map((record: IResourceRecord | IRecord) => ({ id: record.cid.toString(), title: record.description ?? record.cid.toString(), kind: 'record' as const }))
-      .filter((record, index, array) => array.map(el => el.id.toString()).indexOf(record.id.toString()) === index); // Only unique. The duplications comes from same records by versions or by tags.
+      .map((record: IResourceRecord | IRecord) => ({
+        id: record.cid.toString(),
+        title: record.description ?? record.cid.toString(),
+        kind: 'record' as const
+      }))
+      .filter((record, index, array) =>
+        // Only unique. The duplications comes from same records by versions or by tags.
+        array.map(el => el.id.toString()).indexOf(record.id.toString()) === index);
 
-    const domainNodes: Node[] = domains.map(domain => ({ id: domain.name ?? domain.key.toString(), title: domain.name ?? domain.key.toString(), kind: 'domain' }));
+    const domainNodes: Node[] = domains.map(domain => ({
+      id: domain.name ?? domain.key.toString(),
+      title: domain.name ?? domain.key.toString(),
+      kind: 'domain'
+    }));
     const nodes = [...resourceNodes, ...recordNodes, ...domainNodes];
 
     const domainResourceLinks: GraphType['links'] = resources
       .filter(resource => resource.id.domain !== undefined)
-      .map(resource => ({ id: `${resource.id.toString()}-${resource.id.domain}`, source: resource.id.toString(), target: resource.id.domain! }));
+      .map(resource => ({
+        id: `${resource.id.toString()}-${resource.id.domain}`,
+        source: resource.id.toString(),
+        target: resource.id.domain!
+      }));
 
     const resourceVersionsLinks: GraphType['links'] = resources
       .flatMap(resource => Object.entries(resource.versions).map(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        entry => ({ id: `${resource.id.toString()}-${entry[0]}-${entry[1]?.toString()!}`, source: resource.id.toString(), target: entry[1]?.toString()! })
+        entry => ({
+          // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+          id: `${resource.id.toString()}-${entry[0]}-${entry[1]?.toString()!}`,
+          source: resource.id.toString(),
+          // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+          target: entry[1]?.toString()!
+        })
       ));
 
     const resourceTagsLinks: GraphType['links'] = resources
       .flatMap(resource => Object.entries(resource.tags).map(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        entry => ({ id: `${resource.id.toString()}-${entry[0]}-${entry[1]?.toString()!}`, source: resource.id.toString(), target: entry[1]?.toString()! })
+        entry => ({
+          // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+          id: `${resource.id.toString()}-${entry[0]}-${entry[1]?.toString()!}`,
+          source: resource.id.toString(),
+          // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+          target: entry[1]?.toString()!
+        })
       ));
 
     const links = [...domainResourceLinks, ...resourceVersionsLinks, ...resourceTagsLinks];
@@ -100,7 +136,8 @@ export const RegistryGraph = ({ domains = [], records = [], resources = [] }: Re
       sx={{
         display: 'flex',
         flex: 1,
-        position: 'relative'
+        position: 'relative',
+        ...styles
       }}
     >
       {resizeListener}
@@ -111,9 +148,6 @@ export const RegistryGraph = ({ domains = [], records = [], resources = [] }: Re
           layout={layout}
           nodeProjector={nodeProjector}
           linkProjector={linkProjector}
-          classes={{
-            nodes: classes.nodes
-          }}
         />
       </SVG>
     </Box>
