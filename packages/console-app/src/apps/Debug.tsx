@@ -3,25 +3,25 @@
 //
 
 import { AppBar, Box, CssBaseline, Paper, Toolbar } from '@mui/material';
-import { styled, Theme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
+
+import { ThemeProvider, ThemeProviderProps, styled } from '@material-ui/core/styles';
 
 import { JsonView } from '../components';
 import { IConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';
 
-const AppBarOffset = styled('div')(({ theme }) => theme.mixins.toolbar);
+const AppBarOffset = styled('div')(({ theme }) => theme.mixins.toolbar as any);
 
 interface DebugProps {
   config: IConfig
-  theme: Theme
+  theme: ThemeProviderProps['theme']
 }
 
 /**
  * Simple Debug app (mostly for sanity testing the console framework).
  */
 export const Debug = ({ config, theme }: DebugProps) => {
-  console.log(theme);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

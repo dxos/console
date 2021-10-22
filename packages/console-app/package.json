@@ -25,7 +25,7 @@
     "deploy": "npm run chromatic",
     "lint": "eslint --fix --format codeframe './src/**/*.{ts,tsx}'",
     "start": "esapp dev",
-    "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
+    "storybook": "esapp book 'stories/**/*.{stories,story}.tsx'",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "browserslist": [

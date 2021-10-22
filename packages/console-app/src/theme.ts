@@ -3,7 +3,8 @@
 //
 
 import { colors } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
+
+import { createTheme } from '@material-ui/core/styles';
 
 import { IConfig } from './hooks';
 
@@ -15,7 +16,7 @@ export const createCustomTheme = (config: IConfig) => createTheme({
 
   // https://mui.com/customization/palette
   palette: {
-    mode: config.app.theme,
+    type: config.app.theme,
     primary: colors.cyan,
     secondary: colors.orange
   },
@@ -26,10 +27,10 @@ export const createCustomTheme = (config: IConfig) => createTheme({
   },
 
   // https://mui.com/customization/theme-components/#default-props
-  components: {
+  overrides: {
     // https://mui.com/components/css-baseline
     MuiCssBaseline: {
-      styleOverrides: {
+      '@global': {
         body: {
           overflow: 'hidden' // Prevent scroll bounce.
         },
@@ -41,17 +42,17 @@ export const createCustomTheme = (config: IConfig) => createTheme({
       }
     },
     MuiAppBar: {
-      defaultProps: {
+      root: {
         elevation: 0
       }
     },
     MuiButtonBase: {
-      defaultProps: {
+      root: {
         disableRipple: true
       }
     },
     MuiPaper: {
-      defaultProps: {
+      root: {
         elevation: 1
         // variant: 'outlined'
       }

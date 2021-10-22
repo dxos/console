@@ -2,7 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { CssBaseline, Theme, ThemeProvider } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import React from 'react';
 import {
   HashRouter as Router,
@@ -13,6 +13,8 @@ import {
   useHistory,
   useParams
 } from 'react-router-dom';
+
+import { ThemeProvider, ThemeProviderProps } from '@material-ui/core/styles';
 
 import { Container, Fullscreen, Sidebar } from '../components';
 import { IConfig, ConfigContext } from '../hooks';
@@ -63,7 +65,7 @@ export const Main = ({ panels }: MainProps) => {
 interface AppProps {
   config: IConfig
   panels: IPanel[]
-  theme: Theme
+  theme: ThemeProviderProps['theme']
 }
 
 export const App = ({ config, panels, theme }: AppProps) => (

@@ -6,12 +6,12 @@
 app:
   title: 'Console'
   org': 'DXOS.org'
-  theme: 'light'
+  theme: 'dark'
   website: 'https://dxos.org'
   publicUrl: '/console'
 
 registry:
-  endpoint: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
+  endpoint: 'wss://enterprise.kube.dxos.network/dxns/ws'
 
 api:
   server: 'https://kube.local'
@@ -33,7 +33,7 @@ services:
     server: 'https://enterprise.kube.dxos.network'
 
   dxns:
-    server: 'wss://dxns1.kube.moon.dxos.network/dxns/ws'
+    server: 'wss://dxns1.kube.dxos.network/dxns/ws'
     schema:
       cid:
       fqn:
