@@ -6,7 +6,7 @@
 app:
   title: 'Console'
   org': 'DXOS.org'
-  theme: 'light'
+  theme: 'dark'
   website: 'https://dxos.org'
   publicUrl: '/console'
 
