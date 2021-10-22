@@ -2,7 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
-import { CssBaseline, Theme, ThemeProvider } from '@mui/material';
+import { CssBaseline, Theme } from '@mui/material';
+import { ThemeProvider, ThemeProviderProps } from '@material-ui/core/styles';
 import React from 'react';
 import {
   HashRouter as Router,
@@ -63,7 +64,7 @@ export const Main = ({ panels }: MainProps) => {
 interface AppProps {
   config: IConfig
   panels: IPanel[]
-  theme: Theme
+  theme: ThemeProviderProps['theme']
 }
 
 export const App = ({ config, panels, theme }: AppProps) => (
