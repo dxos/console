@@ -10932,7 +10932,7 @@ debug@^3.0.0, debug@^3.1.0, debug@^3.1.1, debug@^3.2.6, debug@^3.2.7:
   dependencies:
     ms "^2.1.1"
 
-"debug@github:ngokevin/debug#noTimestamp":
+debug@ngokevin/debug#noTimestamp:
   version "2.2.0"
   resolved "https://codeload.github.com/ngokevin/debug/tar.gz/ef5f8e66d49ce8bc64c6f282c15f8b7164409e3a"
 
@@ -11420,7 +11420,7 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-"document-register-element@github:dmarcos/document-register-element#8ccc532b7f3744be954574caf3072a5fd260ca90":
+document-register-element@dmarcos/document-register-element#8ccc532b7f3744be954574caf3072a5fd260ca90:
   version "0.5.4"
   resolved "https://codeload.github.com/dmarcos/document-register-element/tar.gz/8ccc532b7f3744be954574caf3072a5fd260ca90"
 
@@ -14635,7 +14635,7 @@ hypercore-protocol@^8.0.5:
     streamx "^2.1.0"
     timeout-refresh "^1.0.0"
 
-"hypercore-protocol@github:dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60":
+hypercore-protocol@dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60:
   version "8.0.7"
   resolved "https://codeload.github.com/dxos/hypercore-protocol/tar.gz/05513f9266f8bec4d29b144b72c59257c2d7bd60"
   dependencies:
@@ -17113,7 +17113,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-"jsondown@github:dxos/jsondown#main":
+jsondown@dxos/jsondown#main:
   version "1.0.0"
   resolved "https://codeload.github.com/dxos/jsondown/tar.gz/0bec0436f00973e7f2528115c72a5ab96dc45576"
   dependencies:
@@ -24288,7 +24288,7 @@ thirty-two@^1.0.2:
   resolved "https://registry.yarnpkg.com/thirty-two/-/thirty-two-1.0.2.tgz#4ca2fffc02a51290d2744b9e3f557693ca6b627a"
   integrity sha1-TKL//AKlEpDSdEueP1V2k8prYno=
 
-"three-bmfont-text@github:dmarcos/three-bmfont-text#1babdf8507c731a18f8af3b807292e2b9740955e":
+three-bmfont-text@dmarcos/three-bmfont-text#1babdf8507c731a18f8af3b807292e2b9740955e:
   version "2.3.0"
   resolved "https://codeload.github.com/dmarcos/three-bmfont-text/tar.gz/1babdf8507c731a18f8af3b807292e2b9740955e"
   dependencies:
