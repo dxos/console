@@ -26,7 +26,6 @@ jobs:
 
           yarn install --frozen-lockfile
           yarn ci
-          yarn deploy
 
           # Uncomment for NPM publishing.
           npm whoami
