@@ -2,7 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 
 export const Fullscreen = styled('div')(() => ({
   display: 'flex',

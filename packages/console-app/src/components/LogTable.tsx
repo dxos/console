@@ -14,7 +14,7 @@ import {
   SelectChangeEvent,
   TableCell
 } from '@mui/material';
-import { makeStyles } from '@mui/styles'; // TODO(burdon): Deprecated.
+import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
 import { AutoSizer, Column, Table } from 'react-virtualized';
@@ -93,7 +93,7 @@ const columns = [
   }
 ];
 
-// TODO(burdon): Change.
+// TODO(burdon): Update gem to use Mui5 (remove dependency on @mui/styles).
 const useStyles = makeStyles(() => ({
   headerCell: {
     flexDirection: 'column'

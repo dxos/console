@@ -2,10 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
-import { AppBar, Box, CssBaseline, Paper, Toolbar } from '@mui/material';
+import {
+  AppBar, Box, CssBaseline, Paper, Toolbar, ThemeProvider, ThemeProviderProps, styled
+} from '@mui/material';
 import React from 'react';
-
-import { ThemeProvider, ThemeProviderProps, styled } from '@material-ui/core/styles';
 
 import { JsonView } from '../components';
 import { IConfig } from '../hooks';

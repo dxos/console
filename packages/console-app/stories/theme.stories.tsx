@@ -2,8 +2,9 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box, Button, ButtonProps, CssBaseline, Paper, Toolbar } from '@mui/material';
-import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
+import {
+  createTheme, styled, Box, Button, ButtonProps, CssBaseline, Paper, ThemeProvider, Toolbar
+} from '@mui/material';
 import debug from 'debug';
 import React from 'react';
 
@@ -15,17 +16,6 @@ debug.enable('dxos:console:*');
 export default {
   title: 'Theme'
 };
-
-//
-// Migration Tests
-// https://next.material-ui.com/guides/migration-v4
-// TODO(burdon): Remove @mui/styles
-// TODO(burdon): Roboto/DM fonts.
-//
-
-// TODO(burdon): Themes not working inside storybooks?
-// https://www.npmjs.com/package/storybook-addon-material-ui
-// TODO(burdon): https://storybook.js.org/addons/@react-theming/storybook-addon
 
 // Reusable styled components.
 // https://mui.com/customization/how-to-customize/#2-reusable-style-overrides

@@ -28,7 +28,11 @@
     "> 5%"
   ],
   "eslintConfig": {
-    "extends": "plugin:@dxos/react"
+    "extends": "plugin:@dxos/react",
+    "rules": {
+      "quote-props": "off",
+      "jsx-quotes": "off"
+    }
   },
   "jest": {
     "preset": "ts-jest/presets/default",

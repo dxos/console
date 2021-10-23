@@ -12,9 +12,9 @@ import {
   TableHead,
   TableRow,
   TablePagination,
-  TableSortLabel
+  TableSortLabel,
+  styled
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
 
 interface FlexTableColumn {
