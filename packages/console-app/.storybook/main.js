@@ -10,7 +10,8 @@ module.exports = {
 
   webpackFinal: async config => {
 
-    // https://mui.com/guides/migration-v4/
+    // TODO(burdon): Causes Chromatic to fail.
+    // https://mui.com/guides/migration-v4
     return {
       ...config,
       resolve: {
