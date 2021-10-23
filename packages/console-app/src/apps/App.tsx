@@ -2,7 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
-import { CssBaseline, ThemeProvider, ThemeProviderProps } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
 import React from 'react';
 import {
   HashRouter as Router,
