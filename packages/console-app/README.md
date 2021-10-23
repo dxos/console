@@ -1,22 +1,17 @@
 # Console App
 
-Console app displays overview of the following:
-
-- Service: services available in DXOS.
-- Records: registered resources in DXOS.
-- Logs: log entries from sources in DXOS.
-- Config: effective configuration applied for the current user profile.
+The Console app is used to manage the local KUBE node.
 
 ## Development
 
-To run the webpack dev server:
+To run the server locally:
 
 ```bash
-yarn start
+rushx start
 ```
 
-To see storybook of the visual components, run:
+To run the storybook:
 
 ```bash
-yarn storybook
+rushx book
 ```
