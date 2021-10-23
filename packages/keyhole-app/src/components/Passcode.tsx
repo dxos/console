@@ -80,6 +80,15 @@ export const Passcode = (
     chars[i] = i < value.length ? value[i] : '\u00A0';
   }
 
+  // https://support.1password.com/compatible-website-design
+  // https://github.com/apple/password-manager-resources
+  // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+  // https://developer.apple.com/documentation/security/password_autofill/enabling_password_autofill_on_an_html_input_element
+  const customAttrs = {
+    'autocomplete': 'one-time-code',
+    'data-com-onepassword-filled': 'dark'
+  };
+
   return (
     <Box
       sx={{
@@ -99,17 +108,16 @@ export const Passcode = (
             border: 'none'
           }}
         >
-          <label htmlFor='one-time-password'>One-time Password</label>
           <input
             ref={inputRef}
-            id='one-time-password'
             value={value}
-            data-testid="passcode-input"
+            type='number'
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             onBlur={handleFocusChange}
             onFocus={handleFocusChange}
             autoFocus
+            {...customAttrs}
           />
         </form>
       )}
