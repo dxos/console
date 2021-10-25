@@ -7,6 +7,7 @@ import compression from 'compression';
 import cors from 'cors';
 import debug from 'debug';
 import express from 'express';
+import path from 'path';
 import yargs from 'yargs';
 
 import { getConfig } from './config';
@@ -54,7 +55,7 @@ const app = express();
 
 app.use(cors());
 
-app.set('views', `${__dirname}/views`);
+app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());
 

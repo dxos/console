@@ -3,8 +3,8 @@
 //
 
 import { readFileSync, existsSync } from 'fs';
-import path from 'path';
 import yaml from 'js-yaml';
+import path from 'path';
 
 import { Config } from '@dxos/config';
 
