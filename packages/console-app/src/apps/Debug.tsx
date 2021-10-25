@@ -6,7 +6,8 @@ import { AppBar, Box, CssBaseline, Paper, Toolbar, ThemeProvider, styled } from 
 import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
 import React from 'react';
 
-import { JsonView } from '../components';
+import { JsonTreeView } from '@dxos/react-components';
+
 import { IConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';
 
@@ -62,7 +63,7 @@ export const Debug = ({ config, theme }: DebugProps) => {
             padding: 1
           }}
         >
-          <JsonView data={config} />
+          <JsonTreeView data={config} />
         </Paper>
       </Box>
     </ThemeProvider>

@@ -13,10 +13,11 @@ import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
+import { Searchbar } from '@dxos/react-components';
 import { useDomains, useRecords, useRecordTypes, useResources } from '@dxos/react-registry-client';
 import { CID, DXN, IQuery, Resource } from '@dxos/registry-client';
 
-import { DataGrid, IRecord, IResourceRecord, Panel, ResourceRecordsTable, Toolbar, SearchBar } from '../components';
+import { DataGrid, IRecord, IResourceRecord, Panel, ResourceRecordsTable, Toolbar } from '../components';
 import { RegistryGraph } from '../components/RegistryGraph';
 import { IConfig, useConfig } from '../hooks';
 import { joinRecords } from './RecordsPanel';
@@ -162,7 +163,7 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
               minWidth: 350
             }}
           >
-            <SearchBar
+            <Searchbar
               placeholder='Search records'
               onSearch={handleSearch}
               delay={500}
