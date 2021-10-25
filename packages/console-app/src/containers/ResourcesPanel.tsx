@@ -25,7 +25,7 @@ import { joinRecords } from './RecordsPanel';
 
 export interface DisplayResource extends Resource {
   latestVersion: string,
-  latestTag: string | undefined
+  latestTag: string
 }
 
 /**
@@ -78,10 +78,7 @@ const columns: GridColDef[] = [
     field: 'latestTag',
     headerName: 'Latest tag',
     width: 300,
-    cellClassName: 'monospace secondary',
-    renderCell: ({ value }) => {
-      return value ?? '';
-    }
+    cellClassName: 'monospace secondary'
   }
 ];
 
@@ -164,7 +161,7 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
         }
         return Object.keys(resource.tags).find(key => resource.tags[key]?.equals(latestTag.cid));
       }));
-      const withTags = rawResources.map((resource, i) => ({ ...resource, latestTag: latestTags[i] }));
+      const withTags = rawResources.map((resource, i) => ({ ...resource, latestTag: latestTags[i] ?? '' }));
       const withVersions: DisplayResource[] = withTags.map(resource => ({
         ...resource,
         latestVersion: semver.maxSatisfying(Object.keys(resource.versions), '*') ?? ''
