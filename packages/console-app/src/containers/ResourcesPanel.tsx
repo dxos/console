@@ -12,6 +12,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
+import semver from 'semver';
 
 import { Searchbar } from '@dxos/react-components';
 import { useDomains, useRecords, useRecordTypes, useResources } from '@dxos/react-registry-client';
@@ -64,12 +65,12 @@ const columns: GridColDef[] = [
   },
   {
     field: 'versions',
-    headerName: 'Versions',
+    headerName: 'Latest version',
     width: 300,
     cellClassName: 'monospace secondary',
     renderCell: ({ value }) => {
       const versions = value as Resource['versions'];
-      return Object.keys(versions).join(', ');
+      return semver.maxSatisfying(Object.keys(versions), '*') ?? '';
     }
   },
   {
