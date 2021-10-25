@@ -7,11 +7,11 @@ The Console app is used to manage the local KUBE node.
 To run the server locally:
 
 ```bash
-rushx start
+yarn start
 ```
 
 To run the storybook:
 
 ```bash
-rushx book
+yarn book
 ```
