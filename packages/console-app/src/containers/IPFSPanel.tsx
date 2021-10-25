@@ -4,13 +4,15 @@
 
 import React from 'react';
 
-import { Panel } from '../components';
+import { IPFSTable, Panel } from '../components';
 
 /**
  * Displays the status of the IPFS servers.
  */
 export const IPFSPanel = () => {
   return (
-    <Panel />
+    <Panel>
+      <IPFSTable />
+    </Panel>
   );
 };
