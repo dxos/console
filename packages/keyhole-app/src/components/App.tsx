@@ -9,14 +9,28 @@ import React, { useEffect, useState } from 'react';
 import superagent from 'superagent';
 
 import { Kube } from '@dxos/gem-experimental';
+import { Passcode } from '@dxos/react-components';
 
 import { useContentScript } from '../hooks';
-import { Passcode } from './Passcode';
 
 const APP_AUTH_PATH = '/app/auth';
 const WALLET_AUTH_PATH = '/wallet/auth';
 
 const theme = createTheme({
+  palette: {
+    action: {
+      selected: colors.grey[200],
+      hover: '#121212'
+    },
+    divider: colors.grey[400],
+    background: {
+      default: '#000'
+    },
+    text: {
+      primary: colors.grey[50],
+      disabled: colors.grey[100]
+    }
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: {

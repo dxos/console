@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import { Passcode } from '../src';
+import { Passcode } from '@dxos/react-components';
 
 export default {
   title: 'Passcode'
