@@ -10,4 +10,4 @@ export const router = express.Router();
 
 router.post('/logs', async (req, res) => res.json(await getLogs(req.body)));
 
-router.get('/services', async (req, res) => res.json(await getServiceInfo(req.body)));
+router.all('/services', async (req, res) => res.json(await getServiceInfo(req.body)));
