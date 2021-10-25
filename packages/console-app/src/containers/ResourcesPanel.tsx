@@ -155,7 +155,6 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
             return prev;
           }
           if (prev?.meta.created) {
-            console.log({ current, prev });
             return (current.meta.created.getTime() - prev.meta.created.getTime()) > 0 ? current : prev;
           }
           return current;
