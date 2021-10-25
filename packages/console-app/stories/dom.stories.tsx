@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 import faker from 'faker';
 import React, { useState } from 'react';
 
-import { Fullscreen } from '../src';
+import { FullScreen } from '@dxos/react-components';
 
 export default {
   title: 'DOM'
@@ -90,7 +90,7 @@ export const TestBox = () => {
 
 export const TestFullscreen = () => {
   return (
-    <Fullscreen
+    <FullScreen
       sx={{
         justifyContent: 'center',
         alignItems: 'center',
@@ -101,6 +101,6 @@ export const TestFullscreen = () => {
       }}
     >
       FULLSCREEN
-    </Fullscreen>
+    </FullScreen>
   );
 };

@@ -15,7 +15,9 @@ import {
   useParams
 } from 'react-router-dom';
 
-import { Container, Fullscreen, Sidebar } from '../components';
+import { FullScreen } from '@dxos/react-components';
+
+import { Container, Sidebar } from '../components';
 import { IConfig, ConfigContext } from '../hooks';
 import { IPanel } from '../types';
 
@@ -36,7 +38,7 @@ export const Main = ({ panels }: MainProps) => {
   };
 
   return (
-    <Fullscreen>
+    <FullScreen>
       <Container
         sidebar={
           <Sidebar
@@ -57,7 +59,7 @@ export const Main = ({ panels }: MainProps) => {
           ))}
         </>
       </Container>
-    </Fullscreen>
+    </FullScreen>
   );
 };
 

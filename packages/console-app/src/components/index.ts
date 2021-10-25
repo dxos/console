@@ -5,7 +5,6 @@
 export * from './Container';
 export * from './DataGrid';
 export * from './FlexTable';
-export * from './Fullscreen';
 export * from './LogTable';
 export * from './Panel';
 export * from './RecordsTable';
