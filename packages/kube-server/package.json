@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "build": "tsc && cp -R ./*.yml dist",
+    "ci": "npm run build && npm run lint && npm run test",
     "clean": "rm -rf ./dist",
     "lint": "eslint './src/**/*.{ts,js}'",
     "start": "CONFIG_FILE=${CONFIG_FILE=~/.dx/profile/default} ts-node --files ./src/server.js",
