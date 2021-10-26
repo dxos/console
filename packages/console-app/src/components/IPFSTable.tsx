@@ -55,8 +55,8 @@ export const IPFSTable = () => {
       const appType = await registry.getResourceRecord(DXN.parse('dxos:type.app'), 'latest');
       assert(appType, 'Resource not found: dxos:type.app');
       const apps = await registry.getDataRecords<Hashable>({ type: appType.record.cid });
-      const botType = await registry.getResourceRecord(DXN.parse('dxos:type.app'), 'latest');
-      assert(botType, 'Resource not found: dxos:type.app');
+      const botType = await registry.getResourceRecord(DXN.parse('dxos:type.bot'), 'latest');
+      assert(botType, 'Resource not found: dxos:type.bot');
       const bots = await registry.getDataRecords<Hashable>({ type: botType.record.cid });
       setRows(
         [...apps, ...bots]
