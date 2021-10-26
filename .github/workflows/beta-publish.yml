@@ -40,5 +40,6 @@ jobs:
           scripts/publish_app.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          DX_DXNS_USER_URI: ${{secrets.dx_dxns_user_uri}}
           DX_PROFILE_URL: ${{secrets.dx_profile_url}}
           DX_PROFILE: ci
