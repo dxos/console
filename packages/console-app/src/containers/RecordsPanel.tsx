@@ -20,7 +20,7 @@ import {
   Toolbar
 } from '../components';
 import { IConfig, useConfig } from '../hooks';
-import { safe } from '../util';
+import { getRecordTypeString, safe } from '../util';
 
 /**
  * Joins records with record types.
@@ -29,18 +29,6 @@ import { safe } from '../util';
  * @param config
  */
 export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryTypeRecord[], config: IConfig): IRecord[] => {
-  // TODO(burdon): Hack.
-  const getRecordTypeString = (record: RegistryRecord, types: RegistryTypeRecord[]): string | undefined => {
-    if (RegistryRecord.isDataRecord(record)) {
-      const matches = types.filter(({ cid }) => cid.equals(record.type));
-      if (matches.length !== 1) {
-        return;
-      }
-
-      return matches[0].messageName;
-    }
-  };
-
   return records.map(registryRecord => {
     const record: IRecord = {
       cid: registryRecord.cid,

@@ -5,22 +5,20 @@
 import { Launch } from '@mui/icons-material';
 import { Box, IconButton, Link } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import assert from 'assert';
 import urlJoin from 'proper-url-join';
 import React, { useEffect, useState } from 'react';
 
-import { useRegistry } from '@dxos/react-registry-client';
-import { CID, DXN } from '@dxos/registry-client';
+import { useRecordTypes, useRegistry } from '@dxos/react-registry-client';
+import { CID } from '@dxos/registry-client';
 
 import { useConfig } from '../hooks';
+import { getRecordTypeString, getRelativeTime, sortDateStrings } from '../util';
 import { DataGrid } from './DataGrid';
-
-interface Hashable {
-  hash?: Uint8Array;
-}
 
 interface IPFSRow {
   cid: CID,
+  type: string,
+  created: Date | undefined,
   url: string
 }
 
@@ -30,6 +28,22 @@ const ipfsColumns: GridColDef[] = [
     headerName: 'CID',
     cellClassName: 'monospace secondary',
     flex: 1
+  },
+  {
+    field: 'type',
+    headerName: 'Type',
+    cellClassName: () => 'monospace',
+    flex: 1
+  },
+  {
+    field: 'created',
+    headerName: 'Created',
+    flex: 1,
+    valueFormatter: (params) => {
+      return params.value && getRelativeTime(new Date(params.value as number));
+    },
+    // https://mui.com/components/data-grid/sorting
+    sortComparator: (v1, v2) => sortDateStrings(v1 as string, v2 as string)
   },
   {
     field: 'url',
@@ -47,27 +61,25 @@ const ipfsColumns: GridColDef[] = [
 
 export const IPFSTable = () => {
   const registry = useRegistry();
+  const { recordTypes } = useRecordTypes();
   const config = useConfig();
   const [rows, setRows] = useState<IPFSRow[] | undefined>();
 
   useEffect(() => {
     void (async () => {
-      const appType = await registry.getResourceRecord(DXN.parse('dxos:type.app'), 'latest');
-      assert(appType, 'Resource not found: dxos:type.app');
-      const apps = await registry.getDataRecords<Hashable>({ type: appType.record.cid });
-      const botType = await registry.getResourceRecord(DXN.parse('dxos:type.bot'), 'latest');
-      assert(botType, 'Resource not found: dxos:type.bot');
-      const bots = await registry.getDataRecords<Hashable>({ type: botType.record.cid });
+      const records = await registry.getDataRecords();
       setRows(
-        [...apps, ...bots]
-          .filter(app => app.data.hash)
-          .map(app => ({
-            cid: app.cid,
-            url: urlJoin(config.services.ipfs.gateway, CID.from(app.data.hash!).toString())
+        records
+          .filter(record => record.data.hash)
+          .map(record => ({
+            cid: record.cid,
+            type: getRecordTypeString(record, recordTypes) ?? '',
+            created: record.meta.created,
+            url: urlJoin(config.services.ipfs.gateway, CID.from(record.data.hash).toString())
           }))
       );
     })();
-  }, [registry, config]);
+  }, [registry, recordTypes, config]);
 
   return (
     <Box
