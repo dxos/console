@@ -6,7 +6,7 @@ import { TabContext, TabList } from '@mui/lab';
 import { Box, Tab } from '@mui/material';
 import React from 'react';
 
-import { IPFSTable, Panel } from '../components';
+import { IPFSStatus, IPFSTable, Panel } from '../components';
 
 /**
  * Displays the status of the IPFS servers.
@@ -28,7 +28,7 @@ export const IPFSPanel = () => {
             </TabList>
           </Box>
         }>
-          {tab === '1' ? <div> IPFS status </div> : <> </>}
+          {tab === '1' ? <IPFSStatus /> : <> </>}
           {tab === '2' ? <IPFSTable /> : <> </>}
       </Panel>
     </TabContext>

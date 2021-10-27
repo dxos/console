@@ -13,3 +13,4 @@ export * from './ResourceRecordsTable';
 export * from './ScrollContainer';
 export * from './Sidebar';
 export * from './IPFSTable';
+export * from './IPFSStatus';

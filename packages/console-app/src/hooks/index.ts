@@ -5,3 +5,4 @@
 export * from './useConfig';
 export * from './useRequest';
 export * from './useServices';
+export * from './useIPFSStatus';
