@@ -27,7 +27,7 @@ const ipfsColumns: GridColDef[] = [
     field: 'cid',
     headerName: 'CID',
     cellClassName: 'monospace secondary',
-    flex: 1
+    flex: 2
   },
   {
     field: 'type',
