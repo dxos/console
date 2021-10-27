@@ -14,35 +14,32 @@ export const useIFPSStatus = () => {
   useEffect(() => {
     void (async () => {
       // NOTE: Hangs if server not running.
-      console.log({ config });
-      const ipfs = create({ url: 'https://enterprise.kube.dxos.network/dxos/ipfs' });
+      const ipfs = create({ url: config.services.ipfs.server });
 
       const id = await ipfs.id();
       const version = await ipfs.version();
       const peers = await ipfs.swarm.peers();
       const stats = await ipfs.stats.repo();
 
-      const refs: string[] = [];
-
-      for await (const ref of ipfs.refs.local()) {
-        if (!ref.err) {
-          refs.push(ref.ref);
-        }
-      }
-
-      setStatus({
+      let statusObject: any = {
         id,
         version,
         repo: {
           stats
         },
-        refs: {
-          local: refs
-        },
         swarm: {
           peers
         }
-      });
+      };
+
+      // https://github.com/GoogleChromeLabs/jsbi/issues/30
+      statusObject = JSON.parse(JSON.stringify(statusObject, (_key, value) =>
+        typeof value === 'bigint'
+          ? value.toString()
+          : value
+      ));
+
+      setStatus(statusObject);
     })();
   }, []);
 
