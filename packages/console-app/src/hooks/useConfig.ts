@@ -32,6 +32,9 @@ export interface IConfig {
       server: string,
       prefix: string
     }
+    signal: {
+      api: string
+    }
   },
   system: {
     debug: string

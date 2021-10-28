@@ -21,3 +21,7 @@ export interface IPanel {
   component: ComponentType<any>
   icon?: ComponentType
 }
+
+export interface IAuthQR {
+  imageSrc: string
+}

@@ -3,6 +3,7 @@
 //
 
 import debug from 'debug';
+import { GraphQLClient, ClientContext } from 'graphql-hooks';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -23,15 +24,21 @@ void (async () => {
   const log = debug('dxos:console:main');
   log('Starting...', { config });
 
+  const signalClient = new GraphQLClient({
+    url: config.services.signal?.api
+  });
+
   const theme = createCustomTheme(config);
 
   ReactDOM.render((
     <RegistryInitializer config={config}>
-      <App
-        config={config}
-        panels={panels}
-        theme={theme}
-      />
+      <ClientContext.Provider value={signalClient}>
+        <App
+          config={config}
+          panels={panels}
+          theme={theme}
+        />
+      </ClientContext.Provider>
     </RegistryInitializer>
   ), document.getElementById('root'));
 })();

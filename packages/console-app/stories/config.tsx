@@ -33,6 +33,9 @@ export const config: IConfig = {
     app: {
       prefix: 'test-prefix',
       server: 'test-server'
+    },
+    signal: {
+      api: ''
     }
   },
   system: {
