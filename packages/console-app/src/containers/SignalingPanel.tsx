@@ -59,11 +59,7 @@ const SIGNAL_QUERY = `query {
  * Displays the status of the signaling servers.
  */
 export const SignalingPanel = () => {
-  const { data } = useQuery(SIGNAL_QUERY, {
-    variables: {
-      limit: 10
-    }
-  });
+  const { data } = useQuery(SIGNAL_QUERY);
 
   return (
     <Panel>
