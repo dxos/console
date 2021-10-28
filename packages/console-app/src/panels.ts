@@ -15,10 +15,12 @@ import {
   CloudQueue as IPFSIcon,
   Adb as BotsIcon,
   Apps as AppsIcon,
-  Layers as DomainsIcon
+  Layers as DomainsIcon,
+  QrCode2 as QrCode2Icon
 } from '@mui/icons-material';
 
 import {
+  AccessPanel,
   AppsPanel,
   BotsPanel,
   ConfigPanel,
@@ -119,5 +121,12 @@ export const panels: IPanel[] = [
     label: 'Config',
     component: ConfigPanel,
     icon: SettingsIcon
+  },
+  {
+    id: 'access',
+    path: paths.access,
+    label: 'Access',
+    component: AccessPanel,
+    icon: QrCode2Icon
   }
 ];
