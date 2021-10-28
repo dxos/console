@@ -3,7 +3,7 @@
 //
 
 import debug from 'debug';
-import { GraphQLClient, ClientContext } from 'graphql-hooks'
+import { GraphQLClient, ClientContext } from 'graphql-hooks';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -26,7 +26,7 @@ void (async () => {
 
   const signalClient = new GraphQLClient({
     url: config.services.signal?.api
-  })
+  });
 
   const theme = createCustomTheme(config);
 

@@ -2,8 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
+import { useQuery } from 'graphql-hooks';
 import React from 'react';
-import { useQuery } from 'graphql-hooks'
 
 import { JsonTreeView } from '@dxos/react-components';
 
@@ -59,11 +59,11 @@ const SIGNAL_QUERY = `query {
  * Displays the status of the signaling servers.
  */
 export const SignalingPanel = () => {
-  const { error, data } = useQuery(SIGNAL_QUERY, {
+  const { data } = useQuery(SIGNAL_QUERY, {
     variables: {
       limit: 10
     }
-  })
+  });
 
   return (
     <Panel>

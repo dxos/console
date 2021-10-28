@@ -2,7 +2,7 @@
 // Copyright 2021 DXOS.org
 //
 
-export * from './AccessPanel'
+export * from './AccessPanel';
 export * from './AppsPanel';
 export * from './BotsPanel';
 export * from './ConfigPanel';
