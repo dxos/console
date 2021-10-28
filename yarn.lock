@@ -1608,10 +1608,10 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/codec-protobuf@2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@dxos/codec-protobuf/-/codec-protobuf-2.16.2.tgz#44bb55b6681d051ad8dda3c0d8ed29746af96c58"
-  integrity sha512-gsYtpVhPBHbVgEa3vDgL5J0ntSL6bj4XBUvVU7AoxIxiR1jfkV+EmnYrHUiwXuwLCeMxVd7W7fCx72cmLyPqFQ==
+"@dxos/codec-protobuf@2.16.3":
+  version "2.16.3"
+  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.16.3.tgz#fddf60ff5303169d164a1395628d62bccfc6eeae"
+  integrity sha512-Q/Pv+Jr8RZYSN7AjsDJvl8Odgc1mcakf4ORkCoeAQmUOWurNy4em20J/JXSNb7RwVMord8GmPgJBcFUW6vxk/w==
   dependencies:
     assert "^2.0.0"
     lodash.merge "^4.6.2"
@@ -1632,12 +1632,12 @@
     lodash.set "^4.3.2"
     node-fetch "^2.6.0"
 
-"@dxos/config@~2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@dxos/config/-/config-2.16.2.tgz#b63ce399201b14c68ef1eecac69d992800a8c1c7"
-  integrity sha512-eXZlxEA1XAXUrSYcloGHg6XRFd4CrzlzxzdSUddsQwvmdcE30PvO5Z+gUJ/EMc8405Ehu6inoizx4DY4eQCNNg==
+"@dxos/config@~2.16.3":
+  version "2.16.3"
+  resolved "https://registry.npmjs.org/@dxos/config/-/config-2.16.3.tgz#c0209108c53ba561562da98ceee4b4a448a1260f"
+  integrity sha512-CkXhISX2fM/ktlfXYBpQ+876g5sp1QyJDmbyUT4ymNQbhDAbPt1iKYBppUcRjM89LQXU5ID5TUwttHyxOnhMiQ==
   dependencies:
-    "@dxos/debug" "2.16.2"
+    "@dxos/debug" "2.16.3"
     ajv "~8.6.2"
     boolean "^3.0.1"
     debug "^4.1.1"
@@ -1749,6 +1749,16 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
+"@dxos/crypto@2.16.3":
+  version "2.16.3"
+  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.16.3.tgz#d6f51c08b43b616cb91c2bcf3140f66ddb9eb470"
+  integrity sha512-xWiQ/t8aAnae4PzA3QdTMtRXE2xS+iPxkV0p9WYgsSAmeQnIuGEuZgEo0li1d8j8jdpbQcwnJXbj5dxV9f6q/A==
+  dependencies:
+    bip39 "^3.0.2"
+    crypto-js "^3.1.9-1"
+    humanhash "^1.0.4"
+    hypercore-crypto "^2.3.0"
+
 "@dxos/debug@2.10.12":
   version "2.10.12"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.10.12.tgz#389921561c0c023e270ed51b5aab0542cdf23f86"
@@ -1769,6 +1779,14 @@
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.16.2.tgz#0d4acd9a39b1a16d71b1764ecf2f7e235b682d75"
   integrity sha512-2lolhcVHd/xfA0a+jn8dFdeILF4rolkHO7ER8h8IrAUGtn09p/CRIG/tVjSw+jJ1LUfeIcIVDSLNvsIWbBrx/w==
+  dependencies:
+    "@types/node" "^14.0.9"
+    debug "^4.1.1"
+
+"@dxos/debug@2.16.3":
+  version "2.16.3"
+  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.16.3.tgz#45450972acbd87a6d41a27669eac1d8be8d0de74"
+  integrity sha512-5PC3zc5SWmPw5sN8L+nkg3x6+b8Be9kylzKUyN03WT39mvDKHc6VYIpIdXmjdWDYEjEthUDERhXJUkK1PvzS9A==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -2288,7 +2306,7 @@
     random-access-memory "^3.1.1"
     random-access-web "^2.0.3"
 
-"@dxos/react-components@^2.16.2", "@dxos/react-components@~2.16.2":
+"@dxos/react-components@^2.16.2":
   version "2.16.2"
   resolved "https://registry.npmjs.org/@dxos/react-components/-/react-components-2.16.2.tgz#1ed6b785c5a6d10600aa36d58daa6b875bec1b2d"
   integrity sha512-vBYGNOyE5Ql9v0Tf/lQjKrl30g26d35IIw/BXowzuoYQXhy1LpQmBrdPhsYye5Z1ZOPLLxxqhYd/4BFDz/H0Xg==
@@ -2301,6 +2319,20 @@
     react-copy-to-clipboard "~5.0.3"
     url-join "^4.0.1"
 
+"@dxos/react-components@~2.16.3":
+  version "2.16.3"
+  resolved "https://registry.npmjs.org/@dxos/react-components/-/react-components-2.16.3.tgz#7bf205ecf5221285986d2b33c92841e40acebf18"
+  integrity sha512-MOwW1ZME9zMM3sLugi2VGo7HcsA7Vg9FDBd8VXqSILLqoVAKL91MoOjCU30SU0r8JTMAz5RCGcf3wB650G+dmQ==
+  dependencies:
+    "@dxos/crypto" "2.16.3"
+    "@dxos/debug" "2.16.3"
+    debug "^4.1.1"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.isplainobject "^4.0.6"
+    react-copy-to-clipboard "~5.0.3"
+    react-json-view "~1.21.3"
+    url-join "^4.0.1"
+
 "@dxos/react-json-tree@~0.12.0":
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/@dxos/react-json-tree/-/react-json-tree-0.12.0.tgz#34d1366e562ff1b0e9877c5d9eb9e9dfe5fa84f8"
@@ -2309,14 +2341,14 @@
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
-"@dxos/react-registry-client@~2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@dxos/react-registry-client/-/react-registry-client-2.16.2.tgz#3f0e0671272f726a82e97d77de4e6871d19013e9"
-  integrity sha512-YO2d6eh0GgaIRcUVAs1QG5HpJhK9LV0MRilzvKDYeZVwUkneSp7cWAZO0rkgRKNluNtagBQRGZbvGKQ9N8A8sA==
+"@dxos/react-registry-client@~2.16.3":
+  version "2.16.3"
+  resolved "https://registry.npmjs.org/@dxos/react-registry-client/-/react-registry-client-2.16.3.tgz#2ee5ec01bd684dd03baab8fe4a7dcd312e6caf0c"
+  integrity sha512-JvrHfq3k8u2oO4fYupIl0oTzyN5ndY+4kw9kQEmODP+Un5UfL1chuVzPIvRALWXVgCnW331HHAiLHHG8QFJUsg==
   dependencies:
-    "@dxos/debug" "2.16.2"
-    "@dxos/registry-client" "2.16.2"
-    "@dxos/util" "2.16.2"
+    "@dxos/debug" "2.16.3"
+    "@dxos/registry-client" "2.16.3"
+    "@dxos/util" "2.16.3"
     assert "^2.0.0"
     debug "^4.1.1"
 
@@ -2341,14 +2373,14 @@
     multihashes "^4.0.2"
     protobufjs "^6.9.0"
 
-"@dxos/registry-client@2.16.2", "@dxos/registry-client@~2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@dxos/registry-client/-/registry-client-2.16.2.tgz#39cc806be96bcc336cf860bd536e628c84f09188"
-  integrity sha512-kvQrKIPmVhOBAQKo/UnjXI3KbTBOvkcKFjBnPCXkS/BR3E7bSIhrxoxeEpucoNOhqOPHQJ5E81s5hs9nauzkxw==
+"@dxos/registry-client@2.16.3", "@dxos/registry-client@~2.16.3":
+  version "2.16.3"
+  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.16.3.tgz#32f02ae65d93a15819707c2d77e092cfec5d7e88"
+  integrity sha512-lyDxf9LSuFdQ0o5rFUG2rp2wxgHrgiuz93zARIy/E0XPDhPUfSIJ2604jMpJW4efq+VUfCx7U0t1W7a2EK+pWw==
   dependencies:
-    "@dxos/codec-protobuf" "2.16.2"
-    "@dxos/debug" "2.16.2"
-    "@dxos/util" "2.16.2"
+    "@dxos/codec-protobuf" "2.16.3"
+    "@dxos/debug" "2.16.3"
+    "@dxos/util" "2.16.3"
     "@polkadot/api" "4.17.1"
     "@polkadot/keyring" "6.11.1"
     "@polkadot/metadata" "4.17.1"
@@ -2427,7 +2459,16 @@
     "@dxos/debug" "2.15.9"
     "@types/node" "^14.0.9"
 
-"@dxos/util@2.16.2", "@dxos/util@^2.15.6":
+"@dxos/util@2.16.3":
+  version "2.16.3"
+  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.16.3.tgz#14d911c1a5400019c98a3efd7ba05a693b09a4dd"
+  integrity sha512-HzHIjv09FCxc1bKeMb7/B73RG6U1yUmh13YsHgOe+GR8LSqlYgNgbqXGXetTVZdT6iOMexd3X96PXMOU21gGDg==
+  dependencies:
+    "@dxos/crypto" "2.16.3"
+    "@dxos/debug" "2.16.3"
+    "@types/node" "^14.0.9"
+
+"@dxos/util@^2.15.6":
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.16.2.tgz#31c196909abd015d1e1ca2e87faac1424b7624ea"
   integrity sha512-a8PdZ9gFORa78S3TeQlmgwJ6XK5wAYwn0D9Q15bLtIOLOZBqPairdsz1Uu7ue7LdRqN8S4hsKVBK8B9FBGLbVw==
@@ -19496,7 +19537,7 @@ react-json-tree@^0.15.0:
     prop-types "^15.7.2"
     react-base16-styling "^0.8.0"
 
-react-json-view@^1.21.3:
+react-json-view@^1.21.3, react-json-view@~1.21.3:
   version "1.21.3"
   resolved "https://registry.yarnpkg.com/react-json-view/-/react-json-view-1.21.3.tgz#f184209ee8f1bf374fb0c41b0813cff54549c475"
   integrity sha512-13p8IREj9/x/Ye4WI/JpjhoIwuzEgUAtgJZNBJckfzJt1qyh24BdTm6UQNGnyTq9dapQdrqvquZTo3dz1X6Cjw==
