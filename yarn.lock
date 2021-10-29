@@ -1608,10 +1608,10 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/codec-protobuf@2.16.3":
-  version "2.16.3"
-  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.16.3.tgz#fddf60ff5303169d164a1395628d62bccfc6eeae"
-  integrity sha512-Q/Pv+Jr8RZYSN7AjsDJvl8Odgc1mcakf4ORkCoeAQmUOWurNy4em20J/JXSNb7RwVMord8GmPgJBcFUW6vxk/w==
+"@dxos/codec-protobuf@2.16.4":
+  version "2.16.4"
+  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.16.4.tgz#677e5e0bd65b416e287c95e0b9e9a547dd5861ce"
+  integrity sha512-PaghpZgXAE602sZaSPtzSWDFp0jfDhij6NaI3/930q9oemUR12FySExcagePKuFp1NGm0ug5DiWMuTLBvRRl8Q==
   dependencies:
     assert "^2.0.0"
     lodash.merge "^4.6.2"
@@ -1632,13 +1632,13 @@
     lodash.set "^4.3.2"
     node-fetch "^2.6.0"
 
-"@dxos/config@~2.16.3":
-  version "2.16.3"
-  resolved "https://registry.npmjs.org/@dxos/config/-/config-2.16.3.tgz#c0209108c53ba561562da98ceee4b4a448a1260f"
-  integrity sha512-CkXhISX2fM/ktlfXYBpQ+876g5sp1QyJDmbyUT4ymNQbhDAbPt1iKYBppUcRjM89LQXU5ID5TUwttHyxOnhMiQ==
+"@dxos/config@~2.16.4":
+  version "2.16.4"
+  resolved "https://registry.npmjs.org/@dxos/config/-/config-2.16.4.tgz#dc40af0a17b165c33b97088f27953ea6af7c5448"
+  integrity sha512-pWLUwqbU08+zT/NumYagE5b65PAw3zjSVJUc2uNiDvBI4K2EwST89IJxGJlJlY63ogIGyKuUrrACPe7V4t0jKw==
   dependencies:
-    "@dxos/debug" "2.16.3"
-    ajv "~8.6.2"
+    "@dxos/codec-protobuf" "2.16.4"
+    "@dxos/debug" "2.16.4"
     boolean "^3.0.1"
     debug "^4.1.1"
     js-yaml "^3.13.1"
@@ -1646,6 +1646,7 @@
     lodash.get "^4.4.2"
     lodash.set "^4.3.2"
     node-fetch "^2.6.0"
+    protobufjs "^6.9.0"
 
 "@dxos/credentials@2.10.12":
   version "2.10.12"
@@ -1749,10 +1750,10 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
-"@dxos/crypto@2.16.3":
-  version "2.16.3"
-  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.16.3.tgz#d6f51c08b43b616cb91c2bcf3140f66ddb9eb470"
-  integrity sha512-xWiQ/t8aAnae4PzA3QdTMtRXE2xS+iPxkV0p9WYgsSAmeQnIuGEuZgEo0li1d8j8jdpbQcwnJXbj5dxV9f6q/A==
+"@dxos/crypto@2.16.4":
+  version "2.16.4"
+  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.16.4.tgz#6797f426bed18936cdd12cb9d02308872cd606af"
+  integrity sha512-n1Hg2cM7GrFFc+QdG479dnTD+yYYqt4Qhx1V1eKsj7zYZfvuoJsTaHs2SB+PfGWGM9zsbnsoSNIDZrzhjpGKHw==
   dependencies:
     bip39 "^3.0.2"
     crypto-js "^3.1.9-1"
@@ -1783,10 +1784,10 @@
     "@types/node" "^14.0.9"
     debug "^4.1.1"
 
-"@dxos/debug@2.16.3":
-  version "2.16.3"
-  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.16.3.tgz#45450972acbd87a6d41a27669eac1d8be8d0de74"
-  integrity sha512-5PC3zc5SWmPw5sN8L+nkg3x6+b8Be9kylzKUyN03WT39mvDKHc6VYIpIdXmjdWDYEjEthUDERhXJUkK1PvzS9A==
+"@dxos/debug@2.16.4":
+  version "2.16.4"
+  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.16.4.tgz#af0390466988281c99ef377abfc4a1585b1b4771"
+  integrity sha512-FzAfnzrG2hvg+n9+8FxLyu7/5SHdP2mh3nwYb2lbwiahi2jlZ7K/NaUAUogUFcKWRJcB1mysGfAr4BVAPL+gdw==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -2319,13 +2320,13 @@
     react-copy-to-clipboard "~5.0.3"
     url-join "^4.0.1"
 
-"@dxos/react-components@~2.16.3":
-  version "2.16.3"
-  resolved "https://registry.npmjs.org/@dxos/react-components/-/react-components-2.16.3.tgz#7bf205ecf5221285986d2b33c92841e40acebf18"
-  integrity sha512-MOwW1ZME9zMM3sLugi2VGo7HcsA7Vg9FDBd8VXqSILLqoVAKL91MoOjCU30SU0r8JTMAz5RCGcf3wB650G+dmQ==
+"@dxos/react-components@~2.16.4":
+  version "2.16.4"
+  resolved "https://registry.npmjs.org/@dxos/react-components/-/react-components-2.16.4.tgz#be764939a35ffcf114b1b9c0901c25b46d10d747"
+  integrity sha512-xsIRgHdPvemuWc3OdihhFFbOYKBffk0ubKEUByGzvKA0ZobfIAsINU2+0VcoZtrEwzKNVwUmPb7OA/v5C99w5Q==
   dependencies:
-    "@dxos/crypto" "2.16.3"
-    "@dxos/debug" "2.16.3"
+    "@dxos/crypto" "2.16.4"
+    "@dxos/debug" "2.16.4"
     debug "^4.1.1"
     lodash.defaultsdeep "^4.6.1"
     lodash.isplainobject "^4.0.6"
@@ -2341,14 +2342,14 @@
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
-"@dxos/react-registry-client@~2.16.3":
-  version "2.16.3"
-  resolved "https://registry.npmjs.org/@dxos/react-registry-client/-/react-registry-client-2.16.3.tgz#2ee5ec01bd684dd03baab8fe4a7dcd312e6caf0c"
-  integrity sha512-JvrHfq3k8u2oO4fYupIl0oTzyN5ndY+4kw9kQEmODP+Un5UfL1chuVzPIvRALWXVgCnW331HHAiLHHG8QFJUsg==
+"@dxos/react-registry-client@~2.16.4":
+  version "2.16.4"
+  resolved "https://registry.npmjs.org/@dxos/react-registry-client/-/react-registry-client-2.16.4.tgz#cd64ad248fa1f4dfbb9cbbbc40fef1e8bdb47284"
+  integrity sha512-RYFdAjkQsMZq+VfHsMypIPjXQbWrAtUEKOeEthETM8foY6effAL2J8W73BpiwQ/YEuotZyMXmCOS5b6/s78wrg==
   dependencies:
-    "@dxos/debug" "2.16.3"
-    "@dxos/registry-client" "2.16.3"
-    "@dxos/util" "2.16.3"
+    "@dxos/debug" "2.16.4"
+    "@dxos/registry-client" "2.16.4"
+    "@dxos/util" "2.16.4"
     assert "^2.0.0"
     debug "^4.1.1"
 
@@ -2373,14 +2374,14 @@
     multihashes "^4.0.2"
     protobufjs "^6.9.0"
 
-"@dxos/registry-client@2.16.3", "@dxos/registry-client@~2.16.3":
-  version "2.16.3"
-  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.16.3.tgz#32f02ae65d93a15819707c2d77e092cfec5d7e88"
-  integrity sha512-lyDxf9LSuFdQ0o5rFUG2rp2wxgHrgiuz93zARIy/E0XPDhPUfSIJ2604jMpJW4efq+VUfCx7U0t1W7a2EK+pWw==
+"@dxos/registry-client@2.16.4", "@dxos/registry-client@~2.16.4":
+  version "2.16.4"
+  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.16.4.tgz#acfd9139dc29bcabebfeec23d45c0d31c465681f"
+  integrity sha512-SgrgNqsrV6M8SKr0C4NO90Byy3l6wQPypF7J3MfMIZNb7y4eCchH/kCvl12zamJMATqSlcs+beuYZ4u6A5GgEA==
   dependencies:
-    "@dxos/codec-protobuf" "2.16.3"
-    "@dxos/debug" "2.16.3"
-    "@dxos/util" "2.16.3"
+    "@dxos/codec-protobuf" "2.16.4"
+    "@dxos/debug" "2.16.4"
+    "@dxos/util" "2.16.4"
     "@polkadot/api" "4.17.1"
     "@polkadot/keyring" "6.11.1"
     "@polkadot/metadata" "4.17.1"
@@ -2459,13 +2460,13 @@
     "@dxos/debug" "2.15.9"
     "@types/node" "^14.0.9"
 
-"@dxos/util@2.16.3":
-  version "2.16.3"
-  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.16.3.tgz#14d911c1a5400019c98a3efd7ba05a693b09a4dd"
-  integrity sha512-HzHIjv09FCxc1bKeMb7/B73RG6U1yUmh13YsHgOe+GR8LSqlYgNgbqXGXetTVZdT6iOMexd3X96PXMOU21gGDg==
+"@dxos/util@2.16.4":
+  version "2.16.4"
+  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.16.4.tgz#a36460de8f638bbfaed71bbdff8d14bb800e3925"
+  integrity sha512-oIGWOZQPf7cUx9wtAwxVKxpsMqPVciu1LLld1lLgDog+i9OwZpcoW3259BnB4qe0BRU0qT/dGXkz7JryOneZYQ==
   dependencies:
-    "@dxos/crypto" "2.16.3"
-    "@dxos/debug" "2.16.3"
+    "@dxos/crypto" "2.16.4"
+    "@dxos/debug" "2.16.4"
     "@types/node" "^14.0.9"
 
 "@dxos/util@^2.15.6":
