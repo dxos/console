@@ -2,7 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
-import { CssBaseline, ThemeProvider, ThemeProviderProps } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
 import React from 'react';
 import {
   HashRouter as Router,
@@ -14,7 +15,9 @@ import {
   useParams
 } from 'react-router-dom';
 
-import { Container, Fullscreen, Sidebar } from '../components';
+import { FullScreen } from '@dxos/react-components';
+
+import { Container, Sidebar } from '../components';
 import { IConfig, ConfigContext } from '../hooks';
 import { IPanel } from '../types';
 
@@ -35,7 +38,7 @@ export const Main = ({ panels }: MainProps) => {
   };
 
   return (
-    <Fullscreen>
+    <FullScreen>
       <Container
         sidebar={
           <Sidebar
@@ -56,7 +59,7 @@ export const Main = ({ panels }: MainProps) => {
           ))}
         </>
       </Container>
-    </Fullscreen>
+    </FullScreen>
   );
 };
 

@@ -5,7 +5,9 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import React from 'react';
 
-import { createCustomTheme, Fullscreen, IConfig } from '../src';
+import { FullScreen } from '@dxos/react-components';
+
+import { createCustomTheme, IConfig } from '../src';
 
 export const config: IConfig = {
   app: {
@@ -31,6 +33,9 @@ export const config: IConfig = {
     app: {
       prefix: 'test-prefix',
       server: 'test-server'
+    },
+    signal: {
+      api: ''
     }
   },
   system: {
@@ -42,9 +47,9 @@ export const RootContainer = ({ config, children }: { config: IConfig, children:
   return (
     <ThemeProvider theme={createCustomTheme(config)}>
       <CssBaseline />
-      <Fullscreen>
+      <FullScreen>
         {children}
-      </Fullscreen>
+      </FullScreen>
     </ThemeProvider>
   );
 };

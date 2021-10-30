@@ -1,6 +1,6 @@
-# Console App
+# Keyhole App
 
-The Console app is used to manage the local KUBE node.
+The Keyhole app presents login credentials to access the local KUBE node.
 
 ## Development
 
@@ -13,5 +13,5 @@ yarn start
 To run the storybook:
 
 ```bash
-yarn book
+yarn storybook
 ```

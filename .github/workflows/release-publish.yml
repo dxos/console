@@ -36,11 +36,10 @@ jobs:
           yarn lerna publish from-package --force-publish -y
 
           # Publish to registry
-          DEBUG='dxos:cli' yarn wire profile init --name $WIRE_PROFILE --template-url "$WIRE_PROFILE_URL"
+          DEBUG='dxos:cli' yarn dx profile init --name $DX_PROFILE --template-url "$DX_PROFILE_URL"
           scripts/publish_app.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          WIRE_WNS_USER_KEY: ${{secrets.wns_user_key}}
-          WIRE_WNS_BOND_ID: ${{secrets.wns_bond_id}}
-          WIRE_PROFILE_URL: ${{secrets.wire_profile_url}}
-          WIRE_PROFILE: ci
+          DX_DXNS_USER_URI: ${{secrets.dx_dxns_user_uri}}
+          DX_PROFILE_URL: ${{secrets.dx_profile_url}}
+          DX_PROFILE: ci

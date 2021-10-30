@@ -81,14 +81,6 @@ export const TEST_SERVICES: IService[] = [
     cpu: 0.96,
     memory: 111255552,
     type: 'container'
-  },
-  {
-    name: 'wns-lite',
-    exec: '/usr/local/bin/wnsd-lite',
-    status: 'online',
-    cpu: 0.3,
-    memory: 65089536,
-    type: 'daemon'
   }
 ];
 
@@ -98,10 +90,10 @@ export const TEST_LOGS = [
   '2021-09-14T20:53:49.002739404Z   dxos:cli-app:server Not found in DXNS: dxos:application +1s\r',
   '2021-09-14T20:53:49.353874887Z   dxos:cli-app:server Not found in DXNS: dxos:application +351ms\r',
   '2021-09-14T20:53:49.791784679Z   dxos:cli-app:server Not found in DXNS: dxos:application +438ms\r',
-  '2021-09-14T20:53:49.800143663Z   dxos:cli-app:server Found wrn://dxos/application/keyhole => QmceH1eecyyNPpzQEYPG3kYRXJMd42nGP1ANGRrrUwY6Q4 +8ms\r',
+  '2021-09-14T20:53:49.800143663Z   dxos:cli-app:server Found dxos:app.test => QmceH1eecyyNPpzQEYPG3kYRXJMd42nGP1ANGRrrUwY6Q4 +8ms\r',
   '2021-09-14T20:53:49.800478810Z   dxos:cli-app:server Fetching: http://127.0.0.1:8888/ipfs/QmceH1eecyyNPpzQEYPG3kYRXJMd42nGP1ANGRrrUwY6Q4/ +1ms\r',
   '2021-09-14T20:53:50.670552105Z   dxos:cli-app:server Not found in DXNS: dxos:application +870ms\r',
-  '2021-09-14T20:53:50.670929179Z   dxos:cli-app:server Cached wrn://dxos/application/keyhole => QmceH1eecyyNPpzQEYPG3kYRXJMd42nGP1ANGRrrUwY6Q4 +0ms\r',
+  '2021-09-14T20:53:50.670929179Z   dxos:cli-app:server Cached dxos:app.keyhole => QmceH1eecyyNPpzQEYPG3kYRXJMd42nGP1ANGRrrUwY6Q4 +0ms\r',
   '2021-09-14T20:53:50.671280279Z   dxos:cli-app:server Fetching: http://127.0.0.1:8888/ipfs/QmceH1eecyyNPpzQEYPG3kYRXJMd42nGP1ANGRrrUwY6Q4/ +1ms\r',
   '2021-09-14T22:15:42.018673431Z   dxos:cli-app:server:auth Not authenticated. +1h\r',
   '2021-09-14T22:15:42.117632593Z   dxos:cli-app:server Not found in DXNS: dxos:application +1h\r'

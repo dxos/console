@@ -8,16 +8,15 @@ import urlJoin from 'proper-url-join';
 import React, { useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
 
+import { JsonTreeView, Searchbar } from '@dxos/react-components';
 import { useRecords, useRecordTypes } from '@dxos/react-registry-client';
 import { CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-client';
 
 import {
   IRecord,
-  JsonView,
   Panel,
   RecordsTable,
   RecordTypeSelector,
-  SearchBar,
   Toolbar
 } from '../components';
 import { IConfig, useConfig } from '../hooks';
@@ -117,7 +116,7 @@ export const RecordsPanel = ({ match }: { match?: any }) => {
               minWidth: 350
             }}
           >
-            <SearchBar
+            <Searchbar
               placeholder='Search records'
               onSearch={handleSearch}
               delay={500}
@@ -150,7 +149,7 @@ export const RecordsPanel = ({ match }: { match?: any }) => {
             padding: 1
           }}
         >
-          <JsonView data={selected && records.find(record => record.cid.equals(selected.toB58String()))} />
+          <JsonTreeView data={selected && records.find(record => record.cid.equals(selected.toB58String()))} />
         </Paper>
       </Collapse>
     </Panel>

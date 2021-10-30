@@ -10,16 +10,23 @@ import {
 import { Box, Collapse, IconButton, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import urlJoin from 'proper-url-join';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router';
+import semver from 'semver';
 
-import { useDomains, useRecords, useRecordTypes, useResources } from '@dxos/react-registry-client';
+import { Searchbar } from '@dxos/react-components';
+import { useDomains, useRecords, useRecordTypes, useRegistry, useResources } from '@dxos/react-registry-client';
 import { CID, DXN, IQuery, Resource } from '@dxos/registry-client';
 
-import { DataGrid, IRecord, IResourceRecord, Panel, ResourceRecordsTable, Toolbar, SearchBar } from '../components';
+import { DataGrid, IRecord, IResourceRecord, Panel, ResourceRecordsTable, Toolbar } from '../components';
 import { RegistryGraph } from '../components/RegistryGraph';
 import { IConfig, useConfig } from '../hooks';
 import { joinRecords } from './RecordsPanel';
+
+export interface DisplayResource extends Resource {
+  latestVersion: string,
+  latestTag: string
+}
 
 /**
  * Joins records with resources.
@@ -62,24 +69,16 @@ const columns: GridColDef[] = [
     cellClassName: 'monospace primary'
   },
   {
-    field: 'versions',
-    headerName: 'Versions',
+    field: 'latestVersion',
+    headerName: 'Latest version',
     width: 300,
-    cellClassName: 'monospace secondary',
-    renderCell: ({ value }) => {
-      const versions = value as Resource['versions'];
-      return Object.keys(versions).join(', ');
-    }
+    cellClassName: 'monospace secondary'
   },
   {
-    field: 'tags',
-    headerName: 'Tags',
+    field: 'latestTag',
+    headerName: 'Latest tag',
     width: 300,
-    cellClassName: 'monospace secondary',
-    renderCell: ({ value }) => {
-      const tags = value as Resource['tags'];
-      return Object.keys(tags).join(', ');
-    }
+    cellClassName: 'monospace secondary'
   }
 ];
 
@@ -132,7 +131,9 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
   const { domains } = useDomains();
   const [search, setSearch] = useState<string | undefined>();
   const query = useMemo<IQuery>(() => ({ text: search }), [search]);
-  const { resources } = useResources(query);
+  const { resources: rawResources } = useResources(query);
+  const [resources, setResources] = useState<DisplayResource[]>([]);
+  const registry = useRegistry();
   const [view, setView] = useState<View>(views[0].key);
   const { dxn }: { dxn?: string } = useParams();
   const history = useHistory();
@@ -141,6 +142,33 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
   const { records: registryRecords } = useRecords();
   const records = joinRecords(registryRecords, recordTypes, config);
   const resourceRecords = joinResourceRecords(records, selectedResource, config);
+
+  useEffect(() => {
+    void (async () => {
+      const latestTags = await Promise.all(rawResources.map(async resource => {
+        const tagRecords = await Promise.all(Object.values(resource.tags).map(cid => cid && registry.getRecord(cid)));
+        const latestTag = tagRecords.reduce((prev, current) => {
+          if (!current?.meta.created) {
+            return prev;
+          }
+          if (prev?.meta.created) {
+            return (current.meta.created.getTime() - prev.meta.created.getTime()) > 0 ? current : prev;
+          }
+          return current;
+        }, undefined);
+        if (!latestTag) {
+          return undefined;
+        }
+        return Object.keys(resource.tags).find(key => resource.tags[key]?.equals(latestTag.cid));
+      }));
+      const withTags = rawResources.map((resource, i) => ({ ...resource, latestTag: latestTags[i] ?? '' }));
+      const withVersions: DisplayResource[] = withTags.map(resource => ({
+        ...resource,
+        latestVersion: semver.maxSatisfying(Object.keys(resource.versions), '*') ?? ''
+      }));
+      setResources(withVersions);
+    })();
+  }, [rawResources]);
 
   const onSelected = (dxn: DXN) => {
     const next = (dxn.toString() === selectedResource?.id.toString()) ? undefined : dxn;
@@ -162,7 +190,7 @@ export const ResourcesPanel = ({ match }: { match?: any }) => {
               minWidth: 350
             }}
           >
-            <SearchBar
+            <Searchbar
               placeholder='Search records'
               onSearch={handleSearch}
               delay={500}

@@ -4,7 +4,9 @@
 
 import React from 'react';
 
-import { JsonView, Panel } from '../components';
+import { JsonTreeView } from '@dxos/react-components';
+
+import { Panel } from '../components';
 import { useConfig } from '../hooks';
 
 /**
@@ -13,10 +15,9 @@ import { useConfig } from '../hooks';
 export const ConfigPanel = () => {
   const config = useConfig();
 
-  // TODO(burdon): Re-implement JsonTreeView.
   return (
     <Panel scroll>
-      <JsonView data={config} />
+      <JsonTreeView data={config} />
     </Panel>
   );
 };

@@ -26,22 +26,19 @@ jobs:
 
           yarn install --frozen-lockfile
           yarn ci
-          yarn deploy
 
           # Uncomment for NPM publishing.
           npm whoami
           yarn lerna publish -y prerelease --dist-tag="alpha" --force-publish
 
           # Publish to registry
-          DEBUG='dxos:cli' yarn wire profile init --name $WIRE_PROFILE --template-url "$DX_PROFILE_URL"
+          DEBUG='dxos:cli' yarn dx profile init --name $DX_PROFILE --template-url "$DX_PROFILE_URL"
           export PKG_CHANNEL="@alpha"
           scripts/publish_app.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          WIRE_WNS_USER_KEY: ${{secrets.wns_user_key}}
-          WIRE_WNS_BOND_ID: ${{secrets.wns_bond_id}}
           DX_PROFILE_URL: ${{secrets.dx_profile_url}}
           DX_DXNS_USER_URI: ${{secrets.dx_dxns_user_uri}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          WIRE_PROFILE: ci
+          DX_PROFILE: ci
