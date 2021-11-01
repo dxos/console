@@ -1749,6 +1749,16 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
+"@dxos/crypto@2.16.6":
+  version "2.16.6"
+  resolved "https://registry.yarnpkg.com/@dxos/crypto/-/crypto-2.16.6.tgz#7774429ea668087074eff3d8cbcf067b2081efb4"
+  integrity sha512-13fJi9k7z70AI5+HfSr/SbcyX0xR1u5IHthoX8Lh6UqywqTIM9MYh3XzEoDoh3XIcKPzvB4BLftDAWrrJGEhHw==
+  dependencies:
+    bip39 "^3.0.2"
+    crypto-js "^3.1.9-1"
+    humanhash "^1.0.4"
+    hypercore-crypto "^2.3.0"
+
 "@dxos/debug@2.10.12":
   version "2.10.12"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.10.12.tgz#389921561c0c023e270ed51b5aab0542cdf23f86"
@@ -1769,6 +1779,14 @@
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.16.2.tgz#0d4acd9a39b1a16d71b1764ecf2f7e235b682d75"
   integrity sha512-2lolhcVHd/xfA0a+jn8dFdeILF4rolkHO7ER8h8IrAUGtn09p/CRIG/tVjSw+jJ1LUfeIcIVDSLNvsIWbBrx/w==
+  dependencies:
+    "@types/node" "^14.0.9"
+    debug "^4.1.1"
+
+"@dxos/debug@2.16.6":
+  version "2.16.6"
+  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.16.6.tgz#e5948c811a5ac69dde47a2a90a0414349e683c99"
+  integrity sha512-YBOSizEHGLmJSi7+peEAWOpaKN2no+9nXt0oDSpNQz+8cPmwKdaGy3um7jEaFD/kPoZ/81gKCneWcW4jh0Jhqg==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -2288,7 +2306,22 @@
     random-access-memory "^3.1.1"
     random-access-web "^2.0.3"
 
-"@dxos/react-components@^2.16.2", "@dxos/react-components@~2.16.2":
+"@dxos/react-components@^2.16.6":
+  version "2.16.6"
+  resolved "https://registry.yarnpkg.com/@dxos/react-components/-/react-components-2.16.6.tgz#0af9ce4b01940b9ed3dedd6000b5233bc2a723be"
+  integrity sha512-XhTuJrTDUbqIrY0P8MJOsujwJasCzTEKHGslceVVXc9AfSUYBWXGw+k0IygxH2DLZu5btyAqaaVQ2zt/uY2mHQ==
+  dependencies:
+    "@dxos/crypto" "2.16.6"
+    "@dxos/debug" "2.16.6"
+    debug "^4.1.1"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.isplainobject "^4.0.6"
+    qrcode.react "~1.0.1"
+    react-copy-to-clipboard "~5.0.3"
+    react-json-view "~1.21.3"
+    url-join "^4.0.1"
+
+"@dxos/react-components@~2.16.2":
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/@dxos/react-components/-/react-components-2.16.2.tgz#1ed6b785c5a6d10600aa36d58daa6b875bec1b2d"
   integrity sha512-vBYGNOyE5Ql9v0Tf/lQjKrl30g26d35IIw/BXowzuoYQXhy1LpQmBrdPhsYye5Z1ZOPLLxxqhYd/4BFDz/H0Xg==
@@ -13058,22 +13091,7 @@ hypercore-protocol@^6.11.1, hypercore-protocol@^6.5.0:
     sorted-indexof "^1.0.0"
     varint "^5.0.0"
 
-hypercore-protocol@^8.0.5:
-  version "8.0.7"
-  resolved "https://registry.yarnpkg.com/hypercore-protocol/-/hypercore-protocol-8.0.7.tgz#74ed279710b095858d60905477d5bb6a69765aba"
-  integrity sha512-b5TXhqXUZ+Z7M/5/PlCTgElfufDRa3EzACd7y7BA7owLkxQreaUQ58wUO7nzJppDP1bnC2Hz6Hg7nlRPc75bKw==
-  dependencies:
-    abstract-extension "^3.0.1"
-    debug "^4.1.1"
-    hypercore-crypto "^2.0.0"
-    inspect-custom-symbol "^1.1.0"
-    nanoguard "^1.2.1"
-    pretty-hash "^1.0.1"
-    simple-hypercore-protocol "^2.0.0"
-    streamx "^2.1.0"
-    timeout-refresh "^1.0.0"
-
-hypercore-protocol@dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60:
+hypercore-protocol@^8.0.5, hypercore-protocol@dxos/hypercore-protocol#05513f9266f8bec4d29b144b72c59257c2d7bd60:
   version "8.0.7"
   resolved "https://codeload.github.com/dxos/hypercore-protocol/tar.gz/05513f9266f8bec4d29b144b72c59257c2d7bd60"
   dependencies:
@@ -18912,6 +18930,20 @@ q@^1.5.1:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
+qr.js@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
+  integrity sha1-ys6GOG9ZoNuAUPqQ2baw6IoeNk8=
+
+qrcode.react@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-1.0.1.tgz#2834bb50e5e275ffe5af6906eff15391fe9e38a5"
+  integrity sha512-8d3Tackk8IRLXTo67Y+c1rpaiXjoz/Dd2HpcMdW//62/x8J1Nbho14Kh8x974t9prsLHN6XqVgcnRiBGFptQmg==
+  dependencies:
+    loose-envify "^1.4.0"
+    prop-types "^15.6.0"
+    qr.js "0.0.0"
+
 qrcode@^1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.4.4.tgz#f0c43568a7e7510a55efc3b88d9602f71963ea83"
@@ -19346,7 +19378,7 @@ react-json-tree@^0.15.0:
     prop-types "^15.7.2"
     react-base16-styling "^0.8.0"
 
-react-json-view@^1.21.3:
+react-json-view@^1.21.3, react-json-view@~1.21.3:
   version "1.21.3"
   resolved "https://registry.yarnpkg.com/react-json-view/-/react-json-view-1.21.3.tgz#f184209ee8f1bf374fb0c41b0813cff54549c475"
   integrity sha512-13p8IREj9/x/Ye4WI/JpjhoIwuzEgUAtgJZNBJckfzJt1qyh24BdTm6UQNGnyTq9dapQdrqvquZTo3dz1X6Cjw==
@@ -20523,19 +20555,6 @@ simple-handshake@^3.0.0:
   dependencies:
     nanoassert "^2.0.0"
     noise-protocol "^3.0.0"
-
-simple-hypercore-protocol@^2.0.0:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/simple-hypercore-protocol/-/simple-hypercore-protocol-2.1.2.tgz#7ddf149ecf4013a085382f3ea70f758a8cfada07"
-  integrity sha512-zCwEMw/Evd5iDPkVEjO+1T3OJqbuDukJSuZtMZ7A7Wfn0RxmaJFbwngfUnDNyQFbPMxiINNxGBMD85fFJF8ghA==
-  dependencies:
-    hypercore-crypto "^2.1.0"
-    noise-protocol "^3.0.1"
-    protocol-buffers-encodings "^1.1.0"
-    simple-handshake "^3.0.0"
-    simple-message-channels "^1.2.1"
-    varint "^5.0.0"
-    xsalsa20-universal "^1.0.0"
 
 simple-hypercore-protocol@dxos/simple-hypercore-protocol#bc23f0747e55954ec0bd94754910c92f88ec561c:
   version "2.1.1"
