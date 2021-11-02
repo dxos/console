@@ -1,6 +1,6 @@
 {
   "name": "@dxos/kube-server",
-  "version": "1.2.9-alpha.68",
+  "version": "1.2.9-alpha.69",
   "description": "KUBE Server",
   "license": "AGPL-3.0",
   "main": "dist/src/server.js",
@@ -28,7 +28,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@dxos/config": "~2.16.2",
+    "@dxos/config": "~2.16.7",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
