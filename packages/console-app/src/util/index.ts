@@ -3,7 +3,7 @@
 //
 
 export * from './datetime';
-export * from './record-type-string';
+export * from './record-type-data';
 
 export function safe<T> (f: () => T): T | undefined {
   try {

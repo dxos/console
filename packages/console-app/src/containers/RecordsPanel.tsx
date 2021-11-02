@@ -20,7 +20,7 @@ import {
   Toolbar
 } from '../components';
 import { IConfig, useConfig } from '../hooks';
-import { getRecordTypeString, safe } from '../util';
+import { getRecordTypeData, safe } from '../util';
 
 /**
  * Joins records with record types.
@@ -37,12 +37,12 @@ export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryType
       type: registryRecord.kind
     };
 
-    const type = getRecordTypeString(registryRecord, recordTypes);
+    const { typeName: type } = getRecordTypeData(registryRecord, recordTypes);
     if (type) {
       record.type = type;
     }
 
-    const url = (type === '.dxos.type.App')
+    const url = (type === 'App')
       ? urlJoin(config.services.app.server, config.services.app.prefix, registryRecord.cid.toString())
       : undefined;
     if (url) {
