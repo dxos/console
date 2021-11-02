@@ -37,6 +37,9 @@ export const config: IConfig = {
     ipfs: {
       gateway: 'test-ipfs-gateway',
       server: 'test-ipfs-server'
+    },
+    signal: {
+      api: ''
     }
   },
   system: {

@@ -1,6 +1,6 @@
 {
   "name": "@dxos/console-app",
-  "version": "1.2.9-alpha.67",
+  "version": "1.2.9-alpha.68",
   "description": "Console App.",
   "homepage": "https://github.com/dxos/console#readme",
   "bugs": {
@@ -58,6 +58,7 @@
     "clsx": "^1.1.0",
     "debug": "^4.1.1",
     "ipfs-http-client": "^53.0.1",
+    "graphql-hooks": "^5.4.1",
     "lodash.isequalwith": "^4.4.0",
     "proper-url-join": "^2.1.1",
     "react": "^17.0.2",

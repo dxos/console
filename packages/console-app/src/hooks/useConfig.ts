@@ -36,6 +36,9 @@ export interface IConfig {
       gateway: string,
       server: string
     }
+    signal: {
+      api: string
+    }
   },
   system: {
     debug: string

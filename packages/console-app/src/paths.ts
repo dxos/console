@@ -3,6 +3,7 @@
 //
 
 export const paths = {
+  access: '/access',
   apps: '/apps',
   bots: '/bots',
   config: '/config',

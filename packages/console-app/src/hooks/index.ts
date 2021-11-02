@@ -4,5 +4,6 @@
 
 export * from './useConfig';
 export * from './useRequest';
+export * from './useQR';
 export * from './useServices';
 export * from './useIPFSStatus';
