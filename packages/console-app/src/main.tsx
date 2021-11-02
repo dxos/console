@@ -29,7 +29,6 @@ void (async () => {
   });
 
   const theme = createCustomTheme(config);
-  console.log(theme);
 
   ReactDOM.render((
     <RegistryInitializer config={config}>
