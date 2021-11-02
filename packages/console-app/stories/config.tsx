@@ -34,6 +34,10 @@ export const config: IConfig = {
       prefix: 'test-prefix',
       server: 'test-server'
     },
+    ipfs: {
+      gateway: 'test-ipfs-gateway',
+      server: 'test-ipfs-server'
+    },
     signal: {
       api: ''
     }

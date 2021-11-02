@@ -31,6 +31,10 @@ export interface IConfig {
     app: {
       server: string,
       prefix: string
+    },
+    ipfs: {
+      gateway: string,
+      server: string
     }
     signal: {
       api: string
