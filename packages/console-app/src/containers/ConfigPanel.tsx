@@ -15,7 +15,6 @@ import { useConfig } from '../hooks';
 export const ConfigPanel = () => {
   const config = useConfig();
 
-  // TODO(burdon): Re-implement JsonTreeView.
   return (
     <Panel scroll>
       <JsonTreeView data={config} />

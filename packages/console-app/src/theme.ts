@@ -15,7 +15,7 @@ export const createCustomTheme = (config: IConfig) => createTheme({
   // https://mui.com/customization/palette
   palette: {
     mode: config.app.theme,
-    primary: colors.cyan,
+    primary: colors.teal,
     secondary: colors.orange
   },
 

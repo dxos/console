@@ -3,7 +3,7 @@
 //
 
 import debug from 'debug';
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { RegistryProvider } from '@dxos/react-registry-client';
 import { MemoryRegistryClient } from '@dxos/registry-client';

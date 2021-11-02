@@ -3,8 +3,7 @@
 //
 
 import { keyframes } from '@emotion/react';
-import { colors, Box, CssBaseline } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { colors, Box, CssBaseline, createTheme, ThemeProvider } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import superagent from 'superagent';
 
@@ -18,18 +17,9 @@ const WALLET_AUTH_PATH = '/wallet/auth';
 
 const theme = createTheme({
   palette: {
-    action: {
-      selected: colors.grey[200],
-      hover: '#121212'
-    },
-    divider: colors.grey[400],
-    background: {
-      default: '#000'
-    },
-    text: {
-      primary: colors.grey[50],
-      disabled: colors.grey[100]
-    }
+    mode: 'dark',
+    primary: colors.teal,
+    divider: colors.grey[600]
   },
   components: {
     MuiCssBaseline: {
@@ -43,24 +33,6 @@ const theme = createTheme({
     }
   }
 });
-
-const shake = keyframes`
-  10%, 90% {
-    transform: translate3d(-8px, 0, 0);
-  }
-  
-  20%, 80% {
-    transform: translate3d(8px, 0, 0);
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-8px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(8px, 0, 0);
-  }
-`;
 
 const drop = keyframes`
   0% {
@@ -89,7 +61,7 @@ enum State {
 }
 
 export const App = () => {
-  const [attempt, setAttempt] = useState(0);
+  const [attempt, setAttempt] = useState(1);
   const [state, setState] = useState(State.Default);
   const [phrase, setPhrase] = useState(phrases[0]);
   const { rpcClient: contentScript } = useContentScript();
@@ -189,14 +161,11 @@ export const App = () => {
             animation: state === State.Success ? `${drop} 0.5s ease-in` : undefined
           }}
         >
-          <Box
-            sx={{
-              animation: state === State.Error ? `${shake} 0.6s linear` : undefined
-            }}
-          >
+          <Box>
             <Passcode
-              editable={true}
+              shake
               length={6}
+              size='large'
               attempt={attempt}
               onSubmit={handleSubmit}
             />

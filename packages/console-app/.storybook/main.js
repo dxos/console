@@ -8,10 +8,11 @@ const toPath = (filePath) => path.join(process.cwd(), filePath);
 module.exports = {
   stories: ['../stories/**/*.stories.tsx'],
 
-  webpackFinal: async config => {
-
-    // TODO(burdon): Causes Chromatic to fail.
-    // https://mui.com/guides/migration-v4
+  // TODO(burdon): Storybook patch.
+  // https://mui.com/guides/migration-v4/#heading-storybook-emotion-with-v5
+  // https://github.com/mui-org/material-ui/issues/24282#issuecomment-796755133
+  /*
+  webpackFinal: async (config) => {
     return {
       ...config,
       resolve: {

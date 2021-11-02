@@ -1750,10 +1750,10 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
-"@dxos/crypto@2.16.4":
-  version "2.16.4"
-  resolved "https://registry.npmjs.org/@dxos/crypto/-/crypto-2.16.4.tgz#6797f426bed18936cdd12cb9d02308872cd606af"
-  integrity sha512-n1Hg2cM7GrFFc+QdG479dnTD+yYYqt4Qhx1V1eKsj7zYZfvuoJsTaHs2SB+PfGWGM9zsbnsoSNIDZrzhjpGKHw==
+"@dxos/crypto@2.16.6":
+  version "2.16.6"
+  resolved "https://registry.yarnpkg.com/@dxos/crypto/-/crypto-2.16.6.tgz#7774429ea668087074eff3d8cbcf067b2081efb4"
+  integrity sha512-13fJi9k7z70AI5+HfSr/SbcyX0xR1u5IHthoX8Lh6UqywqTIM9MYh3XzEoDoh3XIcKPzvB4BLftDAWrrJGEhHw==
   dependencies:
     bip39 "^3.0.2"
     crypto-js "^3.1.9-1"
@@ -1784,10 +1784,10 @@
     "@types/node" "^14.0.9"
     debug "^4.1.1"
 
-"@dxos/debug@2.16.4":
-  version "2.16.4"
-  resolved "https://registry.npmjs.org/@dxos/debug/-/debug-2.16.4.tgz#af0390466988281c99ef377abfc4a1585b1b4771"
-  integrity sha512-FzAfnzrG2hvg+n9+8FxLyu7/5SHdP2mh3nwYb2lbwiahi2jlZ7K/NaUAUogUFcKWRJcB1mysGfAr4BVAPL+gdw==
+"@dxos/debug@2.16.6":
+  version "2.16.6"
+  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.16.6.tgz#e5948c811a5ac69dde47a2a90a0414349e683c99"
+  integrity sha512-YBOSizEHGLmJSi7+peEAWOpaKN2no+9nXt0oDSpNQz+8cPmwKdaGy3um7jEaFD/kPoZ/81gKCneWcW4jh0Jhqg==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -1928,6 +1928,23 @@
     readable-stream "^3.6.0"
     tty-browserify "~0.0.1"
     util "~0.12.4"
+
+"@dxos/esbuild-server@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@dxos/esbuild-server/-/esbuild-server-1.2.0.tgz#a7664fd33a8dae903a87bca13473d8f42b1dbcd0"
+  integrity sha512-5bFDfPJ4ZDxo7B/bq22Duei6MmkLUW3q72V4lz7DWXmKqKdkcQvfjgO8IzEEf60U49ZaSZSvZUcNWqskAOSmdg==
+  dependencies:
+    chalk "^4.1.2"
+    esbuild "^0.12.15"
+    glob "^7.2.0"
+    ncp "^2.0.0"
+    pkg-up "^3.1.0"
+    react "^17.0.2"
+    react-dom "^17.0.2"
+    react-is "^17.0.2"
+    react-router-dom "^5.3.0"
+    styled-components "^5.3.1"
+    yargs "^17.2.1"
 
 "@dxos/eslint-plugin@^1.0.14", "@dxos/eslint-plugin@~1.0.10":
   version "1.0.16"
@@ -2307,9 +2324,24 @@
     random-access-memory "^3.1.1"
     random-access-web "^2.0.3"
 
-"@dxos/react-components@^2.16.2":
+"@dxos/react-components@^2.16.6":
+  version "2.16.6"
+  resolved "https://registry.yarnpkg.com/@dxos/react-components/-/react-components-2.16.6.tgz#0af9ce4b01940b9ed3dedd6000b5233bc2a723be"
+  integrity sha512-XhTuJrTDUbqIrY0P8MJOsujwJasCzTEKHGslceVVXc9AfSUYBWXGw+k0IygxH2DLZu5btyAqaaVQ2zt/uY2mHQ==
+  dependencies:
+    "@dxos/crypto" "2.16.6"
+    "@dxos/debug" "2.16.6"
+    debug "^4.1.1"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.isplainobject "^4.0.6"
+    qrcode.react "~1.0.1"
+    react-copy-to-clipboard "~5.0.3"
+    react-json-view "~1.21.3"
+    url-join "^4.0.1"
+
+"@dxos/react-components@~2.16.2":
   version "2.16.2"
-  resolved "https://registry.npmjs.org/@dxos/react-components/-/react-components-2.16.2.tgz#1ed6b785c5a6d10600aa36d58daa6b875bec1b2d"
+  resolved "https://registry.yarnpkg.com/@dxos/react-components/-/react-components-2.16.2.tgz#1ed6b785c5a6d10600aa36d58daa6b875bec1b2d"
   integrity sha512-vBYGNOyE5Ql9v0Tf/lQjKrl30g26d35IIw/BXowzuoYQXhy1LpQmBrdPhsYye5Z1ZOPLLxxqhYd/4BFDz/H0Xg==
   dependencies:
     "@dxos/crypto" "2.16.2"
@@ -10825,23 +10857,6 @@ es6-symbol@^3.1.1, es6-symbol@~3.1.3:
     d "^1.0.1"
     ext "^1.1.2"
 
-esapp@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/esapp/-/esapp-0.1.6.tgz#2e9195e3717c03b274f36f91d0785fe7acb3b9b0"
-  integrity sha512-QuHP8Tj06UfgRrNa7VfJXEf3JauB2rE2NCfarPnnhjvi7yJ4xOhagywA55swWtuViiaqDiIYsr2SdMrnMEfalw==
-  dependencies:
-    chalk "^4.1.2"
-    esbuild "^0.12.15"
-    glob "^7.2.0"
-    ncp "^2.0.0"
-    pkg-up "^3.1.0"
-    react "^17.0.2"
-    react-dom "^17.0.2"
-    react-is "^17.0.2"
-    react-router-dom "^5.3.0"
-    styled-components "^5.3.1"
-    yargs "^17.2.1"
-
 esbuild@^0.11.23:
   version "0.11.23"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.23.tgz#c42534f632e165120671d64db67883634333b4b8"
@@ -19122,6 +19137,20 @@ q@^1.5.1:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
+qr.js@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
+  integrity sha1-ys6GOG9ZoNuAUPqQ2baw6IoeNk8=
+
+qrcode.react@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-1.0.1.tgz#2834bb50e5e275ffe5af6906eff15391fe9e38a5"
+  integrity sha512-8d3Tackk8IRLXTo67Y+c1rpaiXjoz/Dd2HpcMdW//62/x8J1Nbho14Kh8x974t9prsLHN6XqVgcnRiBGFptQmg==
+  dependencies:
+    loose-envify "^1.4.0"
+    prop-types "^15.6.0"
+    qr.js "0.0.0"
+
 qrcode@^1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.4.4.tgz#f0c43568a7e7510a55efc3b88d9602f71963ea83"
@@ -23122,8 +23151,10 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
+    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
+    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
