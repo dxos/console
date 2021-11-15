@@ -19,6 +19,8 @@ type NodeKind = 'record' | 'resource' | 'domain'
 
 type Node = NodeType & {kind: NodeKind}
 
+const DISPLAY_RECORDS = false; // TODO(rzadp): Gem does not handle big amount of nodes. Disabled for now, ideally would just be limited.
+
 const typeMap: Record<NodeKind, keyof typeof colors> = {
   record: 'blue',
   resource: 'orange',
@@ -95,7 +97,11 @@ export const RegistryGraph = ({ domains = [], records = [], resources = [] }: Re
       title: domain.name ?? domain.key.toString(),
       kind: 'domain'
     }));
-    const nodes = [...resourceNodes, ...recordNodes, ...domainNodes];
+    const nodes = [
+      ...resourceNodes,
+      ...domainNodes,
+      ...(DISPLAY_RECORDS ? recordNodes : [])
+    ];
 
     const domainResourceLinks: GraphType['links'] = resources
       .filter(resource => resource.id.domain !== undefined)
@@ -127,7 +133,11 @@ export const RegistryGraph = ({ domains = [], records = [], resources = [] }: Re
         })
       ));
 
-    const links = [...domainResourceLinks, ...resourceVersionsLinks, ...resourceTagsLinks];
+    const links = [
+      ...domainResourceLinks,
+      ...(DISPLAY_RECORDS ? resourceVersionsLinks : []),
+      ...(DISPLAY_RECORDS ? resourceTagsLinks : [])
+    ];
     setData({ nodes, links });
   }, [domains, records, resources]);
 
