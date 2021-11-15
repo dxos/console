@@ -1608,12 +1608,13 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/codec-protobuf@2.16.4":
-  version "2.16.4"
-  resolved "https://registry.npmjs.org/@dxos/codec-protobuf/-/codec-protobuf-2.16.4.tgz#677e5e0bd65b416e287c95e0b9e9a547dd5861ce"
-  integrity sha512-PaghpZgXAE602sZaSPtzSWDFp0jfDhij6NaI3/930q9oemUR12FySExcagePKuFp1NGm0ug5DiWMuTLBvRRl8Q==
+"@dxos/codec-protobuf@2.16.17":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/codec-protobuf/-/codec-protobuf-2.16.17.tgz#1a45ba9100b8cb1c5833ae5c37b3cebae1fc714c"
+  integrity sha512-89lp9d2v9CkRfOCe+D2O9hYYFCode2RrT42EhArZqmnja7T6I93kw10tKGo//ZS7ocy4neWNk5X3obdxKtflpg==
   dependencies:
     assert "^2.0.0"
+    debug "^4.1.1"
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
@@ -1632,13 +1633,13 @@
     lodash.set "^4.3.2"
     node-fetch "^2.6.0"
 
-"@dxos/config@~2.16.4":
-  version "2.16.4"
-  resolved "https://registry.npmjs.org/@dxos/config/-/config-2.16.4.tgz#dc40af0a17b165c33b97088f27953ea6af7c5448"
-  integrity sha512-pWLUwqbU08+zT/NumYagE5b65PAw3zjSVJUc2uNiDvBI4K2EwST89IJxGJlJlY63ogIGyKuUrrACPe7V4t0jKw==
+"@dxos/config@~2.16.7":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/config/-/config-2.16.17.tgz#9408a22a4cc85318ccd23e2b9f0b54f9d003813b"
+  integrity sha512-CoMtnCekd8ZZn/LftoqvW1B0Yqc3mZdZGJAUEl19//nsIbulTjJzdorV2JwG7y3ziDutzP7BAkCTOYQg8RFiUQ==
   dependencies:
-    "@dxos/codec-protobuf" "2.16.4"
-    "@dxos/debug" "2.16.4"
+    "@dxos/codec-protobuf" "2.16.17"
+    "@dxos/debug" "2.16.17"
     boolean "^3.0.1"
     debug "^4.1.1"
     js-yaml "^3.13.1"
@@ -1740,6 +1741,16 @@
     humanhash "^1.0.4"
     hypercore-crypto "^2.3.0"
 
+"@dxos/crypto@2.16.17":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/crypto/-/crypto-2.16.17.tgz#fd641a624aba6dff412eff800c7240b686638111"
+  integrity sha512-HJtK7vFNVphoQzyqf+tdY4PAP6s14wbeilShhnjeJ9YA0DnlpBD+hj/ATyDjSsLJHY1MIPY8ktqJZpbqAFrIeA==
+  dependencies:
+    bip39 "^3.0.2"
+    crypto-js "^3.1.9-1"
+    humanhash "^1.0.4"
+    hypercore-crypto "^2.3.0"
+
 "@dxos/crypto@2.16.2":
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/@dxos/crypto/-/crypto-2.16.2.tgz#da17ebf6ede1b21dd449c3d1e4730a81977caf09"
@@ -1772,6 +1783,14 @@
   version "2.15.9"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.15.9.tgz#089ddf83eae6f935eee35d5a157615a9fdd1d179"
   integrity sha512-b+bR1tTAAzFutjstAUt2+W8Izg3NWg+zCDmebNtb25GcprT8dxAP0OFs6eJ3ABe+1rRIdLaYBzP47UfoCl421A==
+  dependencies:
+    "@types/node" "^14.0.9"
+    debug "^4.1.1"
+
+"@dxos/debug@2.16.17":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-2.16.17.tgz#0c08932f65b75de740e5cea797cfeec4cf15eda1"
+  integrity sha512-YA92XkUX5lf0Tw0LEduQVdcT1w4z/3mRzOa4qWrc7c22JEdZaPfBL5Gyz6muKMbWqfbavB3o//OXlcGzJjAPTQ==
   dependencies:
     "@types/node" "^14.0.9"
     debug "^4.1.1"
@@ -2339,31 +2358,20 @@
     react-json-view "~1.21.3"
     url-join "^4.0.1"
 
-"@dxos/react-components@~2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@dxos/react-components/-/react-components-2.16.2.tgz#1ed6b785c5a6d10600aa36d58daa6b875bec1b2d"
-  integrity sha512-vBYGNOyE5Ql9v0Tf/lQjKrl30g26d35IIw/BXowzuoYQXhy1LpQmBrdPhsYye5Z1ZOPLLxxqhYd/4BFDz/H0Xg==
+"@dxos/react-components@~2.16.7":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/react-components/-/react-components-2.16.17.tgz#b6a455112df5cc25ef4402659d0953f01c1400ab"
+  integrity sha512-UHNTe4Go8uthIQCcD3v96Y6dGmuUGREnW5enhLfTecwg9qVSD1+V25R0Lyi6RaPEUutpeoMcJsm4Pze/rpODdA==
   dependencies:
-    "@dxos/crypto" "2.16.2"
-    "@dxos/debug" "2.16.2"
+    "@dxos/crypto" "2.16.17"
+    "@dxos/debug" "2.16.17"
     debug "^4.1.1"
     lodash.defaultsdeep "^4.6.1"
     lodash.isplainobject "^4.0.6"
-    react-copy-to-clipboard "~5.0.3"
-    url-join "^4.0.1"
-
-"@dxos/react-components@~2.16.4":
-  version "2.16.4"
-  resolved "https://registry.npmjs.org/@dxos/react-components/-/react-components-2.16.4.tgz#be764939a35ffcf114b1b9c0901c25b46d10d747"
-  integrity sha512-xsIRgHdPvemuWc3OdihhFFbOYKBffk0ubKEUByGzvKA0ZobfIAsINU2+0VcoZtrEwzKNVwUmPb7OA/v5C99w5Q==
-  dependencies:
-    "@dxos/crypto" "2.16.4"
-    "@dxos/debug" "2.16.4"
-    debug "^4.1.1"
-    lodash.defaultsdeep "^4.6.1"
-    lodash.isplainobject "^4.0.6"
+    qrcode.react "~1.0.1"
     react-copy-to-clipboard "~5.0.3"
     react-json-view "~1.21.3"
+    string-hash "~1.1.3"
     url-join "^4.0.1"
 
 "@dxos/react-json-tree@~0.12.0":
@@ -2374,14 +2382,14 @@
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
-"@dxos/react-registry-client@~2.16.4":
-  version "2.16.4"
-  resolved "https://registry.npmjs.org/@dxos/react-registry-client/-/react-registry-client-2.16.4.tgz#cd64ad248fa1f4dfbb9cbbbc40fef1e8bdb47284"
-  integrity sha512-RYFdAjkQsMZq+VfHsMypIPjXQbWrAtUEKOeEthETM8foY6effAL2J8W73BpiwQ/YEuotZyMXmCOS5b6/s78wrg==
+"@dxos/react-registry-client@~2.16.7":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/react-registry-client/-/react-registry-client-2.16.17.tgz#900836e97c74558f6b34e91be81a3735987b394d"
+  integrity sha512-ha+yZ3BlF7fNQSqLu1j726lLEYHH18+9YLBEEnV53ozyb1x1I7CmxBzy9J/zwYTKzRj7xDSYnNwOTWLLOY3b9g==
   dependencies:
-    "@dxos/debug" "2.16.4"
-    "@dxos/registry-client" "2.16.4"
-    "@dxos/util" "2.16.4"
+    "@dxos/debug" "2.16.17"
+    "@dxos/registry-client" "2.16.17"
+    "@dxos/util" "2.16.17"
     assert "^2.0.0"
     debug "^4.1.1"
 
@@ -2406,14 +2414,14 @@
     multihashes "^4.0.2"
     protobufjs "^6.9.0"
 
-"@dxos/registry-client@2.16.4", "@dxos/registry-client@~2.16.4":
-  version "2.16.4"
-  resolved "https://registry.npmjs.org/@dxos/registry-client/-/registry-client-2.16.4.tgz#acfd9139dc29bcabebfeec23d45c0d31c465681f"
-  integrity sha512-SgrgNqsrV6M8SKr0C4NO90Byy3l6wQPypF7J3MfMIZNb7y4eCchH/kCvl12zamJMATqSlcs+beuYZ4u6A5GgEA==
+"@dxos/registry-client@2.16.17", "@dxos/registry-client@~2.16.7":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/registry-client/-/registry-client-2.16.17.tgz#8313ed28069679c98686f17ce8ea46f304ec684d"
+  integrity sha512-IrN5HeW6rAXRWBZTEaaJN/KlpfxeSl6W2+HvF1b8NCtR1wocccy0YXc5HhTA2GekgINicqqRthd7l1fD/pJRcQ==
   dependencies:
-    "@dxos/codec-protobuf" "2.16.4"
-    "@dxos/debug" "2.16.4"
-    "@dxos/util" "2.16.4"
+    "@dxos/codec-protobuf" "2.16.17"
+    "@dxos/debug" "2.16.17"
+    "@dxos/util" "2.16.17"
     "@polkadot/api" "4.17.1"
     "@polkadot/keyring" "6.11.1"
     "@polkadot/metadata" "4.17.1"
@@ -2492,13 +2500,13 @@
     "@dxos/debug" "2.15.9"
     "@types/node" "^14.0.9"
 
-"@dxos/util@2.16.4":
-  version "2.16.4"
-  resolved "https://registry.npmjs.org/@dxos/util/-/util-2.16.4.tgz#a36460de8f638bbfaed71bbdff8d14bb800e3925"
-  integrity sha512-oIGWOZQPf7cUx9wtAwxVKxpsMqPVciu1LLld1lLgDog+i9OwZpcoW3259BnB4qe0BRU0qT/dGXkz7JryOneZYQ==
+"@dxos/util@2.16.17":
+  version "2.16.17"
+  resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.16.17.tgz#36e06127e6c52a33d13657953d3af59a04cee388"
+  integrity sha512-q1Rpmpg0kcWWJP+WfyvOsWuwN1PbRy/bXZI+acx9t/JC8w2T2vPFHclVW007p//fWBHYmtqJNpPe2Yf2pz2s7Q==
   dependencies:
-    "@dxos/crypto" "2.16.4"
-    "@dxos/debug" "2.16.4"
+    "@dxos/crypto" "2.16.17"
+    "@dxos/debug" "2.16.17"
     "@types/node" "^14.0.9"
 
 "@dxos/util@^2.15.6":
@@ -21407,7 +21415,7 @@ string-argv@^0.3.0, string-argv@^0.3.1:
   resolved "https://registry.yarnpkg.com/string-argv/-/string-argv-0.3.1.tgz#95e2fbec0427ae19184935f816d74aaa4c5c19da"
   integrity sha512-a1uQGz7IyVy9YwhqjZIZu1c8JO8dNIe20xBmSS6qu9kv++k3JGzCVmprbNN5Kn+BgzD5E7YYwg1CcjuJMRNsvg==
 
-string-hash@^1.1.3:
+string-hash@^1.1.3, string-hash@~1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/string-hash/-/string-hash-1.1.3.tgz#e8aafc0ac1855b4666929ed7dd1275df5d6c811b"
   integrity sha1-6Kr8CsGFW0Zmkp7X3RJ1311sgRs=
@@ -23151,10 +23159,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
