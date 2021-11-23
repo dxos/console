@@ -16,9 +16,9 @@ const mergeByProperty = (target, source, prop) => {
   });
 };
 
-export const getServiceInfo = async () => {
+export const getServiceInfo = async ({ usage = false }) => {
   const command = 'dx';
-  const args = ['service', '--json'];
+  const args = ['service', '--json', '--usage', usage];
 
   const child = spawnSync(command, args, { encoding: 'utf8' });
   const runningServices = JSON.parse(child.stdout);
