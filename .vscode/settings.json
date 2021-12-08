@@ -6,6 +6,7 @@
     "artifactory.json": "jsonc",
     "experiments.json": "jsonc",
     "build-cache.json": "jsonc",
+    "common-versions.json": "jsonc",
     "command-versions.json": "jsonc",
   },
   "search.followSymlinks": false,
