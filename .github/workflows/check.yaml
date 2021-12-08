@@ -18,7 +18,7 @@ jobs:
           clean: false
       - name: Build, lint and test
         run: |
-          \. "$NVM_DIR/nvm.sh" && nvm use ${{ matrix.node-version }}
+          \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
           npm install -g @microsoft/rush pnpm
           
