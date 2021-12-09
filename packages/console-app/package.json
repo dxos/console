@@ -23,7 +23,7 @@
     "debug": "webpack serve --mode development --host 0.0.0.0 --config webpack-debug.config.js",
     "lint": "eslint --fix --format codeframe './src/**/*.{ts,tsx}'",
     "start": "esbuild-server dev",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests 2>&1"
   },
   "browserslist": [
     "> 5%"
