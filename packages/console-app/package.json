@@ -105,7 +105,8 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.8.0",
     "webpack-version-file-plugin": "^0.4.0",
-    "yaml": "^1.10.2"
+    "yaml": "^1.10.2",
+    "@types/debug": "~4.1.7"
   },
   "publishConfig": {
     "access": "public"
