@@ -60,6 +60,7 @@ importers:
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.5.2
       copy-webpack-plugin: 6.4.1_webpack@4.44.2
       eslint: 7.32.0
+      eslint-plugin-react: 7.27.1_eslint@7.32.0
       faker: 4.1.0
       html-webpack-plugin: 4.5.2_webpack@4.44.2
       jest: 27.4.3
@@ -113,6 +114,7 @@ importers:
       copy-webpack-plugin: ^6.4.1
       debug: ^4.1.1
       eslint: ^7.10.0
+      eslint-plugin-react: ^7.27.0
       faker: ^4.1.0
       graphql-hooks: ^5.4.1
       html-webpack-plugin: ^4.3.0
@@ -167,6 +169,7 @@ importers:
       '@types/react-dom': 17.0.11
       '@types/superagent': 4.1.13
       eslint: 7.32.0
+      eslint-plugin-react: 7.27.1_eslint@7.32.0
       jest: 27.4.3
       rollup-plugin-node-globals: 1.4.0
       ts-jest: 27.1.1_jest@27.4.3+typescript@4.5.2
@@ -193,6 +196,7 @@ importers:
       '@types/superagent': ^4.1.10
       debug: ^4.1.1
       eslint: ^7.10.0
+      eslint-plugin-react: ^7.27.0
       jest: ^27.1.0
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -4041,6 +4045,16 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-KaYU+S+ndVqyUnignHftkwc58o3uVU1jzczILJ1tN2YaIZpFIKBiP/x/j97E5MVPsaCloPbqWLB/8qCTVvT2qg==
+  /array.prototype.flatmap/1.2.5:
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.3
+      es-abstract: 1.19.1
+    dev: true
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha512-08u6rVyi1Lj7oqWbS9nUxliETrtIROT4XGTA4D/LWGten6E3ocm7cy9SIrmNHOL5XVbVuckUp3X6Xyg8/zpvHA==
   /as-number/1.0.0:
     dev: false
     resolution:
@@ -6680,6 +6694,30 @@ packages:
       eslint: ^7.0.0
     resolution:
       integrity: sha512-SftLb1pUG01QYq2A/hGAWfDRXqYD82zE7j7TopDOyNdU+7SvvoXREls/+PRTY17vUXzXnZA/zfnyKgRH6x4JJw==
+  /eslint-plugin-react/7.27.1_eslint@7.32.0:
+    dependencies:
+      array-includes: 3.1.4
+      array.prototype.flatmap: 1.2.5
+      doctrine: 2.1.0
+      eslint: 7.32.0
+      estraverse: 5.3.0
+      jsx-ast-utils: 3.2.1
+      minimatch: 3.0.4
+      object.entries: 1.1.5
+      object.fromentries: 2.0.5
+      object.hasown: 1.1.0
+      object.values: 1.1.5
+      prop-types: 15.7.2
+      resolve: 2.0.0-next.3
+      semver: 6.3.0
+      string.prototype.matchall: 4.0.6
+    dev: true
+    engines:
+      node: '>=4'
+    peerDependencies:
+      eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
+    resolution:
+      integrity: sha512-meyunDjMMYeWr/4EBLTV1op3iSG3mjT/pz5gti38UzfM4OPpNc2m0t2xvKCOMU5D6FSdd34BIMFOvQbW+i8GAA==
   /eslint-plugin-standard/5.0.0:
     deprecated: 'standard 16.0.0 and eslint-config-standard 16.0.0 no longer require the eslint-plugin-standard package. You can remove it from your dependencies with ''npm rm eslint-plugin-standard''. More info here: https://github.com/standard/standard/issues/1316'
     dev: true
@@ -9547,6 +9585,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-YpzpreB6kUunQBbrlArlsMpXYyndt9JATbt95tajx0t4MTJJcCJdd4hdNpHmOIDiUJrF/oX5wtVFrS3uofWfGw==
+  /jsx-ast-utils/3.2.1:
+    dependencies:
+      array-includes: 3.1.4
+      object.assign: 4.1.2
+    dev: true
+    engines:
+      node: '>=4.0'
+    resolution:
+      integrity: sha512-uP5vu8xfy2F9A6LGC22KO7e2/vGTS1MhP+18f++ZNlf0Ohaxbc9nIEwHAsejlJKyzfZzU5UIhe5ItYkitcZnZA==
   /kapsule/1.13.5:
     dependencies:
       debounce: 1.2.1
@@ -10872,6 +10919,26 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-ixT2L5THXsApyiUPYKmW+2EHpXXe5Ii3M+f4e+aJFAHao5amFRW6J0OO6c/LU8Be47utCx2GL89hxGB6XSmKuQ==
+  /object.entries/1.1.5:
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.3
+      es-abstract: 1.19.1
+    dev: true
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha512-TyxmjUoZggd4OrrU1W66FMDG6CuqJxsFvymeyXI51+vQLN67zYfZseptRge703kKQdo4uccgAKebXFcRCzk4+g==
+  /object.fromentries/2.0.5:
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.3
+      es-abstract: 1.19.1
+    dev: true
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha512-CAyG5mWQRRiBU57Re4FKoTBjXfDoNwdFVH2Y1tS9PqCsfUTymAohOkEMSG3aRNKmv4lV3O7p1et7c187q6bynw==
   /object.getownpropertydescriptors/2.1.3:
     dependencies:
       call-bind: 1.0.2
@@ -10882,6 +10949,13 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-VdDoCwvJI4QdC6ndjpqFmoL3/+HxffFBbcJzKi5hwLLqqx3mdbedRpfZDdK0SrOSauj8X4GzBvnDZl4vTN7dOw==
+  /object.hasown/1.1.0:
+    dependencies:
+      define-properties: 1.1.3
+      es-abstract: 1.19.1
+    dev: true
+    resolution:
+      integrity: sha512-MhjYRfj3GBlhSkDHo6QmvgjRLXQ2zndabdf3nX0yTyZK9rPfxb6uRpAac8HXNLy1GpqWtZ81Qh4v3uOls2sRAg==
   /object.pick/1.3.0:
     dependencies:
       isobject: 3.0.1
@@ -12207,6 +12281,13 @@ packages:
       path-parse: 1.0.7
     resolution:
       integrity: sha512-wENBPt4ySzg4ybFQW2TT1zMQucPK95HSh/nq2CFTZVOGut2+pQvSsgtda4d26YrYcr067wjbmzOG8byDPBX63A==
+  /resolve/2.0.0-next.3:
+    dependencies:
+      is-core-module: 2.8.0
+      path-parse: 1.0.7
+    dev: true
+    resolution:
+      integrity: sha512-W8LucSynKUIDu9ylraa7ueVZ7hc0uAgJBxVsQSKOXOyle8a93qXhcz+XAXZ8bIq2d6i4Ehddn6Evt+0/UwKk6Q==
   /ret/0.1.15:
     dev: true
     engines:
@@ -13007,6 +13088,19 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  /string.prototype.matchall/4.0.6:
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.3
+      es-abstract: 1.19.1
+      get-intrinsic: 1.1.1
+      has-symbols: 1.0.2
+      internal-slot: 1.0.3
+      regexp.prototype.flags: 1.3.1
+      side-channel: 1.0.4
+    dev: true
+    resolution:
+      integrity: sha512-6WgDX8HmQqvEd7J+G6VtAahhsQIssiZ8zl7zKh1VDMFyL3hRTJP4FTNA3RbIp2TOQ9AYNDcc7e3fH0Qbup+DBg==
   /string.prototype.trimend/1.0.4:
     dependencies:
       call-bind: 1.0.2

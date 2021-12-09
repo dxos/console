@@ -21,7 +21,7 @@
     "ci": "npm run build && npm run lint && npm run test",
     "clean": "rm -rf ./dist",
     "debug": "webpack serve --mode development --host 0.0.0.0 --config webpack-debug.config.js",
-    "lint": "eslint --fix --format codeframe './src/**/*.{ts,tsx}'",
+    "lint": "eslint './src/**/*.{ts,tsx}'",
     "start": "esbuild-server dev",
     "test": "jest --rootDir ./src --verbose --passWithNoTests 2>&1"
   },
@@ -93,6 +93,7 @@
     "@typescript-eslint/parser": "^4.19.0",
     "copy-webpack-plugin": "^6.4.1",
     "eslint": "^7.10.0",
+    "eslint-plugin-react": "^7.27.0",
     "faker": "^4.1.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^27.1.0",
