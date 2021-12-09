@@ -2,9 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import React from 'react';
+
 import { Box } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import React from 'react';
 
 import { DataGrid } from './DataGrid';
 import { IRecord, recordsColumns } from './RecordsTable';

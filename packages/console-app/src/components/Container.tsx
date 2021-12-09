@@ -2,6 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
+import React, { useState } from 'react';
+
 import {
   Menu as MenuIcon,
   MoreVert as MoreVertIcon,
@@ -20,7 +22,6 @@ import {
   Typography,
   styled
 } from '@mui/material';
-import React, { useState } from 'react';
 
 import { useConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';

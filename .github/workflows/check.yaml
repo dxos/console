@@ -1,0 +1,35 @@
+on:
+  push:
+
+name: Build, test, lint
+jobs:
+  check:
+    runs-on: [self-hosted, dind-actions-runner]
+    timeout-minutes: 25
+    strategy:
+      matrix:
+        node-version: [16.1]
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          clean: false
+      - name: Build, lint and test
+        run: |
+          \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+          npm install -g @microsoft/rush pnpm
+          
+          # Install dependencies
+          node common/scripts/install-run-rush.js install
+          
+          # Build
+          node common/scripts/install-run-rush.js build --verbose
+
+          # Lint
+          node common/scripts/install-run-rush.js lint --verbose
+
+          # Test
+          node common/scripts/install-run-rush.js test --verbose

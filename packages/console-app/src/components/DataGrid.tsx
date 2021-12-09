@@ -2,10 +2,11 @@
 // Copyright 2021 DXOS.org
 //
 
-import { styled } from '@mui/material';
-import { DataGrid as MuiDataGrid } from '@mui/x-data-grid';
 import React from 'react';
 import { generatePath, useHistory } from 'react-router';
+
+import { styled } from '@mui/material';
+import { DataGrid as MuiDataGrid } from '@mui/x-data-grid';
 
 import { CID } from '@dxos/registry-client';
 

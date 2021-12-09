@@ -2,9 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import React from 'react';
+
 import { TabContext, TabList } from '@mui/lab';
 import { Box, Tab } from '@mui/material';
-import React from 'react';
 
 import { IPFSStatus, IPFSTable, Panel } from '../components';
 
@@ -20,14 +21,14 @@ export const IPFSPanel = () => {
   return (
     <TabContext value={tab}>
       <Panel
-        toolbar={
+        toolbar={(
           <Box>
             <TabList onChange={handleTabChange}>
               <Tab label='Status' value='1' />
               <Tab label='Records' value='2' />
             </TabList>
           </Box>
-        }>
+        )}>
           {tab === '1' ? <IPFSStatus /> : <> </>}
           {tab === '2' ? <IPFSTable /> : <> </>}
       </Panel>

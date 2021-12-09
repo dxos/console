@@ -1,6 +1,6 @@
 {
   "name": "@dxos/console-app",
-  "version": "1.2.9-alpha.74",
+  "version": "1.2.9",
   "description": "Console App.",
   "homepage": "https://github.com/dxos/console#readme",
   "bugs": {
@@ -18,14 +18,12 @@
   "scripts": {
     "book": "esbuild-server book 'stories/**/*.{stories,story}.tsx'",
     "build": "tsc --noEmit && esbuild-server build",
-    "build-storybook": "build-storybook --quiet",
-    "chromatic": "npx chromatic --exit-zero-on-changes --auto-accept-changes",
     "ci": "npm run build && npm run lint && npm run test",
     "clean": "rm -rf ./dist",
     "debug": "webpack serve --mode development --host 0.0.0.0 --config webpack-debug.config.js",
-    "lint": "eslint --fix --format codeframe './src/**/*.{ts,tsx}'",
+    "lint": "eslint './src/**/*.{ts,tsx}'",
     "start": "esbuild-server dev",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests 2>&1"
   },
   "browserslist": [
     "> 5%"
@@ -76,12 +74,9 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@dxos/esbuild-plugins": "^2.15.2",
-    "@dxos/esbuild-server": "^1.2.0",
-    "@dxos/eslint-plugin": "^1.0.14",
-    "@storybook/addon-actions": "^6.3.9",
-    "@storybook/addon-knobs": "^6.3.1",
-    "@storybook/react": "^6.3.9",
+    "@dxos/esbuild-plugins": "2.19.2",
+    "@dxos/esbuild-server": "1.4.1",
+    "@dxos/eslint-plugin": "1.0.20",
     "@types/faker": "^4.1.12",
     "@types/jest": "^27.0.1",
     "@types/proper-url-join": "^2.1.1",
@@ -96,30 +91,23 @@
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-inline-import": "^3.0.0",
-    "chromatic": "^5.8.0",
     "copy-webpack-plugin": "^6.4.1",
     "eslint": "^7.10.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react": "^7.27.0",
     "faker": "^4.1.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^27.1.0",
     "js-yaml": "^4.1.0",
     "ts-jest": "^27.0.5",
     "ts-loader": "~8.1.0",
-    "typescript": "~4.2.4",
+    "typescript": "^4.5.2",
     "webpack": "4.44.2",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.8.0",
     "webpack-version-file-plugin": "^0.4.0",
-    "yaml": "^1.10.2"
+    "yaml": "^1.10.2",
+    "@types/debug": "~4.1.7"
   },
   "publishConfig": {
     "access": "public"

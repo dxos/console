@@ -1,6 +1,6 @@
 {
-  "name": "@dxos/keyhole",
-  "version": "1.2.9-alpha.74",
+  "name": "@dxos/keyhole-app",
+  "version": "1.2.9",
   "description": "KUBE Authenticator.",
   "homepage": "https://github.com/dxos/console#readme",
   "bugs": {
@@ -16,12 +16,12 @@
     "src"
   ],
   "scripts": {
-    "build": "webpack",
+    "build": "tsc --noEmit && esbuild-server build",
     "ci": "npm run build && npm run lint && npm run test",
     "clean": "rm -rf ./dist",
-    "lint": "eslint --format codeframe './src/**/*.ts'",
-    "start": "webpack serve --mode development --host 0.0.0.0",
-    "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
+    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "start": "esbuild-server dev",
+    "book": "esbuild-server book",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "browserslist": [
@@ -39,8 +39,8 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@dxos/gem-experimental": "^1.0.0-beta.35",
-    "@dxos/react-components": "^2.16.6",
+    "@dxos/gem-experimental": "1.0.0-beta.36",
+    "@dxos/react-components": "~2.17.4",
     "@dxos/wallet-core": "2.10.12",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.4.1",
@@ -54,23 +54,18 @@
     "superagent": "^6.1.0"
   },
   "devDependencies": {
-    "@dxos/eslint-plugin": "^1.0.14",
-    "@storybook/addon-knobs": "^6.3.1",
-    "@storybook/react": "^6.3.9",
+    "@dxos/eslint-plugin": "1.0.20",
+    "@dxos/esbuild-plugins": "2.19.2",
+    "@dxos/esbuild-server": "1.4.1",
     "@types/superagent": "^4.1.10",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-inline-import": "^3.0.0",
     "eslint": "^7.10.0",
-    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react": "^7.27.0",
     "jest": "^27.1.0",
     "rollup-plugin-node-globals": "^1.4.0",
-    "ts-jest": "^27.0.5",
-    "ts-loader": "~8.1.0",
-    "typescript": "~4.2.4",
-    "webpack": "4.44.2",
-    "webpack-cli": "^4.7.0",
-    "webpack-dev-server": "^3.11.2"
+    "typescript": "^4.5.2",
+    "@types/debug": "~4.1.7",
+    "@types/react": "^17.0.22",
+    "@types/react-dom": "^17.0.9"
   },
   "publishConfig": {
     "access": "public"

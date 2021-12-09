@@ -2,8 +2,9 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box, Toolbar } from '@mui/material';
 import React from 'react';
+
+import { Box, Toolbar } from '@mui/material';
 
 /**
  * Status.
@@ -16,7 +17,7 @@ export const Statusbar = () => {
       <Box>
 
       </Box>
-      <Box sx={{ flex: 1 }}/>
+      <Box sx={{ flex: 1 }} />
       <Box>
 
       </Box>

@@ -2,9 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import React from 'react';
+
 import { AppBar, Box, CssBaseline, Paper, Toolbar, ThemeProvider, styled } from '@mui/material';
 import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
-import React from 'react';
 
 import { JsonTreeView } from '@dxos/react-components';
 

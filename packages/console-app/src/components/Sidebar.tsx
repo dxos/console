@@ -2,11 +2,12 @@
 // Copyright 2021 DXOS.org
 //
 
+import React from 'react';
+
 import {
   Apps as DefaultIcon
 } from '@mui/icons-material';
 import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import React from 'react';
 
 import { IPanel } from '../types';
 

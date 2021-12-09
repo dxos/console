@@ -2,9 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
+import React from 'react';
+
 import { OpenInNew as RefreshIcon } from '@mui/icons-material';
 import { Box, IconButton } from '@mui/material';
-import React from 'react';
 
 import { Panel, Toolbar } from '../components';
 

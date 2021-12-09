@@ -2,6 +2,9 @@
 // Copyright 2021 DXOS.org
 //
 
+import urlJoin from 'proper-url-join';
+import React, { useEffect, useState } from 'react';
+
 import { Sync as RefreshIcon } from '@mui/icons-material';
 import {
   Box,
@@ -13,8 +16,6 @@ import {
   SelectChangeEvent,
   Switch
 } from '@mui/material';
-import urlJoin from 'proper-url-join';
-import React, { useEffect, useState } from 'react';
 
 import { LogTable, Panel, Toolbar } from '../components';
 import { useConfig, useRequest, useServices } from '../hooks';
@@ -88,13 +89,14 @@ export const LogsPanel = () => {
             </Select>
           </FormControl>
           <Box sx={{ flex: 1 }} />
-          <FormControlLabel control={
+          <FormControlLabel
+control={(
             <Switch
               size='small'
               checked={polling}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPolling(event.target.checked)}
             />
-          } label='Auto' />
+          )} label='Auto' />
           <IconButton
             size='small'
             aria-label='refresh'
