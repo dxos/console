@@ -18,7 +18,6 @@
   "scripts": {
     "book": "esbuild-server book 'stories/**/*.{stories,story}.tsx'",
     "build": "tsc --noEmit && esbuild-server build",
-    "build-storybook": "build-storybook --quiet",
     "chromatic": "npx chromatic --exit-zero-on-changes --auto-accept-changes",
     "ci": "npm run build && npm run lint && npm run test",
     "clean": "rm -rf ./dist",
@@ -76,12 +75,9 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@dxos/esbuild-plugins": "^2.15.2",
-    "@dxos/esbuild-server": "^1.2.0",
+    "@dxos/esbuild-plugins": "2.19.2",
+    "@dxos/esbuild-server": "1.4.1",
     "@dxos/eslint-plugin": "1.0.20",
-    "@storybook/addon-actions": "^6.3.9",
-    "@storybook/addon-knobs": "^6.3.1",
-    "@storybook/react": "^6.3.9",
     "@types/faker": "^4.1.12",
     "@types/jest": "^27.0.1",
     "@types/proper-url-join": "^2.1.1",
