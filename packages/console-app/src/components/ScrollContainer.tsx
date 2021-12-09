@@ -2,8 +2,9 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
+
+import { Box } from '@mui/material';
 
 const pad = (num: number, places: number) => String(num).padStart(places, '0');
 

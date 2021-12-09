@@ -2,8 +2,9 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box, Toolbar as MuiToolbar } from '@mui/material';
 import React from 'react';
+
+import { Box, Toolbar as MuiToolbar } from '@mui/material';
 
 interface PanelProps {
   children?: JSX.Element | JSX.Element[]

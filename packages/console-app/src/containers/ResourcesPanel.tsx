@@ -2,6 +2,11 @@
 // Copyright 2021 DXOS.org
 //
 
+import urlJoin from 'proper-url-join';
+import React, { useEffect, useMemo, useState } from 'react';
+import { generatePath, useHistory, useParams } from 'react-router';
+import semver from 'semver';
+
 import {
   Sync as RefreshIcon,
   BubbleChart as GraphIcon,
@@ -9,10 +14,6 @@ import {
 } from '@mui/icons-material';
 import { Box, Collapse, IconButton, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import urlJoin from 'proper-url-join';
-import React, { useEffect, useMemo, useState } from 'react';
-import { generatePath, useHistory, useParams } from 'react-router';
-import semver from 'semver';
 
 import { Searchbar } from '@dxos/react-components';
 import { useDomains, useRecords, useRecordTypes, useRegistry, useResources } from '@dxos/react-registry-client';

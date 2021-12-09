@@ -19,7 +19,7 @@
     "build": "webpack",
     "ci": "npm run build && npm run lint && npm run test",
     "clean": "rm -rf ./dist",
-    "lint": "eslint './src/**/*.ts'",
+    "lint": "eslint './src/**/*.{ts,tsx}'",
     "start": "webpack serve --mode development --host 0.0.0.0",
     "book": "esbuild-server book",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"

@@ -2,8 +2,9 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Divider, FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import React from 'react';
+
+import { Divider, FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 import { CID, RegistryTypeRecord } from '@dxos/registry-client';
 

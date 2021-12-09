@@ -2,8 +2,9 @@
 // Copyright 2021 DXOS.org
 //
 
-import { SvgIcon } from '@mui/material';
 import React from 'react';
+
+import { SvgIcon } from '@mui/material';
 
 export const DXOS = (props: any) => (
   <SvgIcon {...props} viewBox='0 0 3200 1067'>

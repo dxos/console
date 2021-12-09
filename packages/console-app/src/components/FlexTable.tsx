@@ -2,6 +2,8 @@
 // Copyright 2021 DXOS.org
 //
 
+import React, { useEffect, useState } from 'react';
+
 import {
   Box,
   Table,
@@ -15,7 +17,6 @@ import {
   TableSortLabel,
   styled
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
 
 interface FlexTableColumn {
   id: string

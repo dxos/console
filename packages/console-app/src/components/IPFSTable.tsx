@@ -2,11 +2,12 @@
 // Copyright 2021 DXOS.org
 //
 
+import urlJoin from 'proper-url-join';
+import React, { useEffect, useState } from 'react';
+
 import { Launch } from '@mui/icons-material';
 import { Box, IconButton, Link } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import urlJoin from 'proper-url-join';
-import React, { useEffect, useState } from 'react';
 
 import { useRecordTypes, useRegistry } from '@dxos/react-registry-client';
 import { CID } from '@dxos/registry-client';

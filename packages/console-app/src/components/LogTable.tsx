@@ -2,6 +2,11 @@
 // Copyright 2021 DXOS.org
 //
 
+import clsx from 'clsx';
+import React, { useEffect, useRef, useState } from 'react';
+import { AutoSizer, Column, Table } from 'react-virtualized';
+import hash from 'string-hash';
+
 import {
   colors,
   Box,
@@ -15,10 +20,6 @@ import {
   TableCell
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import clsx from 'clsx';
-import React, { useEffect, useRef, useState } from 'react';
-import { AutoSizer, Column, Table } from 'react-virtualized';
-import hash from 'string-hash';
 
 import { IFilter, ILogMessage } from '../logging';
 

@@ -2,8 +2,6 @@
 // Copyright 2021 DXOS.org
 //
 
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
 import React from 'react';
 import {
   HashRouter as Router,
@@ -14,6 +12,9 @@ import {
   useHistory,
   useParams
 } from 'react-router-dom';
+
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
 
 import { FullScreen } from '@dxos/react-components';
 
@@ -40,13 +41,13 @@ export const Main = ({ panels }: MainProps) => {
   return (
     <FullScreen>
       <Container
-        sidebar={
+        sidebar={(
           <Sidebar
             panels={panels}
             selected={panel}
             onSelect={handleNavigate}
           />
-        }
+        )}
       >
         <>
           {/* TODO(burdon): Cache panels so that they are not rendered each time. */}

@@ -12,6 +12,6 @@ export const IPFSStatus = () => {
   const status = useIFPSStatus();
 
   return (
-    <JsonTreeView data={status}/>
+    <JsonTreeView data={status} />
   );
 };

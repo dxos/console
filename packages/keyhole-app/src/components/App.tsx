@@ -3,9 +3,10 @@
 //
 
 import { keyframes } from '@emotion/react';
-import { colors, Box, CssBaseline, createTheme, ThemeProvider } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import superagent from 'superagent';
+
+import { colors, Box, CssBaseline, createTheme, ThemeProvider } from '@mui/material';
 
 import { Kube } from '@dxos/gem-experimental';
 import { Passcode } from '@dxos/react-components';

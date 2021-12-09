@@ -2,9 +2,10 @@
 // Copyright 2021 DXOS.org
 //
 
-import { Box, colors, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import useResizeAware from 'react-resize-aware';
+
+import { Box, colors, useTheme } from '@mui/material';
 
 import { GraphType, NodeType, SVG, useGrid } from '@dxos/gem-core';
 import { ForceLayout, Graph, LinkProjector, NodeProjector } from '@dxos/gem-spore';
