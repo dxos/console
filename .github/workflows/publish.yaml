@@ -18,9 +18,6 @@ jobs:
       with:
         fetch-depth: 0
         clean: false
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 16.1
     - name: Check, install and build
       run: |
         \. "$NVM_DIR/nvm.sh" && nvm install ${{ matrix.node-version }} && nvm use ${{ matrix.node-version }}
