@@ -3,7 +3,7 @@
 #
 
 PUBLIC_URL:
-  path: app.publicUrl
+  path: runtime.app.publicUrl
 NODE_ENV:
   path: debug.mode
 DEBUG:

@@ -6,13 +6,14 @@ import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { ConfigV1Object } from '@dxos/config';
+
 import { Debug } from './apps';
 import { loadConfig } from './config';
-import { IConfig } from './hooks';
 import { createCustomTheme } from './theme';
 
-const start = async (config: IConfig) => {
-  debug.enable(config.system.debug);
+const start = async (config: ConfigV1Object) => {
+  debug.enable(config.runtime?.system?.debug!);
   const log = debug('dxos:console:main');
   log('Starting...', { config });
 

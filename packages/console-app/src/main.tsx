@@ -20,18 +20,18 @@ import { createCustomTheme } from './theme';
 void (async () => {
   const config = await loadConfig();
 
-  debug.enable(config.system.debug);
+  debug.enable(config.runtime?.system?.debug!);
   const log = debug('dxos:console:main');
   log('Starting...', { config });
 
   const signalClient = new GraphQLClient({
-    url: config.services.signal?.api
+    url: config.runtime?.services?.signal?.api!
   });
 
   const theme = createCustomTheme(config);
 
   ReactDOM.render((
-    <RegistryInitializer config={config}>
+    <RegistryInitializer config={config.runtime!.services as any}>
       <ClientContext.Provider value={signalClient}>
         <App
           config={config}

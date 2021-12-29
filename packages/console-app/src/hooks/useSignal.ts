@@ -9,7 +9,7 @@ import { useRequest } from './useRequest';
 export const useServices = (cached = true) => {
   const config = useConfig();
   return useRequest<ISignal[]>({
-    url: config.services.signal?.status,
+    url: config.runtime?.services?.signal?.status!,
     method: 'GET'
   }, cached);
 };

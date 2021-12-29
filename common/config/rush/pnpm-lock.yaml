@@ -9,7 +9,7 @@ importers:
     specifiers:
       '@apollo/client': ^3.3.19
       '@babel/core': ^7.0.0
-      '@dxos/config': ~2.17.4
+      '@dxos/config': ~2.19.6
       '@dxos/esbuild-plugins': 2.19.2
       '@dxos/esbuild-server': 1.4.1
       '@dxos/eslint-plugin': 1.0.20
@@ -82,7 +82,7 @@ importers:
       yaml: ^1.10.2
     dependencies:
       '@apollo/client': 3.5.6_graphql@16.2.0+react@17.0.2
-      '@dxos/config': 2.17.4
+      '@dxos/config': 2.19.6
       '@dxos/gem-core': 1.0.0-beta.36_fced322086cd04afb0b6feec9e866920
       '@dxos/gem-spore': 1.0.0-beta.36_fced322086cd04afb0b6feec9e866920
       '@dxos/react-components': 2.17.4_a52d5d101e9893ddbd53ed5f22a24e75
@@ -215,7 +215,7 @@ importers:
 
   ../../packages/kube-server:
     specifiers:
-      '@dxos/config': ~2.17.4
+      '@dxos/config': ~2.19.6
       '@dxos/eslint-plugin': 1.0.20
       body-parser: ^1.19.0
       compression: ^1.7.4
@@ -238,7 +238,7 @@ importers:
       typescript: ^4.5.2
       yargs: ^15.3.1
     dependencies:
-      '@dxos/config': 2.17.4
+      '@dxos/config': 2.19.6
       body-parser: 1.19.0
       compression: 1.7.4
       cors: 2.8.5
@@ -878,12 +878,23 @@ packages:
       - supports-color
     dev: false
 
-  /@dxos/config/2.17.4:
-    resolution: {integrity: sha512-X8eXf8ilTljPZOPA2xt0nRPqoKD7Stm/4IfE8dMei0gCSH//Z6u2aWkX/faul+HTEq9DmHZkGtX5mAtj95xFsg==}
+  /@dxos/codec-protobuf/2.19.6:
+    resolution: {integrity: sha512-6bCsZkdbQLTd/E4co38MMlEbYh8PPspFSAhsZ4YCZxtXBIN6hzyIl+sWjj5GCsidnwGR6BPPd3UcAP4t+mtF7g==}
     dependencies:
-      '@dxos/codec-protobuf': 2.17.4
-      '@dxos/debug': 2.17.4
-      '@dxos/proto': 2.17.4
+      assert: 2.0.0
+      debug: 4.3.3
+      lodash.merge: 4.6.2
+      protobufjs: 6.11.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@dxos/config/2.19.6:
+    resolution: {integrity: sha512-yPlwqjkonriZB0+13b+VJ9sQGqDUPAVSV4Zu2x4PZa5iTjyp0jaT3T4txtP0QAzCSh5OG+7QYfT2H4+2fkLl+A==}
+    dependencies:
+      '@dxos/codec-protobuf': 2.19.6
+      '@dxos/debug': 2.19.6
+      '@dxos/proto': 2.19.6
       boolean: 3.1.4
       debug: 4.3.3
       js-yaml: 3.14.1
@@ -968,6 +979,15 @@ packages:
 
   /@dxos/debug/2.17.4:
     resolution: {integrity: sha512-4eyOyAW6BiIXjShDHC5gqa0oO+JgmcDFHR504F7XJJaxJWKN+j4swmPJ1WEmwOhYaq9mVydhEiZ49bjWyiTjBQ==}
+    dependencies:
+      '@types/node': 14.18.0
+      debug: 4.3.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@dxos/debug/2.19.6:
+    resolution: {integrity: sha512-ssSSoDMYhfHFyY79/4WQucaNpfWCtaqzYcIkau9WNfv9Y24an9BZuVIk08PUDN+athy6UoyIzF3a1JxADH+JTg==}
     dependencies:
       '@types/node': 14.18.0
       debug: 4.3.3
@@ -1281,10 +1301,10 @@ packages:
       - supports-color
     dev: false
 
-  /@dxos/proto/2.17.4:
-    resolution: {integrity: sha512-4RuopqgDBK+hCoCXCLEmmSoGDVRUym5rfLu/8efYZi+tSkywyNmqH4TGEaZoYP7UBAEXn/Y5IWk3Ygg2/vfSLA==}
+  /@dxos/proto/2.19.6:
+    resolution: {integrity: sha512-gkOznoqD9Va2FlbHqZFb3xvao4MKvXkfPxo4qsEpS8TgO/NnGcYlJAZJYzc4vVhUB859nZ7yf5+uO6HCp4aUCg==}
     dependencies:
-      '@dxos/codec-protobuf': 2.17.4
+      '@dxos/codec-protobuf': 2.19.6
     transitivePeerDependencies:
       - supports-color
     dev: false
