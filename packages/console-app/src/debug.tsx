@@ -13,7 +13,7 @@ import { loadConfig } from './config';
 import { createCustomTheme } from './theme';
 
 const start = async (config: ConfigV1Object) => {
-  debug.enable(config.runtime?.system?.debug!);
+  debug.enable(config.runtime!.system!.debug!);
   const log = debug('dxos:console:main');
   log('Starting...', { config });
 

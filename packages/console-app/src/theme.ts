@@ -4,9 +4,9 @@
 
 import { colors, createTheme } from '@mui/material';
 
-import { ConfigV1Object } from '@dxos/config'
+import { ConfigV1Object } from '@dxos/config';
 
-type ThemeMode = "light" | "dark" | undefined;
+type ThemeMode = 'light' | 'dark' | undefined;
 
 /**
  * Create material theme.
