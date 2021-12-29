@@ -11,7 +11,6 @@ import { FullScreen } from '@dxos/react-components';
 import { createCustomTheme } from '../src';
 
 export const config: ConfigV1Object = {
-  
   module: {
     build: {
       version: '1.0.0'

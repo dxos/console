@@ -31,7 +31,7 @@ void (async () => {
   const theme = createCustomTheme(config);
 
   ReactDOM.render((
-    <RegistryInitializer config={config.runtime!.services as any}>
+    <RegistryInitializer config={config.runtime as any}>
       <ClientContext.Provider value={signalClient}>
         <App
           config={config}
