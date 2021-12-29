@@ -25,3 +25,9 @@ export interface IPanel {
 export interface IAuthQR {
   imageSrc: string
 }
+
+export interface ISignal {
+  id: string
+  updatedAt: string,
+  nodes: any
+}

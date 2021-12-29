@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.19",
-    "@dxos/config": "~2.17.4",
+    "@dxos/config": "~2.19.4",
     "@dxos/gem-core": "^1.0.0-beta.35",
     "@dxos/gem-spore": "^1.0.0-beta.35",
     "@dxos/react-components": "~2.17.4",
