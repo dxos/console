@@ -2,68 +2,38 @@
 // Copyright 2021 DXOS.org
 //
 
-import { useQuery } from 'graphql-hooks';
 import React from 'react';
+
+import { Sync as RefreshIcon } from '@mui/icons-material';
+import { Box, IconButton } from '@mui/material';
 
 import { JsonTreeView } from '@dxos/react-components';
 
-import { Panel } from '../components';
-
-const SIGNAL_QUERY = `query {
-  signal_status: status {
-    id
-    updatedAt,
-    nodes {
-      id
-      kubeStatus {
-        system {
-          version
-
-          memory {
-            total
-            used
-          }
-
-          network {
-            hostname
-          }
-
-          time {
-            up
-          }
-
-          nodejs {
-            version
-          }
-        }
-        services {
-          name
-          status
-        }
-      }
-      connections {
-        id
-        target
-      }
-      signal {
-        topics {
-          id
-          peers
-        }
-      }
-    }
-  }
-}`;
+import { Panel, Toolbar } from '../components';
+import { useSignal } from '../hooks';
 
 /**
  * Displays the status of the signaling servers.
  */
 export const SignalingPanel = () => {
-  const { data } = useQuery(SIGNAL_QUERY);
+  const [signalInfo, refreshSignalInfo] = useSignal(true);
 
   return (
-    <Panel>
-      {data && <JsonTreeView data={data} />}
+    <Panel
+      toolbar={(
+        <Toolbar>
+          <Box sx={{ flex: 1 }} />
+          <IconButton
+            size='small'
+            aria-label='refresh'
+            onClick={refreshSignalInfo}
+          >
+            <RefreshIcon />
+          </IconButton>
+        </Toolbar>
+      )}
+    >
+      {signalInfo && <JsonTreeView data={signalInfo} />}
     </Panel>
   );
 };

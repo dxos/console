@@ -3,53 +3,47 @@
 # It will be replaced by a config/config.json request when served with dx app serve.
 #
 
-app:
-  title: 'Console'
-  org': 'DXOS.org'
-  theme: 'dark'
-  website: 'https://dxos.org'
-  publicUrl: '/console'
+version: 1
 
-registry:
-  endpoint: 'wss://enterprise.kube.dxos.network/dxns/ws'
-
-api:
-  server: 'https://kube.local'
-  path: '/api'
-  intervalLog: 5000
-  pollInterval: 10000
-
-system:
-  debug: 'dxos:console:*'
-
-services:
-  kube:
-    endpoints:
-      logs: '/kube/logs'
-      services: '/kube/services'
-
+runtime:
+  props:
+    title: "Console"
   app:
-    prefix: '/app'
-    server: 'https://enterprise.kube.dxos.network'
+    org': 'DXOS.org'
+    theme: 'dark'
+    website: 'https://dxos.org'
+    publicUrl: '/console'
 
-  dxns:
-    server: 'wss://dxns1.kube.dxos.network/dxns/ws'
-    schema:
-      cid:
-      fqn:
-        app: '.dxos.App'
-        bot: '.dxos.Bot'
-        botFactory: '.dxos.BotFactory'
-        KUBE: '.dxos.KUBE'
-        service: '.dxos.Service'
-        file: '.dxos.File'
-  signal:
-    server: 'wss://enterprise.kube.dxos.network/dxos/signal'
-    api: 'https://enterprise.kube.dxos.network/dxos/signal/api'
+  services:
+    kube:
+      endpoints:
+        logs: '/kube/logs'
+        services: '/kube/services'
 
-  ipfs:
-    server: 'https://enterprise.kube.dxos.network/dxos/ipfs/api'
-    gateway: 'https://enterprise.kube.dxos.network/dxos/ipfs/gateway'
+    app:
+      prefix: '/app'
+      server: 'https://enterprise.kube.dxos.network'
 
-  wellknown:
-    endpoint: 'https://enterprise.kube.dxos.network/.well-known/dxos'
+    dxns:
+      server: 'wss://dxns1.kube.dxos.network/dxns/ws'
+      schema:
+        cid:
+        fqn:
+          app: '.dxos.App'
+          bot: '.dxos.Bot'
+          botFactory: '.dxos.BotFactory'
+          KUBE: '.dxos.KUBE'
+          service: '.dxos.Service'
+          file: '.dxos.File'
+    signal:
+      server: 'wss://enterprise.kube.dxos.network/dxos/signal'
+      api: 'https://enterprise.kube.dxos.network/dxos/signal/api'
+      # TODO(egorgripasov): Temp, replace with enterprise.
+      status: 'https://test-signal2.kube.dxos.network/dxos/signal/status'
+
+    ipfs:
+      server: 'https://enterprise.kube.dxos.network/dxos/ipfs/api'
+      gateway: 'https://enterprise.kube.dxos.network/dxos/ipfs/gateway'
+
+    wellknown:
+      endpoint: 'https://enterprise.kube.dxos.network/.well-known/dxos'

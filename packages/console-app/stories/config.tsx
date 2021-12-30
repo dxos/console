@@ -5,49 +5,50 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import React from 'react';
 
+import { ConfigV1Object } from '@dxos/config';
 import { FullScreen } from '@dxos/react-components';
 
-import { createCustomTheme, IConfig } from '../src';
+import { createCustomTheme } from '../src';
 
-export const config: IConfig = {
-  app: {
-    title: 'Test'
-    // theme: 'dark'
+export const config: ConfigV1Object = {
+  module: {
+    build: {
+      version: '1.0.0'
+    },
   },
-  build: {
-    version: '1.0.0'
-  },
-  registry: {
-    endpoint: ''
-  },
-  services: {
-    kube: {
-      endpoints: {
-        logs: '',
-        services: ''
+  runtime: {
+    props: {
+      title: 'Test'
+    },
+    services: {
+      kube: {
+        endpoints: {
+          logs: '',
+          services: ''
+        }
+      },
+      dxns: {
+        server: 'test-dxns-server'
+      },
+      app: {
+        prefix: 'test-prefix',
+        server: 'test-server'
+      },
+      ipfs: {
+        gateway: 'test-ipfs-gateway',
+        server: 'test-ipfs-server'
+      },
+      signal: {
+        api: ''
       }
     },
-    dxns: {
-      server: 'test-dxns-server'
-    },
-    app: {
-      prefix: 'test-prefix',
-      server: 'test-server'
-    },
-    ipfs: {
-      gateway: 'test-ipfs-gateway',
-      server: 'test-ipfs-server'
-    },
-    signal: {
-      api: ''
+    system: {
+      debug: 'stories'
     }
-  },
-  system: {
-    debug: 'stories'
   }
 };
 
-export const RootContainer = ({ config, children }: { config: IConfig, children: JSX.Element }) => {
+export const RootContainer = ({ config, children }: { config: ConfigV1Object, children: JSX.Element }) => {
   return (
     <ThemeProvider theme={createCustomTheme(config)}>
       <CssBaseline />

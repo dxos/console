@@ -7,15 +7,15 @@ import React from 'react';
 import { AppBar, Box, CssBaseline, Paper, Toolbar, ThemeProvider, styled } from '@mui/material';
 import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
 
+import { ConfigV1Object } from '@dxos/config';
 import { JsonTreeView } from '@dxos/react-components';
 
-import { IConfig } from '../hooks';
 import { DXOS as DXOSIcon } from '../icons';
 
 const AppBarOffset = styled('div')(({ theme }) => theme.mixins.toolbar as any);
 
 interface DebugProps {
-  config: IConfig
+  config: ConfigV1Object
   theme: ThemeProviderProps['theme']
 }
 

@@ -15,13 +15,14 @@ import {
 import { Box, Collapse, IconButton, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
+import { ConfigV1Object } from '@dxos/config';
 import { Searchbar } from '@dxos/react-components';
 import { useDomains, useRecords, useRecordTypes, useRegistry, useResources } from '@dxos/react-registry-client';
 import { CID, DXN, IQuery, Resource } from '@dxos/registry-client';
 
 import { DataGrid, IRecord, IResourceRecord, Panel, ResourceRecordsTable, Toolbar } from '../components';
 import { RegistryGraph } from '../components/RegistryGraph';
-import { IConfig, useConfig } from '../hooks';
+import { useConfig } from '../hooks';
 import { joinRecords } from './RecordsPanel';
 
 export interface DisplayResource extends Resource {
@@ -32,7 +33,7 @@ export interface DisplayResource extends Resource {
 /**
  * Joins records with resources.
  */
-export const joinResourceRecords = (records: IRecord[], resource: Resource | undefined, config: IConfig): IResourceRecord[] => {
+export const joinResourceRecords = (records: IRecord[], resource: Resource | undefined, config: ConfigV1Object): IResourceRecord[] => {
   if (!resource) {
     return [];
   }
@@ -47,7 +48,7 @@ export const joinResourceRecords = (records: IRecord[], resource: Resource | und
       [field]: versionOrTag,
 
       url: (record.type === '.dxos.type.App')
-        ? urlJoin(config.services.app.server, config.services.app.prefix, `${resource.id.toString()}@${versionOrTag}`)
+        ? urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.app?.prefix, `${resource.id.toString()}@${versionOrTag}`)
         : undefined
     };
     return resourceRecord;

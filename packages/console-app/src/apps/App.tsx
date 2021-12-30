@@ -16,10 +16,11 @@ import {
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
 
+import { ConfigV1Object } from '@dxos/config';
 import { FullScreen } from '@dxos/react-components';
 
 import { Container, Sidebar } from '../components';
-import { IConfig, ConfigContext } from '../hooks';
+import { ConfigContext } from '../hooks';
 import { IPanel } from '../types';
 
 interface MainProps {
@@ -65,7 +66,7 @@ export const Main = ({ panels }: MainProps) => {
 };
 
 interface AppProps {
-  config: IConfig
+  config: ConfigV1Object
   panels: IPanel[]
   theme: ThemeProviderProps['theme']
 }

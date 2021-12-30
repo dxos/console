@@ -32,7 +32,7 @@ const useLogs = (service: string | undefined): [ILogMessage[], () => void] => {
   const config = useConfig();
   // TODO(burdon): Don't trigger request if service is undefined.
   const [data, refreshData] = useRequest<string[]>({
-    url: urlJoin(config.services.app.server, config.services.kube.endpoints.logs),
+    url: urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.kube?.endpoints?.logs),
     params: { name: service, lines: 100 }
   });
   const [logs, setLogs] = useState<ILogMessage[]>([]);
@@ -51,7 +51,7 @@ const useLogs = (service: string | undefined): [ILogMessage[], () => void] => {
  */
 // TODO(burdon): Scroll to bottom.
 export const LogsPanel = () => {
-  const config = useConfig();
+  // const config = useConfig();
   const [services = []] = useServices(true);
   const [service, setService] = useState<string | undefined>();
   const [polling, setPolling] = useState(false);
@@ -64,7 +64,7 @@ export const LogsPanel = () => {
   }, [services]);
 
   useEffect(() => {
-    const interval = polling ? setInterval(refreshLogs, config.app.pollingPeriod || 5000) : undefined;
+    const interval = polling ? setInterval(refreshLogs, /* config.runtime?.app?.pollingPeriod || */ 5000) : undefined;
     return () => interval && clearInterval(interval);
   }, [polling]);
 
