@@ -38,7 +38,8 @@ runtime:
     signal:
       server: 'wss://enterprise.kube.dxos.network/dxos/signal'
       api: 'https://enterprise.kube.dxos.network/dxos/signal/api'
-      status: 'https://enterprise.kube.dxos.network/dxos/signal/status'
+      # TODO(egorgripasov): Temp, replace with enterprise.
+      status: 'https://test-signal2.kube.dxos.network/dxos/signal/status'
 
     ipfs:
       server: 'https://enterprise.kube.dxos.network/dxos/ipfs/api'
