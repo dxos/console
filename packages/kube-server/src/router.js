@@ -16,4 +16,4 @@ export const getRouter = (config) => {
   router.post('/faucet', async (req, res) => res.json(await faucet(config, req.body)));
 
   return router;
-}
+};
