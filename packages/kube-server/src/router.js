@@ -4,10 +4,16 @@
 
 import express from 'express';
 
-import { getServiceInfo, getLogs } from './handlers';
+import { getServiceInfo, getLogs, faucet } from './handlers';
 
-export const router = express.Router();
+export const getRouter = (config) => {
+  const router = express.Router();
 
-router.post('/logs', async (req, res) => res.json(await getLogs(req.body)));
+  router.post('/logs', async (req, res) => res.json(await getLogs(req.body)));
 
-router.all('/services', async (req, res) => res.json(await getServiceInfo(req.body)));
+  router.all('/services', async (req, res) => res.json(await getServiceInfo(req.body)));
+
+  router.post('/faucet', async (req, res) => res.json(await faucet(config, req.body)));
+
+  return router;
+};
