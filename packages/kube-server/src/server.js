@@ -11,7 +11,7 @@ import path from 'path';
 import yargs from 'yargs';
 
 import { getConfig } from './config';
-import { router } from './router';
+import { getRouter } from './router';
 
 const argv = yargs
   .option('config', {
@@ -61,7 +61,7 @@ app.use(compression());
 
 // Endpoints for console-app.
 app.use(express.json());
-app.use(config.api.kubePath, router);
+app.use(config.api.kubePath, getRouter(config));
 
 app.get('/', (req, res) => {
   res.redirect(config.api.path);

@@ -13,3 +13,4 @@ api:
 
 system:
   debug: 'dxos:kube:*'
+  mnemonic: ''
