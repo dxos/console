@@ -26,7 +26,7 @@ const columns: GridColDef[] = [
   {
     field: 'id',
     headerName: 'Id',
-    width: 180,
+    width: 400,
     cellClassName: 'monospace secondary'
   },
   {
