@@ -1,6 +1,6 @@
 {
   "name": "@dxos/kube-server",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "description": "KUBE Server",
   "license": "AGPL-3.0",
   "main": "dist/src/server.js",
