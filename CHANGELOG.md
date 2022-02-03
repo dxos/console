@@ -1,5 +1,18 @@
 # Changelog
 
+### [1.2.11](https://www.github.com/dxos/console/compare/v1.2.10...v1.2.11) (2022-02-03)
+
+
+### Features
+
+* **apps:** increase id width ([#186](https://www.github.com/dxos/console/issues/186)) ([7d9faed](https://www.github.com/dxos/console/commit/7d9faedc75df530ed4f04158831389bafabb9499))
+* use config v1; rm graphql. ([#183](https://www.github.com/dxos/console/issues/183)) ([dd240d8](https://www.github.com/dxos/console/commit/dd240d83a766c49897ad8d81d5cd46b3a507a6aa))
+
+
+### Bug Fixes
+
+* update cli version on CI. ([#187](https://www.github.com/dxos/console/issues/187)) ([a4153e3](https://www.github.com/dxos/console/commit/a4153e3edcc330213d612752aa254254c0c7ecab))
+
 ### [1.2.10](https://www.github.com/dxos/console/compare/v1.2.9...v1.2.10) (2021-12-09)
 
 
