@@ -1,15 +1,17 @@
 //
-// Copyright 2021 DXOS.org
+// Copyright 2022 DXOS.org
 //
 
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Sync as RefreshIcon } from '@mui/icons-material';
+import { Sync as RefreshIcon, RestartAlt as RestartAltIcon } from '@mui/icons-material';
 import { Box, IconButton } from '@mui/material';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridCellParams } from '@mui/x-data-grid';
 
 import { DataGrid, Panel, Toolbar } from '../components';
-import { useServices } from '../hooks';
+import { useServices, useConfig, serviceActionRequester } from '../hooks';
+
+const essentialServices = ['ipfs', 'ipfs-swarm-connect', 'kube'];
 
 const format = new Intl.NumberFormat('en', { maximumSignificantDigits: 3 });
 
@@ -50,10 +52,45 @@ const columns: GridColDef[] = [
 ];
 
 /**
- * Displays the config panel
+ * Displays the service panel
  */
 export const ServicesPanel = () => {
+  const config = useConfig();
   const [services, refreshServices] = useServices(true);
+  const [isActionRunning, setIsActionRunning] = useState(false);
+
+  const handleServiceAction = async (service: string, action: string) => {
+    if (confirm(`This action will cause a ${action} of ${service}.`)) {
+      setIsActionRunning(true);
+      try {
+        await serviceActionRequester(config, service, action);
+      } finally {
+        refreshServices();
+        setIsActionRunning(false);
+      }
+    }
+  };
+
+  const columnsWithActions: GridColDef[] = [
+    ...columns,
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 120,
+      sortable: false,
+      align: 'right',
+      // https://mui.com/components/data-grid/style/#styling-cells
+      renderCell: (params: GridCellParams) => {
+        if (!essentialServices.includes(params.row.name)) {
+          return (
+            <IconButton disabled={isActionRunning} size='small' color='primary' onClick={() => handleServiceAction(params.row.name, 'restart')}>
+              <RestartAltIcon />
+            </IconButton>
+          );
+        }
+      }
+    }
+  ];
 
   return (
     <Panel
@@ -72,7 +109,7 @@ export const ServicesPanel = () => {
     >
       <DataGrid
         rows={services || []}
-        columns={columns}
+        columns={columnsWithActions}
         getRowId={({ name }) => name}
       />
     </Panel>
