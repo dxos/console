@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.2.12](https://www.github.com/dxos/console/compare/v1.2.11...v1.2.12) (2022-02-03)
+
+
+### Bug Fixes
+
+* services actions. ([#188](https://www.github.com/dxos/console/issues/188)) ([c3bac92](https://www.github.com/dxos/console/commit/c3bac92f9540bce30c758708cb5a4c73284d8fe8))
+
 ### [1.2.11](https://www.github.com/dxos/console/compare/v1.2.10...v1.2.11) (2022-02-03)
 
 
