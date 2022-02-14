@@ -30,7 +30,13 @@ const mergeByProperty = (target, source, prop) => {
   });
 };
 
-const getServices = (usage) => {
+const getServices = (usage, cacheKey) => {
+  // Check cache again after lock.
+  const services = cacheKey && _cache.get(cacheKey);
+  if (services) {
+    return services;
+  }
+
   const command = 'dx';
   const args = ['service', '--json', '--usage', usage];
 
@@ -53,7 +59,7 @@ export const getServiceInfo = async ({ usage = false, cached = true }) => {
     return cachedServices;
   }
 
-  const services = await lock.executeSynchronized(async () => getServices(usage));
+  const services = await lock.executeSynchronized(async () => getServices(usage, cacheKey));
   cached && _cache.set(cacheKey, services);
 
   return services;
