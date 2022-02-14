@@ -4,6 +4,9 @@
 
 import { spawnSync } from 'child_process';
 import { existsSync, readFileSync } from 'fs';
+import NodeCache from 'node-cache';
+
+const CACHE_TTL = 10;
 
 const FAILED = 'failed';
 const SUCCESS = 'success';
@@ -12,6 +15,8 @@ const KUBE_SERVICES_INFO_FILE = '/opt/kube/services.json';
 
 // TODO(egorgripasov): Support start/stop actions.
 const ALLOWED_ACTIONS = ['restart'];
+
+const _cache = new NodeCache({ stdTTL: CACHE_TTL, useClones: false });
 
 const mergeByProperty = (target, source, prop) => {
   source.forEach(sourceElement => {
@@ -22,7 +27,13 @@ const mergeByProperty = (target, source, prop) => {
   });
 };
 
-export const getServiceInfo = async ({ usage = false }) => {
+export const getServiceInfo = async ({ usage = false, cached = true }) => {
+  const cacheKey = `usage-${usage}`;
+  const cachedServices = cached && _cache.get(cacheKey);
+  if (cachedServices) {
+    return cachedServices;
+  }
+
   const command = 'dx';
   const args = ['service', '--json', '--usage', usage];
 
@@ -35,6 +46,8 @@ export const getServiceInfo = async ({ usage = false }) => {
   }
 
   mergeByProperty(runningServices, servicesInfo, 'name');
+
+  cached && _cache.set(cacheKey, runningServices);
 
   return runningServices;
 };
