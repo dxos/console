@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/dxos/console/compare/v1.2.12...v1.3.0) (2022-02-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* rework services. (#190)
+
+### Features
+
+* rework services. ([#190](https://www.github.com/dxos/console/issues/190)) ([e9b0e4b](https://www.github.com/dxos/console/commit/e9b0e4ba9e743d08408f6cde14b0de2da7b76356))
+
 ### [1.2.12](https://www.github.com/dxos/console/compare/v1.2.11...v1.2.12) (2022-02-03)
 
 
