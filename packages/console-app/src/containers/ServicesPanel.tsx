@@ -2,14 +2,14 @@
 // Copyright 2022 DXOS.org
 //
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Sync as RefreshIcon, RestartAlt as RestartAltIcon } from '@mui/icons-material';
 import { Box, IconButton } from '@mui/material';
 import { GridColDef, GridCellParams } from '@mui/x-data-grid';
 
 import { DataGrid, Panel, Toolbar } from '../components';
-import { useServices, useConfig, serviceActionRequester } from '../hooks';
+import { useServices, useConfig, serviceActionRequester, serviceRequester } from '../hooks';
 
 const essentialServices = ['ipfs', 'ipfs-swarm-connect', 'kube'];
 
@@ -56,8 +56,17 @@ const columns: GridColDef[] = [
  */
 export const ServicesPanel = () => {
   const config = useConfig();
-  const [services, refreshServices] = useServices(true);
+  const [services, refreshServices] = useServices(true, true);
+  const [servicesPrelist, setServicesPrelist] = useState([]);
   const [isActionRunning, setIsActionRunning] = useState(false);
+
+  useEffect(() => {
+    const prepopulate = async () => {
+      const result = await serviceRequester(config, false, true);
+      setServicesPrelist(result.data);
+    };
+    void prepopulate();
+  }, []);
 
   const handleServiceAction = async (service: string, action: string) => {
     if (confirm(`This action will cause a ${action} of ${service}.`)) {
@@ -108,7 +117,7 @@ export const ServicesPanel = () => {
       )}
     >
       <DataGrid
-        rows={services || []}
+        rows={services || servicesPrelist}
         columns={columnsWithActions}
         getRowId={({ name }) => name}
       />
