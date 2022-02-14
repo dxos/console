@@ -10,6 +10,18 @@ import { IService } from '../types';
 import { useConfig } from './useConfig';
 import { useRequest, httpRequester } from './useRequest';
 
+const getReqParams = (config: ConfigV1Object, usage: boolean, cached: boolean) => {
+  const query = { usage: usage.toString(), cached: cached.toString() };
+  return {
+    url: urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.kube?.endpoints?.services, { query }),
+    method: 'GET'
+  };
+};
+
+export const serviceRequester = async (config: ConfigV1Object, usage: boolean, cached: boolean) => {
+  return httpRequester(getReqParams(config, usage, cached));
+};
+
 export const serviceActionRequester = async (config: ConfigV1Object, service: string, action: string) => {
   return httpRequester({
     url: urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.kube?.endpoints?.services),
@@ -18,10 +30,8 @@ export const serviceActionRequester = async (config: ConfigV1Object, service: st
   });
 };
 
-export const useServices = (cached = true) => {
+export const useServices = (cached = true, usage = true) => {
   const config = useConfig();
-  return useRequest<IService[]>({
-    url: urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.kube?.endpoints?.services),
-    method: 'GET'
-  }, cached);
+
+  return useRequest<IService[]>(getReqParams(config, usage, cached), cached);
 };

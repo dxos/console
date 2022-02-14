@@ -2,6 +2,7 @@
 // Copyright 2022 DXOS.org
 //
 
+import { boolean } from 'boolean';
 import { spawnSync } from 'child_process';
 import { existsSync, readFileSync } from 'fs';
 import NodeCache from 'node-cache';
@@ -14,6 +15,7 @@ const FAILED = 'failed';
 const SUCCESS = 'success';
 
 const KUBE_SERVICES_INFO_FILE = '/opt/kube/services.json';
+const KUBE_SERVICES_PRELIST_FILE = '/opt/kube/started-services.json';
 
 // TODO(egorgripasov): Support start/stop actions.
 const ALLOWED_ACTIONS = ['restart'];
@@ -37,11 +39,16 @@ const getServices = (usage, cacheKey) => {
     return services;
   }
 
-  const command = 'dx';
-  const args = ['service', '--json', '--usage', usage];
+  let runningServices;
+  if (!usage) {
+    runningServices = existsSync(KUBE_SERVICES_PRELIST_FILE) ? JSON.parse(readFileSync(KUBE_SERVICES_PRELIST_FILE, 'utf8')) : [];
+  } else {
+    const command = 'dx';
+    const args = ['service', '--json', '--usage', 'true'];
 
-  const child = spawnSync(command, args, { encoding: 'utf8' });
-  const runningServices = JSON.parse(child.stdout);
+    const child = spawnSync(command, args, { encoding: 'utf8' });
+    runningServices = JSON.parse(child.stdout);
+  }
 
   let servicesInfo = [];
   if (existsSync(KUBE_SERVICES_INFO_FILE)) {
@@ -52,7 +59,10 @@ const getServices = (usage, cacheKey) => {
   return runningServices;
 };
 
-export const getServiceInfo = async ({ usage = false, cached = true }) => {
+export const getServiceInfo = async (query) => {
+  const usage = boolean(query.usage);
+  const cached = query.cached ? boolean(query.cached) : true;
+
   const cacheKey = `usage-${usage}`;
   const cachedServices = cached && _cache.get(cacheKey);
   if (cachedServices) {

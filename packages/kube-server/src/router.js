@@ -11,7 +11,7 @@ export const getRouter = (config) => {
 
   router.post('/logs', async (req, res) => res.json(await getLogs(req.body)));
 
-  router.get('/services', async (req, res) => res.json(await getServiceInfo(req.body)));
+  router.get('/services', async (req, res) => res.json(await getServiceInfo(req.query)));
 
   router.post('/services', async (req, res) => res.json(await runServiceAction(req.body)));
 

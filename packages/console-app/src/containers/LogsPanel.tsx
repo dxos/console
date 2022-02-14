@@ -52,7 +52,7 @@ const useLogs = (service: string | undefined): [ILogMessage[], () => void] => {
 // TODO(burdon): Scroll to bottom.
 export const LogsPanel = () => {
   // const config = useConfig();
-  const [services = []] = useServices(true);
+  const [services = []] = useServices(true, false);
   const [service, setService] = useState<string | undefined>();
   const [polling, setPolling] = useState(false);
   const [logs, refreshLogs] = useLogs(service);
