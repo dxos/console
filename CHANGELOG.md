@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.3.1](https://www.github.com/dxos/console/compare/v1.3.0...v1.3.1) (2022-02-15)
+
+
+### Bug Fixes
+
+* don't show empty stats. ([#192](https://www.github.com/dxos/console/issues/192)) ([bb7b45e](https://www.github.com/dxos/console/commit/bb7b45ebe4f63b0ff0d5f7886ad1b93e027313da))
+
 ## [1.3.0](https://www.github.com/dxos/console/compare/v1.2.12...v1.3.0) (2022-02-14)
 
 
