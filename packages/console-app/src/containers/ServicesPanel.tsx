@@ -39,7 +39,7 @@ const columns: GridColDef[] = [
     width: 140,
     align: 'right',
     cellClassName: 'monospace',
-    valueFormatter: ({ value }) => (value as number).toFixed(2)
+    valueFormatter: ({ value }) => value !== undefined ? (value as number).toFixed(2) : ''
   },
   {
     field: 'memory',
@@ -47,7 +47,7 @@ const columns: GridColDef[] = [
     width: 160,
     align: 'right',
     cellClassName: 'monospace',
-    valueFormatter: ({ value }) => format.format(value as number / 1000) + 'K'
+    valueFormatter: ({ value }) => value !== undefined ? format.format(value as number / 1000) + 'K' : ''
   }
 ];
 
@@ -63,7 +63,7 @@ export const ServicesPanel = () => {
   useEffect(() => {
     const prepopulate = async () => {
       const result = await serviceRequester(config, false, true);
-      setServicesPrelist(result.data);
+      setServicesPrelist(result.data.map(({ name, type, status }: any) => ({ name, type, status })));
     };
     void prepopulate();
   }, []);
