@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.3.2](https://www.github.com/dxos/console/compare/v1.3.1...v1.3.2) (2022-02-16)
+
+
+### Bug Fixes
+
+* better UI for logs. ([#194](https://www.github.com/dxos/console/issues/194)) ([dd2cd64](https://www.github.com/dxos/console/commit/dd2cd6471853f955198f2229e169e987d14b29ad))
+
 ### [1.3.1](https://www.github.com/dxos/console/compare/v1.3.0...v1.3.1) (2022-02-15)
 
 
