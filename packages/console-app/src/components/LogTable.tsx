@@ -23,6 +23,8 @@ import { makeStyles } from '@mui/styles';
 
 import { IFilter, ILogMessage } from '../logging';
 
+const LOG_COLUMN_WIDTH = 500;
+
 // Levels
 
 interface LevelColorMap {
@@ -66,6 +68,24 @@ const getRelativeTime = (d1: Date, d2: Date = new Date()) => {
   }
 };
 
+const splitStringByLinesByWidth = (str: string, width: number) => {
+  const words = str.split(' ');
+  const lines = [];
+  let currentLine = words[0];
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i];
+    const widthWithSpace = currentLine.length + word.length + 1;
+    if (widthWithSpace > width) {
+      lines.push(currentLine);
+      currentLine = word;
+    } else {
+      currentLine += ` ${word}`;
+    }
+  }
+  lines.push(currentLine);
+  return lines;
+};
+
 const columns = [
   {
     dataKey: 'timestamp',
@@ -88,7 +108,7 @@ const columns = [
   {
     dataKey: 'message',
     label: 'Message',
-    width: 500, // TODO(burdon): Causes error if not provided, but otherwise disables flex.
+    width: LOG_COLUMN_WIDTH, // TODO(burdon): Causes error if not provided, but otherwise disables flex.
     flexShrink: 1,
     flexGrow: 1
   }
@@ -212,11 +232,12 @@ const LevelFilter = ({ context, label, value = '', onChange }: {
 /**
  * Table cell.
  */
-const Cell = ({ dataKey, data, rowData, rowHeight }: {
+const Cell = ({ dataKey, data, rowData, rowHeight, width }: {
   dataKey: string,
   data: string | React.ReactNode,
   rowData: any,
   rowHeight?: number
+  width: number
 }) => {
   const classes = useStyles();
 
@@ -265,7 +286,10 @@ const Cell = ({ dataKey, data, rowData, rowHeight }: {
       }
 
       case 'message': {
-        const lines = (data as string).split('\n');
+        let lines = (data as string).split('\n');
+        if (lines.length === 1) {
+          lines = splitStringByLinesByWidth(data as string, Math.ceil(width / 10));
+        }
         return (
           <div>{lines.map((line, i) => <div key={i}>{line}</div>)}</div>
         );
@@ -307,9 +331,9 @@ export const LogTable = ({ messages = [] }: LogProps) => {
   const tableRef = useRef<Table>(null);
   const [filteredMessages, setFilteredMessages] = useState(messages);
   const [levels, setLevels] = useState<string[]>([]);
-  const [expanded, setExpanded] = useState(new Set<string>());
   const [{ filterKey, filterValue }, setFilter] = useState<IFilter>({ filterKey: undefined, filterValue: undefined });
   const [tail, setTail] = useState(true);
+  const [logsColumnWidth, setlogsColumnWidth] = useState(0);
 
   // Filter.
   useEffect(() => {
@@ -337,6 +361,12 @@ export const LogTable = ({ messages = [] }: LogProps) => {
     }
   }, [filteredMessages]);
 
+  // Recalculate height.
+  useEffect(() => {
+    // Recalculate height.
+    tableRef.current!.recomputeRowHeights(); // Refresh.
+  }, [filteredMessages, logsColumnWidth]);
+
   const handleFilterChange = (filterKey: keyof ILogMessage, filterValue: any) => {
     setFilter({ filterKey, filterValue });
   };
@@ -349,67 +379,70 @@ export const LogTable = ({ messages = [] }: LogProps) => {
     <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}>
         <AutoSizer>
-          {({ width, height }) => (
-            <Table
-              ref={tableRef}
-              width={width}
-              height={height}
-              headerHeight={headerHeight}
-              rowClassName={() => clsx(classes.tableRow, classes.flexContainer)}
-              rowCount={filteredMessages.length}
-              rowGetter={({ index }) => filteredMessages[index]}
-              // scrollToAlignment='end'
-              // scrollToRow={Infinity}
-              onScroll={({ clientHeight, scrollHeight, scrollTop }: {
-                clientHeight: number,
-                scrollHeight: number,
-                scrollTop: number
-              }) => {
-                // Tail mode (pinned) if scrolled to bottom.
-                // NOTE: CSS overflow-anchor would work (https://blog.eqrion.net/pin-to-bottom) if we could
-                // inject an anchor dev as a sibling of the scroll container inside the Grid.
-                setTail(scrollHeight - clientHeight === scrollTop);
-              }}
-              rowHeight={({ index }: { index: number }) => {
-                const message = filteredMessages[index];
-                const lines = message.message.split('\n').length;
-                return rowHeight + (expanded.has(message.id) ? (lines - 1) * lineHeight : 0);
-              }}
-              // TODO(burdon): Toggle expanded on message; otherwith highlight row.
-              onRowClick={({ index }: { index: number }) => {
-                const message = filteredMessages[index];
-                if (expanded.has(message.id)) {
-                  expanded.delete(message.id);
-                } else {
-                  expanded.add(message.id);
+          {({ width: tableWidth, height }) => {
+            const logColumnWidth = Math.max(columns.filter(col => col.dataKey !== 'message').reduce((sum, col) => sum - col.width, tableWidth), LOG_COLUMN_WIDTH);
+            setlogsColumnWidth(logColumnWidth);
+            return (
+              <Table
+                ref={tableRef}
+                width={tableWidth}
+                height={height}
+                headerHeight={headerHeight}
+                rowClassName={() => clsx(classes.tableRow, classes.flexContainer)}
+                rowCount={filteredMessages.length}
+                rowGetter={({ index }) => filteredMessages[index]}
+                // scrollToAlignment='end'
+                // scrollToRow={Infinity}
+                onScroll={({ clientHeight, scrollHeight, scrollTop }: {
+                  clientHeight: number,
+                  scrollHeight: number,
+                  scrollTop: number
+                }) => {
+                  // Tail mode (pinned) if scrolled to bottom.
+                  // NOTE: CSS overflow-anchor would work (https://blog.eqrion.net/pin-to-bottom) if we could
+                  // inject an anchor dev as a sibling of the scroll container inside the Grid.
+                  setTail(scrollHeight - clientHeight === scrollTop);
+                }}
+                rowHeight={({ index }: { index: number }) => {
+                  const message = filteredMessages[index];
+                  let lines = message.message.split('\n').length;
+                  if (lines === 1) {
+                    lines = splitStringByLinesByWidth(message.message, Math.ceil(logColumnWidth / 10)).length;
+                  }
+                  // Expand all logs by default.
+                  return rowHeight + (lines - 1) * lineHeight;
+                }}
+              >
+                {
+                  columns.map(({ dataKey, label, width }) => {
+                    const columnWidth = (dataKey === 'message') ? logColumnWidth : width;
+                    return (
+                      <Column
+                        key={dataKey}
+                        dataKey={dataKey}
+                        label={label}
+                        width={columnWidth}
+                        className={classes.flexContainer}
+                        headerRenderer={({ label, ...other }) => (
+                          <Header
+                            filterKey={filterKey}
+                            filterValue={filterValue}
+                            onFilterChange={handleFilterChange}
+                            Component={dataKey === 'level' ? LevelFilter : undefined}
+                            context={{ levels }}
+                            label={label}
+                            {...other}
+                          />
+                        )}
+                        cellRenderer={({ cellData, ...other }) => <Cell data={cellData} width={columnWidth} {...other} />}
+                      />
+                    );
+                  })
                 }
-                setExpanded(new Set(expanded));
-                tableRef.current!.recomputeRowHeights(index); // Refresh.
-              }}
-            >
-              {columns.map(({ dataKey, label, width }) => (
-                <Column
-                  key={dataKey}
-                  dataKey={dataKey}
-                  label={label}
-                  width={width}
-                  className={classes.flexContainer}
-                  headerRenderer={({ label, ...other }) => (
-                    <Header
-                      filterKey={filterKey}
-                      filterValue={filterValue}
-                      onFilterChange={handleFilterChange}
-                      Component={dataKey === 'level' ? LevelFilter : undefined}
-                      context={{ levels }}
-                      label={label}
-                      {...other}
-                    />
-                  )}
-                  cellRenderer={({ cellData, ...other }) => <Cell data={cellData} {...other} />}
-                />
-              ))}
-            </Table>
-          )}
+              </Table>
+            );
+          }
+          }
         </AutoSizer>
       </Box>
     </Box>
