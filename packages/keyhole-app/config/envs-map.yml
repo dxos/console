@@ -1,10 +1,3 @@
 #
 # ENV mapping
 #
-
-PUBLIC_URL:
-  path: app.publicUrl
-NODE_ENV:
-  path: debug.mode
-DEBUG:
-  path: debug.logging
