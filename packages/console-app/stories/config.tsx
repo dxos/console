@@ -5,12 +5,12 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import React from 'react';
 
-import { ConfigV1Object } from '@dxos/config';
+import { ConfigObject } from '@dxos/config';
 import { FullScreen } from '@dxos/react-components';
 
 import { createCustomTheme } from '../src';
 
-export const config: ConfigV1Object = {
+export const config: ConfigObject = {
   module: {
     build: {
       version: '1.0.0'
@@ -48,7 +48,7 @@ export const config: ConfigV1Object = {
   }
 };
 
-export const RootContainer = ({ config, children }: { config: ConfigV1Object, children: JSX.Element }) => {
+export const RootContainer = ({ config, children }: { config: ConfigObject, children: JSX.Element }) => {
   return (
     <ThemeProvider theme={createCustomTheme(config)}>
       <CssBaseline />

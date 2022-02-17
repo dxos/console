@@ -8,7 +8,6 @@ runtime:
   props:
     title: "Console"
   app:
-    org': 'DXOS.org'
     theme: 'dark'
     website: 'https://dxos.org'
     publicUrl: '/console'

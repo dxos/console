@@ -9,7 +9,6 @@ runtime:
   props:
     title: "Console"
   app:
-    org': 'DXOS.org'
     theme: 'dark'
     website: 'https://dxos.org'
     publicUrl: '/console'
@@ -26,15 +25,6 @@ runtime:
 
     dxns:
       server: 'wss://dxns1.kube.dxos.network/dxns/ws'
-      schema:
-        cid:
-        fqn:
-          app: '.dxos.App'
-          bot: '.dxos.Bot'
-          botFactory: '.dxos.BotFactory'
-          KUBE: '.dxos.KUBE'
-          service: '.dxos.Service'
-          file: '.dxos.File'
     signal:
       server: 'wss://enterprise.kube.dxos.network/dxos/signal'
       api: 'https://enterprise.kube.dxos.network/dxos/signal/api'
@@ -44,6 +34,3 @@ runtime:
     ipfs:
       server: 'https://enterprise.kube.dxos.network/dxos/ipfs/api'
       gateway: 'https://enterprise.kube.dxos.network/dxos/ipfs/gateway'
-
-    wellknown:
-      endpoint: 'https://enterprise.kube.dxos.network/.well-known/dxos'

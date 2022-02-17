@@ -16,7 +16,7 @@ import {
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ThemeProviderProps } from '@mui/material/styles/ThemeProvider';
 
-import { ConfigV1Object } from '@dxos/config';
+import { ConfigObject } from '@dxos/config';
 import { FullScreen } from '@dxos/react-components';
 
 import { Container, Sidebar } from '../components';
@@ -66,7 +66,7 @@ export const Main = ({ panels }: MainProps) => {
 };
 
 interface AppProps {
-  config: ConfigV1Object
+  config: ConfigObject
   panels: IPanel[]
   theme: ThemeProviderProps['theme']
 }
