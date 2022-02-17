@@ -11,10 +11,7 @@ import { colors, Box, CssBaseline, createTheme, ThemeProvider } from '@mui/mater
 import { Kube } from '@dxos/gem-experimental';
 import { Passcode } from '@dxos/react-components';
 
-import { useContentScript } from '../hooks';
-
 const APP_AUTH_PATH = '/app/auth';
-const WALLET_AUTH_PATH = '/wallet/auth';
 
 const theme = createTheme({
   palette: {
@@ -65,8 +62,6 @@ export const App = () => {
   const [attempt, setAttempt] = useState(1);
   const [state, setState] = useState(State.Default);
   const [phrase, setPhrase] = useState(phrases[0]);
-  const { rpcClient: contentScript } = useContentScript();
-  const rpcClient = contentScript?.rpc;
 
   const onLogin = () => {
     setState(State.Success);
@@ -83,26 +78,6 @@ export const App = () => {
 
     return () => clearInterval(t);
   }, []);
-
-  useEffect(() => {
-    if (rpcClient === undefined) {
-      return;
-    }
-
-    setImmediate(async () => {
-      const profile = await rpcClient.GetProfile({});
-      superagent.post(WALLET_AUTH_PATH)
-        .send({ key: profile.publicKey })
-        .set('accept', 'json')
-        .end((err: string, res: any = {}) => {
-          if (err || !res.ok) {
-            console.log('Couldn\'t login with wallet identity. Falling back to OTP.');
-          } else {
-            onLogin();
-          }
-        });
-    });
-  }, [rpcClient]);
 
   const handleSubmit = (code: string) => {
     setTimeout(() => {

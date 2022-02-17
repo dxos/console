@@ -9,7 +9,7 @@ import { generatePath, useHistory, useParams } from 'react-router';
 import { Sync as RefreshIcon } from '@mui/icons-material';
 import { Box, Collapse, IconButton, Paper } from '@mui/material';
 
-import { ConfigV1Object } from '@dxos/config';
+import { ConfigObject } from '@dxos/config';
 import { JsonTreeView, Searchbar } from '@dxos/react-components';
 import { useRecords, useRecordTypes } from '@dxos/react-registry-client';
 import { CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-client';
@@ -30,7 +30,7 @@ import { getRecordTypeData, safe } from '../util';
  * @param recordTypes
  * @param config
  */
-export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryTypeRecord[], config: ConfigV1Object): IRecord[] => {
+export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryTypeRecord[], config: ConfigObject): IRecord[] => {
   return records.map(registryRecord => {
     const record: IRecord = {
       cid: registryRecord.cid,
