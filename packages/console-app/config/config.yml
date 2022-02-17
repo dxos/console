@@ -34,3 +34,5 @@ runtime:
     ipfs:
       server: 'https://enterprise.kube.dxos.network/dxos/ipfs/api'
       gateway: 'https://enterprise.kube.dxos.network/dxos/ipfs/gateway'
+    bot:
+      topic: '21a77b968505ea2ee8628b1044f1becd92330e63644a59eb4361a5016fbad37f'
