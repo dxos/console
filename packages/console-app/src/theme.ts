@@ -4,7 +4,7 @@
 
 import { colors, createTheme } from '@mui/material';
 
-import { ConfigObject } from '@dxos/config';
+import { Config } from '@dxos/config';
 
 type ThemeMode = 'light' | 'dark' | undefined;
 
@@ -12,11 +12,11 @@ type ThemeMode = 'light' | 'dark' | undefined;
  * Create material theme.
  * https://mui.com/customization/theming
  */
-export const createCustomTheme = (config: ConfigObject) => createTheme({
+export const createCustomTheme = (config: Config) => createTheme({
 
   // https://mui.com/customization/palette
   palette: {
-    mode: config.runtime?.app?.theme as ThemeMode,
+    mode: config.get('runtime.app.theme') as ThemeMode,
     primary: colors.teal,
     secondary: colors.orange
   },

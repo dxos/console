@@ -14,6 +14,7 @@ import { Box } from '@mui/system';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 
 import { DataGrid, Panel, Toolbar } from '../components';
+import { useConfig } from '../hooks';
 
 interface ColumsProps {
   bfClient: BotFactoryClient,
@@ -102,7 +103,8 @@ const columns: (props: ColumsProps) => GridColDef[] = (props: ColumsProps) => [
  * Displays the status of bot containers.
  */
 export const BotsPanel = () => {
-  const botClient = useBotFactoryClient();
+  const config = useConfig();
+  const botClient = useBotFactoryClient(config);
   const [bots, setBots] = useState<BotRow[]>([]);
   const [inProgress, setInProgress] = useState<string[]>([]); // Bot ids that have requests in progress
 

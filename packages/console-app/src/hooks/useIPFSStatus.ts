@@ -14,7 +14,7 @@ export const useIFPSStatus = () => {
   useEffect(() => {
     void (async () => {
       // NOTE: Hangs if server not running.
-      const ipfs = create({ url: config.runtime?.services?.ipfs?.server });
+      const ipfs = create({ url: config.get('runtime.services.ipfs.server') });
 
       const id = await ipfs.id();
       const version = await ipfs.version();

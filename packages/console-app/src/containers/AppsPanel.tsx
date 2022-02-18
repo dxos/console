@@ -85,7 +85,7 @@ export const AppsPanel = () => {
         id: resource.id.toString(),
         created: record?.meta.created?.getTime(),
         description: record?.meta.description,
-        url: urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.app?.prefix, resource.id.toString())
+        url: urlJoin(config.get('runtime.services.app.server'), config.get('runtime.services.app.prefix'), resource.id.toString())
       };
     }));
 
