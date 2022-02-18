@@ -6,6 +6,7 @@ export * from './AccessPanel';
 export * from './AppsPanel';
 export * from './BotsPanel';
 export * from './ConfigPanel';
+export * from './DeveloperPanel';
 export * from './DXNSPanel';
 export * from './DomainsPanel';
 export * from './IPFSPanel';

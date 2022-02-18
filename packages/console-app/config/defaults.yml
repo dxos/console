@@ -6,10 +6,12 @@ version: 1
 
 runtime:
   props:
-    title: "Console"
+    title: 'Console'
+
   app:
     theme: 'dark'
     website: 'https://dxos.org'
     publicUrl: '/console'
+
   system:
     debug: 'dxos:console:*'
