@@ -4,7 +4,6 @@
 
 export * from './datetime';
 export * from './record-type-data';
-export * from './array-element';
 
 export function safe<T> (f: () => T): T | undefined {
   try {

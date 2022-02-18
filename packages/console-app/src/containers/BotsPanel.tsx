@@ -8,17 +8,40 @@ import { Bot, BotFactoryClient } from '@dxos/bot-factory-client';
 import { useBotFactoryClient } from '@dxos/react-client';
 
 
-import { Launch as LaunchIcon, Sync as RefreshIcon } from '@mui/icons-material';
-import { IconButton, Link } from '@mui/material';
+import { Stop as StopIcon, Start as StartIcon, Remove as RemoveIcon, Sync as RefreshIcon } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 import { Box } from '@mui/system';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 
 import { DataGrid, Panel, Toolbar } from '../components';
-import { ArrayElement } from '../util';
 
 interface ColumsProps {
   bfClient: BotFactoryClient,
-  requestsInProgress: string[] // list of bot ids that have pending request
+  inProgress: string[],
+  setInProgress: React.Dispatch<React.SetStateAction<string[]>>
+}
+
+interface BotRow {
+  id?: string,
+  status?: string
+}
+
+const doBotAction = (botId: string, props: ColumsProps) => async (action: 'START' | 'STOP' | 'REMOVE') => {
+  const { bfClient, setInProgress } = props;
+
+  setInProgress(inProgress => [...inProgress, botId]);
+  try {
+    const handle = bfClient.get(botId);
+    switch (action) {
+      case 'START': await handle.start(); break;
+      case 'STOP': await handle.stop(); break;
+      case 'REMOVE': await handle.remove(); break;
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    setInProgress(inProgress => inProgress.filter(id => id !== botId));
+  }
 }
 
 const columns: (props: ColumsProps) => GridColDef[] = (props: ColumsProps) => [
@@ -29,72 +52,66 @@ const columns: (props: ColumsProps) => GridColDef[] = (props: ColumsProps) => [
     cellClassName: 'monospace secondary'
   },
   {
-    field: 'description',
-    headerName: 'Description',
+    field: 'status',
+    headerName: 'Status',
     width: 180
   },
   {
-    field: 'url',
-    headerName: 'Link',
-    width: 120,
+    field: 'id',
+    headerName: 'Actions',
     sortable: false,
-    // https://mui.com/components/data-grid/style/#styling-cells
     renderCell: (params: GridCellParams) => {
-      if (props.requestsInProgress.includes(params.id.toString())) {
-        // this bot has a requies in progress
-        return
-      }
+      const id = params.value as string;
+      let inProgress = props.inProgress.includes(id);
+      const actions = doBotAction(id, props);
       if (params.value) {
         return (
-          <Link target='link' href={params.value as string}>
-            <IconButton size='small' color='primary'>
-              <LaunchIcon />
+          <>
+            <IconButton 
+              size='small' 
+              color='success'
+              disabled={inProgress}
+              onClick={() => actions('START')}
+            >
+              <StartIcon />
             </IconButton>
-          </Link>
+            <IconButton 
+              size='small'
+              color='warning'
+              disabled={inProgress}
+              onClick={() => actions('STOP')}
+            >
+              <StopIcon />
+            </IconButton>
+            <IconButton
+              size='small'
+              color='error'
+              disabled={inProgress}
+              onClick={() => actions('REMOVE')}
+            >
+              <RemoveIcon />
+            </IconButton>
+          </>
         );
       }
     }
   }
 ];
 
-// class Bot {
-//   public readonly id: string;
-//   public readonly status: string;
-//   public requestInProgress = false;
-//   private readonly _bfClient: BotFactoryClient;
-
-//   constructor (bfClient: BotFactoryClient, id: string, status: number) {
-//     this._bfClient = bfClient;
-//     this.id = id;
-//     this.status = status === 0 ? 'RUNNING' : 'STOPPED'; //todo use protobuf enum
-//   }
-
-//   get actions() {
-//     return {
-//       requestInProgress: this.requestInProgress,
-//       start: async () => {
-//         this.requestInProgress = true;
-//         await this._bfClient.startBot(this.id);
-//         this.requestInProgress = false;
-//       }
-//     };
-//   }
-// }
-
 /**
  * Displays the status of bot containers.
  */
 export const BotsPanel = () => {
   const botClient = useBotFactoryClient();
-  const [bots, setBots] = useState<any[]>([]);
-  const [inProgress, setInprogress] = useState<string[]>([]); // Bot ids that have requests in progress
+  const [bots, setBots] = useState<BotRow[]>([]);
+  const [inProgress, setInProgress] = useState<string[]>([]); // Bot ids that have requests in progress
 
   const refresh = async () => {
     if (botClient) {
       const bots = await botClient.list();
       setBots(bots.map(bot => ({
         id: bot.id,
-        status: Bot. bot.status,
+        status: Bot.Status[bot.status!],
       })))
     }
   };
@@ -125,7 +142,7 @@ export const BotsPanel = () => {
       )}>
       <DataGrid
         rows={bots}
-        columns={columns({bfClient: botClient, requestsInProgress: inProgress})}
+        columns={columns({ bfClient: botClient, inProgress, setInProgress })}
         getRowId={row => row.id}
       />
     </Panel>

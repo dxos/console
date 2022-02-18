@@ -36,6 +36,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "@dxos/bot-factory-client": "~2.27.3",
     "@dxos/config": "~2.27.3",
     "@dxos/gem-core": "^1.0.0-beta.35",
     "@dxos/gem-spore": "^1.0.0-beta.35",
@@ -107,8 +108,7 @@
     "webpack-version-file-plugin": "^0.4.0",
     "yaml": "^1.10.2",
     "@types/debug": "~4.1.7",
-    "@babel/core": "^7.0.0",
-    "@dxos/bot-factory-client": "~2.27.3"
+    "@babel/core": "^7.0.0"
   },
   "publishConfig": {
     "access": "public"
