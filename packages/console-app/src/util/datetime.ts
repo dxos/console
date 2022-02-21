@@ -15,7 +15,7 @@ const units = {
 
 export const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
-export const getRelativeTime = (d1: Date, d2: Date = new Date()) => {
+const dateDiff = (d1: Date, d2: Date = new Date()) => {
   const elapsed = d1.valueOf() - d2.valueOf();
   if (isNaN(elapsed)) {
     return undefined;
@@ -24,9 +24,29 @@ export const getRelativeTime = (d1: Date, d2: Date = new Date()) => {
   let unit: keyof typeof units;
   for (unit in units) {
     if (Math.abs(elapsed) > units[unit] || unit === 'second') {
-      return rtf.format(Math.round(elapsed / units[unit]), unit);
+      return { value: Math.round(elapsed / units[unit]), unit };
     }
   }
+};
+
+export const getRelativeTimeDelta  = (d1: Date, d2: Date = new Date()) => {
+  const diff = dateDiff(d1, d2);
+  if (!diff) {
+    return undefined;
+  }
+
+  const { value, unit } = diff;
+  return `${-value} ${unit}`  + (-value > 1 ? 's' : '');
+}
+
+export const getRelativeTime = (d1: Date, d2: Date = new Date()) => {
+  const diff = dateDiff(d1, d2);
+  if (!diff) {
+    return undefined;
+  }
+
+  const { value, unit } = diff;
+  return rtf.format(value, unit);
 };
 
 export const sortDateStrings = (v1: string, v2: string) => {

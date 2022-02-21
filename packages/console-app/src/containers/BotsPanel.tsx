@@ -2,12 +2,12 @@
 // Copyright 2021 DXOS.org
 //
 
+import assert from 'assert';
 import React, { useEffect, useState } from 'react';
 
 import { Bot, BotFactoryClient } from '@dxos/bot-factory-client';
 import { PublicKey } from '@dxos/crypto';
 import { useBotFactoryClient } from '@dxos/react-client';
-import { NetworkManager } from '@dxos/network-manager';
 
 
 import { Stop as StopIcon, PlayArrow as StartIcon, DeleteForever as RemoveIcon, Sync as RefreshIcon } from '@mui/icons-material';
@@ -17,6 +17,7 @@ import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 
 import { DataGrid, Panel, Toolbar } from '../components';
 import { useConfig } from '../hooks';
+import { getRelativeTimeDelta } from '../util';
 
 interface ColumsProps {
   bfClient: BotFactoryClient,
@@ -27,6 +28,7 @@ interface ColumsProps {
 interface BotRow {
   id?: string,
   status?: string,
+  dxn?: string,
   actions: any
 }
 
@@ -48,18 +50,33 @@ const doBotAction = (botId: string, props: ColumsProps) => async (action: 'START
   }
 }
 
+const getBotStatus = (bot: Bot) => {
+  assert(bot.status, 'Bot status is not defined');
+  if (bot.lastStart && bot.status === Bot.Status.RUNNING) {
+    return 'UP ' + getRelativeTimeDelta(bot.lastStart);
+  }
+  return Bot.Status[bot.status];
+}
+
 const columns: (props: ColumsProps) => GridColDef[] = (props: ColumsProps) => [
   {
     field: 'id',
     headerName: 'Bot Id',
     headerAlign: 'center',
-    flex: 3,
+    flex: 1,
     align: 'center',
     cellClassName: 'monospace secondary'
   },
   {
     field: 'status',
     headerName: 'Status',
+    headerAlign: 'center',
+    flex: 1,
+    align: 'center'
+  },
+  {
+    field: 'dxn',
+    headerName: 'DXN',
     headerAlign: 'center',
     flex: 1,
     align: 'center'
@@ -126,17 +143,12 @@ export const BotsPanel = () => {
 
   const refresh = async () => {
     if (botClient) {
-      const networkManager = new NetworkManager({
-        signal: config.get('runtime.services.signal.server') ? [config.get('runtime.services.signal.server')!] : undefined,
-        ice: config.get('runtime.services.ice'),
-        log: true
-      });
-      const botFactoryClient = new BotFactoryClient(networkManager);
-      await botFactoryClient.start(PublicKey.from(config.get('runtime.services.bot.topic')!));
-      const bots = await botFactoryClient.list();
+      await botClient.start(PublicKey.from(config.get('runtime.services.bot.topic')!));
+      const bots = await botClient.list();
       setBots(bots.map(bot => ({
         id: bot.id,
-        status: Bot.Status[bot.status!],
+        status: getBotStatus(bot),
+        dxn: bot.packageSpecifier?.dxn,
         actions: {}
       })));
     }
