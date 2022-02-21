@@ -126,7 +126,6 @@ export const BotsPanel = () => {
 
   const refresh = async () => {
     if (botClient) {
-      console.log('Refreshing bots');
       const networkManager = new NetworkManager({
         signal: config.get('runtime.services.signal.server') ? [config.get('runtime.services.signal.server')!] : undefined,
         ice: config.get('runtime.services.ice'),
@@ -135,13 +134,11 @@ export const BotsPanel = () => {
       const botFactoryClient = new BotFactoryClient(networkManager);
       await botFactoryClient.start(PublicKey.from(config.get('runtime.services.bot.topic')!));
       const bots = await botFactoryClient.list();
-      console.log('Bots', bots);
       setBots(bots.map(bot => ({
         id: bot.id,
         status: Bot.Status[bot.status!],
         actions: {}
       })));
-      console.log('Refreshing bots done');
     }
   };
 
