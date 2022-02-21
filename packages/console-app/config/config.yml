@@ -34,6 +34,9 @@ runtime:
       server: wss://discovery.kube.dxos.network/dxos/signal
       api: https://discovery.kube.dxos.network/dxos/signal/api
 
+    bot:
+      topic: d4d8f4aa6999ff87b00b2644117bcf9dd62c7ae7a70118264b2e1d286402c9fa
+
     ice:
     - urls: stun:discovery.kube.dxos.network:3478
     - urls: turn:discovery.kube.dxos.network:3478

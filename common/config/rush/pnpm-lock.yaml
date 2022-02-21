@@ -10,11 +10,13 @@ importers:
       '@babel/core': ^7.0.0
       '@dxos/bot-factory-client': /Users/vladyslav/dxos/protocols/common/temp/artifacts/local-e230b72c646b/dxos-bot-factory-client-2.27.3.tgz
       '@dxos/config': /Users/vladyslav/dxos/protocols/common/temp/artifacts/local-e230b72c646b/dxos-config-2.27.3.tgz
+      '@dxos/crypto': /Users/vladyslav/dxos/protocols/common/temp/artifacts/local-e230b72c646b/dxos-crypto-2.27.3.tgz
       '@dxos/esbuild-plugins': /Users/vladyslav/dxos/protocols/common/temp/artifacts/local-e230b72c646b/dxos-esbuild-plugins-2.27.3.tgz
       '@dxos/esbuild-server': 1.4.1
       '@dxos/eslint-plugin': 1.0.20
       '@dxos/gem-core': ^1.0.0-beta.35
       '@dxos/gem-spore': ^1.0.0-beta.35
+      '@dxos/network-manager': /Users/vladyslav/dxos/protocols/common/temp/artifacts/local-e230b72c646b/dxos-network-manager-2.27.3.tgz
       '@dxos/react-client': /Users/vladyslav/dxos/protocols/common/temp/artifacts/local-e230b72c646b/dxos-react-client-2.27.3.tgz
       '@dxos/react-components': /Users/vladyslav/dxos/protocols/common/temp/artifacts/local-e230b72c646b/dxos-react-components-2.27.3.tgz
       '@dxos/react-registry-client': /Users/vladyslav/dxos/protocols/common/temp/artifacts/local-e230b72c646b/dxos-react-registry-client-2.27.3.tgz
@@ -81,8 +83,10 @@ importers:
     dependencies:
       '@dxos/bot-factory-client': file:../../../protocols/common/temp/artifacts/local-e230b72c646b/dxos-bot-factory-client-2.27.3.tgz
       '@dxos/config': file:../../../protocols/common/temp/artifacts/local-e230b72c646b/dxos-config-2.27.3.tgz
+      '@dxos/crypto': file:../../../protocols/common/temp/artifacts/local-e230b72c646b/dxos-crypto-2.27.3.tgz
       '@dxos/gem-core': 1.0.0-beta.36_fced322086cd04afb0b6feec9e866920
       '@dxos/gem-spore': 1.0.0-beta.36_fced322086cd04afb0b6feec9e866920
+      '@dxos/network-manager': file:../../../protocols/common/temp/artifacts/local-e230b72c646b/dxos-network-manager-2.27.3.tgz
       '@dxos/react-client': file:../../../protocols/common/temp/artifacts/local-e230b72c646b/dxos-react-client-2.27.3.tgz_react@17.0.2
       '@dxos/react-components': file:../../../protocols/common/temp/artifacts/local-e230b72c646b/dxos-react-components-2.27.3.tgz_a52d5d101e9893ddbd53ed5f22a24e75
       '@dxos/react-registry-client': file:../../../protocols/common/temp/artifacts/local-e230b72c646b/dxos-react-registry-client-2.27.3.tgz_react-dom@17.0.2+react@17.0.2

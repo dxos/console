@@ -5,11 +5,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { Bot, BotFactoryClient } from '@dxos/bot-factory-client';
+import { PublicKey } from '@dxos/crypto';
 import { useBotFactoryClient } from '@dxos/react-client';
+import { NetworkManager } from '@dxos/network-manager';
 
 
-import { Stop as StopIcon, Start as StartIcon, Remove as RemoveIcon, Sync as RefreshIcon } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { Stop as StopIcon, PlayArrow as StartIcon, DeleteForever as RemoveIcon, Sync as RefreshIcon } from '@mui/icons-material';
+import { IconButton, Tooltip } from '@mui/material';
 import { Box } from '@mui/system';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 
@@ -24,7 +26,8 @@ interface ColumsProps {
 
 interface BotRow {
   id?: string,
-  status?: string
+  status?: string,
+  actions: any
 }
 
 const doBotAction = (botId: string, props: ColumsProps) => async (action: 'START' | 'STOP' | 'REMOVE') => {
@@ -48,50 +51,63 @@ const doBotAction = (botId: string, props: ColumsProps) => async (action: 'START
 const columns: (props: ColumsProps) => GridColDef[] = (props: ColumsProps) => [
   {
     field: 'id',
-    headerName: 'Id',
-    width: 400,
+    headerName: 'Bot Id',
+    headerAlign: 'center',
+    flex: 3,
+    align: 'center',
     cellClassName: 'monospace secondary'
   },
   {
     field: 'status',
     headerName: 'Status',
-    width: 180
+    headerAlign: 'center',
+    flex: 1,
+    align: 'center'
   },
   {
-    field: 'id',
+    field: 'actions',
     headerName: 'Actions',
+    headerAlign: 'center',
+    flex: 1,
+    align: 'center',
     sortable: false,
     renderCell: (params: GridCellParams) => {
-      const id = params.value as string;
+      const id = params.id as string;
       let inProgress = props.inProgress.includes(id);
       const actions = doBotAction(id, props);
       if (params.value) {
         return (
           <>
-            <IconButton 
-              size='small' 
-              color='success'
-              disabled={inProgress}
-              onClick={() => actions('START')}
-            >
-              <StartIcon />
-            </IconButton>
-            <IconButton 
-              size='small'
-              color='warning'
-              disabled={inProgress}
-              onClick={() => actions('STOP')}
-            >
-              <StopIcon />
-            </IconButton>
-            <IconButton
-              size='small'
-              color='error'
-              disabled={inProgress}
-              onClick={() => actions('REMOVE')}
-            >
-              <RemoveIcon />
-            </IconButton>
+            <Tooltip title='Start'>
+              <IconButton 
+                size='small' 
+                color='success'
+                disabled={inProgress}
+                onClick={() => actions('START')}
+              >
+                <StartIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title='Stop'>
+              <IconButton 
+                size='small'
+                color='warning'
+                disabled={inProgress}
+                onClick={() => actions('STOP')}
+              >
+                <StopIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title='Remove'>
+              <IconButton
+                size='small'
+                color='error'
+                disabled={inProgress}
+                onClick={() => actions('REMOVE')}
+              >
+                <RemoveIcon />
+              </IconButton>
+            </Tooltip>
           </>
         );
       }
@@ -110,11 +126,22 @@ export const BotsPanel = () => {
 
   const refresh = async () => {
     if (botClient) {
-      const bots = await botClient.list();
+      console.log('Refreshing bots');
+      const networkManager = new NetworkManager({
+        signal: config.get('runtime.services.signal.server') ? [config.get('runtime.services.signal.server')!] : undefined,
+        ice: config.get('runtime.services.ice'),
+        log: true
+      });
+      const botFactoryClient = new BotFactoryClient(networkManager);
+      await botFactoryClient.start(PublicKey.from(config.get('runtime.services.bot.topic')!));
+      const bots = await botFactoryClient.list();
+      console.log('Bots', bots);
       setBots(bots.map(bot => ({
         id: bot.id,
         status: Bot.Status[bot.status!],
-      })))
+        actions: {}
+      })));
+      console.log('Refreshing bots done');
     }
   };
 
