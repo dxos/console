@@ -39,10 +39,13 @@ export const DeveloperPanel = () => {
       return;
     }
     setImmediate(async () => {
+      const userDomains = (await registry.getDomains())
+        .filter(domain => AccountKey.equals(domain.owner, account.id))
+        .map(domain => domain.name)
       const appType = await registry.getResourceRecord(DXN.parse('dxos:type.app'), 'latest');
       assert(appType, 'Resource not found: dxos:type.app');
       const apps = await registry.queryResources({ type: appType.record.cid });
-      setApps(apps);
+      setApps(apps.filter(app => userDomains.includes(app.id.domain)));
     });
   }, [account]);
 
