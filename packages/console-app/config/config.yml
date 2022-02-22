@@ -20,17 +20,29 @@ runtime:
         services: '/kube/services'
 
     app:
-      prefix: '/app'
-      server: 'https://enterprise.kube.dxos.network'
+      prefix: "/app"
+      server: https://discovery.kube.dxos.network
 
     dxns:
-      server: 'wss://dxns1.kube.dxos.network/dxns/ws'
-    signal:
-      server: 'wss://enterprise.kube.dxos.network/dxos/signal'
-      api: 'https://enterprise.kube.dxos.network/dxos/signal/api'
-      # TODO(egorgripasov): Temp, replace with enterprise.
-      status: 'https://test-signal2.kube.dxos.network/dxos/signal/status'
-
+      server: wss://discovery.kube.dxos.network/dxns/ws
+  
     ipfs:
-      server: 'https://enterprise.kube.dxos.network/dxos/ipfs/api'
-      gateway: 'https://enterprise.kube.dxos.network/dxos/ipfs/gateway'
+      server: https://discovery.kube.dxos.network/dxos/ipfs/api
+      gateway: https://discovery.kube.dxos.network/dxos/ipfs/gateway/
+
+    signal:
+      server: wss://discovery.kube.dxos.network/dxos/signal
+      api: https://discovery.kube.dxos.network/dxos/signal/api
+
+    bot:
+      topic: d4d8f4aa6999ff87b00b2644117bcf9dd62c7ae7a70118264b2e1d286402c9fa
+
+    ice:
+    - urls: stun:discovery.kube.dxos.network:3478
+    - urls: turn:discovery.kube.dxos.network:3478
+      username: dxos
+      credential: dxos
+    - urls: stun:discovery.kube.dxos.network:3478
+    - urls: turn:discovery.kube.dxos.network:3478
+      username: dxos
+      credential: dxos

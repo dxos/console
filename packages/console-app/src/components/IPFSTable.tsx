@@ -97,9 +97,6 @@ export const IPFSTable = () => {
           .filter(record => record.data.hash)
           .map(record => {
             const { typeName, ipfsCid } = getRecordTypeData(record, recordTypes);
-            if (typeName === 'VladsType2') {
-              console.log({ record, ipfsCid });
-            }
             let hash: string | undefined;
             try {
               hash = CID.from(record.data.hash).toString();

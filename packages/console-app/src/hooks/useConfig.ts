@@ -5,11 +5,11 @@
 import assert from 'assert';
 import { createContext, useContext } from 'react';
 
-import { ConfigObject } from '@dxos/config';
+import { Config } from '@dxos/config';
 
-export const ConfigContext = createContext<ConfigObject | undefined>(undefined);
+export const ConfigContext = createContext<Config | undefined>(undefined);
 
-export const useConfig = (): ConfigObject => {
+export const useConfig = (): Config => {
   const config = useContext(ConfigContext)!;
   assert(config);
   return config;
