@@ -29,15 +29,15 @@ const dateDiff = (d1: Date, d2: Date = new Date()) => {
   }
 };
 
-export const getRelativeTimeDelta  = (d1: Date, d2: Date = new Date()) => {
+export const getRelativeTimeDelta = (d1: Date, d2: Date = new Date()) => {
   const diff = dateDiff(d1, d2);
   if (!diff) {
     return undefined;
   }
 
   const { value, unit } = diff;
-  return `${-value} ${unit}`  + (-value > 1 ? 's' : '');
-}
+  return `${-value} ${unit}` + (-value > 1 ? 's' : '');
+};
 
 export const getRelativeTime = (d1: Date, d2: Date = new Date()) => {
   const diff = dateDiff(d1, d2);

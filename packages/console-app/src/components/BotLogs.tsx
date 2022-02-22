@@ -4,13 +4,13 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { BotFactoryClient } from "@dxos/bot-factory-client";
-
-import { 
-  ArrowBack as BackIcon,
+import {
+  ArrowBack as BackIcon
 } from '@mui/icons-material';
 import { IconButton, Tooltip, Paper, Divider, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+
+import { BotFactoryClient } from '@dxos/bot-factory-client';
 
 import { Panel, Toolbar } from './Panel';
 
@@ -20,30 +20,30 @@ export interface BotLogsProps {
   selectBot: React.Dispatch<React.SetStateAction<string | undefined>>,
 }
 
-export const BotLogs = ({ 
+export const BotLogs = ({
   botClient,
   selectedBot,
   selectBot
- }: BotLogsProps) => {
-   const [logs, setLogs] = useState<string[]>([]);
+}: BotLogsProps) => {
+  const [logs, setLogs] = useState<string[]>([]);
 
-   useEffect(() => {
-      const handle = botClient.get(selectedBot);
-      const stream = handle.logsStream();
-      stream.subscribe((msg) => {
-        const { chunk } = msg;
-        if (chunk) {
-          setLogs(logs => [...logs, chunk.toString()]);
-        }
-      }, () => {
-        setLogs(logs => [...logs, 'Stream ended.']);
-      });
-      () => stream.close();
-   }, []);
+  useEffect(() => {
+    const handle = botClient.get(selectedBot);
+    const stream = handle.logsStream();
+    stream.subscribe((msg) => {
+      const { chunk } = msg;
+      if (chunk) {
+        setLogs(logs => [...logs, chunk.toString()]);
+      }
+    }, () => {
+      setLogs(logs => [...logs, 'Stream ended.']);
+    });
+    () => stream.close();
+  }, []);
 
-   console.log(logs);
+  console.log(logs);
 
-   return (
+  return (
     <Panel
       toolbar={(
         <Toolbar>
@@ -70,4 +70,4 @@ export const BotLogs = ({
       </Paper>
     </Panel>
   );
-}
+};

@@ -14,8 +14,8 @@ import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { useRegistry } from '@dxos/react-registry-client';
 import { DXN, RegistryRecord } from '@dxos/registry-client';
 
-import { useConfig } from '../hooks';
 import { DataGrid, Panel, Toolbar } from '../components';
+import { useConfig } from '../hooks';
 import { getRelativeTime } from '../util';
 
 interface TableEntry {

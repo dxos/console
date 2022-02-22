@@ -5,10 +5,7 @@
 import assert from 'assert';
 import React, { useEffect, useState } from 'react';
 
-import { Bot, BotFactoryClient } from '@dxos/bot-factory-client';
-import { PublicKey } from '@dxos/crypto';
-
-import { 
+import {
   Stop as StopIcon,
   PlayArrow as StartIcon,
   DeleteForever as RemoveIcon,
@@ -19,9 +16,12 @@ import { IconButton, Tooltip } from '@mui/material';
 import { Box } from '@mui/system';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 
-import { Panel, Toolbar } from './Panel';
-import { DataGrid } from './DataGrid';
+import { Bot, BotFactoryClient } from '@dxos/bot-factory-client';
+import { PublicKey } from '@dxos/crypto';
+
 import { getRelativeTimeDelta } from '../util';
+import { DataGrid } from './DataGrid';
+import { Panel, Toolbar } from './Panel';
 
 interface ColumsProps {
   bfClient: BotFactoryClient,
@@ -56,7 +56,7 @@ const doBotAction = (botId: string, props: ColumsProps) => async (action: 'START
   } finally {
     setInProgress(inProgress => inProgress.filter(id => id !== botId));
   }
-}
+};
 
 const getBotStatus = (bot: Bot) => {
   assert(bot.status !== undefined, 'Bot status is not defined');
@@ -64,7 +64,7 @@ const getBotStatus = (bot: Bot) => {
     return 'UP ' + getRelativeTimeDelta(bot.lastStart);
   }
   return Bot.Status[bot.status];
-}
+};
 
 const columns: (props: ColumsProps) => GridColDef[] = (props: ColumsProps) => [
   {
@@ -105,14 +105,14 @@ const columns: (props: ColumsProps) => GridColDef[] = (props: ColumsProps) => [
     sortable: false,
     renderCell: (params: GridCellParams) => {
       const id = params.id as string;
-      let inProgress = props.inProgress.includes(id);
+      const inProgress = props.inProgress.includes(id);
       const actions = doBotAction(id, props);
       if (params.value) {
         return (
           <>
             <Tooltip title='Start'>
-              <IconButton 
-                size='small' 
+              <IconButton
+                size='small'
                 color='success'
                 disabled={inProgress}
                 onClick={() => actions('START')}
@@ -121,7 +121,7 @@ const columns: (props: ColumsProps) => GridColDef[] = (props: ColumsProps) => [
               </IconButton>
             </Tooltip>
             <Tooltip title='Stop'>
-              <IconButton 
+              <IconButton
                 size='small'
                 color='warning'
                 disabled={inProgress}
@@ -184,8 +184,8 @@ export const BotsTable = ({ selectBot, botClient } : BotsTableProps) => {
   useEffect(() => {
     setImmediate(async () => {
       await refresh();
-    })
-  }, [botClient])
+    });
+  }, [botClient]);
 
   if (!botClient) {
     return null;
