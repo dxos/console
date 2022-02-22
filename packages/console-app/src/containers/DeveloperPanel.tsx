@@ -5,6 +5,7 @@
 import assert from 'assert';
 import React, { useEffect, useState } from 'react';
 
+import { Config } from '@dxos/config';
 import { useClient } from '@dxos/react-client';
 import { JsonTreeView } from '@dxos/react-components';
 import { useAccountClient, useRegistry } from '@dxos/react-registry-client';
@@ -24,8 +25,8 @@ export const DeveloperPanel = () => {
 
   useEffect(() => {
     setImmediate(async () => {
-      const config = await client.services.SystemService.getConfig();
-      const dxnsAccount = config?.runtime?.services?.dxns?.dxnsAccount;
+      const config = new Config(await client.services.SystemService.getConfig());
+      const dxnsAccount = config.get('runtime.services.dxns.account');
 
       if (accountClient && dxnsAccount) {
         const account = await accountClient.getAccount(AccountKey.fromHex(dxnsAccount));
@@ -41,7 +42,7 @@ export const DeveloperPanel = () => {
     setImmediate(async () => {
       const userDomains = (await registry.getDomains())
         .filter(domain => AccountKey.equals(domain.owner, account.id))
-        .map(domain => domain.name)
+        .map(domain => domain.name);
       const appType = await registry.getResourceRecord(DXN.parse('dxos:type.app'), 'latest');
       assert(appType, 'Resource not found: dxos:type.app');
       const apps = await registry.queryResources({ type: appType.record.cid });
