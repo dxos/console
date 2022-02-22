@@ -1,5 +1,17 @@
 # Changelog
 
+### [1.3.3](https://www.github.com/dxos/console/compare/v1.3.2...v1.3.3) (2022-02-22)
+
+
+### Features
+
+* Bots panel ([#197](https://www.github.com/dxos/console/issues/197)) ([a8b8c24](https://www.github.com/dxos/console/commit/a8b8c24b27278a8c4f22dc6d697228994fc0d6cb))
+
+
+### Bug Fixes
+
+* Cleanup bots stream ([#199](https://www.github.com/dxos/console/issues/199)) ([2051d2f](https://www.github.com/dxos/console/commit/2051d2fa5e4f7b9b07fc30e4c5cbc8be5d2e59c5))
+
 ### [1.3.2](https://www.github.com/dxos/console/compare/v1.3.1...v1.3.2) (2022-02-16)
 
 
