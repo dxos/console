@@ -38,7 +38,7 @@ export const BotLogs = ({
     }, () => {
       setLogs(logs => [...logs, 'Stream ended.']);
     });
-    () => stream.close();
+    return () => stream.close();
   }, []);
 
   return (
