@@ -39,7 +39,7 @@ interface BotRow {
   actions: any
 }
 
-const doBotAction = (botId: string, props: ColumsProps) => async (action: 'START' | 'STOP' | 'REMOVE') => {
+const executeBotAction = (botId: string, props: ColumsProps) => async (action: 'START' | 'STOP' | 'REMOVE') => {
   const { bfClient, setInProgress, refresh } = props;
 
   setInProgress(inProgress => [...inProgress, botId]);
@@ -106,7 +106,7 @@ const columns: (props: ColumsProps) => GridColDef[] = (props: ColumsProps) => [
     renderCell: (params: GridCellParams) => {
       const id = params.id as string;
       const inProgress = props.inProgress.includes(id);
-      const actions = doBotAction(id, props);
+      const actions = executeBotAction(id, props);
       if (params.value) {
         return (
           <>

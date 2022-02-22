@@ -41,8 +41,6 @@ export const BotLogs = ({
     () => stream.close();
   }, []);
 
-  console.log(logs);
-
   return (
     <Panel
       toolbar={(
