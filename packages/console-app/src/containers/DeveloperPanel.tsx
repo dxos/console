@@ -26,7 +26,8 @@ export const DeveloperPanel = () => {
   useEffect(() => {
     setImmediate(async () => {
       const config = new Config(await client.services.SystemService.getConfig());
-      const dxnsAccount = config.get('runtime.services.dxns.account');
+      const dxnsAccount = config.get('runtime.services.dxns.account') ??
+        await client.halo.getGlobalPreference('DXNSAccount');
 
       if (accountClient && dxnsAccount) {
         const account = await accountClient.getAccount(AccountKey.fromHex(dxnsAccount));
