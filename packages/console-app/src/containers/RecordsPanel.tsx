@@ -9,7 +9,7 @@ import { generatePath, useHistory, useParams } from 'react-router';
 import { Sync as RefreshIcon } from '@mui/icons-material';
 import { Box, Collapse, IconButton, Paper } from '@mui/material';
 
-import { ConfigObject } from '@dxos/config';
+import { Config } from '@dxos/config';
 import { JsonTreeView, Searchbar } from '@dxos/react-components';
 import { useRecords, useRecordTypes } from '@dxos/react-registry-client';
 import { CID, IQuery, RegistryRecord, RegistryTypeRecord } from '@dxos/registry-client';
@@ -30,7 +30,7 @@ import { getRecordTypeData, safe } from '../util';
  * @param recordTypes
  * @param config
  */
-export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryTypeRecord[], config: ConfigObject): IRecord[] => {
+export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryTypeRecord[], config: Config): IRecord[] => {
   return records.map(registryRecord => {
     const record: IRecord = {
       cid: registryRecord.cid,
@@ -45,7 +45,7 @@ export const joinRecords = (records: RegistryRecord[], recordTypes: RegistryType
     }
 
     const url = (type === 'App')
-      ? urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.app?.prefix, registryRecord.cid.toString())
+      ? urlJoin(config.get('runtime.services.app.server'), config.get('runtime.services.app.prefix'), registryRecord.cid.toString())
       : undefined;
     if (url) {
       record.url = url;

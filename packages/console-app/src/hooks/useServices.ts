@@ -4,27 +4,27 @@
 
 import urlJoin from 'proper-url-join';
 
-import { ConfigObject } from '@dxos/config';
+import { Config } from '@dxos/config';
 
 import { IService } from '../types';
 import { useConfig } from './useConfig';
 import { useRequest, httpRequester } from './useRequest';
 
-const getReqParams = (config: ConfigObject, usage: boolean, cached: boolean) => {
+const getReqParams = (config: Config, usage: boolean, cached: boolean) => {
   const query = { usage: usage.toString(), cached: cached.toString() };
   return {
-    url: urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.kube?.endpoints?.services, { query }),
+    url: urlJoin(config.get('runtime.services.app.server'), config.get('runtime.services.kube.endpoints.services'), { query }),
     method: 'GET'
   };
 };
 
-export const serviceRequester = async (config: ConfigObject, usage: boolean, cached: boolean) => {
+export const serviceRequester = async (config: Config, usage: boolean, cached: boolean) => {
   return httpRequester(getReqParams(config, usage, cached));
 };
 
-export const serviceActionRequester = async (config: ConfigObject, service: string, action: string) => {
+export const serviceActionRequester = async (config: Config, service: string, action: string) => {
   return httpRequester({
-    url: urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.kube?.endpoints?.services),
+    url: urlJoin(config.get('runtime.services.app.server'), config.get('runtime.services.kube.endpoints.services')),
     method: 'POST',
     params: { service, action }
   });

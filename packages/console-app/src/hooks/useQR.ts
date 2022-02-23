@@ -13,7 +13,7 @@ const authQRPath = '/app/auth-setup';
 export const useQR = (cached = true) => {
   const config = useConfig();
   return useRequest<IAuthQR>({
-    url: urlJoin(config.runtime?.services?.app?.server, authQRPath),
+    url: urlJoin(config.get('runtime.services.app.server'), authQRPath),
     method: 'GET'
   }, cached);
 };

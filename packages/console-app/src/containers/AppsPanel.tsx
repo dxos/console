@@ -14,8 +14,8 @@ import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { useRegistry } from '@dxos/react-registry-client';
 import { DXN, RegistryRecord } from '@dxos/registry-client';
 
-import { useConfig } from '..';
 import { DataGrid, Panel, Toolbar } from '../components';
+import { useConfig } from '../hooks';
 import { getRelativeTime } from '../util';
 
 interface TableEntry {
@@ -85,7 +85,7 @@ export const AppsPanel = () => {
         id: resource.id.toString(),
         created: record?.meta.created?.getTime(),
         description: record?.meta.description,
-        url: urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.app?.prefix, resource.id.toString())
+        url: urlJoin(config.get('runtime.services.app.server'), config.get('runtime.services.app.prefix'), resource.id.toString())
       };
     }));
 

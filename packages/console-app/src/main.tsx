@@ -20,7 +20,7 @@ import { createCustomTheme } from './theme';
 void (async () => {
   const config = await loadConfig();
 
-  debug.enable(config.runtime!.system!.debug!);
+  debug.enable(config.get('runtime.system.debug') ?? '');
   const log = debug('dxos:console:main');
   log('Starting...', { config });
 
@@ -28,7 +28,7 @@ void (async () => {
 
   ReactDOM.render((
     <ClientProvider config={config}>
-      <RegistryInitializer config={config.runtime as any}>
+      <RegistryInitializer config={config.get('runtime') as any}>
         <App
           config={config}
           panels={panels}

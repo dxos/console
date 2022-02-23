@@ -8,4 +8,4 @@ export const loadConfig = async () => new Config(
   await Dynamics(),
   await Envs(),
   Defaults()
-).values;
+);

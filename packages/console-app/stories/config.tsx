@@ -5,12 +5,12 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import React from 'react';
 
-import { ConfigObject } from '@dxos/config';
+import { Config } from '@dxos/config';
 import { FullScreen } from '@dxos/react-components';
 
 import { createCustomTheme } from '../src';
 
-export const config: ConfigObject = {
+export const config = new Config({
   module: {
     build: {
       version: '1.0.0'
@@ -46,9 +46,9 @@ export const config: ConfigObject = {
       debug: 'stories'
     }
   }
-};
+});
 
-export const RootContainer = ({ config, children }: { config: ConfigObject, children: JSX.Element }) => {
+export const RootContainer = ({ config, children }: { config: Config, children: JSX.Element }) => {
   return (
     <ThemeProvider theme={createCustomTheme(config)}>
       <CssBaseline />

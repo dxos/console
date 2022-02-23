@@ -15,7 +15,7 @@ import {
 import { Box, Collapse, IconButton, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
-import { ConfigObject } from '@dxos/config';
+import { Config } from '@dxos/config';
 import { Searchbar } from '@dxos/react-components';
 import { useDomains, useRecords, useRecordTypes, useRegistry, useResources } from '@dxos/react-registry-client';
 import { CID, DXN, IQuery, Resource } from '@dxos/registry-client';
@@ -33,7 +33,7 @@ export interface DisplayResource extends Resource {
 /**
  * Joins records with resources.
  */
-export const joinResourceRecords = (records: IRecord[], resource: Resource | undefined, config: ConfigObject): IResourceRecord[] => {
+export const joinResourceRecords = (records: IRecord[], resource: Resource | undefined, config: Config): IResourceRecord[] => {
   if (!resource) {
     return [];
   }
@@ -48,7 +48,7 @@ export const joinResourceRecords = (records: IRecord[], resource: Resource | und
       [field]: versionOrTag,
 
       url: (record.type === '.dxos.type.App')
-        ? urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.app?.prefix, `${resource.id.toString()}@${versionOrTag}`)
+        ? urlJoin(config.get('runtime.services.app.server'), config.get('runtime.services.app.prefix'), `${resource.id.toString()}@${versionOrTag}`)
         : undefined
     };
     return resourceRecord;

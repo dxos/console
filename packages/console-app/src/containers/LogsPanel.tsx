@@ -32,7 +32,7 @@ const useLogs = (service: string | undefined): [ILogMessage[], () => void] => {
   const config = useConfig();
   // TODO(burdon): Don't trigger request if service is undefined.
   const [data, refreshData] = useRequest<string[]>({
-    url: urlJoin(config.runtime?.services?.app?.server, config.runtime?.services?.kube?.endpoints?.logs),
+    url: urlJoin(config.get('runtime.services.app.server'), config.get('runtime.services.kube.endpoints.logs')),
     params: { name: service, lines: 100 }
   });
   const [logs, setLogs] = useState<ILogMessage[]>([]);

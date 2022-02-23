@@ -165,7 +165,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
             </IconButton>
           </Box>
           <Typography variant='h6'>
-            {config.runtime?.props?.title}
+            {config.get('runtime.props.title')}
           </Typography>
           <Box sx={{ flex: 1 }} />
           <ContainerMenu />
@@ -221,7 +221,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
             justifyContent: 'center'
           }}
         >
-          <Box sx={{ color: theme => theme.palette.secondary.main }}>{ config.module?.build?.version }</Box>
+          <Box sx={{ color: theme => theme.palette.secondary.main }}>{ config.get('module.build.version') }</Box>
         </Toolbar>
       </Drawer>
 
