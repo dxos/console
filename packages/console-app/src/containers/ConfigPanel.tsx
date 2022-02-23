@@ -17,7 +17,7 @@ export const ConfigPanel = () => {
 
   return (
     <Panel scroll>
-      <JsonTreeView data={config} />
+      <JsonTreeView data={config.values} />
     </Panel>
   );
 };
