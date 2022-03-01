@@ -100,4 +100,4 @@ jobs:
       run:  |
         \. "$NVM_DIR/nvm.sh" && nvm use ${{ matrix.node-version }}
         export PATH="$PATH:$(yarn global bin)"
-        # ./common/scripts/publish-apps.sh
+        ./common/scripts/publish-apps.sh
