@@ -41,13 +41,6 @@ import { IPanel } from './types';
 
 export const panels: IPanel[] = [
   {
-    id: 'developer',
-    path: paths.developer,
-    label: 'Developer',
-    component: DeveloperPanel,
-    icon: DeveloperIcon
-  },
-  {
     id: 'services',
     path: paths.services,
     label: 'Services',
@@ -137,5 +130,12 @@ export const panels: IPanel[] = [
     label: 'Access',
     component: AccessPanel,
     icon: QrCode2Icon
+  },
+  {
+    id: 'developer',
+    path: paths.developer,
+    label: 'Developer',
+    component: DeveloperPanel,
+    icon: DeveloperIcon
   }
 ];

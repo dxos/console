@@ -52,7 +52,7 @@ export const DeveloperPanel = () => {
   }, [account]);
 
   if (!account) {
-    return null;
+    return <p>Connect a DXOS Wallet with a DXNS Account for more information.</p>
   }
 
   const data = {
