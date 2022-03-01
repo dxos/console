@@ -4,7 +4,7 @@
 
 import { readFileSync, existsSync } from 'fs';
 import yaml from 'js-yaml';
-import defaultsDeep from 'lodash.defaultsDeep';
+import defaultsDeep from 'lodash.defaultsdeep';
 import path from 'path';
 
 // TODO(egorgripasov): Proper conf schema.
