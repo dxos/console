@@ -15,10 +15,10 @@ do
   echo "::group::Publishing $PKG_NAME"
   
   # Canary deployment
-  dx app --verbose deploy --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tag dev --version=false
+  dx ns --account $DX_DXNS_ACCOUNT --verbose deploy --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tag dev --version=false
 
   # Latest version deployment
-  dx app --verbose deploy --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tag latest --skipExisting
+  dx ns --account $DX_DXNS_ACCOUNT --verbose deploy --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tag latest --skipExisting
 
   cd -
   echo "::endgroup::"
