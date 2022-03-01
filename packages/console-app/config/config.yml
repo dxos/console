@@ -21,31 +21,25 @@ runtime:
         services: '/kube/services'
 
     app:
-      prefix: "/app"
-      server: https://discovery.kube.dxos.network
+      prefix: '/app'
+      server: 'https://demo.kube.dxos.network'
 
     dxns:
-      # server: wss://discovery.kube.dxos.network/dxns/ws
-      # TODO(wittjosiah): Temp, revert
-      server: 'ws://127.0.0.1:9945'
+      server: wss://node1.devnet.dxos.network/dxns/ws
   
     ipfs:
-      server: https://discovery.kube.dxos.network/dxos/ipfs/api
-      gateway: https://discovery.kube.dxos.network/dxos/ipfs/gateway/
+      server: 'https://ipfs1.kube.dxos.network/dxos/ipfs/api'
+      gateway: 'https://ipfs1.kube.dxos.network/dxos/ipfs/gateway/'
 
     signal:
-      server: wss://discovery.kube.dxos.network/dxos/signal
-      api: https://discovery.kube.dxos.network/dxos/signal/api
+      server: 'wss://demo.kube.dxos.network/dxos/signal'
+      api: 'https://demo.kube.dxos.network/dxos/signal/api'
 
     bot:
       topic: d4d8f4aa6999ff87b00b2644117bcf9dd62c7ae7a70118264b2e1d286402c9fa
 
     ice:
-    - urls: stun:discovery.kube.dxos.network:3478
-    - urls: turn:discovery.kube.dxos.network:3478
-      username: dxos
-      credential: dxos
-    - urls: stun:discovery.kube.dxos.network:3478
-    - urls: turn:discovery.kube.dxos.network:3478
-      username: dxos
-      credential: dxos
+      - urls: 'stun:demo.kube.dxos.network:3478'
+      - urls: 'turn:demo.kube.dxos.network:3478'
+        username: 'dxos'
+        credential: 'dxos'
