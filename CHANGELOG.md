@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.3.4](https://www.github.com/dxos/console/compare/v1.3.3...v1.3.4) (2022-03-01)
+
+
+### Bug Fixes
+
+* linter err. ([d4ee559](https://www.github.com/dxos/console/commit/d4ee559a3022828f08c34586d4fcdcfaed14c201))
+* temporary not use Config & disable app publishing ([bf93c5b](https://www.github.com/dxos/console/commit/bf93c5bc90efcc0f1fac444107dbb287f9ea431e))
+
 ### [1.3.3](https://www.github.com/dxos/console/compare/v1.3.2...v1.3.3) (2022-02-22)
 
 
