@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.3.5](https://www.github.com/dxos/console/compare/v1.3.4...v1.3.5) (2022-03-01)
+
+
+### Bug Fixes
+
+* typo ([19793f0](https://www.github.com/dxos/console/commit/19793f09b22eb174002a2a1c4693636267d9711d))
+
 ### [1.3.4](https://www.github.com/dxos/console/compare/v1.3.3...v1.3.4) (2022-03-01)
 
 
