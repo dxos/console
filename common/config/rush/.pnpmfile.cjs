@@ -63,5 +63,12 @@ function readPackage(packageJson, context) {
   //  packageJson.dependencies['log4js'] = '0.6.38';
   // }
 
+  switch (packageJson.name) {
+    case 'wrtc':
+      // The package got renamed
+      delete packageJson.dependencies['node-pre-gyp'];
+      packageJson.dependencies['@mapbox/node-pre-gyp'] = '1.0.3';
+  }
+
   return packageJson;
 }

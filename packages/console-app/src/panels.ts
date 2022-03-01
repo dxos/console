@@ -4,6 +4,7 @@
 
 // https://mui.com/components/material-icons
 import {
+  AccountCircle as DeveloperIcon,
   Bolt as TypeIcon,
   Reorder as LoggingIcon,
   Settings as SettingsIcon,
@@ -24,6 +25,7 @@ import {
   AppsPanel,
   BotsPanel,
   ConfigPanel,
+  DeveloperPanel,
   DomainsPanel,
   DXNSPanel,
   IPFSPanel,
@@ -128,5 +130,12 @@ export const panels: IPanel[] = [
     label: 'Access',
     component: AccessPanel,
     icon: QrCode2Icon
+  },
+  {
+    id: 'developer',
+    path: paths.developer,
+    label: 'Developer',
+    component: DeveloperPanel,
+    icon: DeveloperIcon
   }
 ];

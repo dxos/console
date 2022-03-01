@@ -6,6 +6,7 @@ import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { ClientProvider } from '@dxos/react-client';
 import { RegistryInitializer } from '@dxos/react-registry-client';
 
 import { App } from './apps';
@@ -26,12 +27,14 @@ void (async () => {
   const theme = createCustomTheme(config);
 
   ReactDOM.render((
-    <RegistryInitializer config={config.get('runtime') as any}>
-      <App
-        config={config}
-        panels={panels}
-        theme={theme}
-      />
-    </RegistryInitializer>
+    <ClientProvider config={config}>
+      <RegistryInitializer config={config.get('runtime') as any}>
+        <App
+          config={config}
+          panels={panels}
+          theme={theme}
+        />
+      </RegistryInitializer>
+    </ClientProvider>
   ), document.getElementById('root'));
 })();
