@@ -5,7 +5,7 @@ const { ConfigPlugin } = require('@dxos/config/dist/src/esbuild-plugin');
 module.exports = {
   entryPoints: ['src/main.tsx'],
   staticDir: 'public',
-  outdir: 'dist',
+  outdir: 'out',
   plugins: [
     NodeGlobalsPolyfillPlugin(),
     FixMemdownPlugin(),

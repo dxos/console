@@ -14,6 +14,6 @@ module.exports = {
     NodeModulesPlugin(),
     ConfigPlugin()
   ],
-  outdir: 'dist',
+  outdir: 'out',
   staticDir: 'public'
 };
