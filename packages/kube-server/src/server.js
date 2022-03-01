@@ -28,7 +28,7 @@ const argv = yargs
   .alias('help', 'h')
   .argv;
 
-const config = getConfig(argv.config || process.env.CONFIG_FILE).values;
+const config = getConfig(argv.config || process.env.CONFIG_FILE);
 
 debug.enable(config.system.debug);
 const log = debug('dxos:kube:server');

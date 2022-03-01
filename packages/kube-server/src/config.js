@@ -4,9 +4,11 @@
 
 import { readFileSync, existsSync } from 'fs';
 import yaml from 'js-yaml';
+import defaultsDeep from 'lodash.defaultsDeep';
 import path from 'path';
 
-import { Config } from '@dxos/config';
+// TODO(egorgripasov): Proper conf schema.
+// import { Config } from '@dxos/config';
 
 const baseConfig = readFileSync(path.join(__dirname, '../config.yml')).toString();
 
@@ -16,7 +18,10 @@ export const getConfig = (configPath) => {
   }
 
   const profileConfig = yaml.load(readFileSync(configPath));
-  const config = new Config(profileConfig, yaml.load(baseConfig));
+
+  const config = defaultsDeep(profileConfig, yaml.load(baseConfig));
+
+  //const config = new Config(profileConfig, yaml.load(baseConfig));
 
   return config;
 };
