@@ -21,7 +21,7 @@ export const getConfig = (configPath) => {
 
   const config = defaultsDeep(profileConfig, yaml.load(baseConfig));
 
-  //const config = new Config(profileConfig, yaml.load(baseConfig));
+  // const config = new Config(profileConfig, yaml.load(baseConfig));
 
   return config;
 };
