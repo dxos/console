@@ -13,7 +13,7 @@ import path from 'path';
 const baseConfig = readFileSync(path.join(__dirname, '../config.yml')).toString();
 
 export const getConfig = (configPath) => {
-  if (!existsSync) {
+  if (!existsSync(configPath)) {
     throw new Error('Configuration file does not exist. Please init default cli profile or provide proper path to config file.');
   }
 
