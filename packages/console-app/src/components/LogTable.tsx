@@ -371,7 +371,7 @@ export const LogTable = ({ messages = [] }: LogProps) => {
     setFilter({ filterKey, filterValue });
   };
 
-  // TODO(burdon): Replace with FlexTable.
+  // TODO(burdon): Replace with https://github.com/bvaughn/react-window or https://react-table.tanstack.com (merge with react-components efforts).
   // https://mui.com/components/tables/#virtualized-table
   // https://github.com/bvaughn/react-virtualized/blob/master/docs/Table.md
 

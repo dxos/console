@@ -6,6 +6,7 @@ import { spawnSync } from 'child_process';
 
 const DEFAULT_AMOUNT = '1000000000000';
 
+// TODO(burdon): Placeholder.
 export const faucet = async (config, { account }) => {
   const adminMnemonic = config.system.mnemonic;
   if (!adminMnemonic) {

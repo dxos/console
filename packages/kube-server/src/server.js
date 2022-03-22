@@ -7,7 +7,6 @@ import compression from 'compression';
 import cors from 'cors';
 import debug from 'debug';
 import express from 'express';
-import path from 'path';
 import yargs from 'yargs';
 
 import { getConfig } from './config';
@@ -48,21 +47,20 @@ const app = express();
 //
 
 // https://expressjs.com/en/resources/middleware/cors.html
+// TODO(burdon): Remove unused code.
 // app.use(cors({
 //   origin: true,
 //   credentials: true
 // }));
-
 app.use(cors());
 
-app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());
 
-// Endpoints for console-app.
 app.use(express.json());
 app.use(config.api.kubePath, getRouter(config));
 
+// TODO(burdon): Deprecated? Clean-up config?
 app.get('/', (req, res) => {
   res.redirect(config.api.path);
 });

@@ -56,6 +56,7 @@
     "debug": "^4.1.1",
     "ipfs-http-client": "^53.0.1",
     "lodash.isequalwith": "^4.4.0",
+    "node-fetch": "~3.2.3",
     "proper-url-join": "^2.1.1",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
