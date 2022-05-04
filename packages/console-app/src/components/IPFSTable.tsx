@@ -94,12 +94,12 @@ export const IPFSTable = () => {
       const records = await registry.getDataRecords();
       setRows(
         records
-          .filter(record => record.data.hash)
+          .filter(record => record.data.bundle)
           .map(record => {
             const { typeName, ipfsCid } = getRecordTypeData(record, recordTypes);
-            let hash: string | undefined;
+            let bundle: string | undefined;
             try {
-              hash = CID.from(record.data.hash).toString();
+              bundle = CID.from(record.data.bundle).toString();
             } catch (err) {
               console.error(err);
             }
@@ -108,7 +108,7 @@ export const IPFSTable = () => {
               type: typeName ?? '',
               created: record.meta.created,
               typeDefUrl: ipfsCid && ipfsExplorerUrl(ipfsCid),
-              url: ipfsExplorerUrl(hash ?? '')
+              url: ipfsExplorerUrl(bundle ?? '')
             };
           })
       );

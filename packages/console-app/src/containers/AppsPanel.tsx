@@ -72,8 +72,8 @@ export const AppsPanel = () => {
   const [data, setData] = useState<TableEntry[]>([]);
 
   const refresh = async () => {
-    const appType = await registry.getResourceRecord(DXN.parse('dxos:type.app'), 'latest');
-    assert(appType, 'Resource not found: dxos:type.app');
+    const appType = await registry.getResourceRecord(DXN.parse('dxos:type/app'), 'latest');
+    assert(appType, 'Resource not found: dxos:type/app');
     const resources = await registry.queryResources({ type: appType.record.cid });
 
     const entries = await Promise.all(resources.map(async resource => {
@@ -85,7 +85,7 @@ export const AppsPanel = () => {
         id: resource.id.toString(),
         created: record?.meta.created?.getTime(),
         description: record?.meta.description,
-        url: urlJoin(config.get('runtime.services.app.server'), config.get('runtime.services.app.prefix'), resource.id.toString())
+        url: urlJoin(config.get('runtime.services.app.server'), config.get('runtime.services.app.prefix'), DXN.urlencode(resource.id))
       };
     }));
 
