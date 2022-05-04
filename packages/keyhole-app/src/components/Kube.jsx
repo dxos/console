@@ -51,9 +51,9 @@ class KubeRenderer {
     this._scene.add(this._group);
 
     const helper = new THREE.BoxHelper(new THREE.Mesh(new THREE.BoxGeometry(radius, radius, radius)));
-    (helper.material as any).color.setHex(0x101010);
-    (helper.material as any).blending = THREE.AdditiveBlending;
-    (helper.material as any).transparent = true;
+    (helper.material).color.setHex(0x101010);
+    (helper.material).blending = THREE.AdditiveBlending;
+    (helper.material).transparent = true;
     this._group.add(helper);
 
     const segments = maxParticleCount * maxParticleCount;

@@ -1,5 +1,5 @@
 const { NodeGlobalsPolyfillPlugin, FixMemdownPlugin, NodeModulesPlugin } = require('@dxos/esbuild-plugins')
-const { ConfigPlugin } = require('@dxos/config/dist/src/esbuild-plugin');
+const { ConfigPlugin } = require('@dxos/config/esbuild-plugin');
 
 /** @type {import('esapp').Config} */
 module.exports = {
@@ -10,9 +10,7 @@ module.exports = {
     NodeGlobalsPolyfillPlugin(),
     FixMemdownPlugin(),
     NodeModulesPlugin(),
-    ConfigPlugin({
-      dynamic: process.env.CONFIG_DYNAMIC === 'true',
-    }),
+    ConfigPlugin(),
     {
       name: 'resolve-fixup',
       setup({ onResolve }) {

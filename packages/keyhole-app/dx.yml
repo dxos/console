@@ -1,8 +1,15 @@
 version: 1
 
-module:
-  type: dxos:type.app
-  name: dxos:keyhole
+package:
+  license: AGPL-3.0
 
-build:
-  command: npm run build
+  modules:
+    - type: dxos:type/app
+      name: dxos:app/keyhole
+      displayName: Keyhole
+      description: KUBE Keyhole
+      tags:
+        - kube
+        - keyhole
+      build:
+        command: npm run build

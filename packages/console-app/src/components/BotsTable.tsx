@@ -16,12 +16,15 @@ import { IconButton, Tooltip } from '@mui/material';
 import { Box } from '@mui/system';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 
+import { waitForCondition } from '@dxos/async';
 import { Bot, BotFactoryClient } from '@dxos/bot-factory-client';
 import { PublicKey } from '@dxos/crypto';
 
 import { getRelativeTimeDelta } from '../util';
 import { DataGrid } from './DataGrid';
 import { Panel, Toolbar } from './Panel';
+
+const TIMEOUT = 10000;
 
 interface ColumsProps {
   bfClient: BotFactoryClient,
@@ -44,7 +47,7 @@ const executeBotAction = (botId: string, props: ColumsProps) => async (action: '
 
   setInProgress(inProgress => [...inProgress, botId]);
   try {
-    const handle = bfClient.get(botId);
+    const handle = bfClient.getBot(botId);
     switch (action) {
       case 'START': await handle.start(); break;
       case 'STOP': await handle.stop(); break;
@@ -183,6 +186,7 @@ export const BotsTable = ({ selectBot, botClient } : BotsTableProps) => {
 
   useEffect(() => {
     setImmediate(async () => {
+      await waitForCondition(() => botClient.isReady, TIMEOUT);
       await refresh();
     });
   }, [botClient]);

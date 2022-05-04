@@ -1,8 +1,57 @@
 version: 1
 
-module:
-  type: dxos:type.app
-  name: dxos:console
+package:
+  license: AGPL-3.0
 
-build:
-  command: npm run build
+  modules:
+    - type: dxos:type/app
+      name: dxos:app/console
+      displayName: Console
+      description: KUBE Console
+      tags:
+        - kube
+        - console
+      build:
+        command: npm run build
+
+runtime:
+  props:
+    title: 'Console'
+
+  app:
+    theme: 'dark'
+    website: 'https://dxos.org'
+    publicUrl: '/console'
+
+  system:
+    debug: 'dxos:console:*'
+
+  services:
+    kube:
+      endpoints:
+        logs: '/kube/logs'
+        services: '/kube/services'
+
+    app:
+      prefix: '/app'
+      server: 'https://demo.kube.dxos.network'
+
+    dxns:
+      server: wss://node1.devnet.dxos.network/dxns/ws
+  
+    ipfs:
+      server: 'https://ipfs1.kube.dxos.network/dxos/ipfs/api'
+      gateway: 'https://ipfs1.kube.dxos.network/dxos/ipfs/gateway/'
+
+    signal:
+      server: 'wss://demo.kube.dxos.network/dxos/signal'
+      api: 'https://demo.kube.dxos.network/dxos/signal/api'
+
+    bot:
+      topic: ff82c85494468da0745eb5a9ff01681f89dc1fc938701c11c4061e4b0911c5af
+
+    ice:
+      - urls: 'stun:demo.kube.dxos.network:3478'
+      - urls: 'turn:demo.kube.dxos.network:3478'
+        username: 'dxos'
+        credential: 'dxos'

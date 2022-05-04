@@ -28,7 +28,7 @@ export const BotLogs = ({
   const [logs, setLogs] = useState<string[]>([]);
 
   useEffect(() => {
-    const handle = botClient.get(selectedBot);
+    const handle = botClient.getBot(selectedBot);
     const stream = handle.logsStream();
     stream.subscribe((msg) => {
       const { chunk } = msg;
