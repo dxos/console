@@ -29,8 +29,8 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@dxos/async": "~2.31.2",
-    "@dxos/config": "~2.31.2",
+    "@dxos/async": "~2.31.3",
+    "@dxos/config": "~2.31.3",
     "body-parser": "^1.19.0",
     "boolean": "^3.0.0",
     "compression": "^1.7.4",

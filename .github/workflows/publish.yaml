@@ -93,9 +93,9 @@ jobs:
         \. "$NVM_DIR/nvm.sh" && nvm use ${{ matrix.node-version }}
         npm install -g yarn
 
-        yarn global add @dxos/cli@v2.18.0
-        yarn global add @dxos/cli-dxns@v2.18.0
-        yarn global add @dxos/cli-app@v2.18.0
+        yarn global add @dxos/cli@v2.18.1
+        yarn global add @dxos/cli-dxns@v2.18.1
+        yarn global add @dxos/cli-app@v2.18.1
     - name: Publish apps
       run:  |
         \. "$NVM_DIR/nvm.sh" && nvm use ${{ matrix.node-version }}

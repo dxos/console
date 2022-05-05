@@ -312,7 +312,7 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
-"@dxos/async@~2.31.2":
+"@dxos/async@~2.31.3":
   version "2.28.7"
   resolved "https://registry.yarnpkg.com/@dxos/async/-/async-2.28.7.tgz#a470463a0dd8154bb95b00168c80a76eb471be47"
   integrity sha512-VFH0N3Z5mKvNOy6nbaeU4gtp2V5YjG2M0l6XEtmQSFF7JMlVGB/t0ud0uhjl0jH6CtSK5/4d8e2O6OH1CqjwOQ==
@@ -329,7 +329,7 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
 
-"@dxos/config@~2.31.2":
+"@dxos/config@~2.31.3":
   version "2.28.7"
   resolved "https://registry.yarnpkg.com/@dxos/config/-/config-2.28.7.tgz#70214d05bbae80bbbc28f36bd95a6ba57576b419"
   integrity sha512-1NUE7hVtix0M1E0OfbslUzzhiYn9mutaYibQoPdBRKT2pRS6hBhgCkmf/4Jmfgk+WW11KHJqR5SBceBruUy8zQ==
