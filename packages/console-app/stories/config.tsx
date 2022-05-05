@@ -11,11 +11,6 @@ import { FullScreen } from '@dxos/react-components';
 import { createCustomTheme } from '../src';
 
 export const config = new Config({
-  module: {
-    build: {
-      version: '1.0.0'
-    },
-  },
   runtime: {
     props: {
       title: 'Test'

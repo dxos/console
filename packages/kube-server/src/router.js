@@ -11,10 +11,10 @@ export const getRouter = (config) => {
 
   router.post('/logs', async (req, res) => res.json(await getLogs(req.body)));
 
+  router.post('/services', async (req, res) => res.json(await runServiceAction(req.body)));
   router.get('/services', async (req, res) => res.json(await getServiceInfo(req.query)));
 
-  router.post('/services', async (req, res) => res.json(await runServiceAction(req.body)));
-
+  // TODO(burdon): Move to separate service?
   router.post('/faucet', async (req, res) => res.json(await faucet(config, req.body)));
 
   return router;

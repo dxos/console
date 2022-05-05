@@ -221,7 +221,7 @@ export const Container = ({ children, sidebar }: ContainerProps) => {
             justifyContent: 'center'
           }}
         >
-          <Box sx={{ color: theme => theme.palette.secondary.main }}>{ config.get('module.build.version') }</Box>
+          <Box sx={{ color: theme => theme.palette.secondary.main }}>{ /* config.get('module.build.version') */ }</Box>
         </Toolbar>
       </Drawer>
 

@@ -8,11 +8,9 @@ import { useBotFactoryClient } from '@dxos/react-client';
 
 import { BotLogs } from '../components/BotLogs';
 import { BotsTable } from '../components/BotsTable';
-import { useConfig } from '../hooks';
 
 export const BotsPanel = () => {
-  const config = useConfig();
-  const botClient = useBotFactoryClient(config);
+  const botClient = useBotFactoryClient(true);
   const [selectedBot, setSelectedBot] = useState<string | undefined>();
 
   if (!botClient) {

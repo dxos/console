@@ -3,7 +3,6 @@
 set -euo pipefail
 
 [[ -e ~/.dx/profile/default ]] || dx profile init --name $DX_PROFILE --template-url "$DX_PROFILE_URL"
-DXOS_DOMAIN="${DXOS_DOMAIN:-dxos}"
 
 for APP_PATH in "packages/console-app" "packages/keyhole-app"
 do
@@ -15,10 +14,10 @@ do
   echo "::group::Publishing $PKG_NAME"
   
   # Canary deployment
-  dx ns --account $DX_DXNS_ACCOUNT --verbose deploy --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tag dev --version=false
+  dx ns --account $DX_DXNS_ACCOUNT --verbose deploy --tag dev --version=false
 
   # Latest version deployment
-  dx ns --account $DX_DXNS_ACCOUNT --verbose deploy --name "app.${PKG_NAME}" --domain $DXOS_DOMAIN --tag latest --skipExisting
+  dx ns --account $DX_DXNS_ACCOUNT --verbose deploy --tag latest --skipExisting
 
   cd -
   echo "::endgroup::"

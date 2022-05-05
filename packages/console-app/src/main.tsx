@@ -6,7 +6,7 @@ import debug from 'debug';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ClientProvider } from '@dxos/react-client';
+import { BotFactoryClientProvider, ClientProvider } from '@dxos/react-client';
 import { RegistryInitializer } from '@dxos/react-registry-client';
 
 import { App } from './apps';
@@ -28,13 +28,15 @@ void (async () => {
 
   ReactDOM.render((
     <ClientProvider config={config}>
-      <RegistryInitializer config={config.get('runtime') as any}>
-        <App
-          config={config}
-          panels={panels}
-          theme={theme}
-        />
-      </RegistryInitializer>
+      <BotFactoryClientProvider>
+        <RegistryInitializer config={config}>
+          <App
+            config={config}
+            panels={panels}
+            theme={theme}
+          />
+        </RegistryInitializer>
+      </BotFactoryClientProvider>
     </ClientProvider>
   ), document.getElementById('root'));
 })();

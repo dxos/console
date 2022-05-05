@@ -3,4 +3,5 @@
 //
 
 export * from './App';
+export * from './Kube';
 export * from './Logo';

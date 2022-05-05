@@ -8,8 +8,9 @@ import superagent from 'superagent';
 
 import { colors, Box, CssBaseline, createTheme, ThemeProvider } from '@mui/material';
 
-import { Kube } from '@dxos/gem-experimental';
 import { Passcode } from '@dxos/react-components';
+
+import { Kube } from './Kube';
 
 const APP_AUTH_PATH = '/app/auth';
 
