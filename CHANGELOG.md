@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/dxos/console/compare/v1.3.5...v1.4.0) (2022-05-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* Introduce DeveloperPage (#201)
+
+### Features
+
+* Introduce DeveloperPage ([#201](https://www.github.com/dxos/console/issues/201)) ([3c305c4](https://www.github.com/dxos/console/commit/3c305c4bac9291e4f1371ea01ab1d7690cad9f0b))
+
+
+### Bug Fixes
+
+* latest protocols & CLI - new types, DXNs. ([#206](https://www.github.com/dxos/console/issues/206)) ([85a1081](https://www.github.com/dxos/console/commit/85a10817092a56d1b068a381a50ab3eee41569cd))
+* redeploy. ([7def582](https://www.github.com/dxos/console/commit/7def582b616cb1eee4fdbdcc2095979ac8e57ca1))
+* update deps. ([f5fe3d2](https://www.github.com/dxos/console/commit/f5fe3d2e5d548e2f1f37e87699535d7d3c41d8f8))
+
 ### [1.3.5](https://www.github.com/dxos/console/compare/v1.3.4...v1.3.5) (2022-03-01)
 
 
